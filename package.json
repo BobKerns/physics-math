@@ -1,0 +1,43 @@
+{
+  "name": "typedoc-plugin-linkrewriter",
+  "version": "0.1.0",
+  "description": "A TypeDoc plugin for rewriting links in markdown",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "tsconfig": "tsconfig.json",
+  "scripts": {
+    "build": "tsc -b .",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbuckton/typedoc-plugin-biblio.git"
+  },
+  "keywords": [
+    "typedocplugin",
+    "typedoc",
+    "links"
+  ],
+  "author": "Ron Buckton (rbuckton@chronicles.org)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/rbuckton/typedoc-plugin-biblio/issues"
+  },
+  "homepage": "https://github.com/rbuckton/typedoc-plugin-biblio#readme",
+  "peerDependencies": {
+    "typedoc": ">=0.10.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "marked": "^0.6.2",
+    "source-map-support": "^0.5.12",
+    "tslib": "^1.9.3"
+  }
+}
