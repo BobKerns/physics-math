@@ -1,6 +1,6 @@
 {
   "name": "typedoc-plugin-linkrewriter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A TypeDoc plugin for rewriting links in markdown",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rbuckton/typedoc-plugin-biblio.git"
+    "url": "git+https://github.com/rbuckton/typedoc-plugin-linkrewriter.git"
   },
   "keywords": [
     "typedocplugin",
@@ -21,9 +21,9 @@
   "author": "Ron Buckton (rbuckton@chronicles.org)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/rbuckton/typedoc-plugin-biblio/issues"
+    "url": "https://github.com/rbuckton/typedoc-plugin-linkrewriter/issues"
   },
-  "homepage": "https://github.com/rbuckton/typedoc-plugin-biblio#readme",
+  "homepage": "https://github.com/rbuckton/typedoc-plugin-linkrewriter#readme",
   "peerDependencies": {
     "typedoc": ">=0.10.0"
   },
