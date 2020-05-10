@@ -40,6 +40,7 @@
   },
   "homepage": "https://github.com/BobKerns/physics-math#readme",
   "dependencies": {
+    "gl-matrix": "^3.3.0",
     "katex": "^0.11.1"
   },
   "devDependencies": {
