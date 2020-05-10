@@ -12,11 +12,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import {terser} from 'rollup-plugin-terser';
 import visualizer from 'rollup-plugin-visualizer';
-import {OutputOptions, PluginContext, RollupOptions} from "rollup";
+import {OutputOptions, RollupOptions} from "rollup";
 import {chain as flatMap} from 'ramda';
 
-const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
+// const mode = process.env.NODE_ENV;
+// const dev = mode === 'development';
 
 /**
  * A rough description of the contents of [[package.json]].
@@ -98,7 +98,7 @@ const options: RollupOptions = {
             // Check for these in package.json
             mainFields: mainFields(pkg, ['module', 'main', 'browser'])
         }),
-         typescript({
+        typescript({
              tsconfig: 'src/tsconfig.json',
              include: "src/*.ts",
              objectHashIgnoreUnknownHack: true,
