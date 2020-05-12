@@ -25,13 +25,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3a4542a-dd57-43ed-b3b2-ae5d31a65a33" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/fileColors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/derivative.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/derivative.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
     </list>
-    <list id="c0efe2d8-7097-44a7-8c90-5262cc676c1f" name="Config" comment="" />
+    <list id="c0efe2d8-7097-44a7-8c90-5262cc676c1f" name="Config" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/physics-math.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/physics-math.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,7 +79,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -173,6 +174,7 @@
       <updated>1589075341027</updated>
       <workItem from="1589075343221" duration="31743000" />
       <workItem from="1589151593316" duration="35633000" />
+      <workItem from="1589282181452" duration="649000" />
     </task>
     <task id="LOCAL-00001" summary="Config">
       <changelist id="c0efe2d8-7097-44a7-8c90-5262cc676c1f" name="Config" comment="" />
@@ -231,7 +233,21 @@
       <option name="project" value="LOCAL" />
       <updated>1589201694015</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Include more IDE configuration.">
+      <created>1589282281107</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1589282281107</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Include more IDE configuration.">
+      <created>1589282336572</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1589282336572</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <option name="trackContextForNewChangelist" value="true" />
     <servers />
   </component>
@@ -257,7 +273,8 @@
     <MESSAGE value="Add gl-matrix dependency." />
     <MESSAGE value="Preliminary restructuring of base code. Add curry code and subclassed Vector, Point, and Quaternion." />
     <MESSAGE value="Drop node 8.x builds; they're not compatible with current jest." />
-    <option name="LAST_COMMIT_MESSAGE" value="Drop node 8.x builds; they're not compatible with current jest." />
+    <MESSAGE value="Include more IDE configuration." />
+    <option name="LAST_COMMIT_MESSAGE" value="Include more IDE configuration." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -361,10 +378,10 @@
     </state>
     <state width="1638" height="364" key="GridCell.Tab.3.right/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160312" />
     <state width="1638" height="364" key="GridCell.Tab.3.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871029" />
-    <state x="390" y="187" key="SettingsEditor" timestamp="1589281872468">
+    <state x="390" y="187" key="SettingsEditor" timestamp="1589282835283">
       <screen x="0" y="0" width="1920" height="1200" />
     </state>
-    <state x="390" y="187" key="SettingsEditor/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589281872468" />
+    <state x="390" y="187" key="SettingsEditor/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282835283" />
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1589190677648" />
     <state x="691" y="446" key="VCS.ChangelistChooser" timestamp="1589122906883">
       <screen x="0" y="0" width="1680" height="1050" />
@@ -386,14 +403,15 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="566" y="305" key="refactoring.ChangeSignatureDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589176711347" />
-    <state x="730" y="446" width="489" height="384" key="scopes" timestamp="1589281870565">
+    <state x="730" y="446" width="489" height="384" key="scopes" timestamp="1589282690928">
       <screen x="0" y="0" width="1920" height="1200" />
     </state>
-    <state x="730" y="446" width="489" height="384" key="scopes/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589281870565" />
+    <state x="730" y="446" width="489" height="384" key="scopes/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282690928" />
     <state x="639" y="390" width="781" height="379" key="scopes/0.0.1680.1050@0.0.1680.1050" timestamp="1589168225964" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1589192014416">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="577" y="266" width="766" height="773" key="search.everywhere.popup" timestamp="1589282397189">
+      <screen x="0" y="0" width="1920" height="1200" />
     </state>
+    <state x="577" y="266" width="766" height="773" key="search.everywhere.popup/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282397189" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1589192014416" />
   </component>
 </project>
