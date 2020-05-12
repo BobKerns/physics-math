@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="ignored" pattern="file[physics-math]:bin//*||file[physics-math]:build//*||file[physics-math]:lib/*" />
+</component>

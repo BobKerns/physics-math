@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="config" pattern="(file:config/tsconfig.json||file:config/module-typings.d.ts||file:config/rollup.config.ts||file:config/top-jest.config.ts||file:.gitignore||file:.npmignore||file:.editorconfig||file:package.json||file:tsconfig.json||file:typedoc.json||file[physics-math]:.idea//*||file:src/tsconfig.json||file:src/__tests__/tsconfig.json||file[physics-math]:config//*)&amp;&amp;!file:config/require-from.ts" />
+</component>

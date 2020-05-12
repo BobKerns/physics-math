@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:template" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b3a4542a-dd57-43ed-b3b2-ae5d31a65a33" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/fileColors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/derivative.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/derivative.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
+    </list>
+    <list id="c0efe2d8-7097-44a7-8c90-5262cc676c1f" name="Config" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="NamedScopeManager">
+    <order>
+      <scope name="src" />
+      <scope name="tests" />
+      <scope name="config" />
+      <scope name="CI" />
+      <scope name="modules" />
+      <scope name="ignored" />
+      <scope name="docs" />
+      <scope name="content" />
+    </order>
+  </component>
+  <component name="ProjectId" id="1bhDH4gfeGEYh4njgqmC3oT3vTc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/src/curry.ts" />
+      <recent name="$PROJECT_DIR$/src/utils.ts" />
+      <recent name="$PROJECT_DIR$/src/Derivative.ts" />
+      <recent name="$PROJECT_DIR$/src/Integral.ts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Jest.All Tests">
+    <configuration name="Curry1" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/__tests__/test-curry.ts" />
+      <test-names>
+        <test-name value="Curry1" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Curry1.call 0" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/__tests__/test-curry.ts" />
+      <test-names>
+        <test-name value="Curry1" />
+        <test-name value="call 0" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Curry2" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/__tests__/test-curry.ts" />
+      <test-names>
+        <test-name value="Curry2" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="test-curry.ts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/src/__tests__/test-curry.ts" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Jest.All Tests" />
+      <item itemvalue="Jest.Curry1" />
+      <item itemvalue="Jest.Curry1.call 0" />
+      <item itemvalue="Jest.Curry2" />
+      <item itemvalue="Jest.test-curry.ts" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.test-curry.ts" />
+        <item itemvalue="Jest.Curry2" />
+        <item itemvalue="Jest.Curry1" />
+        <item itemvalue="Jest.Curry1.call 0" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="StructuralSearchPlugin">
+    <replaceConfiguration name="user defined" created="1589156582952" text="T" recursive="false" caseInsensitive="true" type="TypeScript" scope_type="NAMED" scope_descriptor="Selection" reformatAccordingToStyle="false" shortenFQN="false" replacement="R" history="1">
+      <constraint name="__context__" within="" contains="" />
+    </replaceConfiguration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b3a4542a-dd57-43ed-b3b2-ae5d31a65a33" name="Default Changelist" comment="" />
+      <created>1589075341027</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589075341027</updated>
+      <workItem from="1589075343221" duration="31743000" />
+      <workItem from="1589151593316" duration="35633000" />
+    </task>
+    <task id="LOCAL-00001" summary="Config">
+      <changelist id="c0efe2d8-7097-44a7-8c90-5262cc676c1f" name="Config" comment="" />
+      <created>1589122892229</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1589122892229</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Remove failing PlantUML TypeDoc extension.">
+      <created>1589122958258</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1589122958258</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Use correct username for NPM scope.">
+      <created>1589123050006</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1589123050006</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Remove leftovers from the project template.">
+      <created>1589123390998</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1589123390998</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add gl-matrix dependency.">
+      <created>1589126898386</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1589126898386</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Preliminary restructuring of base code. Add curry code and subclassed Vector, Point, and Quaternion.">
+      <created>1589200412418</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1589200412418</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Preliminary restructuring of base code. Add curry code and subclassed Vector, Point, and Quaternion.">
+      <created>1589201390401</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1589201390401</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Drop node 8.x builds; they're not compatible with current jest.">
+      <created>1589201694015</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1589201694015</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <option name="trackContextForNewChangelist" value="true" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Remove failing PlantUML TypeDoc extension." />
+    <MESSAGE value="Use correct username for NPM scope." />
+    <MESSAGE value="Remove leftovers from the project template." />
+    <MESSAGE value="Add gl-matrix dependency." />
+    <MESSAGE value="Preliminary restructuring of base code. Add curry code and subclassed Vector, Point, and Quaternion." />
+    <MESSAGE value="Drop node 8.x builds; they're not compatible with current jest." />
+    <option name="LAST_COMMIT_MESSAGE" value="Drop node 8.x builds; they're not compatible with current jest." />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="474" y="210" key="#Inspections" timestamp="1589189100246">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="474" y="210" key="#Inspections/0.0.1680.1050@0.0.1680.1050" timestamp="1589189100246" />
+    <state x="304" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589168488975">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="304" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589168488975" />
+    <state x="653" y="248" key="#com.intellij.ide.util.MemberChooser" timestamp="1589198233794">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="653" y="248" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1589198233794" />
+    <state width="927" height="508" key="#com.intellij.structuralsearch.plugin.ui.StructuralReplaceDialog" timestamp="1589156582938">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="927" height="508" key="#com.intellij.structuralsearch.plugin.ui.StructuralReplaceDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589156582938" />
+    <state x="376" y="271" key="#com.intellij.structuralsearch.plugin.ui.StructuralSearchDialog" timestamp="1589156582937">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="376" y="271" key="#com.intellij.structuralsearch.plugin.ui.StructuralSearchDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589156582937" />
+    <state width="1638" height="364" key="GridCell.Tab.0.bottom" timestamp="1589282160300">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.0.bottom/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160300" />
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1589197995417" />
+    <state width="1638" height="364" key="GridCell.Tab.0.center" timestamp="1589282160297">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.0.center/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160297" />
+    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1589197995416" />
+    <state width="1638" height="364" key="GridCell.Tab.0.left" timestamp="1589282160296">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.0.left/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160296" />
+    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1589197995413" />
+    <state width="1638" height="364" key="GridCell.Tab.0.right" timestamp="1589282160299">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.0.right/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160299" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589197995417" />
+    <state width="1638" height="364" key="GridCell.Tab.1.bottom" timestamp="1589282160304">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.1.bottom/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160304" />
+    <state width="1638" height="364" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871023" />
+    <state width="1638" height="364" key="GridCell.Tab.1.center" timestamp="1589282160302">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.1.center/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160302" />
+    <state width="1638" height="364" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871022" />
+    <state width="1638" height="364" key="GridCell.Tab.1.left" timestamp="1589282160301">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.1.left/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160301" />
+    <state width="1638" height="364" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871021" />
+    <state width="1638" height="364" key="GridCell.Tab.1.right" timestamp="1589282160303">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.1.right/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160303" />
+    <state width="1638" height="364" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871023" />
+    <state width="1638" height="364" key="GridCell.Tab.2.bottom" timestamp="1589282160309">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.2.bottom/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160309" />
+    <state width="1638" height="364" key="GridCell.Tab.2.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871026" />
+    <state width="1638" height="364" key="GridCell.Tab.2.center" timestamp="1589282160307">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.2.center/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160307" />
+    <state width="1638" height="364" key="GridCell.Tab.2.center/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871025" />
+    <state width="1638" height="364" key="GridCell.Tab.2.left" timestamp="1589282160306">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.2.left/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160306" />
+    <state width="1638" height="364" key="GridCell.Tab.2.left/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871024" />
+    <state width="1638" height="364" key="GridCell.Tab.2.right" timestamp="1589282160308">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.2.right/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160308" />
+    <state width="1638" height="364" key="GridCell.Tab.2.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871026" />
+    <state width="1638" height="364" key="GridCell.Tab.3.bottom" timestamp="1589282160313">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.3.bottom/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160313" />
+    <state width="1638" height="364" key="GridCell.Tab.3.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871029" />
+    <state width="1638" height="364" key="GridCell.Tab.3.center" timestamp="1589282160311">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.3.center/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160311" />
+    <state width="1638" height="364" key="GridCell.Tab.3.center/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871028" />
+    <state width="1638" height="364" key="GridCell.Tab.3.left" timestamp="1589282160310">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.3.left/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160310" />
+    <state width="1638" height="364" key="GridCell.Tab.3.left/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871027" />
+    <state width="1638" height="364" key="GridCell.Tab.3.right" timestamp="1589282160312">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1638" height="364" key="GridCell.Tab.3.right/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589282160312" />
+    <state width="1638" height="364" key="GridCell.Tab.3.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589151871029" />
+    <state x="390" y="187" key="SettingsEditor" timestamp="1589281872468">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="390" y="187" key="SettingsEditor/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589281872468" />
+    <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1589190677648" />
+    <state x="691" y="446" key="VCS.ChangelistChooser" timestamp="1589122906883">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="691" y="446" key="VCS.ChangelistChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1589122906883" />
+    <state x="678" y="401" key="VCS.EditChangelistDialog" timestamp="1589122892218">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="678" y="401" key="VCS.EditChangelistDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589122892218" />
+    <state x="615" y="359" key="com.intellij.lang.javascript.refactoring.memberPullUp.JSPullUpDialog" timestamp="1589156816696">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="615" y="359" key="com.intellij.lang.javascript.refactoring.memberPullUp.JSPullUpDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589156816696" />
+    <state width="664" height="144" key="javadoc.popup.new" timestamp="1589198874747">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="664" height="144" key="javadoc.popup.new/0.0.1680.1050@0.0.1680.1050" timestamp="1589198874747" />
+    <state x="566" y="305" key="refactoring.ChangeSignatureDialog" timestamp="1589176711347">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="566" y="305" key="refactoring.ChangeSignatureDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589176711347" />
+    <state x="730" y="446" width="489" height="384" key="scopes" timestamp="1589281870565">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="730" y="446" width="489" height="384" key="scopes/-3600.-73.1920.1200/0.0.1920.1200/-1680.150.1680.1050@0.0.1920.1200" timestamp="1589281870565" />
+    <state x="639" y="390" width="781" height="379" key="scopes/0.0.1680.1050@0.0.1680.1050" timestamp="1589168225964" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1589192014416">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1589192014416" />
+  </component>
+</project>

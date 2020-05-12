@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="src" pattern="file[physics-math]:src/*.ts&amp;&amp;!file[physics-math]:src/__tests__//*||file[physics-math]:api/*.ts&amp;&amp;!file[physics-math]:api/__tests__//*" />
+</component>

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="content" pattern="file[physics-math]:assets//*||file[physics-math]:*.html||file[physics-math]:*.tsx||file[physics-math]:*.css||file[physics-math]:*.jpg||file[physics-math]:*.jpeg||file[physics-math]:*.png||file[physics-math]:*.gif" />
+</component>
