@@ -5,7 +5,7 @@
     <fileColor scope="docs" color="c9ff9b" />
     <fileColor scope="CI" color="Orange" />
     <fileColor scope="config" color="Yellow" />
-    <fileColor scope="tests" color="ccfdff" />
+    <fileColor scope="tests" color="d6c8ff" />
     <fileColor scope="src" color="d6ffd4" />
     <fileColor scope="ignored" color="dfd4ee" />
     <fileColor scope="content" color="bdeec6" />
