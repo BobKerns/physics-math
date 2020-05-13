@@ -9,7 +9,7 @@
  * Each PFFunction object has a corresponding function object and vice versa.
  */
 import {idGen, ViewOf} from "./utils";
-import {BaseValue} from "./math-types";
+import {BaseValue, TYPE} from "./math-types";
 import {IPFunction, PFunction, TIMESTEP} from "./pfunction";
 
 /**
@@ -70,6 +70,8 @@ export abstract class PFunctionBase<R extends BaseValue, F extends Function> {
      * Name of this PFunction, for disambiguation and well-known functions (such as constants).
      */
     readonly name: string;
+
+    abstract get returnType(): TYPE;
 
     protected constructor(f: F) {
         this.f = f as unknown as IPFunction<R>;

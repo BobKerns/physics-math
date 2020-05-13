@@ -1,4 +1,4 @@
-import {BaseValue} from "./math-types";
+import {BaseValue, TYPE} from "./math-types";
 import {IPFunctionBare, IPFunctionBare2, IPFunctionBase, IPFunctionDisplay, PFunctionBase, TexFormatter} from "./base";
 
 /**
@@ -107,6 +107,10 @@ export class IndefiniteIntegralImpl<T extends BaseValue> extends PFunction2<T> i
     constructor(pf: PFunction<T>, f: IPFunctionBare2<T>) {
         super(f);
         this.integrand = pf;
+    }
+
+    get returnType(): TYPE {
+        return this.integrand.returnType;
     }
 }
 

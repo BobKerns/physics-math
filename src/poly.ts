@@ -5,6 +5,7 @@
 
 import {ZERO} from "./scalar";
 import {PFunction} from "./pfunction";
+import {TYPE} from "./math-types";
 
 /**
  * Polynomial functions
@@ -27,6 +28,10 @@ export class Poly extends PFunction<number> {
 
     integrate(): PFunction<number> {
         return new Poly(0, ...this.coefficients);
+    }
+
+    get returnType(): TYPE.SCALAR {
+        return TYPE.SCALAR;
     }
 
 }

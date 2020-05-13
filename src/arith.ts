@@ -15,7 +15,7 @@ import {
     Vector,
     BaseValue,
     BaseValueRelative,
-    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue
+    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE
 } from "./math-types";
 import {Throw} from "./utils";
 import {IPFunction, isIPFunction, isPFunction, PFunction} from "./pfunction";
@@ -88,6 +88,10 @@ abstract class BinaryOp<R extends BaseValue, X extends BaseValue> extends PFunct
         super(f);
         this.l = l;
         this.r = r;
+    }
+
+    get returnType(): TYPE {
+        return this.l.returnType;
     }
 }
 

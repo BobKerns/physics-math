@@ -1,4 +1,4 @@
-import {BaseValue, Point, Rotation, Vector} from "./math-types";
+import {BaseValue, Point, Rotation, TYPE, Vector} from "./math-types";
 import {IPFunction, PFunction} from "./pfunction";
 
 const bounds = <R extends BaseValue>(f: IPFunction<R>, t: number): [R, R, number] => {
@@ -33,6 +33,10 @@ export class NumericDerivative extends PFunction<number> {
     integrate() {
         return this.from;
     }
+
+    get returnType(): TYPE.SCALAR {
+        return TYPE.SCALAR;
+    }
 }
 
 const makeDerivativeV = (f: IPFunction<Point|Vector>) => (t: number) => {
@@ -42,6 +46,7 @@ const makeDerivativeV = (f: IPFunction<Point|Vector>) => (t: number) => {
     const dz = (u.z - l.z) / timestep;
     return new Vector(dx, dy, dz);
 }
+// noinspection JSUnusedGlobalSymbols
 export class VectorDerivative extends PFunction<Point|Vector> {
     private readonly from: PFunction<Point|Vector>;
     constructor(f: PFunction<Point|Vector>) {
@@ -57,6 +62,10 @@ export class VectorDerivative extends PFunction<Point|Vector> {
     integrate() {
         return this.from;
     }
+
+    get returnType(): TYPE.VECTOR {
+        return TYPE.VECTOR;
+    }
 }
 
 const makeDerivativeQ = (f: IPFunction<Rotation>) => (t: number) => {
@@ -67,6 +76,7 @@ const makeDerivativeQ = (f: IPFunction<Rotation>) => (t: number) => {
     const dw = (u.w - l.w) / timestep;
     return new Rotation(di, dj, dk, dw).normalize();
 }
+// noinspection JSUnusedGlobalSymbols
 export class QuaternionDerivative extends PFunction<Rotation> {
     private readonly from: PFunction<Rotation>;
     constructor(f: PFunction<Rotation>) {
@@ -81,5 +91,9 @@ export class QuaternionDerivative extends PFunction<Rotation> {
 
     integrate() {
         return this.from;
+    }
+
+    get returnType(): TYPE.ROTATION {
+        return TYPE.ROTATION;
     }
 }

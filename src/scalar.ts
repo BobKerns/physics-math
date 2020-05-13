@@ -4,7 +4,7 @@
  */
 
 import {Poly} from "./poly";
-import {BaseValue} from "./math-types";
+import {BaseValue, TYPE} from "./math-types";
 import {PFunction} from "./pfunction";
 
 /**
@@ -20,7 +20,7 @@ export abstract class Constant<T extends BaseValue> extends PFunction<T> {
     }
 }
 
-class Scalar extends Constant<number> {
+export class Scalar extends Constant<number> {
     constructor(value: number) {
         super(value);
     }
@@ -35,6 +35,10 @@ class Scalar extends Constant<number> {
 
     integrate() {
         return new Poly(0, this.value);
+    }
+
+    get returnType(): TYPE.SCALAR {
+        return TYPE.SCALAR;
     }
 }
 
