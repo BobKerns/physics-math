@@ -1,4 +1,5 @@
 import {quat, vec4} from "gl-matrix";
+import {Constructor4N} from "./utils";
 
 export enum TYPE {
     SCALAR,
@@ -46,10 +47,6 @@ export type BaseValueNonScalar = Point | Vector | Orientation | Rotation;
 // noinspection JSUnusedGlobalSymbols
 export type BaseValueRelativeNonScalar = Vector | Rotation;
 export type BaseValue = BaseValueRelative | BaseValueIntrinsic;
-
-export interface Constructor4N<T> {
-    new(x?: number, y?: number, z?: number, w?: number): T;
-}
 
 abstract class ArrayBase extends Float64Array implements NonScalarValue, DataType<TYPE.VECTOR|TYPE.POINT|TYPE.ROTATION|TYPE.ORIENTATION> {
     protected constructor() {
@@ -338,7 +335,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
     }
 
     // noinspection JSUnusedGlobalSymbols
-    rotate(b: Point | Vector) {
+    rotate<T extends Rotationish>(b: T) {
         const ax = this[0];
         const ay = this[1];
         const az = this[2];
@@ -346,12 +343,11 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         const bx = b[0];
         const by = b[1];
         const bz = b[2];
-        const bw = b[3];
 
-        const cx = ax * bw + aw * bx + ay * bz - az * by;
-        const cy = ay * bw + aw * by + az * bx - ax * bz;
-        const cz = az * bw + aw * bz + ax * by - ay * bx;
-        const cw = aw * bw - ax * bx - ay * by - az * bz;
+        const cx = aw * bx + ay * bz - az * by;
+        const cy = aw * by + az * bx - ax * bz;
+        const cz = aw * bz + ax * by - ay * bx;
+        const cw = ax * bx - ay * by - az * bz;
 
         const dx = cx * aw + cw * -ax + cy * -az - cz * -ay;
         const dy = cy * aw + cw * -ay + cz * -ax - cx * -az;
@@ -359,11 +355,8 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         const dw = cw * aw - cx * -ax - cy * -ay - cz * -az;
 
         const w = dw === 0 ? 1 : dw;
-        if (isPoint(b)) {
-            return new Point(dx / w, dy / w, dz / w);
-        } else {
-            return new Vector(dx / w, dy / w, dz / w);
-        }
+        let c = b.constructor as Constructor4N<T>;
+        return new c(dx/2, dy/w, dz/w);
     }
 
     static fromEulerX<T extends Rotationish>(cls: Constructor4N<T>, x: number, y: number, z: number) {
