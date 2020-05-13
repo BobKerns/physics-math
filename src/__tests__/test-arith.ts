@@ -8,9 +8,10 @@
  */
 
 import {add} from "ramda";
-import {sub} from "../arith";
+import {mul, sub} from "../arith";
 
 describe('scalar', () => {
     test('add', () => expect(add(15, 17)).toBe(32));
     test('sub', () => expect(sub(15, 17)).toBe(-2));
+    test('mul', () => expect(mul(3, 5, 7)).toBe(105));
 });

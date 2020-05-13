@@ -30,7 +30,15 @@ export interface Intrinsic<R> {}
 /**
  * Marker for all non-scalar values
  */
-export interface NonScalarValue {
+/**
+ * Marker for all non-scalar values
+ */
+export interface NonScalarValue extends DataType<TYPE.VECTOR | TYPE.POINT | TYPE.ROTATION | TYPE.ORIENTATION> {
+    0: number;
+    1: number;
+    2: number;
+    3: number;
+    type: TYPE.POINT | TYPE.VECTOR | TYPE.ORIENTATION | TYPE.ROTATION;
 }
 
 export type RelativeOf<T> = T extends Point ? Vector : T extends Orientation ? Rotation : T;
@@ -48,11 +56,14 @@ export type BaseValueNonScalar = Point | Vector | Orientation | Rotation;
 export type BaseValueRelativeNonScalar = Vector | Rotation;
 export type BaseValue = BaseValueRelative | BaseValueIntrinsic;
 
-abstract class ArrayBase extends Float64Array implements NonScalarValue, DataType<TYPE.VECTOR|TYPE.POINT|TYPE.ROTATION|TYPE.ORIENTATION> {
+abstract class ArrayBase extends Float64Array implements NonScalarValue {
     protected constructor() {
         super(4);
     }
-
+    0: number;
+    1: number;
+    2: number;
+    3: number;
     abstract get type(): TYPE.POINT | TYPE.VECTOR | TYPE.ORIENTATION | TYPE.ROTATION;
     assign(): this;
     assign(other: ArrayBase): this;
@@ -291,18 +302,30 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         ) as unknown as this;
     }
 
+    /**
+     * Because multiplication of quaternions is equal to addition of sphereical vectors on the
+     * 3D unit sphere, multiplication of those vectors by a real is the same as exponentiation of
+     * their quaternions by a real.
+     * @param n
+     */
     // noinspection JSUnusedGlobalSymbols
     mult(n: number): this {
-        return quat.scale(
+        return quat.pow(
             this.create() as unknown as quat,
             this as unknown as quat,
             n
         ) as unknown as this;
     }
 
+    /**
+     * Because multiplication of quaternions is equal to addition of sphereical vectors on the
+     * 3D unit sphere, multiplication of those vectors by a real is the same as exponentiation of
+     * their quaternions by a real.
+     * @param n
+     */
     // noinspection JSUnusedGlobalSymbols
     multf(n: number): this {
-        return quat.scale(
+        return quat.pow(
             this as unknown as quat,
             this as unknown as quat,
             n

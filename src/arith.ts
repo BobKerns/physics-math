@@ -15,7 +15,7 @@ import {
     Vector,
     BaseValue,
     BaseValueRelative,
-    RelativeOf, isScalarValue, Rotational, isPositional
+    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue
 } from "./math-types";
 import {Throw} from "./utils";
 
@@ -118,6 +118,13 @@ export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryO
     }
 }
 
+/**
+ * Multiply a number, Vector, or Rotation by 0 or more scalar values.
+ * Works on individual values, or PFFunction or IPFunction's. (You cannot
+ * mix levels, however).
+ *
+ * Returns the same type as the first argument.
+ */
 export function sub<R extends number>(a: R, ...rest: R[]): R;
 export function sub(a: Point, ...rest: Vector[]): Point;
 export function sub(a: Vector, ...rest: Vector[]): Vector;
@@ -178,3 +185,71 @@ export function gsub(
     }
 }
 
+
+export class PMul<R extends BaseValueRelative> extends BinaryOp<R, number> {
+    constructor(a: PFunction<R>, b: PFunction<number>) {
+        super(mul(a, b).f, a, b);
+    }
+
+    differentiate(): PFunction<R> {
+        return gsub(this.l.differentiate(), this.r.differentiate()) as PFunction<R>;
+    }
+
+    integrate(): PFunction<R> {
+        return gsub(this.l.integrate(), this.r.integrate()) as PFunction<R>;
+    }
+}
+
+export function mul<R extends BaseValueRelative>(a: R, ...rest: number[]): number;
+// noinspection JSUnusedGlobalSymbols
+export function mul<R extends BaseValueRelative>(a: IPFunction<R>, ...rest: (IPFunction<number>|number)[]): IPFunction<R>;
+export function mul<R extends BaseValueRelative>(a: PFunction<R>, ...rest: (PFunction<number>|number)[]): PFunction<R>;
+export function mul(
+    a: BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>,
+    ...rest: (number|PFunction<number>|IPFunction<number>)[])
+    : BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative> {
+    return gmul(a, ...rest);
+}
+
+export function gmul(
+    a: BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>,
+    ...rest: (number|PFunction<number>|IPFunction<number>)[])
+    : BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>
+{
+    const check = (pred: (v: any) => boolean) => (rest: any[]) => rest.forEach(v => pred(v) || Throw('Bad value in add'));
+    if (typeof a === 'number') {
+        check(isScalarValue)(rest);
+        return (rest as number[]).reduce((acc, v) => acc * v, a);
+    } else if (isVector(a)) {
+        check(isScalarValue)(rest);
+        let [ax, ay, az] = a;
+        (rest as number[]).forEach(v => (ax *= v, ay *= v, az *= v));
+        return new Vector(ax, ay, az);
+    } else if (isRotation(a)) {
+        check(isScalarValue)(rest);
+        const acc = a.clone();
+        for (const v of rest as number[]) {
+            acc.mult(v);
+        }
+        return acc;
+    } else if (a instanceof PFunction) {
+        check(isPFunction)(rest);
+        return (rest as PFunction<number>[]).reduce((ra, v) => new PMul(ra, v), a);
+    } else if ((a as unknown) instanceof Function) {
+        check(isIPFunction)(rest);
+        const pf = a.pfunction as PFunction<BaseValueRelative>;
+        const ri = rest as IPFunction<number>[];
+        const rpf = ri.map(v => v.pfunction);
+        return mul(pf, ...rpf).f;
+    } else {
+        throw new TypeError(`Unknown type in sub: ${{a}}`);
+    }
+}
+
+export function equal<T extends BaseValue>(a: T, b: T): boolean {
+    if (a === b) return true;
+    if (isNonScalarValue(a) && isNonScalarValue(b) && a.type === b.type) {
+        return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+    }
+    return false
+}
