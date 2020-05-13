@@ -20,7 +20,7 @@ export let TIMESTEP: number = 0.001;
 /**
  * Implementing function for a PFunction.
  */
-export interface IPFunctionBare<T extends BaseValue> {
+export interface IPFunctionBare<T extends BaseValue> extends Function {
     (t: number): T;
 }
 
@@ -185,19 +185,19 @@ export abstract class PFunction<R extends BaseValue> extends PFunctionBase<R, IP
     /**
      * Compute the derivative of this function. The default is to perform numneric differentiation.
      */
-    protected abstract differentiate(): PFunction<R>;
+    abstract differentiate(): PFunction<R>;
 
     /**
      * Return the indefinite integral of this function.
      */
     integral(): IndefiniteIntegral<R> {
-        return this.integral_ || (this.integral_ = new IndefiniteIntegral(this.integrate()));
+        return this.integral_ || (this.integral_ = new IndefiniteIntegral(this.integrate(), this.f));
     }
 
     /**
      * Compute the integral of this function. The default is to perform a numeric integration.
      */
-    protected abstract integrate() : PFunction<R>;
+    abstract integrate() : PFunction<R>;
 }
 
 /**
@@ -219,3 +219,10 @@ export abstract class PFunction2<R extends BaseValue>
         super(f);
     }
 }
+
+export const isPFunction = (a: any): a is PFunction<BaseValue> => a instanceof PFunction;
+// noinspection JSUnusedGlobalSymbols
+export const isPFunction2 = (a: any): a is PFunction2<BaseValue> => a instanceof PFunction2;
+export const isIPFunction = (a: any): a is IPFunction<BaseValue> => typeof a === 'function' && !!a.pfunction;
+// noinspection JSUnusedGlobalSymbols
+export const isIPFunction2 = (a: any): a is IPFunction2<BaseValue> => typeof a === 'function' && !!a.pfunction;

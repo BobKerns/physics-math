@@ -3,51 +3,74 @@
  * Copyright ©  by Bob Kerns. Licensed under MIT license
  */
 
-import {IPFunction, PFunction} from "./base";
-import {quat} from "gl-matrix";
-import {isPoint, isRotationish, isRotation, isVector, Orientation, Point, Rotation, Vector, BaseValue, BaseValueRelative} from "./math-types";
+import {IPFunction, IPFunctionBare, isIPFunction, isPFunction, PFunction} from "./base";
+import {
+    isPoint,
+    isRotational,
+    isRotation,
+    isVector,
+    Orientation,
+    Point,
+    Rotation,
+    Vector,
+    BaseValue,
+    BaseValueRelative,
+    RelativeOf, isScalarValue, Rotational, isPositional
+} from "./math-types";
+import {Throw} from "./utils";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.
  */
 
 
-export function add(a: number, ...rest: number[]): number;
+export function add<R extends number>(a: R, ...rest: R[]): R;
 export function add<R extends Point|Vector>(a: R, ...rest: Vector[]): R;
-export function add(a: Vector, ...rest: Vector[]): Vector;
 export function add<R extends Orientation|Rotation>(a: R, ...rest: Rotation[]): R;
-export function add<R extends Point|Vector>(a:R, ...rest: PFunction<Vector>[]): R;
-export function add<R extends Orientation|Rotation>(a: R, ...rest: PFunction<Rotation>[]): R;
-export function add(a: IPFunction<number>, ...rest: IPFunction<number>[]): IPFunction<number>;
+export function add<R extends number>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
 export function add<R extends Point|Vector>(a: IPFunction<R>, ...rest: IPFunction<Vector>[]): IPFunction<R>;
 export function add<R extends Orientation|Rotation>(a: IPFunction<R>, ...rest: IPFunction<Rotation>[]): IPFunction<R>;
-export function add(a: PFunction<number>, ...rest: PFunction<number>[]): PFunction<number>;
+export function add<R extends number>(a: PFunction<R>, ...rest: PFunction<R>[]): PFunction<R>;
 export function add<R extends Point|Vector>(a: PFunction<R>, ...rest: PFunction<Vector>[]): PFunction<R>;
 export function add<R extends Orientation|Rotation>(a: PFunction<R>, ...rest: PFunction<Rotation>[]): PFunction<R>;
 export function add(
     a: BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>,
-    ...rest: (BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>)[]):
-    BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>
+    ...rest: (BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>)[])
+    : BaseValue|PFunction<BaseValue>|IPFunction<BaseValue> {
+    return gadd(a, ...rest);
+}
+
+export function gadd(
+    a: BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>,
+    ...rest: (BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>)[])
+    : BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>
 {
+    const check = (pred: (v: any) => boolean) => (rest: any[]) => rest.forEach(v => pred(v) || Throw('Bad value in add'));
     if (typeof a === 'number') {
+        check(isScalarValue)(rest);
         return (rest as number[]).reduce((acc, v) => acc + v, a);
-    } else if (isPoint(a)) {
+    } else if (isPositional(a)) {
+        check(isVector)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax += v[0], ay += v[1], az += v[2]));
-        return new Point(ax, ay, az);
+        return a.clone().assign(ax, ay, az);
     } else if (isVector(a)) {
-        let [ax, ay, az] = a;
+        check(isVector)(rest);
+        let [ax, ay, az] = a as unknown as number[];
         (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
         return new Vector(ax, ay, az);
-    } else if (isRotationish(a)) {
+    } else if (isRotational(a)) {
+        check(isRotation)(rest);
         const acc = a.clone();
-        for (const v of rest) {
-            acc.addf(v as Rotation);
+        for (const v of rest as Rotational[]) {
+            acc.addf(v);
         }
         return acc;
     } else if (a instanceof PFunction) {
+        check(isPFunction)(rest);
         return (rest as PFunction<Vector>[]).reduce((ra, v) => new PAdd(ra, v), a);
-    } else if (a instanceof Function) {
+    } else if ((a as unknown) instanceof Function) {
+        check(isPFunction)(rest);
         const pf = a.pfunction as PFunction<Vector>;
         const ri = rest as IPFunction<Vector>[];
         const rpf = ri.map(v => v.pfunction);
@@ -56,74 +79,96 @@ export function add(
         throw new TypeError(`Unknown type in add: ${{a}}`);
     }
 }
-const pfAddImpl = <R extends BaseValue>(a: PFunction<R>, b: PFunction<R>) => {
 
-};
-
-export class PAdd<R extends BaseValue, X extends BaseValueRelative > extends PFunction<R> {
+abstract class BinaryOp<R extends BaseValue, X extends BaseValue> extends PFunction<R> {
     l: PFunction<R>;
     r: PFunction<X>;
-    constructor(a: PFunction<R>, b: PFunction<X>) {
-        const av = a.f(0);
-        const bv = b.f(0);
-        super((t: number): R => add(a.f(t), b.f(t)).f);
-        this.l = a;
-        this.r = b;
-    }
-
-    protected differentiate(): PFunction<R> {
-        return add();
-    }
-
-    protected integrate(): PFunction<R> {
-        return undefined;
+    protected constructor(f: IPFunctionBare<R>, l: PFunction<R>, r: PFunction<X>) {
+        super(f);
+        this.l = l;
+        this.r = r;
     }
 }
 
-export class PSub<X extends Vector, R extends Vector | Point = X> extends PFunction<R> {
+export class PAdd<R extends BaseValue, X extends RelativeOf<R> > extends BinaryOp<R, X> {
     constructor(a: PFunction<R>, b: PFunction<X>) {
-        const av = a.f(0);
-        const bv = b.f(0);
-        super((t: number): R => add(a.f(t), b.f(t)));
+        super(gadd(a.f, b.f) as IPFunction<R>, a, b);
+    }
+
+    differentiate(): PFunction<R> {
+        return gadd(this.l.differentiate(), this.r.differentiate()) as PFunction<R>;
+    }
+
+    integrate(): PFunction<R> {
+        return gadd(this.l.integrate(), this.r.integrate()) as PFunction<R>;
     }
 }
 
-export function sub(a: number, ...rest: number[]): number;
-export function sub<R extends Point|Vector>(a: R, ...rest: Vector[]): R;
+export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryOp<R, X> {
+    constructor(a: PFunction<R>, b: PFunction<X>) {
+        super(gsub(a.f, b.f) as IPFunction<R>, a, b);
+    }
+
+    differentiate(): PFunction<R> {
+        return gsub(this.l.differentiate(), this.r.differentiate()) as PFunction<R>;
+    }
+
+    integrate(): PFunction<R> {
+        return gsub(this.l.integrate(), this.r.integrate()) as PFunction<R>;
+    }
+}
+
+//export function sub<R extends number>(a: R, ...rest: R[]): R;
+export function sub(a: Point, ...rest: Vector[]): Point;
 export function sub(a: Vector, ...rest: Vector[]): Vector;
-export function sub<R extends Orientation|Rotation>(a: R, ...rest: Rotation[]): R;
-export function sub<R extends Point|Vector>(a:R, ...rest: PFunction<Vector>[]): R;
-export function sub<R extends Orientation|Rotation>(a: R, ...rest: PFunction<Rotation>[]): R;
-export function sub(a: IPFunction<number>, ...rest: IPFunction<number>[]): IPFunction<number>;
+export function sub<R extends Orientation>(a: R, ...rest: Rotation[]): Orientation;
+export function sub<R extends Rotation>(a: R, ...rest: Rotation[]): Rotation;
+//export function sub<R extends number>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
 export function sub<R extends Point|Vector>(a: IPFunction<R>, ...rest: IPFunction<Vector>[]): IPFunction<R>;
 export function sub<R extends Orientation|Rotation>(a: IPFunction<R>, ...rest: IPFunction<Rotation>[]): IPFunction<R>;
-export function sub(a: PFunction<number>, ...rest: PFunction<number>[]): PFunction<number>;
-export function sub<R extends Point|Vector>(a: PFunction<R>, ...rest: PFunction<Vector>[]): PFunction<R>;
-export function sub<R extends Orientation|Rotation>(a: PFunction<R>, ...rest: PFunction<Rotation>[]): PFunction<R>;
+//export function sub<R extends number>(a: PFunction<R>, ...rest: PFunction<R>[]): PFunction<R>;
+export function sub(a: PFunction<Point>, ...rest: PFunction<Vector>[]): PFunction<Point>;
+export function sub(a: PFunction<Vector>, ...rest: PFunction<Vector>[]): PFunction<Vector>;
+export function sub(a: PFunction<Orientation>, ...rest: PFunction<Rotation>[]): PFunction<Orientation>;
+export function sub(a: PFunction<Rotation>, ...rest: PFunction<Rotation>[]): PFunction<Rotation>;
 export function sub(
     a: BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>,
-    ...rest: (BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>)[]):
-    BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>
+    ...rest: (BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>)[])
+    : BaseValue|PFunction<BaseValue>|IPFunction<BaseValue> {
+    return gsub(a, ...rest);
+}
+
+export function gsub(
+    a: BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>,
+    ...rest: (BaseValueRelative|PFunction<BaseValueRelative>|IPFunction<BaseValueRelative>)[])
+    : BaseValue|PFunction<BaseValue>|IPFunction<BaseValue>
 {
+    const check = (pred: (v: any) => boolean) => (rest: any[]) => rest.forEach(v => pred(v) || Throw('Bad value in add'));
     if (typeof a === 'number') {
+        check(isScalarValue)(rest);
         return (rest as number[]).reduce((acc, v) => acc - v, a);
     } else if (isPoint(a)) {
+        check(isVector)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
         return new Point(ax, ay, az);
     } else if (isVector(a)) {
+        check(isVector)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
         return new Vector(ax, ay, az);
-    } else if (isRotationish(a)) {
+    } else if (isRotational(a)) {
+        check(isRotation)(rest);
         const acc = a.clone();
         for (const v of rest) {
             acc.subf(v as Rotation);
         }
         return acc;
     } else if (a instanceof PFunction) {
+        check(isPFunction)(rest);
         return (rest as PFunction<Vector>[]).reduce((ra, v) => new PSub(ra, v), a);
-    } else if (a instanceof Function) {
+    } else if ((a as unknown) instanceof Function) {
+        check(isIPFunction)(rest);
         const pf = a.pfunction as PFunction<Vector>;
         const ri = rest as IPFunction<Vector>[];
         const rpf = ri.map(v => v.pfunction);

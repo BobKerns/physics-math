@@ -26,7 +26,7 @@ export class NumericDerivative extends PFunction<number> {
         this.setName_(`deriv[${f.name}]`);
     }
 
-    protected differentiate(): PFunction<number> {
+    differentiate(): PFunction<number> {
         return new NumericDerivative(this);
     }
 
@@ -50,7 +50,7 @@ export class VectorDerivative extends PFunction<Point|Vector> {
         this.setName_(`deriv[${f.name}]`);
     }
 
-    protected differentiate(): PFunction<Point|Vector> {
+    differentiate(): PFunction<Point|Vector> {
         return new VectorDerivative(this);
     }
 
@@ -75,7 +75,7 @@ export class QuaternionDerivative extends PFunction<Rotation> {
         this.setName_(`deriv[${f.name}]`);
     }
 
-    protected differentiate(): PFunction<Rotation> {
+    differentiate(): PFunction<Rotation> {
         return new QuaternionDerivative(this);
     }
 

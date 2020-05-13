@@ -2,8 +2,7 @@
  * Classes to support integration
  */
 
-import {IPFunction, IPFunction2, IPFunctionBare, PFunction, PFunction2} from "./base";
-import {sub} from "./utils";
+import {IPFunction, IPFunctionBare2, PFunction, PFunction2} from "./base";
 import {curry2} from "./curry";
 import {BaseValue} from "./math-types";
 
@@ -16,12 +15,12 @@ export class DefiniteIntegral<T extends BaseValue> extends PFunction<T> {
         this.t0 = t0;
     }
 
-    protected differentiate(): PFunction<T> {
+    differentiate(): PFunction<T> {
         return this.from;
     }
 
-    protected integrate(): PFunction<T> {
-        return this.from.integral().definite;
+    integrate(): PFunction<T> {
+        return this.from.integrate();
     }
 }
 
@@ -30,18 +29,19 @@ const makeDefiniteIntegral = <T extends BaseValue> (f: PFunction<T>) =>
 
 export class IndefiniteIntegral<T extends BaseValue> extends PFunction2<BaseValue> {
     integrand: PFunction<T>;
-    constructor(pf: PFunction<T>, f: IPFunction2<T>) {
+    constructor(pf: PFunction<T>, f: IPFunctionBare2<T>) {
         super(f);
         this.integrand = pf;
     }
 }
 
-export class AnalyticIntegral<T extends BaseValue> extends IndefiniteIntegral<T> {
-    constructor(pf: PFunction<T>) {
+// noinspection JSUnusedGlobalSymbols
+export class AnalyticIntegral extends IndefiniteIntegral<number> {
+    constructor(pf: PFunction<number>) {
         super(pf, ((f = pf.f) => curry2((t0: number, t: number) => f(t) - f(t0)))());
     }
 }
-const integrate = (f: IPFunction<number>) => (t0:number, t: number) => {
+export const integrate = (f: IPFunction<number>) => (t0:number, t: number) => {
     const timestep = f.pfunction.timestep;
     let a = 0;
     let v = f(t0);

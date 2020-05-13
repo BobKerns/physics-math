@@ -17,7 +17,7 @@ export class Poly extends PFunction<number> {
         super(makePoly());
         this.coefficients = coeffs;
     }
-    protected differentiate(): PFunction<number> {
+    differentiate(): PFunction<number> {
         if (this.coefficients.length < 2) {
             return ZERO;
         } else {
@@ -25,10 +25,18 @@ export class Poly extends PFunction<number> {
         }
     }
 
-    protected integrate(): PFunction<number> {
+    integrate(): PFunction<number> {
         return new Poly(0, ...this.coefficients);
     }
 
 }
 
-const makePoly = (...coeffs: number[]) => (t: number) => 0;
+const makePoly = (...coeffs: number[]) => (t: number) => {
+    let acc = 0;
+    let tx = 1;
+    for (const k of coeffs) {
+        acc += k * tx;
+        tx *= t;
+    }
+    return acc;
+};
