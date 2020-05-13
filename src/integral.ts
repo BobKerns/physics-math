@@ -2,13 +2,16 @@
  * Classes to support integration
  */
 
-import {IPFunction, IPFunctionBare2, PFunction, PFunction2} from "./base";
+import {DefiniteIntegral, IndefiniteIntegralImpl, IPFunction, PFunction, PFunction2} from "./base";
 import {curry2} from "./curry";
 import {BaseValue} from "./math-types";
 
-export class DefiniteIntegral<T extends BaseValue> extends PFunction<T> {
-    private readonly from: PFunction<T>;
-    private readonly t0: number;
+const makeDefiniteIntegral = <T extends BaseValue> (f: PFunction<T>) =>
+    (t0: number) => new DefiniteIntegralImpl<T>(f, t0).f;
+
+export class DefiniteIntegralImpl<T extends BaseValue> extends PFunction<T> implements DefiniteIntegral<T> {
+    readonly from: PFunction<T>;
+    readonly t0: number;
     constructor(f: PFunction<T>, t0: number) {
         super(makeDefiniteIntegral(f)(t0));
         this.from = f;
@@ -24,19 +27,8 @@ export class DefiniteIntegral<T extends BaseValue> extends PFunction<T> {
     }
 }
 
-const makeDefiniteIntegral = <T extends BaseValue> (f: PFunction<T>) =>
-    (t0: number) => new DefiniteIntegral<T>(f, t0).f;
-
-export class IndefiniteIntegral<T extends BaseValue> extends PFunction2<BaseValue> {
-    integrand: PFunction<T>;
-    constructor(pf: PFunction<T>, f: IPFunctionBare2<T>) {
-        super(f);
-        this.integrand = pf;
-    }
-}
-
 // noinspection JSUnusedGlobalSymbols
-export class AnalyticIntegral extends IndefiniteIntegral<number> {
+export class AnalyticIntegral extends IndefiniteIntegralImpl<number> {
     constructor(pf: PFunction<number>) {
         super(pf, ((f = pf.f) => curry2((t0: number, t: number) => f(t) - f(t0)))());
     }

@@ -118,15 +118,15 @@ export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryO
     }
 }
 
-//export function sub<R extends number>(a: R, ...rest: R[]): R;
+export function sub<R extends number>(a: R, ...rest: R[]): R;
 export function sub(a: Point, ...rest: Vector[]): Point;
 export function sub(a: Vector, ...rest: Vector[]): Vector;
 export function sub<R extends Orientation>(a: R, ...rest: Rotation[]): Orientation;
 export function sub<R extends Rotation>(a: R, ...rest: Rotation[]): Rotation;
-//export function sub<R extends number>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
+export function sub<R extends number>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
 export function sub<R extends Point|Vector>(a: IPFunction<R>, ...rest: IPFunction<Vector>[]): IPFunction<R>;
 export function sub<R extends Orientation|Rotation>(a: IPFunction<R>, ...rest: IPFunction<Rotation>[]): IPFunction<R>;
-//export function sub<R extends number>(a: PFunction<R>, ...rest: PFunction<R>[]): PFunction<R>;
+export function sub<R extends number>(a: PFunction<R>, ...rest: PFunction<R>[]): PFunction<R>;
 export function sub(a: PFunction<Point>, ...rest: PFunction<Vector>[]): PFunction<Point>;
 export function sub(a: PFunction<Vector>, ...rest: PFunction<Vector>[]): PFunction<Vector>;
 export function sub(a: PFunction<Orientation>, ...rest: PFunction<Rotation>[]): PFunction<Orientation>;

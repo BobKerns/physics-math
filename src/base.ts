@@ -9,7 +9,6 @@
  * Each PFFunction object has a corresponding function object and vice versa.
  */
 import {idGen, ViewOf} from "./utils";
-import {IndefiniteIntegral} from "./integral";
 import {BaseValue} from "./math-types";
 
 /**
@@ -59,10 +58,6 @@ export interface IPFunction<R extends BaseValue> extends IPFunctionBare<R>, IPFu
      * Returns the integral of this IPFunction.
      */
     integral: IPFunction2<R>;
-}
-
-export interface IPFunction2<R extends BaseValue>
-    extends IPFunctionBare2<R>, IPFunctionBase<PFunction2<R>>, IPFunctionDisplay {
 }
 
 /**
@@ -191,13 +186,18 @@ export abstract class PFunction<R extends BaseValue> extends PFunctionBase<R, IP
      * Return the indefinite integral of this function.
      */
     integral(): IndefiniteIntegral<R> {
-        return this.integral_ || (this.integral_ = new IndefiniteIntegral(this.integrate(), this.f));
+        return this.integral_ || (this.integral_ = new IndefiniteIntegralImpl(this.integrate(), this.f));
     }
 
     /**
      * Compute the integral of this function. The default is to perform a numeric integration.
      */
     abstract integrate() : PFunction<R>;
+}
+
+
+export interface IPFunction2<R extends BaseValue>
+    extends IPFunctionBare2<R>, IPFunctionBase<PFunction2<R>>, IPFunctionDisplay {
 }
 
 /**
@@ -208,8 +208,7 @@ export abstract class PFunction<R extends BaseValue> extends PFunctionBase<R, IP
  * Instead, curry the multivariate function down to a single parameter and integrate or differentiate
  * over that variable.
  */
-export abstract class PFunction2<R extends BaseValue>
-    extends PFunctionBase<R, IPFunctionBare2<R>>
+export abstract class PFunction2<R extends BaseValue> extends PFunctionBase<R, IPFunctionBare2<R>>
 {
     /**
      * Construct a PFFunction2, and extend the supplied function with our IPFunction2 interface.
@@ -220,9 +219,27 @@ export abstract class PFunction2<R extends BaseValue>
     }
 }
 
+export class IndefiniteIntegralImpl<T extends BaseValue> extends PFunction2<T> implements IndefiniteIntegral<T> {
+
+    integrand: PFunction<T>;
+    constructor(pf: PFunction<T>, f: IPFunctionBare2<T>) {
+        super(f);
+        this.integrand = pf;
+    }
+}
+
+
+export interface IndefiniteIntegral<T extends BaseValue> extends PFunction2<T> {
+    integrand: PFunction<T>;
+}
+
 export const isPFunction = (a: any): a is PFunction<BaseValue> => a instanceof PFunction;
 // noinspection JSUnusedGlobalSymbols
 export const isPFunction2 = (a: any): a is PFunction2<BaseValue> => a instanceof PFunction2;
 export const isIPFunction = (a: any): a is IPFunction<BaseValue> => typeof a === 'function' && !!a.pfunction;
 // noinspection JSUnusedGlobalSymbols
 export const isIPFunction2 = (a: any): a is IPFunction2<BaseValue> => typeof a === 'function' && !!a.pfunction;
+export interface DefiniteIntegral<T extends BaseValue> {
+    from: PFunction<T>;
+    t0: number;
+}
