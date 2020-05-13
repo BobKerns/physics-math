@@ -3,7 +3,7 @@
  * Copyright ©  by Bob Kerns. Licensed under MIT license
  */
 
-import {IPFunction, IPFunctionBare, isIPFunction, isPFunction, PFunction} from "./base";
+import {IPFunctionBare} from "./base";
 import {
     isPoint,
     isRotational,
@@ -18,6 +18,7 @@ import {
     RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue
 } from "./math-types";
 import {Throw} from "./utils";
+import {IPFunction, isIPFunction, isPFunction, PFunction} from "./pfunction";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.

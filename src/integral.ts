@@ -2,9 +2,9 @@
  * Classes to support integration
  */
 
-import {DefiniteIntegral, IndefiniteIntegralImpl, IPFunction, PFunction, PFunction2} from "./base";
 import {curry2} from "./curry";
 import {BaseValue} from "./math-types";
+import {DefiniteIntegral, IndefiniteIntegralImpl, IPFunction, PFunction, PFunction2} from "./pfunction";
 
 const makeDefiniteIntegral = <T extends BaseValue> (f: PFunction<T>) =>
     (t0: number) => new DefiniteIntegralImpl<T>(f, t0).f;

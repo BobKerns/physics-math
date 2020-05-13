@@ -4,10 +4,10 @@
  */
 
 
-import {PFunction} from "./base";
 import {NumericDerivative} from "./derivative";
 import {BaseValue} from "./math-types";
 import {integrate, NumericIntegral} from "./integral";
+import {PFunction} from "./pfunction";
 
 /**
  * Functions that have to be numerically integrated/diffentiated.

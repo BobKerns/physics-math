@@ -3,8 +3,8 @@
  * Copyright © 2020 by Bob Kerns. Licensed under MIT license
  */
 
-import {PFunction} from "./base";
 import {ZERO} from "./scalar";
+import {PFunction} from "./pfunction";
 
 /**
  * Polynomial functions

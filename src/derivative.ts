@@ -1,5 +1,5 @@
-import {IPFunction, PFunction} from "./base";
 import {BaseValue, Point, Rotation, Vector} from "./math-types";
+import {IPFunction, PFunction} from "./pfunction";
 
 const bounds = <R extends BaseValue>(f: IPFunction<R>, t: number): [R, R, number] => {
     const timestep = f.pfunction.timestep;
