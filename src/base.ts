@@ -8,8 +8,9 @@
  *
  * Each PFFunction object has a corresponding function object and vice versa.
  */
-import {idGen, Point, Quaternion, Vector, ViewOf} from "./utils";
+import {idGen, ViewOf} from "./utils";
 import {IndefiniteIntegral} from "./integral";
+import {BaseValue} from "./math-types";
 
 /**
  * Default integration timestep. This can be adjusted per-function.
@@ -48,19 +49,20 @@ interface IPFunctionBase<P> {
 /**
  * Implementing function for a PFunction, extended.
  */
-export interface IPFunction<R extends BaseValue, P> extends IPFunctionBare<R>, IPFunctionBase<PFunction<R>>, IPFunctionDisplay {
+export interface IPFunction<R extends BaseValue> extends IPFunctionBare<R>, IPFunctionBase<PFunction<R>>, IPFunctionDisplay {
     /**
      * Returns the derivative of this IPFunction
      */
-    derivative: IPFunction<R, P>;
+    derivative: IPFunction<R>
 
     /**
      * Returns the integral of this IPFunction.
      */
-    integral: IPFunction2<R, PFunction2<R>>;
+    integral: IPFunction2<R>;
 }
 
-export interface IPFunction2<R extends BaseValue, P> extends IPFunctionBare2<R>, IPFunctionBase<P>, IPFunctionDisplay{
+export interface IPFunction2<R extends BaseValue>
+    extends IPFunctionBare2<R>, IPFunctionBase<PFunction2<R>>, IPFunctionDisplay {
 }
 
 /**
@@ -74,12 +76,7 @@ export type TexGenerator = (tv: string) => string;
  */
 export type TexFormatter = (tex: string, block: boolean) => Element;
 
-/**
- * Our primitive datatypes
- */
-export type BaseValue = number | Vector | Point | Quaternion;
-
-export abstract class PFunctionBase<R extends BaseValue, F extends Function, B extends F> {
+export abstract class PFunctionBase<R extends BaseValue, F extends Function> {
     /**
      * The time step to be used for numerical integration. Ignored for functions with a defined analytic integral.
      */
@@ -87,7 +84,7 @@ export abstract class PFunctionBase<R extends BaseValue, F extends Function, B e
     /**
      * The implementing function
      */
-    readonly f: IPFunction<R, PFunction<R>>;
+    readonly f: IPFunction<R>;
     /**
      * Cached LaTeX string
      */
@@ -98,7 +95,7 @@ export abstract class PFunctionBase<R extends BaseValue, F extends Function, B e
     readonly name: string;
 
     protected constructor(f: F) {
-        this.f = f as unknown as IPFunction<R, PFunction<R>>;
+        this.f = f as unknown as IPFunction<R>;
         const b = f as unknown as IPFunctionDisplay;
         b.tex = (tv = 't') => this.toTex(tv);
         Reflect.defineProperty(b, 'html', {
@@ -149,7 +146,7 @@ export abstract class PFunctionBase<R extends BaseValue, F extends Function, B e
 /**
  * Base class for our object representation, which is bidirectionally paired with implementing functions.
  */
-export abstract class PFunction<R extends BaseValue> extends PFunctionBase<R, IPFunctionBare<R>, IPFunction<R, PFunction<R>>> {
+export abstract class PFunction<R extends BaseValue> extends PFunctionBase<R, IPFunctionBare<R>> {
     /**
      * Cached derivative
      */
@@ -212,7 +209,7 @@ export abstract class PFunction<R extends BaseValue> extends PFunctionBase<R, IP
  * over that variable.
  */
 export abstract class PFunction2<R extends BaseValue>
-    extends PFunctionBase<R, IPFunctionBare2<R>, IPFunction2<R, PFunction2<R>>>
+    extends PFunctionBase<R, IPFunctionBare2<R>>
 {
     /**
      * Construct a PFFunction2, and extend the supplied function with our IPFunction2 interface.

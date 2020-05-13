@@ -6,8 +6,6 @@ export * from './derivative';
 export * from './integral';
 export * from './base';
 export {range} from './utils';
-export {
-    Vector, Point, Quaternion, vector, point, quaternion, isVector, isPoint, isQuaternion,
-    add, sub
-} from "./utils";
+export * from './arith';
 export * from './curry';
+export * from "./math-types";

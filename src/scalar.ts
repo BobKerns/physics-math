@@ -3,8 +3,9 @@
  * Copyright © 2020 by Bob Kerns. Licensed under MIT license
  */
 
-import {BaseValue, PFunction} from "./base";
+import {PFunction} from "./base";
 import {Poly} from "./poly";
+import {BaseValue} from "./math-types";
 
 /**
  * Scalar constants
