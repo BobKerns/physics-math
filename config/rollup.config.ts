@@ -55,7 +55,8 @@ export const outputs = (p: Package) => flatMap((e: OutputOptions) => (e.file ? [
             format: 'umd',
             sourcemap: true,
             globals: {
-                "ramda": "ramda"
+                "ramda": "ramda",
+                "gl-matrix": "glMatrix"
             }
         },
         {
