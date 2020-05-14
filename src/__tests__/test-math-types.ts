@@ -7,7 +7,29 @@
  * Tests of the math datatypes.
  */
 
-import {datatype, DataTypeOf, IntrinsicOf, Orientation, orientation, Point, point, RelativeOf, Rotation, rotation, ScalarValue, TYPE, Vector, vector} from "../math-types";
+import {
+    datatype,
+    DataTypeOf,
+    IntrinsicOf,
+    isOrientation,
+    isPoint,
+    isPositional,
+    isRotation,
+    isRotational,
+    isScalarValue,
+    isVector,
+    Orientation,
+    orientation,
+    Point,
+    point,
+    RelativeOf,
+    Rotation,
+    rotation,
+    ScalarValue,
+    TYPE,
+    Vector,
+    vector
+} from "../math-types";
 import {Constructor} from "../utils";
 
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
@@ -22,7 +44,23 @@ const checkAny = <T extends Vector|Point|Rotation|Orientation>(type: Constructor
     expect(v[3]).toBe(p3);
 };
 
-const checkType = (v: any, type: TYPE) => expect(datatype(v)) .toBe(type)
+const checkType = (v: any, type: TYPE) => expect(datatype(v)).toBe(type);
+
+const testPredicates = (t: any, n: boolean, p: boolean, v: boolean, o: boolean, r: boolean) => {
+    describe("predicates", () => {
+        test("isScalar", () => expect(isScalarValue(t)).toBe(n));
+        test("isPoint", () => expect(isPoint(t)).toBe(p));
+        test("isVector", () => expect(isVector(t)).toBe(v));
+        test("isPositional", () => expect(isPositional(t)).toBe(p || v))
+        test("isOrientation", () => expect(isOrientation(t)).toBe(o));
+        test("isRotation", () => expect(isRotation(t)).toBe(r));
+        test("isRotational", () => expect(isRotational(t)).toBe(o || r));
+    });
+};
+
+describe("Scalar", () => {
+    testPredicates(1, true, false, false, false, false);
+});
 
 describe("Vectorish", () => {
     const check = <T extends Vector|Point>(type: Constructor4N<T>, x: number, y: number, z: number, w: 0 | 1) => (v: T) => {
@@ -47,6 +85,7 @@ describe("Vectorish", () => {
          test("clone",
              () => check(Vector, 10, 20, 30, 0)(vector(10, 20, 30).clone()));
          test("datatype", () => checkType(vector(), TYPE.VECTOR));
+         testPredicates(vector(1, 2, 3), false, false, true, false, false);
      });
      describe("Point", () => {
          test("explicit",
@@ -63,6 +102,7 @@ describe("Vectorish", () => {
          test("origin",
              () => check(Point, 0, 0, 0, 1)(point()));
          test("datatype", () => checkType(point(), TYPE.POINT));
+         testPredicates(point(1, 2, 3), false, true, false, false, false);
      });
  });
 
@@ -90,6 +130,7 @@ describe("Rotationish", () => {
         test("null",
             () => check(Rotation,0, 0, 0, 1)(rotation()));
         test("datatype", () => checkType(rotation(), TYPE.ROTATION));
+        testPredicates(rotation(1, 2, 3), false, false, false, false, true);
     });
     describe("Orientation", () => {
         test("explicit",
@@ -107,6 +148,7 @@ describe("Rotationish", () => {
         test("null",
             () => check(Orientation, 0, 0, 0, 1)(orientation()));
         test("datatype", () => checkType(orientation(), TYPE.ORIENTATION));
+        testPredicates(orientation(1, 2, 3), false, false, false, true, false);
     });
 });
 describe("Types", () => {

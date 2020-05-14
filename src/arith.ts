@@ -19,6 +19,7 @@ import {
 } from "./math-types";
 import {Throw} from "./utils";
 import {IndefiniteIntegral, isPCompiled, isPFunction, PCalculus} from "./pfunction";
+import {glMatrix} from "gl-matrix";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.
@@ -144,7 +145,7 @@ export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryO
  */
 export function sub<R extends number>(a: R, ...rest: R[]): R;
 export function sub<R extends Point|Vector>(a: R, ...rest: Vector[]): Point;
-export function sub<R extends Orientation|Rotation>(a: R, ...rest: Rotation[]): Orientation;
+export function sub<R extends Orientation|Rotation>(a: R, ...rest: Rotation[]): R;
 export function sub<R extends number>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
 export function sub<R extends Point|Vector>(a: IPCompiled<R>, ...rest: IPCompiled<Vector>[]): IPCompiled<R>;
 export function sub<R extends Orientation|Rotation>(a: IPCompiled<R>, ...rest: IPCompiled<Rotation>[]): IPCompiled<R>;
@@ -221,7 +222,8 @@ export class PMul<R extends BaseValueRelative> extends BinaryOp<R, number> {
     }
 }
 
-export function mul<R extends BaseValueRelative>(a: R, ...rest: number[]): number;
+export function mul(a: number, ...rest: number[]): number;
+export function mul<R extends BaseValueRelative>(a: R, ...rest: number[]): R;
 // noinspection JSUnusedGlobalSymbols
 export function mul<R extends BaseValueRelative>(a: IPCompiled<R>, ...rest: (IPCompiled<number>|number)[]): IPCompiled<R>;
 export function mul<R extends BaseValueRelative>(a: IPFunction<R>, ...rest: (IPFunction<number>|number)[]): IPFunction<R>;
@@ -250,7 +252,7 @@ export function gmul(
         check(isScalarValue)(rest);
         const acc = a.clone();
         for (const v of rest as number[]) {
-            acc.mult(v);
+            acc.multf(v);
         }
         return acc;
     } else if (isPFunction(a)) {
@@ -271,6 +273,18 @@ export function equal<T extends BaseValue>(a: T, b: T): boolean {
     if (a === b) return true;
     if (isNonScalarValue(a) && isNonScalarValue(b) && a.type === b.type) {
         return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+    }
+    return false
+}
+
+export function near<T extends BaseValue>(a: T, b: T, epsilon: number = glMatrix.EPSILON): boolean {
+    if (a === b) return true;
+    if (isNonScalarValue(a) && isNonScalarValue(b) && a.type === b.type) {
+        const d0 = a[0] - b[0];
+        const d1 = a[1] - b[1];
+        const d2 = a[2] - b[2];
+        const d3 = a[3] - b[3];
+        return d0*d0 + d1*d1 + d2*d2 + d3*d3 < epsilon * epsilon;
     }
     return false
 }

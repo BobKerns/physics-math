@@ -1,4 +1,4 @@
-import {quat, vec4} from "gl-matrix";
+import {glMatrix, quat, vec4} from "gl-matrix";
 import {Constructor} from "./utils";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
@@ -85,6 +85,15 @@ abstract class ArrayBase extends Float64Array implements NonScalarValue {
             this[3] = a[3];
         }
         return this;
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    magnitude(): number {
+        return vec4.len(this as unknown as vec4);
+    }
+
+    magnitudeSqr(): number {
+        return vec4.squaredLength(this as unknown as vec4);
     }
 }
 
@@ -414,7 +423,7 @@ export class Orientation extends Rotationish implements Intrinsic<Rotation>, Dat
         if (isOrientation(q)) {
             return q;
         } else if (isRotation(q)) {
-            return new Orientation(q.i, q.j, q.k)
+            return new Orientation(q[0], q[1], q[2], q[3])
         } else {
             return new Orientation(q[0], q[1], q[2], q[3])
         }
@@ -434,7 +443,7 @@ export class Rotation extends Rotationish implements Relative<Orientation> {
         if (isRotation(q)) {
             return q;
         } else if (isOrientation(q)) {
-            return new Rotation(q.i, q.j, q.k)
+            return new Rotation(q[0], q[1], q[2], q[3])
         } else {
             return new Rotation(q[0], q[1], q[2], q[3])
         }
