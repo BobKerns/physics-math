@@ -1,5 +1,8 @@
 import {quat, vec4} from "gl-matrix";
-import {Constructor4N} from "./utils";
+import {Constructor} from "./utils";
+
+type Constructor3N<R> = Constructor<R, [number, number, number]>;
+type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
 
 export enum TYPE {
     SCALAR,
@@ -175,7 +178,7 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
 
     // noinspection JSUnusedGlobalSymbols
     clone(): this {
-        const c = this.constructor as Constructor4N<Vectorish>;
+        const c = this.constructor as Constructor3N<Vectorish>;
         return new c(this[0], this[1], this[2]) as this;
     }
 }
@@ -339,7 +342,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
     }
 
     create(): this {
-        const c = this.constructor as Constructor4N<Rotationish> ;
+        const c = this.constructor as Constructor<Rotationish> ;
         return new c() as this;
     }
 
@@ -378,7 +381,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         const dw = cw * aw - cx * -ax - cy * -ay - cz * -az;
 
         const w = dw === 0 ? 1 : dw;
-        let c = b.constructor as Constructor4N<T>;
+        let c = b.constructor as Constructor3N<T>;
         return new c(dx/2, dy/w, dz/w);
     }
 

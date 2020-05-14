@@ -8,39 +8,9 @@
  *
  * Each PFFunction object has a corresponding function object and vice versa.
  */
-import {idGen, ViewOf} from "./utils";
 import {BaseValue, TYPE} from "./math-types";
-import {IPFunction, PFunction, TIMESTEP} from "./pfunction";
-
-/**
- * Implementing function for a PFunction.
- */
-export interface IPFunctionBare<T extends BaseValue> extends Function {
-    (t: number): T;
-}
-
-/**
- * Implementing function for a PFunction2.
- */
-export interface IPFunctionBare2<T extends BaseValue> {
-    (t0: number, t: number): T;
-}
-
-export interface IPFunctionDisplay {
-    /**
-     * Function to generate LaTeX for this implementing function
-     */
-    tex: TexGenerator;
-
-    /**
-     * Computes an HTML representation for this element.
-     */
-    html: Element;
-}
-
-export interface IPFunctionBase<P> {
-    pfunction: P;
-}
+import {IndefiniteIntegral, PFunction} from "./pfunction";
+import {ViewOf} from "./utils";
 
 /**
  * A function that generates a LaTeX string.
@@ -53,62 +23,163 @@ export type TexGenerator = (tv: string) => string;
  */
 export type TexFormatter = (tex: string, block: boolean) => Element;
 
-export abstract class PFunctionBase<R extends BaseValue, F extends Function> {
-    /**
-     * The time step to be used for numerical integration. Ignored for functions with a defined analytic integral.
-     */
-    timestep: number = TIMESTEP;
-    /**
-     * The implementing function
-     */
-    readonly f: IPFunction<R>;
-    /**
-     * Cached LaTeX string
-     */
-    private tex_?: string;
-    /**
-     * Name of this PFunction, for disambiguation and well-known functions (such as constants).
-     */
-    readonly name: string;
 
-    abstract get returnType(): TYPE;
+/**
+ * Implementing function for a PFunction of 0 arguments.
+ */
+interface IPCompileResult0<T extends BaseValue> extends Function {
+    (t: number): T;
+}
 
-    protected constructor(f: F) {
-        this.f = f as unknown as IPFunction<R>;
-        const b = f as unknown as IPFunctionDisplay;
-        b.tex = (tv = 't') => this.toTex(tv);
-        Reflect.defineProperty(b, 'html', {
-            get: () => this.html()
-        });
-        (b as any).pfunction = this;
-        this.name = idGen(this.constructor.name);
-    }
+/**
+ * Implementing function for a PFunction of 1 argument.
+ */
+interface IPCompileResult1<T extends BaseValue> extends Function {
+    (t: number): T;
+}
+
+/**
+ * Implementing function for a PFunction of 2 arguments.
+ */
+interface IPCompileResult2<T extends BaseValue> extends Function {
+    (t0: number, t: number): T;
+}
+/**
+ * Implementing function for a PFunction of 3 arguments.
+ */
+interface IPCompileResult3<T extends BaseValue> extends Function {
+    (t1: number, t0: number, t: number): T;
+}
+/**
+ * Implementing function for a PFunction of 4 arguments.
+ */
+interface IPCompileResult4<T extends BaseValue> extends Function {
+    (t2: number, t1: number, t0: number, t: number): T;
+}
+
+/**
+ * Implementing function for a PFunction of 5 arguments.
+ */
+interface IPCompileResult5<T extends BaseValue> extends Function {
+    (t3: number, t2: number, t1: number, t0: number, t: number): T;
+}
+/**
+ * Implementing function for a PFunction of 6 arguments.
+ */
+interface IPCompileResult6<T extends BaseValue> extends Function {
+    (t4: number, t3: number, t2: number, t1: number, t0: number, t: number): T;
+}
+
+/**
+ * Convenience methods added to compiled functions.
+ */
+export interface IPCompiledDisplay {
+    /**
+     * Function to generate LaTeX for this implementing function
+     */
+    tex: TexGenerator;
+
+    /**
+     * Computes an HTML representation for this element.
+     */
+    html: Element;
+}
+
+/**
+ * Number of arguments supplied to a function.
+ */
+export type ArgCount = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+/**
+ * The result of compilation is a function of N arguments, annotated with originating PFunction
+ * and convenience methods.
+ */
+export type IPCompileResult<
+    R extends BaseValue = BaseValue,
+    N extends ArgCount = 1
+    > = (
+    N extends 0
+        ? IPCompileResult0<R>
+        : N extends 1
+        ? IPCompileResult1<R>
+        : N extends 2
+            ? IPCompileResult2<R>
+            : N extends 3
+                ? IPCompileResult3<R>
+                : N extends 4
+                    ? IPCompileResult4<R>
+                    : N extends 5
+                        ? IPCompileResult5<R>
+                        : N extends 6
+                            ? IPCompileResult6<R>
+                            : never
+    );
+
+
+export interface IPFunctionPtr<P extends IPFunction<BaseValue,ArgCount>> {
+    pfunction: P;
+}
+
+export type IPCompiled<
+    R extends BaseValue = BaseValue,
+    N extends ArgCount = 1,
+    P extends IPFunction<R, N> = IPFunction<R, N>
+    > = (
+        IPCompileResult<R, N> & IPFunctionPtr<P> & IPCompiledDisplay
+    );
+
+export interface PFunctionOpts<N extends ArgCount = 1> {
+    name?: string,
+    vars?: string[],
+    nargs?: N
+}
+
+export const PFunctionDefaults: [
+    PFunctionOpts<0>,
+    PFunctionOpts,
+    PFunctionOpts<2>,
+    PFunctionOpts<3>,
+    PFunctionOpts<4>,
+    PFunctionOpts<5>,
+    PFunctionOpts<6>
+] = [
+    {vars: [], nargs: 0},
+    {vars: ['t'], nargs: 1},
+    {vars: ['t0', 't'], nargs: 2},
+    {vars: ['t1', 't0', 't'], nargs: 3},
+    {vars: ['t2', 't1', 't0', 't'], nargs: 4},
+    {vars: ['t3', 't2', 't1', 't0', 't'], nargs: 5},
+    {vars: ['t4', 't3', 't2', 't1', 't0', 't'], nargs: 6}
+];
+
+export interface IPFunctionBase<R extends BaseValue = BaseValue, N extends ArgCount = 1> {
+    tex_?: string;
+    name: string;
+    readonly returnType: TYPE;
+
+    nargs: N;
+
+    f: IPCompiled<R, N>;
+
+    compile(): IPCompiled<R, N>;
 
     /**
      * Compute the LaTeX representation of this function.
      * @param tv The parameter name (or expression)
      */
-    protected toTex(tv: string = 't') {
-        return `\\operatorname{${this.name}}(${tv})`;
-    }
+    toTex(tv?: string): string;
 
     /**
      * Get the LaTeX representation of this function.  The value is cached.
      * @param tv The parameter name (or expression)
      */
-    tex(tv = 't') {
-        return this.tex_ || (this.tex_ = this.toTex(tv));
-    }
+    tex(tv?: string): any;
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
      * @param block
      */
-    html(block: boolean = false) : ViewOf<PFunction<R>> & Element {
-        const h = PFunction.formatter(this.tex(), block) as ViewOf<PFunction<R>> & Element;
-        h.value = this as unknown as PFunction<R>;
-        return h;
-    }
+    html(block?: boolean): ViewOf<PFunction<R>> & Element;
 
     /**
      *
@@ -116,10 +187,29 @@ export abstract class PFunctionBase<R extends BaseValue, F extends Function> {
      * @param name
      * @private
      */
-    setName_(name: string) {
-        (this as any).name = name;
-        return this;
-    }
+    setName_(name: string): this;
 }
 
+export type IPFunction<
+    R extends BaseValue = BaseValue,
+    N extends ArgCount = 1
+    > = N extends 1 ? IPCalculus<R> & IPFunctionBase<R, N> : IPFunctionBase<R, N>;
 
+/**
+ * Implementing function for a PFunction, extended for derivatrives and integrals.
+ */
+export interface IPCalculus<R extends BaseValue> {
+    timestep: number;
+    /**
+     * Returns the derivative of this IPFunction
+     */
+    derivative(): IPFunction<R>;
+    /**
+     * Returns the integral of this IPFunction.
+     */
+    integrate(): IndefiniteIntegral<R>;
+    /**
+     * Returns the integral of this IPFunction.
+     */
+    integral(): IndefiniteIntegral<R>;
+}

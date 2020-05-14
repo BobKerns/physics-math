@@ -14,7 +14,7 @@ import {Scalar} from "../scalar";
 
 describe('PFunction', () => {
     test('create',
-        () => expect(new GFunction((t: number) => 7)).toBeInstanceOf(PFunction));
+        () => expect(new GFunction(() => 7)).toBeInstanceOf(PFunction));
     test('invoke',
         () => expect(new GFunction((t: number) => 7 * t).f(6)).toBe(42));
     test('type GFunction',

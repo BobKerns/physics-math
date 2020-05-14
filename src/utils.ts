@@ -48,11 +48,6 @@ export function Throw(msg: string = 'Error') {
     throw new Error(msg);
 }
 
-// noinspection JSUnusedGlobalSymbols
-export interface Constructor3N<T> {
-    new(x?: number, y?: number, z?: number): T;
-}
-
-export interface Constructor4N<T> {
-    new(x?: number, y?: number, z?: number, w?: number): T;
+export interface Constructor<R, A extends [...any[]] = []> {
+    new(...args: A): R;
 }

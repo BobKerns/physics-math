@@ -4,21 +4,23 @@
  */
 
 import {ZERO} from "./scalar";
-import {PFunction} from "./pfunction";
+import {IndefiniteIntegral, PCalculus} from "./pfunction";
 import {TYPE} from "./math-types";
+import {IPCompileResult, IPFunction} from "./base";
+import {AnalyticIntegral} from "./integral";
 
 /**
  * Polynomial functions
  */
 
 
-export class Poly extends PFunction<number> {
+export class Poly extends PCalculus<number> {
     coefficients: number[];
     constructor(...coeffs: number[]) {
-        super(makePoly());
+        super({});
         this.coefficients = coeffs;
     }
-    differentiate(): PFunction<number> {
+    differentiate(): IPFunction<number> {
         if (this.coefficients.length < 2) {
             return ZERO;
         } else {
@@ -26,12 +28,16 @@ export class Poly extends PFunction<number> {
         }
     }
 
-    integrate(): PFunction<number> {
-        return new Poly(0, ...this.coefficients);
+    integrate(): IndefiniteIntegral<number> {
+        return new AnalyticIntegral(new Poly(0, ...this.coefficients));
     }
 
     get returnType(): TYPE.SCALAR {
         return TYPE.SCALAR;
+    }
+
+    protected compileFn(): IPCompileResult<number> {
+        return makePoly(...this.coefficients);
     }
 
 }

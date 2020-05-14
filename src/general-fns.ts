@@ -5,28 +5,34 @@
 
 
 import {NumericDerivative} from "./derivative";
-import {BaseValue, TYPE} from "./math-types";
-import {integrate, NumericIntegral} from "./integral";
-import {PFunction} from "./pfunction";
-import {IPFunctionBare} from "./base";
+import {TYPE} from "./math-types";
+import {NumericIntegral} from "./integral";
+import {IndefiniteIntegral, PCalculus} from "./pfunction";
+import {IPCompileResult, IPFunction} from "./base";
 
 /**
  * Functions that have to be numerically integrated/diffentiated.
  */
 
-export class GFunction extends PFunction<number> {
-    constructor(f: IPFunctionBare<number>) {
-        super(f);
+export class GFunction extends PCalculus<number> {
+    explicit: IPCompileResult<number>;
+    constructor(f: IPCompileResult<number>) {
+        super({});
+        this.explicit = f;
     }
-    differentiate(): PFunction<number> {
+    differentiate(): IPFunction<number> {
         return new NumericDerivative(this);
     }
 
-    integrate(): PFunction<number> {
-        return new GFunction((t: number) => integrate(this.f)(0, t))
+    integrate(): IndefiniteIntegral<number> {
+        return new NumericIntegral(this);
     }
 
     get returnType(): TYPE.SCALAR {
         return TYPE.SCALAR;
+    }
+
+    protected compileFn(): IPCompileResult<number> {
+        return this.explicit;
     }
 }

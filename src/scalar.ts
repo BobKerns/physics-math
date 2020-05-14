@@ -5,18 +5,25 @@
 
 import {Poly} from "./poly";
 import {BaseValue, TYPE} from "./math-types";
-import {PFunction} from "./pfunction";
+import {IndefiniteIntegral, PCalculus} from "./pfunction";
+import {IPCompileResult, IPFunction} from "./base";
+import {AnalyticIntegral} from "./integral";
 
 /**
  * Scalar constants
  */
 
-export abstract class Constant<T extends BaseValue> extends PFunction<T> {
+export abstract class Constant<T extends BaseValue> extends PCalculus<T> {
     readonly value: T;
     protected constructor(value: T) {
         // noinspection JSUnusedLocalSymbols
-        super((t: number) => value);
+        super({});
         this.value = value;
+    }
+
+    protected compileFn(): IPCompileResult<T> {
+        const value = this.value;
+        return () => value;
     }
 }
 
@@ -29,12 +36,12 @@ export class Scalar extends Constant<number> {
         return `${this.value}`;
     }
 
-    differentiate(): PFunction<number> {
+    differentiate(): IPFunction<number> {
         return ZERO;
     }
 
-    integrate() {
-        return new Poly(0, this.value);
+    integrate(): IndefiniteIntegral<number> {
+        return new AnalyticIntegral(new Poly(0, this.value));
     }
 
     get returnType(): TYPE.SCALAR {

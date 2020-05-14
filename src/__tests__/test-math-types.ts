@@ -8,8 +8,9 @@
  */
 
 import {datatype, DataTypeOf, IntrinsicOf, Orientation, orientation, Point, point, RelativeOf, Rotation, rotation, ScalarValue, TYPE, Vector, vector} from "../math-types";
-import {Constructor4N} from "../utils";
+import {Constructor} from "../utils";
 
+type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
 
 const checkAny = <T extends Vector|Point|Rotation|Orientation>(type: Constructor4N<T>, p0: number, p1: number, p2: number, p3: number) => (v: T) => {
     expect(v).toBeInstanceOf(type);
