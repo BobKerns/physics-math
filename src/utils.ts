@@ -44,7 +44,7 @@ export interface ViewOf<T = any> {
     value: T;
 }
 
-export function Throw(msg: string = 'Error') {
+export function Throw(msg: string = 'Error'): never {
     throw new Error(msg);
 }
 
