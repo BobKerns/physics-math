@@ -115,6 +115,20 @@ export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
 }
 
 /**
+ * Marker interface indicating standard non-prefixed SI-compatible units.
+ */
+interface SI {
+
+}
+
+/**
+ * Marker interface indicating primitive standard non-prefixed SI-compatible units.
+ */
+interface PrimitiveSI {
+
+}
+
+/**
  * The public interface to all units and alieses.
  */
 export interface Unit<T extends UnitTerms = UnitTerms> {
@@ -150,6 +164,7 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
      */
     divide(u: Unit): Unit;
 
+    readonly si: Unit<T> & SI;
     /**
      * Convert the given value to (unprefixed) SI units, and return the converted value and the
      * corresponding SI unit.
@@ -178,6 +193,8 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
     private id_?: string;
     // Our cached or supplied LaTeX string.
     private tex_?: string;
+
+    abstract readonly si: Unit<T> & SI;
 
     protected constructor(key: T, attributes: UnitAttributes) {
         this.key = key;
@@ -263,7 +280,7 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 /**
  * Our primitive (non-decomposable) units.
  */
-class PrimitiveUnit<U extends Primitive> extends BaseUnit<{[K in U]: 1}> {
+class PrimitiveUnit<U extends Primitive> extends BaseUnit<{[K in U]: 1}>  implements SI, PrimitiveSI {
     readonly symbol: string;
     readonly name: string;
     readonly varName?: string;
@@ -274,6 +291,10 @@ class PrimitiveUnit<U extends Primitive> extends BaseUnit<{[K in U]: 1}> {
         this.symbol = symbol;
         this.varName = varName;
         this.unit = u;
+    }
+
+    get si(): Unit<{ [K in U]: 1 }> & SI & PrimitiveSI {
+        return this;
     }
 }
 
@@ -296,14 +317,6 @@ const UNITS: {
  * A map from name to the Unit representing that unit.
  */
 const NAMED_UNITS: {[key: string]: Unit } = { };
-
-/**
- * Get a unit by name.
- * @param name
- */
-export const getUnit = (name: string) =>
-    NAMED_UNITS[name]
-    || Throw(`No unit named ${{name}}`);
 
 /**
  * A map from primitive name to its Unit instance.
@@ -344,7 +357,7 @@ Object.values(PRIMITIVE_MAP)
  * Derived units build on the primitive units through multiplication (integration)
  * and division (differentiation).
  */
-class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> {
+class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> implements SI {
     readonly name: string;
     readonly symbol?: string;
     readonly varName?: string;
@@ -379,6 +392,10 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> {
                     ? `${num || 1}/${denom}`
                     : `${num || 1}/(${denom})`;
         }
+    }
+
+    get si(): Unit<T> & SI {
+        return this;
     }
 }
 
@@ -441,6 +458,101 @@ export const defineUnit =
     return newUnit;
 };
 
+interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
+
+}
+
+/**
+ * Marker interface for aliases.
+ */
+interface Alias {
+
+}
+export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias {
+    readonly name: string;
+    readonly symbol: string;
+    readonly si: Unit<T>;
+    readonly scale: number;
+    readonly offset: number;
+
+    constructor(name: string, symbol: string, attributes: AliasAttributes, si: Unit<T>, scale: number, offset: number = 0) {
+        super(si.key, attributes);
+        this.name = name;
+        this.symbol = symbol;
+        this.si = si;
+        this.scale = scale;
+        this.offset = offset;
+    }
+
+    toSI<R extends number>(v: R): [R, Unit] {
+        const siScale = this.si.attributes.scale || 1;
+        const siOffset = this.si.attributes.offset || 0;
+        return [((v * this.scale + this.offset) / siScale - siOffset) as R, this.si];
+    }
+
+    fromSI<R extends number>(v: R, unit: Unit): [R, this] {
+        const siScale = this.si.attributes.scale || 1;
+        const siOffset = this.si.attributes.offset || 0;
+        return [((((v - siOffset) * siScale) - this.offset) / this.scale) as R, this];
+    }
+}
+
+/**
+ * Our defined aliases.
+ */
+const ALIASES: {[k: string]: Unit & Alias} = {};
+
+/**
+ * Define a unit alias, which can convert to/from a corresponding standard unprefixed SI unit.
+ * @param name
+ * @param symbol
+ * @param attributes
+ * @param si
+ * @param scale
+ * @param offset
+ * @param names
+ */
+export const defineAlias =
+    <T extends UnitTerms>(
+        name: string, symbol: string, attributes: AliasAttributes
+        , si: Unit<T>, scale: number, offset: number = 0,
+        ...names: string[]
+    ): Unit<T> & Alias => {
+        const alias = new AliasUnit(
+            name, symbol, attributes,
+            si, scale, offset);
+        const addName = (n: string) =>
+            ALIASES[n]
+                ? Throw(`Name conflict for alias ${n}`)
+                : NAMED_UNITS[n]
+                ? Throw(`Name conflict for alias ${n} with unit ${NAMED_UNITS[n].name}`)
+                : (ALIASES[n] = alias);
+        addName(name);
+        addName(symbol);
+        names.forEach(addName);
+        return alias;
+    };
+
+/**
+ * Get a unit by name.
+ *
+ * To process a # + unit into standard unprefixed SI, do:
+ * ```javascript
+ * const [siVal, siUnit] = getUnit(unitName).toSI(val);
+ * ```
+ *
+ * To just get the standard SI unit, do:
+ * ```javascript
+ * const siUnit = getUnit(unitName).si;
+ * ```
+ * @param name
+ * @param siOnly if true, only unscaled SI units are returned.
+ */
+export const getUnit = (name: string, siOnly: boolean = false) =>
+    NAMED_UNITS[name]
+    || !siOnly && ALIASES[name]
+    || Throw(`No unit named ${{name}}`);
+
 /**
  * Namespace for primitives only; merged into the U namespace.
  */
@@ -466,6 +578,7 @@ export namespace TEST {
     // noinspection JSUnusedGlobalSymbols
     export const UNITS_ = UNITS;
     export const NAMED_UNITS_ = NAMED_UNITS;
+    export const ALIASES_ = ALIASES;
     /**
      * Delete a unit created by a test case.
      * @param u
@@ -476,7 +589,8 @@ export namespace TEST {
                 Object.keys(table)
                     .forEach(k => table[k] === u && delete table[k]);
             delFrom(NAMED_UNITS_);
-            delFrom(UNITS);
+            delFrom(UNITS_);
+            delFrom(ALIASES_);
         }
     };
 }

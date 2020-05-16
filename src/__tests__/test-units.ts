@@ -8,7 +8,7 @@
  */
 
 import {
-    defineUnit, getUnit, TEST, Primitive, U, Unit
+    defineUnit, getUnit, TEST, Primitive, U, Unit, defineAlias
 } from "../units";
 
 import PRIMITIVE_MAP = TEST.PRIMITIVES_MAP_;
@@ -40,6 +40,8 @@ describe("Primitive", () => {
         test(`${k} symbol`, () => expect(PRIMITIVE_MAP[k].symbol).toBe(expectations[k][1]));
         test(`${k} varName`, () => expect(PRIMITIVE_MAP[k].varName).toBe(expectations[k][2]));
     });
+    test('toSI', () => expect(U.mass.toSI(1)).toEqual([1, U.mass]));
+    test('fromSI', () => expect(U.mass.fromSI(1, U.mass)).toEqual([1, U.mass]));
 });
 
 describe("Define", () => {
@@ -102,6 +104,8 @@ describe("Define", () => {
             U.unity.attributes.si_base = true;
         }
     });
+    test('toSI', () => expect(U.velocity.toSI(1)).toEqual([1, U.velocity]));
+    test('fromSI', () => expect(U.velocity.fromSI(1, U.mass)).toEqual([1, U.velocity]));
 });
 
 describe(`Unit Arithmetic`, () => {
@@ -139,7 +143,7 @@ describe(`Unit Arithmetic`, () => {
             ];
         specs.forEach(doTest);
     })
-})
+});
 
 describe(`Formatting`, () => {
     test(`Simple name`, () =>
@@ -152,4 +156,22 @@ describe(`Formatting`, () => {
         expect(U.velocity.tex).toBe('\\frac{\\text{m}}{\\text{s}}'));
     test(`Exponent TeX`, () =>
         expect(U.acceleration.tex).toBe('\\frac{\\text{m}}{\\text{s}^{2}}'));
-})
+});
+
+describe(`Aliases`, () => {
+    const [aName, aSymbol, aOther] = ['fR0G', 'f0GGY', 'PrinceOnTheLam'];
+    const alias = defineAlias(aName, aSymbol, {bill: 'cat'},
+        U.mass, 3.5, 2,
+        aOther);
+    afterAll(() => deleteUnit(alias));
+    test(`name`, () => expect(alias.name).toBe(aName));
+    test(`symbol`, () => expect(alias.symbol).toBe(aSymbol));
+    test(`otherName`, () => expect(getUnit(aOther)).toBe(alias));
+    test(`getUnit`, () => expect(getUnit(aName)).toBe(alias));
+    test('getUnit siOnly', () =>
+        expect(() => getUnit(aName, true))
+            .toThrowError());
+    test(`attribute`, () => expect(alias.attributes.bill).toBe('cat'));
+    test('toSI', () => expect(alias.toSI(1)).toEqual([5.5/1000, U.mass]));
+    test('fromSI', () => expect(alias.fromSI(5.5/1000, U.mass)).toEqual([1, alias]));
+});
