@@ -23,7 +23,7 @@ const TeX = String.raw;
 /**
  * Our enumerated primitive units.
  */
-export enum UNIT {
+export enum Primitive {
     time = 'time',
     mass = 'mass',
     length = 'length',
@@ -40,7 +40,7 @@ export enum UNIT {
  * A total order on units, for canonical display and key generation.
  */
 
-const ORDER: {[K in UNIT]: number} = (i => {
+const ORDER: {[K in Primitive]: number} = (i => {
     return {
         mass: i++,
         length: i++,
@@ -62,7 +62,7 @@ const ORDER: {[K in UNIT]: number} = (i => {
  * @param a
  * @param b
  */
-const orderUnits = (a: UNIT, b: UNIT) => {
+const orderUnits = (a: Primitive, b: Primitive) => {
     if (a === b) return 0;
     const ia = ORDER[a];
     const ib = ORDER[b];
@@ -83,7 +83,7 @@ export type Exponent = -9|-8|-7|-6|-5|-4|-3|-2|-1|1|2|3|4|5|6|7|8|9;
  * An object of primitive UNIT: Exponent pairs that uniquely describes each type.
  */
 type UnitTerms = {
-    [u in keyof typeof UNIT]?: Exponent;
+    [u in keyof typeof Primitive]?: Exponent;
 };
 
 /**
@@ -91,11 +91,11 @@ type UnitTerms = {
  * @param key
  */
 const makeLookupKey = (key: UnitTerms) => {
-    const units = Object.keys(key) as UNIT[];
+    const units = Object.keys(key) as Primitive[];
     return units
         .filter(k => (key[k] || 0) !== 0)
         .sort(orderUnits)
-        .map(k => `${PRIMITIVES[k]?.symbol || Throw(`Invalid primitive type name "${k} in type key.`)}^${key[k]}`)
+        .map(k => `${PRIMITIVE_MAP[k]?.symbol || Throw(`Invalid primitive type name "${k} in type key.`)}^${key[k]}`)
         .join(' ');
 }
 
@@ -173,18 +173,18 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 
     get tex(): string {
         const makeTex = (key: UnitTerms) => {
-            const units = Object.keys(key) as UNIT[];
+            const units = Object.keys(key) as Primitive[];
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
                 .sort(orderUnits);
             const num = numUnits
-                .map(k => TeX`${PRIMITIVES[k].tex}${(key[k] || 0) > 1 ? TeX`^(${key[k]})` : TeX``}`)
+                .map(k => TeX`${PRIMITIVE_MAP[k].tex}${(key[k] || 0) > 1 ? TeX`^(${key[k]})` : TeX``}`)
                 .join(TeX`\dot`);
             const denomUnits = units
                 .filter(k => (key[k] || 0) < 0)
                 .sort(orderUnits);
             const denom = denomUnits
-                .map(k => TeX`${PRIMITIVES[k].tex}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
+                .map(k => TeX`${PRIMITIVE_MAP[k].tex}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
                 .join(TeX`\dot`);
             return denomUnits.length === 0
                 ? num
@@ -214,13 +214,13 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 
     private combine<X extends UnitTerms>(u: Unit<X>, dir = 1 | -1): Unit {
         const nkey: Writeable<UnitTerms> = {};
-        const add = (k: UNIT) => {
+        const add = (k: Primitive) => {
             const n = (this.key[k] || 0) + (u.key[k] || 0) * dir;
             if (n != 0) {
                 nkey[k] = n as Exponent;
             }
         }
-        const scan = (u: Unit) => (Object.keys(u.key) as UNIT[]).forEach(add);
+        const scan = (u: Unit) => (Object.keys(u.key) as Primitive[]).forEach(add);
         scan(this);
         scan(u);
         return defineUnit(nkey);
@@ -238,11 +238,11 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 /**
  * Our primitive (non-decomposable) units.
  */
-class PrimitiveUnit<U extends UNIT> extends BaseUnit<{[K in U]: 1}> {
+class PrimitiveUnit<U extends Primitive> extends BaseUnit<{[K in U]: 1}> {
     readonly symbol: string;
     readonly name: string;
     readonly varName?: string;
-    readonly unit: UNIT;
+    readonly unit: Primitive;
     constructor(u: U, name: string, symbol: string, varName?: string, attributes: UnitAttributes = {}) {
         super({[u]: 1} as {[K in U]: 1}, {name, symbol, varName, ...attributes});
         this.name = name;
@@ -253,11 +253,11 @@ class PrimitiveUnit<U extends UNIT> extends BaseUnit<{[K in U]: 1}> {
 }
 
 /**
- * Type of our PRIMITIVES map. This provides one key/value entry for each primitive,
+ * Type of our PRIMITIVE_MAP map. This provides one key/value entry for each primitive,
  * indexed by the UNIT enum.
  */
 type PrimitiveMap = {
-    [k in keyof typeof UNIT]: PrimitiveUnit<(typeof UNIT)[k]>
+    [k in keyof typeof Primitive]: PrimitiveUnit<(typeof Primitive)[k]>
 };
 
 /**
@@ -271,6 +271,11 @@ const UNITS: {
  * A map from name to the Unit representing that unit.
  */
 const NAMED_UNITS: {[key: string]: Unit } = { };
+
+/**
+ * Get a unit by name.
+ * @param name
+ */
 export const getUnit = (name: string) =>
     NAMED_UNITS[name]
     || Throw(`No unit named ${{name}}`);
@@ -278,9 +283,9 @@ export const getUnit = (name: string) =>
 /**
  * A map from primitive name to its Unit instance.
  */
-const PRIMITIVES: Readonly<PrimitiveMap> = (() => {
+const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
     const val: PrimitiveMap = {} as PrimitiveMap;
-    const defPrimitive = (u: UNIT, name: string, symbol: string, varName?: string,
+    const defPrimitive = (u: Primitive, name: string, symbol: string, varName?: string,
                           attributes: UnitAttributes = {}) =>
     {
         const primitive = new PrimitiveUnit(u, name, symbol, varName, attributes);
@@ -290,24 +295,24 @@ const PRIMITIVES: Readonly<PrimitiveMap> = (() => {
         NAMED_UNITS[symbol] = primitive;
         return primitive;
     }
-    defPrimitive(UNIT.time, 'second','s', 't', {si_base: true});
-    defPrimitive(UNIT.mass, 'kilogram', 'kg', 'm',
+    defPrimitive(Primitive.time, 'second','s', 't', {si_base: true});
+    defPrimitive(Primitive.mass, 'kilogram', 'kg', 'm',
         {si_base: true, scale: 1000});
-    defPrimitive(UNIT.length, 'meter', 'm', 'l', {si_base: true});
-    defPrimitive(UNIT.amount, 'mole', 'mol', 'n', {si_base: true});
-    defPrimitive(UNIT.cycles, 'cycle', 'cycle', 'c');
-    defPrimitive(UNIT.angle, 'radian', 'rad', '𝜃',
+    defPrimitive(Primitive.length, 'meter', 'm', 'l', {si_base: true});
+    defPrimitive(Primitive.amount, 'mole', 'mol', 'n', {si_base: true});
+    defPrimitive(Primitive.cycles, 'cycle', 'cycle', 'c');
+    defPrimitive(Primitive.angle, 'radian', 'rad', '𝜃',
         {tex: TeX`\theta`});
-    defPrimitive(UNIT.solidAngle, 'steridian', 'sr', undefined);
-    defPrimitive(UNIT.current, 'ampere', 'A', 'A', {si_base: true});
-    defPrimitive(UNIT.temperature, 'kelvin', 'K', 'T',
+    defPrimitive(Primitive.solidAngle, 'steridian', 'sr', undefined);
+    defPrimitive(Primitive.current, 'ampere', 'A', 'A', {si_base: true});
+    defPrimitive(Primitive.temperature, 'kelvin', 'K', 'T',
         {absolute: true, si_base: true});
-    defPrimitive(UNIT.candela, 'candela', 'cd', 'c', {si_base: true})
+    defPrimitive(Primitive.candela, 'candela', 'cd', 'c', {si_base: true})
     return val as PrimitiveMap;
 })();
 
 // Enter each primitive into the UNITS table by ID.
-Object.values(PRIMITIVES)
+Object.values(PRIMITIVE_MAP)
     .forEach(u => UNITS[u.id] = u);
 
 /**
@@ -330,18 +335,18 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> {
         if (name) {
             this.name = name;
         } else {
-            const units = Object.keys(key) as UNIT[];
+            const units = Object.keys(key) as Primitive[];
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
                 .sort(orderUnits);
             const num = numUnits
-                .map(k => `${PRIMITIVES[k].symbol}${(key[k] || 0) > 1 ? `^${key[k]}` : ''}`)
+                .map(k => `${PRIMITIVE_MAP[k].symbol}${(key[k] || 0) > 1 ? `^${key[k]}` : ''}`)
                 .join(`·`);
             const denomUnits = units
                 .filter(k => (key[k] || 0) < 0)
                 .sort(orderUnits);
             const denom = denomUnits
-                .map(k => `${PRIMITIVES[k].symbol}${(key[k] || 0) < -1 ? `^${-(key[k] || 0)}` : ''}`)
+                .map(k => `${PRIMITIVE_MAP[k].symbol}${(key[k] || 0) < -1 ? `^${-(key[k] || 0)}` : ''}`)
                 .join(`·`);
             this.name = denomUnits.length === 0
                 ? num
@@ -357,15 +362,15 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> {
  *
  * The numbers in the keys are exponents for primitive types. They are taken as type literals,
  *
- * This ensures, for example, that the types of U_velocity and U_acceleration are distinct.
+ * This ensures, for example, that the types of U.velocity and U.acceleration are distinct.
  * ```javascript
- * const U_velocity     = defineUnit({distance: 1, time: -1});
- * const U_acceleration = defineUnit({distance: 1, time: -2});
+ * const U.velocity     = defineUnit({distance: 1, time: -1});
+ * const U.acceleration = defineUnit({distance: 1, time: -2});
  * ```
  * Results in types of:
  * ```
- * type U_velocity     = Unit<{distance: 1, time: -1}>
- * type U_acceleration = Unit<{distance: 1, time: -2}>
+ * type U.velocity     = Unit<{distance: 1, time: -1}>
+ * type U.acceleration = Unit<{distance: 1, time: -2}>
  * ```
  *
  * @param key The key defining the type composition
@@ -411,38 +416,45 @@ export const defineUnit =
     return newUnit;
 };
 
-// noinspection JSUnusedGlobalSymbols
-export const U_mass: Unit<{mass: 1}> = PRIMITIVES.mass;
-// noinspection JSUnusedGlobalSymbols
-export const U_time = PRIMITIVES.time;
-// noinspection JSUnusedGlobalSymbols
-export const U_length: Unit<{length: 1}> = PRIMITIVES.length;
-// noinspection JSUnusedGlobalSymbols
-export const U_angle = PRIMITIVES.angle;
-// noinspection JSUnusedGlobalSymbols
-export const U_amount = PRIMITIVES.amount;
-// noinspection JSUnusedGlobalSymbols
-export const U_cycles = PRIMITIVES.cycles;
-// noinspection JSUnusedGlobalSymbols
-export const U_current = PRIMITIVES.current;
-// noinspection JSUnusedGlobalSymbols
-export const U_temperature = PRIMITIVES.temperature;
-// noinspection JSUnusedGlobalSymbols
-export const U_candela = PRIMITIVES.candela;
+/**
+ * Namespace for primitives only; merged into the U namespace.
+ */
+export namespace P {
+    // noinspection JSUnusedGlobalSymbols
+    export const mass: Unit<{ mass: 1 }> = PRIMITIVE_MAP.mass;
+    // noinspection JSUnusedGlobalSymbols
+    export const time: Unit<{ time: 1 }> = PRIMITIVE_MAP.time;
+    // noinspection JSUnusedGlobalSymbols
+    export const length: Unit<{ length: 1 }> = PRIMITIVE_MAP.length;
+    // noinspection JSUnusedGlobalSymbols
+    export const angle: Unit<{ angle: 1 }> = PRIMITIVE_MAP.angle;
+    // noinspection JSUnusedGlobalSymbols
+    export const amount: Unit<{ amount: 1 }> = PRIMITIVE_MAP.amount;
+    // noinspection JSUnusedGlobalSymbols
+    export const cycles: Unit<{ cycles: 1 }> = PRIMITIVE_MAP.cycles;
+    // noinspection JSUnusedGlobalSymbols
+    export const current: Unit<{ current: 1 }> = PRIMITIVE_MAP.current;
+    // noinspection JSUnusedGlobalSymbols
+    export const temperature: Unit<{ temperature: 1 }> = PRIMITIVE_MAP.temperature;
+    // noinspection JSUnusedGlobalSymbols
+    export const candela: Unit<{ candela: 1 }> = PRIMITIVE_MAP.candela;
+}
 
-export * from './unit-defs';
+export {U} from './unit-defs';
 
 /**
  * A namespace for unit test access
  */
 export namespace TEST {
-    export const PRIMITIVES_ = PRIMITIVES;
+    export const PRIMITIVES_MAP_ = PRIMITIVE_MAP;
+    // noinspection JSUnusedGlobalSymbols
+    export const UNITS_ = UNITS;
     export const NAMED_UNITS_ = NAMED_UNITS;
     /**
      * Delete a unit created by a test case.
      * @param u
      */
-    export const deleteUnit = (u: Unit | null | undefined) => {
+    export const deleteUnit_ = (u: Unit | null | undefined) => {
         if (u) {
             const delFrom = (table: { [k: string]: Unit }) =>
                 Object.keys(table)

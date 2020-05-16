@@ -1,4 +1,4 @@
-import {glMatrix, quat, vec4} from "gl-matrix";
+import {quat, vec4} from "gl-matrix";
 import {Constructor} from "./utils";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
