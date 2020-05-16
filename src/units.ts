@@ -15,13 +15,15 @@
 
 import {Throw, Writeable} from "./utils";
 
+const TeX = String.raw;
+
 export enum UNIT {
     time = 'time',
     mass = 'mass',
     length = 'length',
     cycles = 'cycles', // Not SI base
     angle = 'angle',   // Not SI base
-    voltage = 'voltage',   // Not SI base
+    solidAngle = 'solidAngle',   // Not SI base
     current = 'current', // Dunno why this is the SI base
     temperature = 'temperature',
     amount = 'amount', // Amount
@@ -37,9 +39,9 @@ const ORDER: {[K in UNIT]: number} = (i => {
         mass: i++,
         length: i++,
         angle: i++,
+        solidAngle: i++,
         cycles: i++,
         amount: i++,
-        voltage: i++, // EMF, technically, but better known by the unit.
         current: i++,
         temperature: i++,
         time: i++,
@@ -58,7 +60,7 @@ const orderUnits = (a: UNIT, b: UNIT) => {
     return ia < ib ? -1 : 1;
 };
 
-export type Exponent = -5|-4|-3|-2|-1|1|2|3|4|5;
+export type Exponent = -7|-6|-5|-4|-3|-2|-1|1|2|3|4|5|6|7;
 
 type UnitTerms = {
     [u in keyof typeof UNIT]?: Exponent;
@@ -104,6 +106,7 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
     readonly symbol?: string;
     readonly varName?: string;
     readonly attributes: UnitAttributes;
+    readonly tex: string;
 
     /**
      * Call to check units for addition/subtraction.
@@ -127,12 +130,47 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
 
 abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
     readonly key: T;
+    readonly symbol?: string;
     readonly attributes: UnitAttributes;
     private id_?: string;
+    // Our cached or supplied LaTeX string.
+    private tex_?: string;
 
     protected constructor(key: T, attributes: UnitAttributes) {
         this.key = key;
         this.attributes = attributes;
+        const {tex} = attributes;
+        if (tex) {
+            this.tex_ = tex;
+        }
+    }
+
+    get tex(): string {
+        const makeTex = (key: UnitTerms) => {
+            const units = Object.keys(key) as UNIT[];
+            const numUnits = units
+                .filter(k => (key[k] || 0) > 0)
+                .sort(orderUnits);
+            const num = numUnits
+                .map(k => TeX`${PRIMITIVES[k].tex}${(key[k] || 0) > 1 ? TeX`^(${key[k]})` : TeX``}`)
+                .join(TeX`\dot`);
+            const denomUnits = units
+                .filter(k => (key[k] || 0) < 0)
+                .sort(orderUnits);
+            const denom = denomUnits
+                .map(k => TeX`${PRIMITIVES[k].tex}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
+                .join(TeX`\dot`);
+            return denomUnits.length === 0
+                ? num
+                : TeX`\frac{${num || 1}}{${denom}}`;
+        };
+        return this.tex_ || (
+            this.tex_ = (
+                this.symbol
+                    ? TeX`\text{${this.symbol}}`
+                    : makeTex(this.key)
+            )
+        );
     }
 
     get id() {
@@ -174,9 +212,9 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 class PrimitiveUnit<U extends UNIT> extends BaseUnit<{[K in U]: 1}> {
     readonly symbol: string;
     readonly name: string;
-    readonly varName: string;
+    readonly varName?: string;
     readonly unit: UNIT;
-    constructor(u: U, name: string, symbol: string, varName: string, attributes: UnitAttributes) {
+    constructor(u: U, name: string, symbol: string, varName?: string, attributes: UnitAttributes = {}) {
         super({[u]: 1} as {[K in U]: 1}, {name, symbol, varName, ...attributes});
         this.name = name;
         this.symbol = symbol;
@@ -209,7 +247,7 @@ export const getUnit = (name: string) =>
  */
 const PRIMITIVES: Readonly<PrimitiveMap> = (() => {
     const val: PrimitiveMap = {} as PrimitiveMap;
-    const defPrimitive = (u: UNIT, name: string, symbol: string, varName: string,
+    const defPrimitive = (u: UNIT, name: string, symbol: string, varName?: string,
                           attributes: UnitAttributes = {}) =>
     {
         const primitive = new PrimitiveUnit(u, name, symbol, varName, attributes);
@@ -225,8 +263,9 @@ const PRIMITIVES: Readonly<PrimitiveMap> = (() => {
     defPrimitive(UNIT.length, 'meter', 'm', 'l', {si_base: true});
     defPrimitive(UNIT.amount, 'mole', 'mol', 'n', {si_base: true});
     defPrimitive(UNIT.cycles, 'cycle', 'cycle', 'c');
-    defPrimitive(UNIT.angle, 'radian', 'rad', '𝜃');
-    defPrimitive(UNIT.voltage, 'volt', 'V', 'V');
+    defPrimitive(UNIT.angle, 'radian', 'rad', '𝜃',
+        {tex: TeX`\theta`});
+    defPrimitive(UNIT.solidAngle, 'steridian', 'sr', undefined);
     defPrimitive(UNIT.current, 'ampere', 'A', 'A', {si_base: true});
     defPrimitive(UNIT.temperature, 'kelvin', 'K', 'T',
         {absolute: true, si_base: true});
@@ -254,17 +293,23 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> {
             this.name = name;
         } else {
             const units = Object.keys(key) as UNIT[];
-            const num = units
+            const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
-                .sort(orderUnits)
-                .reduce((acc, k) => acc + ` ${PRIMITIVES[k].symbol}${(key[k] || 0) > 1 ? `^${key[k]}` : ''}`, '')
-                .trim();
-            const denom = units
+                .sort(orderUnits);
+            const num = numUnits
+                .map(k => `${PRIMITIVES[k].symbol}${(key[k] || 0) > 1 ? `^${key[k]}` : ''}`)
+                .join(`·`);
+            const denomUnits = units
                 .filter(k => (key[k] || 0) < 0)
-                .sort(orderUnits)
-                .reduce((acc, k) => acc + ` ${PRIMITIVES[k].symbol}${(key[k] || 0) < -1 ? `^${-(key[k] || 0)}` : ''}`, '')
-                .trim();
-            this.name = denom ? `${num || 1}/${denom}` : num;
+                .sort(orderUnits);
+            const denom = denomUnits
+                .map(k => `${PRIMITIVES[k].symbol}${(key[k] || 0) < -1 ? `^${-(key[k] || 0)}` : ''}`)
+                .join(`·`);
+            this.name = denomUnits.length === 0
+                ? num
+                : denomUnits.length === 1
+                    ? `${num || 1}/${denom}`
+                    : `${num || 1}/(${denom})`;
         }
     }
 }
@@ -343,37 +388,115 @@ export const U_cycles = PRIMITIVES.cycles;
 // noinspection JSUnusedGlobalSymbols
 export const U_current = PRIMITIVES.current;
 // noinspection JSUnusedGlobalSymbols
-export const U_voltage = PRIMITIVES.voltage;
-// noinspection JSUnusedGlobalSymbols
 export const U_temperature = PRIMITIVES.temperature;
 // noinspection JSUnusedGlobalSymbols
 export const U_candela = PRIMITIVES.candela;
 
-export const U_unity = defineUnit({}, {si_base: true});
+export const U_unity = defineUnit({},
+    {name: '1', symbol: '', si_base: true},
+    'unity');
 
 export const U_velocity = defineUnit({length: 1, time: -1},
-    {varName: 'V'});
+    {varName: 'V'},
+    'velocity');
+
+export const U_angularVelocity = defineUnit({angle: 1, time: -1},
+    {varName: 'ω'},
+    'angularVelocity');
+
 // noinspection JSUnusedGlobalSymbols
 export const U_acceleration = defineUnit({length: 1, time: -2},
-    {varName: 'a'});
+    {varName: 'a'},
+    'acceleration');
+
 // noinspection JSUnusedGlobalSymbols
 export const U_force = defineUnit({mass: 1, length: 1, time: -2},
-    {symbol: 'N', varName: 'F'},
-    'newton');
+    {name: 'newton', symbol: 'N', varName: 'F'},
+    'force');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_torque = defineUnit({mass: 1, length: 2, time: -2},
+    {},
+    'torque');
+
 // noinspection JSUnusedGlobalSymbols
 export const U_energy = defineUnit({mass: 1, length: 2, time: -2},
     {symbol: 'J', varName: 'E', name: 'joule'},
-    'joule', 'J');
+    'energy');
+
 // noinspection JSUnusedGlobalSymbols
 export const U_momentum = defineUnit({mass: 1, length: 1, time: -1},
-    {varName: 'p'});
+    {varName: 'p'},
+    'momentum', 'impulse');
+
 export const U_area = defineUnit({length: 2},
     {varName: 'a'},
     'area');
+
 // noinspection JSUnusedGlobalSymbols
 export const U_volume = defineUnit({length: 3},
     {varName: 'V'},
     'volume');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_density = defineUnit({mass: 1, length: -3},
+    {},
+    'density');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_frequency = defineUnit({cycles: 1, time: -1},
+    {name: 'hertz', symbol: 'Hz', varName: 'f'},
+    'frequency');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_wavelength = defineUnit({length: 1, cycles: -1},
+    {},
+    'wavelength');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_power = defineUnit({mass: 1, length: 2, time: -3},
+    {name: 'watt', symbol: 'W'},
+    'power');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_charge = defineUnit({current: 1, time: 1},
+    {name: 'coulomb', symbol: 'C'},
+    'charge');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_capacitance = defineUnit({length: -2, mass: -1, time: 4, current: 2},
+    {name: 'farad', symbol: 'F'},
+    'capacitance');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_voltage = defineUnit({length: 2, mass: 1, time: -3, current: -1},
+    {name: 'volt', symbol: 'V', varName: 'V'},
+    'voltage', 'EMF');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_resistance = defineUnit({length: 2, mass: 1, time: -3, current: -1},
+    {name: 'ohm', symbol: 'Ω', varName: 'R'},
+    'resistance');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_conductance = defineUnit({length: -2, mass: -1, time: 3, current: 1},
+    {name: 'seimen', symbol: 'S'},
+    'conductance');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_flux = defineUnit({length: 2, mass: 1, time: -2, current: -1},
+    {name: 'weber', symbol: 'Wb'},
+    'flux');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_fluxDensity = defineUnit({mass: 1, time: -2, current: -1},
+    {name: 'tesla', symbol: 'T'},
+    'fluxDensity');
+
+// noinspection JSUnusedGlobalSymbols
+export const U_inductace = defineUnit({length: 2, mass: 1, time: -2, current: -2},
+    {name: 'henry', symbol: 'H'},
+    'inductance');
 
 /**
  * A namespace for unit test access
