@@ -1,4 +1,4 @@
-import {defineUnit, P} from "./units";
+import {defineAlias, defineUnit, P} from "./units";
 
 /**
  * Collect common type constants under a U namespace.
@@ -120,4 +120,56 @@ export namespace U {
     export const inductace = defineUnit({length: 2, mass: 1, time: -2, current: -2},
         {name: 'henry', symbol: 'H'},
         'inductance');
+
+    export const liter = defineAlias('liter', 'L', {},
+        volume, 0.001, 0,
+        'litre');
+
+    export const minute = defineAlias('minute', 'min', {},
+        U.time, 60);
+
+    export const hour = defineAlias('hour', 'h', {},
+        U.time, 3600, 0,
+        'hr');
+
+    export const day = defineAlias('day', 'd', {},
+        U.time, 3600 * 24);
+
+    export const week = defineAlias('week', 'wk', {},
+        U.time, 3600 * 24 * 7);
+
+    export const celsius = defineAlias('celsius', '°C', {},
+        U.temperature, 273.15);
+
+    export const degreeArc = defineAlias('degreeArc', '°', {},
+        U.angle, Math.PI / 180);
+
+    export const minuteArc = defineAlias('minuteArc', `'`, {},
+        U.angle, Math.PI / (180 * 60));
+
+    export const secondArc = defineAlias('secondArc', `"`, {},
+        U.angle, Math.PI / (180 * 3600));
+
+    export const hectare = defineAlias('hectare', `ha`, {},
+        U.area, 10000);
+
+    // 'T' would conflict with 'tesla'
+    export const tonne = defineAlias('tonne', 'Ton', {},
+        U.mass, 1000);
+
+    export const inch = defineAlias('inch', 'in', {},
+        U.length, 0.0254);
+
+    export const foot = defineAlias('foot', 'ft', {},
+        U.length, 0.3048);
+
+    export const yard = defineAlias('yard', 'yd', {},
+        U.length, 0.9144);
+
+    export const mile = defineAlias('mile', 'mi', {},
+        U.length, 1609.344);
+
+    export const angstrom = defineAlias('angstrom', 'Å', {},
+        U.length, 0.0000000001, 0,
+        'ångstrom');
 }
