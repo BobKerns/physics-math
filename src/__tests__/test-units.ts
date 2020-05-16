@@ -7,7 +7,11 @@
  * Test the Units package functionality.
  */
 
-import {defineUnit, getUnit, TEST, U_acceleration, U_area, U_charge, U_current, U_energy, U_force, U_length, U_mass, U_momentum, U_power, U_time, U_unity, U_velocity, U_voltage, Unit, UNIT} from "../units";
+import {
+    defineUnit, getUnit, TEST, U_current, U_length, U_mass, U_time, Unit, UNIT,
+    U_acceleration, U_area, U_charge, U_energy, U_force, U_momentum, U_power, U_unity,
+    U_velocity, U_voltage
+} from "../units";
 
 import PRIMITIVES = TEST.PRIMITIVES_;
 import NAMED_UNITS = TEST.NAMED_UNITS_;
