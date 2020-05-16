@@ -420,23 +420,14 @@ export const defineUnit =
  * Namespace for primitives only; merged into the U namespace.
  */
 export namespace P {
-    // noinspection JSUnusedGlobalSymbols
     export const mass: Unit<{ mass: 1 }> = PRIMITIVE_MAP.mass;
-    // noinspection JSUnusedGlobalSymbols
     export const time: Unit<{ time: 1 }> = PRIMITIVE_MAP.time;
-    // noinspection JSUnusedGlobalSymbols
     export const length: Unit<{ length: 1 }> = PRIMITIVE_MAP.length;
-    // noinspection JSUnusedGlobalSymbols
     export const angle: Unit<{ angle: 1 }> = PRIMITIVE_MAP.angle;
-    // noinspection JSUnusedGlobalSymbols
     export const amount: Unit<{ amount: 1 }> = PRIMITIVE_MAP.amount;
-    // noinspection JSUnusedGlobalSymbols
     export const cycles: Unit<{ cycles: 1 }> = PRIMITIVE_MAP.cycles;
-    // noinspection JSUnusedGlobalSymbols
     export const current: Unit<{ current: 1 }> = PRIMITIVE_MAP.current;
-    // noinspection JSUnusedGlobalSymbols
     export const temperature: Unit<{ temperature: 1 }> = PRIMITIVE_MAP.temperature;
-    // noinspection JSUnusedGlobalSymbols
     export const candela: Unit<{ candela: 1 }> = PRIMITIVE_MAP.candela;
 }
 

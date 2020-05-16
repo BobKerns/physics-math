@@ -1,4 +1,4 @@
-import {defineUnit, P, Unit} from "./units";
+import {defineUnit, P} from "./units";
 
 /**
  * Collect common type constants under a U namespace.
@@ -10,10 +10,14 @@ export namespace U {
     export const mass = P.mass;
     export const length = P.length;
     export const time = P.time;
+    // noinspection JSUnusedGlobalSymbols
     export const angle = P.angle;
+    // noinspection JSUnusedGlobalSymbols
     export const amount = P.amount;
+    // noinspection JSUnusedGlobalSymbols
     export const cycles = P.cycles;
     export const current = P.current;
+    // noinspection JSUnusedGlobalSymbols
     export const temperature = P.temperature;
     export const candela = P.candela;
 
