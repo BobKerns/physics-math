@@ -149,6 +149,23 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
      * @param u
      */
     divide(u: Unit): Unit;
+
+    /**
+     * Convert the given value to (unprefixed) SI units, and return the converted value and the
+     * corresponding SI unit.
+     *
+     * @param v
+     * @return [number, Unit]
+     */
+    toSI<R extends number>(v: R): [R, Unit];
+
+    /**
+     * Convert the given value from (unprefixed) SI units, and return the converted value and
+     * corresponding unit (i.e. this unit).
+     * @param v
+     * @param unit
+     */
+    fromSI<R extends number>(v: R, unit: Unit): [R, this];
 }
 
 /**
@@ -232,6 +249,14 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 
     divide<X extends UnitTerms>(u: Unit<X>): Unit {
         return this.combine(u, -1);
+    }
+
+    fromSI<R extends number>(v: R, unit: Unit): [R, this] {
+        return [v, this];
+    }
+
+    toSI<R extends number>(v: R): [R, Unit] {
+        return [v, this];
     }
 }
 
