@@ -15,8 +15,14 @@
 
 import {Throw, Writeable} from "./utils";
 
+/**
+ * String literal parser for LaTeX literals (avoids the need for quoting backslash).
+ */
 const TeX = String.raw;
 
+/**
+ * Our enumerated primitive units.
+ */
 export enum UNIT {
     time = 'time',
     mass = 'mass',
@@ -49,6 +55,13 @@ const ORDER: {[K in UNIT]: number} = (i => {
     };
 })(0);
 
+/**
+ * Comparison predicate for primitive units to allow sorting them into a
+ * canonical total order.
+ *
+ * @param a
+ * @param b
+ */
 const orderUnits = (a: UNIT, b: UNIT) => {
     if (a === b) return 0;
     const ia = ORDER[a];
@@ -66,6 +79,9 @@ const orderUnits = (a: UNIT, b: UNIT) => {
  */
 export type Exponent = -9|-8|-7|-6|-5|-4|-3|-2|-1|1|2|3|4|5|6|7|8|9;
 
+/**
+ * An object of primitive UNIT: Exponent pairs that uniquely describes each type.
+ */
 type UnitTerms = {
     [u in keyof typeof UNIT]?: Exponent;
 };
@@ -98,6 +114,9 @@ export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
     offset?: number;
 }
 
+/**
+ * The public interface to all units and alieses.
+ */
 export interface Unit<T extends UnitTerms = UnitTerms> {
     /**
      * Unique lookup key for this type.
@@ -132,6 +151,9 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
     divide(u: Unit): Unit;
 }
 
+/**
+ * Base class for all units (and aliases).
+ */
 abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
     readonly key: T;
     readonly symbol?: string;
@@ -213,6 +235,9 @@ abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
     }
 }
 
+/**
+ * Our primitive (non-decomposable) units.
+ */
 class PrimitiveUnit<U extends UNIT> extends BaseUnit<{[K in U]: 1}> {
     readonly symbol: string;
     readonly name: string;
@@ -227,6 +252,10 @@ class PrimitiveUnit<U extends UNIT> extends BaseUnit<{[K in U]: 1}> {
     }
 }
 
+/**
+ * Type of our PRIMITIVES map. This provides one key/value entry for each primitive,
+ * indexed by the UNIT enum.
+ */
 type PrimitiveMap = {
     [k in keyof typeof UNIT]: PrimitiveUnit<(typeof UNIT)[k]>
 };
@@ -277,9 +306,14 @@ const PRIMITIVES: Readonly<PrimitiveMap> = (() => {
     return val as PrimitiveMap;
 })();
 
+// Enter each primitive into the UNITS table by ID.
 Object.values(PRIMITIVES)
     .forEach(u => UNITS[u.id] = u);
 
+/**
+ * Derived units build on the primitive units through multiplication (integration)
+ * and division (differentiation).
+ */
 class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> {
     readonly name: string;
     readonly symbol?: string;
