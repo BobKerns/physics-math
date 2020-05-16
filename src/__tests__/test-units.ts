@@ -14,6 +14,7 @@ import {
 import PRIMITIVE_MAP = TEST.PRIMITIVES_MAP_;
 import NAMED_UNITS = TEST.NAMED_UNITS_;
 import deleteUnit = TEST.deleteUnit_;
+import {Throw} from "../utils";
 
 describe("Primitive", () => {
     // If this test fails, the tests need to be revisited for the change in primitives.
@@ -80,7 +81,7 @@ describe("Define", () => {
         const nUnit = defineUnit({mass: 3}, {varName: '_test_bogus_'});
         try {
             expect(nUnit.varName).toBe('_test_bogus_');
-            expect(() => getUnit('_test_bogus_')).toThrowError();
+            expect(() => Throw('_test_bogus_')).toThrowError();
         } finally {
             deleteUnit(nUnit);
         }

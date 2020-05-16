@@ -117,14 +117,14 @@ export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
 /**
  * Marker interface indicating standard non-prefixed SI-compatible units.
  */
-interface SI {
+export interface SI {
 
 }
 
 /**
  * Marker interface indicating primitive standard non-prefixed SI-compatible units.
  */
-interface PrimitiveSI {
+export interface PrimitiveSI {
 
 }
 
@@ -319,6 +319,11 @@ const UNITS: {
 const NAMED_UNITS: {[key: string]: Unit } = { };
 
 /**
+ * A map from symbol for a Unit representing that unit.
+ */
+const SYMBOL_UNITS: {[key: string]: Unit } = { };
+
+/**
  * A map from primitive name to its Unit instance.
  */
 const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
@@ -329,8 +334,8 @@ const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
         const primitive = new PrimitiveUnit(u, name, symbol, varName, attributes);
         (val as any)[u] = primitive;
         NAMED_UNITS[u] = primitive;
-        NAMED_UNITS[name] = primitive;
-        NAMED_UNITS[symbol] = primitive;
+        NAMED_UNITS[name.toLowerCase()] = primitive;
+        SYMBOL_UNITS[symbol] = primitive;
         return primitive;
     }
     defPrimitive(Primitive.time, 'second','s', 't', {si_base: true});
@@ -422,15 +427,15 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> implements SI {
 export const defineUnit =
     <T extends UnitTerms>(key: T, attributes: UnitAttributes = {}, ...names: string[]): Unit<T> => {
         const lookupKey = makeLookupKey(key);
-        const addName = (u: Unit<T>) => (n?: string) => {
+        const addName = (u: Unit<T>) => (n?: string, table = NAMED_UNITS) => {
             if (n) {
-                const enamed = NAMED_UNITS[n];
+                const enamed = table[n];
                 if (enamed) {
                     if (enamed !== u) {
                             throw new Error(`Conflict of name ${n}: ${enamed.name} => ${u.name}`);
                     }
                 } else {
-                    NAMED_UNITS[n] = u;
+                    table[n] = u;
                 }
             }
             return u;
@@ -438,11 +443,12 @@ export const defineUnit =
         const {name, symbol} = attributes;
         const addSpecials = (u: Unit<T>) => {
             const an = addName(u);
-            an(name || u.name);
-            an(symbol);
+            an((name || u.name).toLowerCase());
+            an(symbol, SYMBOL_UNITS);
         };
         const addNames = (u: Unit<T>) => {
-            names.forEach(addName(u));
+            const an = addName(u);
+            names.forEach(n => an(n.toLowerCase()));
             addSpecials(u);
         }
         const existing = UNITS[lookupKey] as Unit<T>;
@@ -458,14 +464,14 @@ export const defineUnit =
     return newUnit;
 };
 
-interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
+export interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
 
 }
 
 /**
  * Marker interface for aliases.
  */
-interface Alias {
+export interface Alias {
 
 }
 export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias {
@@ -475,11 +481,11 @@ export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias
     readonly scale: number;
     readonly offset: number;
 
-    constructor(name: string, symbol: string, attributes: AliasAttributes, si: Unit<T>, scale: number, offset: number = 0) {
+    constructor(name: string, symbol: string, attributes: AliasAttributes, si: Unit<T> & SI, scale: number, offset: number = 0) {
         super(si.key, attributes);
         this.name = name;
         this.symbol = symbol;
-        this.si = si;
+        this.si = si.si;
         this.scale = scale;
         this.offset = offset;
     }
@@ -502,6 +508,8 @@ export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias
  */
 const ALIASES: {[k: string]: Unit & Alias} = {};
 
+const SYMBOL_ALIASES: {[k: string]: Unit & Alias} = {};
+
 /**
  * Define a unit alias, which can convert to/from a corresponding standard unprefixed SI unit.
  * @param name
@@ -521,15 +529,16 @@ export const defineAlias =
         const alias = new AliasUnit(
             name, symbol, attributes,
             si, scale, offset);
-        const addName = (n: string) =>
-            ALIASES[n]
-                ? Throw(`Name conflict for alias ${n}`)
-                : NAMED_UNITS[n]
-                ? Throw(`Name conflict for alias ${n} with unit ${NAMED_UNITS[n].name}`)
-                : (ALIASES[n] = alias);
-        addName(name);
-        addName(symbol);
-        names.forEach(addName);
+        const addName = (n: string, table = ALIASES) => {
+            const lc = n.toLowerCase();
+            const conflict = ALIASES[lc] || NAMED_UNITS[lc] || SYMBOL_ALIASES[n] || SYMBOL_UNITS[n];
+            conflict
+                ? Throw(`Name conflict for alias ${n} with unit ${conflict.name}`)
+                : (table[n] = alias);
+        };
+        addName(name.toLowerCase());
+        addName(symbol, SYMBOL_ALIASES);
+        names.forEach(n => addName(n.toLowerCase()));
         return alias;
     };
 
@@ -548,10 +557,12 @@ export const defineAlias =
  * @param name
  * @param siOnly if true, only unscaled SI units are returned.
  */
-export const getUnit = (name: string, siOnly: boolean = false) =>
-    NAMED_UNITS[name]
-    || !siOnly && ALIASES[name]
-    || Throw(`No unit named ${{name}}`);
+export const getUnit = (name: string, siOnly: boolean = false) => {
+    const lc = name.toLowerCase();
+    return NAMED_UNITS[lc] || SYMBOL_UNITS[name]
+    || !siOnly && (ALIASES[lc] || SYMBOL_ALIASES[name])
+    || Throw(`No unit named ${name}`);
+};
 
 /**
  * Namespace for primitives only; merged into the U namespace.
