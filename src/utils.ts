@@ -51,3 +51,5 @@ export function Throw(msg: string = 'Error') {
 export interface Constructor<R, A extends [...any[]] = []> {
     new(...args: A): R;
 }
+
+export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
