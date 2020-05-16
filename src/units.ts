@@ -542,6 +542,87 @@ export const defineAlias =
         return alias;
     };
 
+export type PrefixSymbol = 'Y'|'Z'|'E'|'P'|'T'|'G'|'M'|'k'|'h'|'da'|'d'|'c'|'m'|'μ'|'u'|'n'|'p'|'f'|'a'|'z'|'y';
+export type PrefixExponent = 24|21|18|15|12|9|6|3|2|1|-1|-2|-3|-6|-9|-12|-15|-18|-21|-24;
+export type PrefixName = 'yotta'|'zetta'|'exa'|'peta'|'tera'|'giga'|'mega'|'kilo'|'hecto'|'deka'|
+    'deci'|'centi'|'milli'|'micro'|'nano'|'pico'|'fempto'|'atto'|'zepto'|'yocto';
+
+class Prefix {
+    readonly symbol: PrefixSymbol;
+    readonly name: PrefixName;
+    readonly exponent: PrefixExponent;
+    readonly tex?: string;
+
+    constructor(sym: PrefixSymbol, exp: PrefixExponent, name: PrefixName, tex?: string) {
+        this.symbol = sym;
+        this.name = name;
+        this.exponent = exp;
+        this.tex = tex;
+    }
+}
+// noinspection NonAsciiCharacters
+const PREFIXES: {[K in PrefixSymbol|PrefixName|PrefixExponent]: Prefix} = ((t: {[K in PrefixSymbol]: [PrefixExponent, PrefixName, string?]} = {
+    Y: [24, 'yotta'],
+    Z: [21, 'zetta'],
+    E: [18, 'exa'],
+    P: [15, 'peta'],
+    T: [12, 'tera'],
+    G: [9, 'giga'],
+    M: [6, 'mega'],
+    k: [3, 'kilo'],
+    h: [2, 'hecto'],
+    da: [1, 'deka'],
+    d: [-1, 'deci'],
+    c: [-2, 'centi'],
+    m: [-3, 'milli'],
+    μ: [-6, 'micro', TeX`\mu`],
+    u: [-6, 'micro', TeX`\mu`], // Alternative for typing-impaired.
+    n: [-9, 'nano'],
+    p: [-12, 'pico'],
+    f: [-15, 'fempto'],
+    a: [-18, 'atto'],
+    z: [-21, 'zepto'],
+    y: [-24, 'yocto']
+}) => {
+    const pt: any = {};
+    Object.keys(t).forEach(k => {
+        const kk = k === 'u' ? 'μ' : k;
+        const a = t[kk as PrefixSymbol] as [PrefixExponent, PrefixName, string?];
+        const p = new Prefix(kk as PrefixSymbol, ...a)
+        pt[k] = p;
+        pt[p.exponent] = p;
+        pt[p.name] = p;
+    });
+    return pt as {[K in PrefixSymbol|PrefixName|PrefixExponent]: Prefix};
+})();
+
+/**
+ * Parse a prefixed expression into a suitable Alias. Returns null if not found.
+ * @param u
+ * @param siOnly true if only non-aliases should be considered.
+ */
+const parsePrefix = (u: string, siOnly: boolean = false): Unit | null => {
+    const n = /((?:yotta|zetta|exa|peta|tera|giga|mega|kilo|hecto|deka|deci|centi|milli|micro|nano|pico|fempto|atto|zepto|yocto))\s?-?\s?([^0-9^\/\s]+)/.exec(u);
+    if (n) {
+        const prefix = PREFIXES[n[1] as PrefixSymbol];
+        const base = NAMED_UNITS[n[2]] || (!siOnly && ALIASES[n[2]]);
+        if (!base) {
+            return null;
+        }
+        return defineAlias(`${prefix.name}${u}`, u, {}, base, Math.pow(10, prefix.exponent))
+    }
+    const p = /(Y|Z|E|P|T|G|M|k|h|da|d|c|m|μ|u|n|p|f|a|z|y)([^0-9^\/\s]+)/.exec(u);
+    if (!p) {
+        return null;
+    }
+    const prefix = PREFIXES[p[1] as PrefixSymbol];
+    const base = SYMBOL_UNITS[p[2]] || (!siOnly && SYMBOL_ALIASES[p[2]]);
+    if (!base) {
+        return null;
+    }
+    return defineAlias(`${prefix.name}${u}`, u, {}, base, Math.pow(10, prefix.exponent));
+};
+
 /**
  * Get a unit by name.
  *
@@ -560,8 +641,9 @@ export const defineAlias =
 export const getUnit = (name: string, siOnly: boolean = false) => {
     const lc = name.toLowerCase();
     return NAMED_UNITS[lc] || SYMBOL_UNITS[name]
-    || !siOnly && (ALIASES[lc] || SYMBOL_ALIASES[name])
-    || Throw(`No unit named ${name}`);
+        || !siOnly && (ALIASES[lc] || SYMBOL_ALIASES[name])
+        || parsePrefix(name, siOnly)
+        || Throw(`No unit named ${name}`);
 };
 
 /**
@@ -604,4 +686,5 @@ export namespace TEST {
             delFrom(ALIASES_);
         }
     };
+    export const parsePrefix_ = parsePrefix;
 }

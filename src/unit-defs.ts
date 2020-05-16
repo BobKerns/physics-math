@@ -190,4 +190,7 @@ export namespace U {
     export const angstrom = defineAlias('angstrom', 'Å', {},
         U.length, 0.0000000001, 0,
         'ångstrom');
+
+    export const gram = defineAlias('gram', 'g', {},
+        U.mass, 0.001);
 }

@@ -15,6 +15,7 @@ import PRIMITIVE_MAP = TEST.PRIMITIVES_MAP_;
 import NAMED_UNITS = TEST.NAMED_UNITS_;
 import deleteUnit = TEST.deleteUnit_;
 import {Throw} from "../utils";
+import parsePrefix = TEST.parsePrefix_;
 
 describe("Primitive", () => {
     // If this test fails, the tests need to be revisited for the change in primitives.
@@ -176,3 +177,39 @@ describe(`Aliases`, () => {
     test('toSI', () => expect(alias.toSI(1)).toEqual([5.5/1000, U.mass]));
     test('fromSI', () => expect(alias.fromSI(5.5/1000, U.mass)).toEqual([1, alias]));
 });
+
+describe('Parse', () => {
+    test('parse Mm', () =>
+        expect(parsePrefix('Mm')?.toSI(2))
+            .toEqual([2000000, U.length]));
+    test('get Mm', () =>
+        expect(getUnit('Mm').toSI(2))
+            .toEqual([2000000, U.length]));
+    test('get μm', () =>
+        expect(getUnit('μm').toSI(2))
+            .toEqual([0.000002, U.length]));
+    test('get um', () =>
+        expect(getUnit('um').toSI(2))
+            .toEqual([0.000002, U.length]));
+    test('get Mg', () =>
+        expect(getUnit('Mg').toSI(2))
+            .toEqual([2000, U.mass]));
+    test('get mg', () =>
+        expect(getUnit('mg').toSI(2))
+            .toEqual([0.000002, U.mass]));
+    test('kilom', () =>
+        expect(() => getUnit('kilom'))
+            .toThrowError());
+    test('parse kilometer', () =>
+        expect(parsePrefix('kilometer')?.toSI(2))
+            .toEqual([2000, U.length]));
+    test('kilometer', () =>
+        expect(getUnit('kilometer')?.toSI(2))
+            .toEqual([2000, U.length]));
+    test('kilo-meter', () =>
+        expect(getUnit('kilo-meter')?.toSI(2))
+            .toEqual([2000, U.length]));
+    test('kilo meter', () =>
+        expect(getUnit('kilo meter')?.toSI(2))
+            .toEqual([2000, U.length]));
+})
