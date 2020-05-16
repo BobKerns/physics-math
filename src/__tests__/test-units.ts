@@ -212,4 +212,4 @@ describe('Parse', () => {
     test('kilo meter', () =>
         expect(getUnit('kilo meter')?.toSI(2))
             .toEqual([2000, U.length]));
-})
+});
