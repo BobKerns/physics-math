@@ -1,10 +1,12 @@
 import {defineAlias, defineUnit, P} from "./units";
 
 /**
- * Collect common type constants under a U namespace.
- * Using a nsmespace allows precise typing, while keeping the namespace
+ * Collect common unit constants under a U namespace.
+ * Using a nsmespace allows precise typescript typing, while keeping the namespace
  * distinct from the start. Otherwise, import * from './unit-defs' would
  * be dangerous as types are added.
+ *
+ * This is a better alternative to prefixing all the names with U_.
  */
 export namespace U {
     export const mass = P.mass;
@@ -121,54 +123,70 @@ export namespace U {
         {name: 'henry', symbol: 'H'},
         'inductance');
 
+    // noinspection JSUnusedGlobalSymbols
     export const liter = defineAlias('liter', 'L', {},
         volume, 0.001, 0,
         'litre');
 
+    // noinspection JSUnusedGlobalSymbols
     export const minute = defineAlias('minute', 'min', {},
         U.time, 60);
 
+    // noinspection JSUnusedGlobalSymbols
     export const hour = defineAlias('hour', 'h', {},
         U.time, 3600, 0,
         'hr');
 
+    // noinspection JSUnusedGlobalSymbols
     export const day = defineAlias('day', 'd', {},
         U.time, 3600 * 24);
 
+    // noinspection JSUnusedGlobalSymbols
     export const week = defineAlias('week', 'wk', {},
         U.time, 3600 * 24 * 7);
 
+    // noinspection JSUnusedGlobalSymbols
     export const celsius = defineAlias('celsius', '°C', {},
         U.temperature, 273.15);
 
+    // noinspection JSUnusedGlobalSymbols
     export const degreeArc = defineAlias('degreeArc', '°', {},
         U.angle, Math.PI / 180);
 
+    // noinspection JSUnusedGlobalSymbols
     export const minuteArc = defineAlias('minuteArc', `'`, {},
         U.angle, Math.PI / (180 * 60));
 
+    // noinspection JSUnusedGlobalSymbols
     export const secondArc = defineAlias('secondArc', `"`, {},
         U.angle, Math.PI / (180 * 3600));
 
+    // noinspection JSUnusedGlobalSymbols
     export const hectare = defineAlias('hectare', `ha`, {},
         U.area, 10000);
 
     // 'T' would conflict with 'tesla'
+    // noinspection JSUnusedGlobalSymbols
     export const tonne = defineAlias('tonne', 'Ton', {},
         U.mass, 1000);
 
+    // noinspection JSUnusedGlobalSymbols
     export const inch = defineAlias('inch', 'in', {},
         U.length, 0.0254);
 
+    // noinspection JSUnusedGlobalSymbols
     export const foot = defineAlias('foot', 'ft', {},
         U.length, 0.3048);
 
+    // noinspection JSUnusedGlobalSymbols
     export const yard = defineAlias('yard', 'yd', {},
         U.length, 0.9144);
 
+    // noinspection JSUnusedGlobalSymbols
     export const mile = defineAlias('mile', 'mi', {},
         U.length, 1609.344);
 
+    // noinspection JSUnusedGlobalSymbols
     export const angstrom = defineAlias('angstrom', 'Å', {},
         U.length, 0.0000000001, 0,
         'ångstrom');
