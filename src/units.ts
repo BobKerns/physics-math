@@ -60,7 +60,11 @@ const orderUnits = (a: UNIT, b: UNIT) => {
     return ia < ib ? -1 : 1;
 };
 
-export type Exponent = -7|-6|-5|-4|-3|-2|-1|1|2|3|4|5|6|7;
+/**
+ * Our supported exponents. A finite list of exponents allows TypeScript to
+ * automatically type exponents as numeric literal types.
+ */
+export type Exponent = -9|-8|-7|-6|-5|-4|-3|-2|-1|1|2|3|4|5|6|7|8|9;
 
 type UnitTerms = {
     [u in keyof typeof UNIT]?: Exponent;
