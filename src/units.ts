@@ -465,7 +465,7 @@ export const defineUnit =
 };
 
 export interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
-
+    prefixed?: boolean;
 }
 
 /**
@@ -476,12 +476,12 @@ export interface Alias {
 }
 export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias {
     readonly name: string;
-    readonly symbol: string;
+    readonly symbol?: string;
     readonly si: Unit<T>;
     readonly scale: number;
     readonly offset: number;
 
-    constructor(name: string, symbol: string, attributes: AliasAttributes, si: Unit<T> & SI, scale: number, offset: number = 0) {
+    constructor(name: string, symbol: string|undefined, attributes: AliasAttributes, si: Unit<T> & SI, scale: number, offset: number = 0) {
         super(si.key, attributes);
         this.name = name;
         this.symbol = symbol;
@@ -522,7 +522,7 @@ const SYMBOL_ALIASES: {[k: string]: Unit & Alias} = {};
  */
 export const defineAlias =
     <T extends UnitTerms>(
-        name: string, symbol: string, attributes: AliasAttributes
+        name: string, symbol: string|undefined, attributes: AliasAttributes
         , si: Unit<T>, scale: number, offset: number = 0,
         ...names: string[]
     ): Unit<T> & Alias => {
@@ -537,7 +537,7 @@ export const defineAlias =
                 : (table[n] = alias);
         };
         addName(name.toLowerCase());
-        addName(symbol, SYMBOL_ALIASES);
+        symbol && addName(symbol, SYMBOL_ALIASES);
         names.forEach(n => addName(n.toLowerCase()));
         return alias;
     };
@@ -596,31 +596,52 @@ const PREFIXES: {[K in PrefixSymbol|PrefixName|PrefixExponent]: Prefix} = ((t: {
     return pt as {[K in PrefixSymbol|PrefixName|PrefixExponent]: Prefix};
 })();
 
+const RE_prefix_name = /yotta|zetta|exa|peta|tera|giga|mega|kilo|hecto|deka|deci|centi|milli|micro|nano|pico|fempto|atto|zepto|yocto/;
+const RE_prefix_symbol = /Y|Z|E|P|T|G|M|k|h|da|d|c|m|μ|u|n|p|f|a|z|y/;
+const RE_identifier = /[\p{L}\p{Pc}\p{Pd}\p{S}][\p{L}\p{Pc}\p{Pd}\p{S}\p{N}]*/u;
+const RE_whitespace = /[\p{Z}\p{C}\p{M}]+/u;
+const RE_whitespace_sep = /[\p{Z}\p{C}\p{M}\p{Pd}]+/u;
+const RE_prefix_name_concat = new RegExp(`(${RE_prefix_name.source})${RE_whitespace_sep.source}(${RE_identifier.source})`, 'ug');
+const RE_name = new RegExp(`(${RE_prefix_name.source})?(${RE_identifier.source})`, 'u');
+const RE_symbol = new RegExp(`(${RE_prefix_symbol.source})?(${RE_identifier.source})`, 'u');
+
 /**
  * Parse a prefixed expression into a suitable Alias. Returns null if not found.
  * @param u
  * @param siOnly true if only non-aliases should be considered.
  */
 const parsePrefix = (u: string, siOnly: boolean = false): Unit | null => {
-    const n = /((?:yotta|zetta|exa|peta|tera|giga|mega|kilo|hecto|deka|deci|centi|milli|micro|nano|pico|fempto|atto|zepto|yocto))\s?-?\s?([^0-9^\/\s]+)/.exec(u);
-    if (n) {
-        const prefix = PREFIXES[n[1] as PrefixSymbol];
-        const base = NAMED_UNITS[n[2]] || (!siOnly && ALIASES[n[2]]);
-        if (!base) {
+    u = u.replace(RE_whitespace, ' ');
+    u = u.replace(RE_prefix_name_concat, (s: string, name: string, sym: string) => `${name}${sym}`);
+    const name = RE_name.exec(u);
+    if (name) {
+        const prefix = PREFIXES[name[1] as PrefixSymbol];
+        const base = NAMED_UNITS[name[2]] || (!siOnly && ALIASES[name[2]]);
+        if (base && !base.attributes.prefixed) {
+            const sym = (prefix.symbol && base.symbol) ? `${prefix.symbol}${base.symbol}` : undefined;
+            const aname = `${prefix.name}${base.name}`;
+            return ALIASES[aname] || defineAlias(aname, sym, {
+                prefixed: true
+            }, base, Math.pow(10, prefix.exponent));
+        } else if (prefix) {
             return null;
         }
-        return defineAlias(`${prefix.name}${u}`, u, {}, base, Math.pow(10, prefix.exponent))
     }
-    const p = /(Y|Z|E|P|T|G|M|k|h|da|d|c|m|μ|u|n|p|f|a|z|y)([^0-9^\/\s]+)/.exec(u);
-    if (!p) {
+    const sym = RE_symbol.exec(u);
+    if (!sym) {
         return null;
     }
-    const prefix = PREFIXES[p[1] as PrefixSymbol];
-    const base = SYMBOL_UNITS[p[2]] || (!siOnly && SYMBOL_ALIASES[p[2]]);
-    if (!base) {
-        return null;
+    const prefix = PREFIXES[sym[1] as PrefixSymbol];
+    const base = SYMBOL_UNITS[sym[2]] || (!siOnly && SYMBOL_ALIASES[sym[2]]);
+    if (base && !base.attributes.prefixed) {
+        const sym = (prefix.symbol && base.symbol) ? `${prefix.symbol}${base.symbol}` : undefined;
+        const aname = `${prefix.name}${base.name}`;
+        return ALIASES[aname]
+        || defineAlias(aname, sym, {
+            prefixed: true
+        }, base, Math.pow(10, prefix.exponent));
     }
-    return defineAlias(`${prefix.name}${u}`, u, {}, base, Math.pow(10, prefix.exponent));
+    return null;
 };
 
 /**
@@ -671,7 +692,16 @@ export namespace TEST {
     // noinspection JSUnusedGlobalSymbols
     export const UNITS_ = UNITS;
     export const NAMED_UNITS_ = NAMED_UNITS;
+    export const SYMBOL_UNITS_ = SYMBOL_UNITS;
     export const ALIASES_ = ALIASES;
+    export const SYMBOL_ALIASES_ = SYMBOL_ALIASES;
+    export const RE_prefix_name_ = RE_prefix_name;
+    export const RE_prefix_symbol_ = RE_prefix_symbol;
+    export const RE_identifier_ = RE_identifier;
+    export const RE_whitespace_ = RE_whitespace;
+    export const RE_prefix_name_concat_ = RE_prefix_name_concat;
+    export const RE_name_ = RE_name;
+    export const RE_symbol_ = RE_symbol;
     /**
      * Delete a unit created by a test case.
      * @param u
