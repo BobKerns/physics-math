@@ -695,11 +695,14 @@ export namespace TEST {
     export const SYMBOL_UNITS_ = SYMBOL_UNITS;
     export const ALIASES_ = ALIASES;
     export const SYMBOL_ALIASES_ = SYMBOL_ALIASES;
+    // noinspection JSUnusedGlobalSymbols
     export const RE_prefix_name_ = RE_prefix_name;
     export const RE_prefix_symbol_ = RE_prefix_symbol;
+    // noinspection JSUnusedGlobalSymbols
     export const RE_identifier_ = RE_identifier;
     export const RE_whitespace_ = RE_whitespace;
     export const RE_prefix_name_concat_ = RE_prefix_name_concat;
+    // noinspection JSUnusedGlobalSymbols
     export const RE_name_ = RE_name;
     export const RE_symbol_ = RE_symbol;
     /**

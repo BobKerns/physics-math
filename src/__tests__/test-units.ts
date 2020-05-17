@@ -18,10 +18,7 @@ import {Throw} from "../utils";
 import parsePrefix = TEST.parsePrefix_;
 import RE_whitespace = TEST.RE_whitespace_;
 import RE_prefix_name_concat = TEST.RE_prefix_name_concat_;
-import RE_prefix_symbol = TEST.RE_prefix_symbol_;
 import RE_symbol = TEST.RE_symbol_;
-import SYMBOL_ALIASES = TEST.SYMBOL_ALIASES_;
-import SYMBOL_UNITS = TEST.SYMBOL_UNITS_;
 
 describe("Primitive", () => {
     // If this test fails, the tests need to be revisited for the change in primitives.
