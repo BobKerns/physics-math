@@ -6,8 +6,8 @@
  */
 
 import {BaseValue, Point, Rotation, TYPE, Vector} from "./math-types";
-import {IndefiniteIntegral, PCalculus, PFunction} from "./pfunction";
-import {IPCompiled, IPCompileResult, IPFunction} from "./base";
+import {PCalculus, PFunction} from "./pfunction";
+import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
 import {AnalyticIntegral} from "./integral";
 
 const bounds = <R extends BaseValue>(f: IPCompiled<R>, t: number): [R, R, number] => {
@@ -35,12 +35,12 @@ export class NumericDerivative extends PCalculus<number> {
         this.setName_(`deriv[${f.name}]`);
     }
 
-    differentiate(): IPFunction<number> {
+    differentiate(): IPFunctionCalculus<number> {
         return new NumericDerivative(this);
     }
 
     integrate(): IndefiniteIntegral<number> {
-        return new AnalyticIntegral(this.from);
+        return new AnalyticIntegral(this.from, this);
     }
 
     get returnType(): TYPE.SCALAR {
@@ -68,7 +68,7 @@ export class VectorDerivative extends PCalculus<Vector> {
         this.setName_(`deriv[${f.name}]`);
     }
 
-    differentiate(): IPFunction<Vector> {
+    differentiate(): IPFunctionCalculus<Vector> {
         return new VectorDerivative(this);
     }
 

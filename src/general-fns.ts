@@ -9,8 +9,8 @@
 import {NumericDerivative} from "./derivative";
 import {TYPE} from "./math-types";
 import {NumericIntegral} from "./integral";
-import {IndefiniteIntegral, PCalculus} from "./pfunction";
-import {IPCompileResult, IPFunction} from "./base";
+import {PCalculus} from "./pfunction";
+import {IndefiniteIntegral, IPCompileResult, IPFunctionCalculus} from "./base";
 
 /**
  * Functions that have to be numerically integrated/differentiated.
@@ -22,7 +22,8 @@ export class GFunction extends PCalculus<number> {
         super({});
         this.explicit = f;
     }
-    differentiate(): IPFunction<number> {
+
+    differentiate(): IPFunctionCalculus<number> {
         return new NumericDerivative(this);
     }
 

@@ -5,7 +5,7 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
-import {IPCompiled, IPCompileResult, IPFunction} from "./base";
+import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
 import {
     isPoint,
     isRotational,
@@ -17,36 +17,37 @@ import {
     Vector,
     BaseValue,
     BaseValueRelative,
-    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE
+    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE, BaseValueIntrinsic
 } from "./math-types";
 import {Throw} from "./utils";
-import {IndefiniteIntegral, isPCompiled, isPFunction, PCalculus} from "./pfunction";
+import {isPCompiled, isPFunction, PCalculus} from "./pfunction";
 import {glMatrix} from "gl-matrix";
+import {Scalar} from "./scalar";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.
  */
 
 
-export function add<R extends number>(a: R, ...rest: R[]): R;
-export function add<R extends Point|Vector>(a: R, ...rest: Vector[]): R;
-export function add<R extends Orientation|Rotation>(a: R, ...rest: Rotation[]): R;
-export function add<R extends number>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
+export function add<R extends BaseValueRelative>(a: R, ...rest: R[]): R;
+export function add<R extends BaseValueIntrinsic>(a: R, ...rest: RelativeOf<R>[]): R;
+export function add<R extends BaseValueRelative>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
+export function add<R extends BaseValueIntrinsic>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
 export function add<R extends Point|Vector>(a: IPCompiled<R>, ...rest: IPCompiled<Vector>[]): IPCompiled<R>;
 export function add<R extends Orientation|Rotation>(a: IPCompiled<R>, ...rest: IPCompiled<Rotation>[]): IPCompiled<R>;
-export function add<R extends number>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
+export function add<R extends number>(a: IPFunction<R>, ...rest: IPFunction<BaseValueRelative>[]): IPFunction<R>;
 export function add<R extends Point|Vector>(a: IPFunction<R>, ...rest: IPFunction<Vector>[]): IPFunction<R>;
 export function add<R extends Orientation|Rotation>(a: IPFunction<R>, ...rest: IPFunction<Rotation>[]): IPFunction<R>;
 export function add(
     a: BaseValue|IPFunction|IPCompiled,
-    ...rest: (BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>)[])
+    ...rest: (BaseValueRelative|IPFunction|IPCompiled)[])
     : BaseValue|IPFunction|IPCompiled {
     return gadd(a, ...rest);
 }
 
 export function gadd(
     a: BaseValue|IPFunction|IPCompiled,
-    ...rest: (BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>)[])
+    ...rest: (BaseValueRelative|IPFunction|IPCompiled)[])
     : BaseValue|IPFunction|IPCompiled
 {
     const check = (pred: (v: any) => boolean) => (rest: any[]) => rest.forEach(v => pred(v) || Throw('Bad value in add'));
@@ -84,10 +85,10 @@ export function gadd(
     }
 }
 
-abstract class BinaryOp<R extends BaseValue, X extends BaseValue> extends PCalculus<R> {
-    l: IPFunction<R>;
-    r: IPFunction<X>;
-    protected constructor( l: IPFunction<R>, r: IPFunction<X>) {
+abstract class BinaryOp<R extends BaseValueRelative, X extends BaseValueRelative = R> extends PCalculus<R> {
+    l: IPFunctionCalculus<R>;
+    r: IPFunctionCalculus<X>;
+    protected constructor( l: IPFunctionCalculus<R>, r: IPFunctionCalculus<X>) {
         super({});
         this.l = l;
         this.r = r;
@@ -98,13 +99,15 @@ abstract class BinaryOp<R extends BaseValue, X extends BaseValue> extends PCalcu
     }
 }
 
-export class PAdd<R extends BaseValue, X extends RelativeOf<R> > extends BinaryOp<R, X> {
-    constructor(a: IPFunction<R>, b: IPFunction<X>) {
+export class PAdd<R extends BaseValueRelative> extends BinaryOp<R, R> implements IPFunctionCalculus<R> {
+    constructor(a: IPFunctionCalculus<R>, b: IPFunctionCalculus<R>) {
         super(a, b);
     }
 
-    differentiate(): IPFunction<R> {
-        return new PAdd(this.l.derivative(), this.r.derivative());
+    differentiate(): IPFunctionCalculus<R> {
+        const dl = this.l.derivative();
+        const dr = this.r.derivative();
+        return new PAdd(dl, dr);
     }
 
     integrate(): IndefiniteIntegral<R> {
@@ -114,16 +117,16 @@ export class PAdd<R extends BaseValue, X extends RelativeOf<R> > extends BinaryO
     protected compileFn(): IPCompileResult<R> {
         const lf = this.l.f;
         const rf = this.r.f;
-        return (t: number) => gadd(lf(t), rf(t)) as R;
+        return (t: number) => add(lf(t), rf(t));
     }
 }
 
-export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryOp<R, X> {
-    constructor(a: IPFunction<R>, b: IPFunction<X>) {
+export class PSub<R extends BaseValueRelative> extends BinaryOp<R> {
+    constructor(a: IPFunctionCalculus<R>, b: IPFunctionCalculus<R>) {
         super(a, b);
     }
 
-    differentiate(): IPFunction<R> {
+    differentiate(): IPFunctionCalculus<R> {
         return new PSub(this.l.derivative(), this.r.derivative());
     }
 
@@ -134,7 +137,7 @@ export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryO
     protected compileFn(): IPCompileResult<R> {
         const lf = this.l.f;
         const rf = this.r.f;
-        return (t: number) => gsub(lf(t), rf(t)) as R;
+        return (t: number) => sub(lf(t), rf(t));
     }
 }
 
@@ -145,27 +148,28 @@ export class PSub<R extends BaseValue, X extends RelativeOf<R> > extends BinaryO
  *
  * Returns the same type as the first argument.
  */
-export function sub<R extends number>(a: R, ...rest: R[]): R;
-export function sub<R extends Point|Vector>(a: R, ...rest: Vector[]): Point;
-export function sub<R extends Orientation|Rotation>(a: R, ...rest: Rotation[]): R;
-export function sub<R extends number>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
-export function sub<R extends Point|Vector>(a: IPCompiled<R>, ...rest: IPCompiled<Vector>[]): IPCompiled<R>;
-export function sub<R extends Orientation|Rotation>(a: IPCompiled<R>, ...rest: IPCompiled<Rotation>[]): IPCompiled<R>;
-export function sub<R extends number>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
-export function sub(a: IPFunction<Point>, ...rest: IPFunction<Vector>[]): IPFunction<Point>;
-export function sub(a: IPFunction<Vector>, ...rest: IPFunction<Vector>[]): IPFunction<Vector>;
-export function sub(a: IPFunction<Orientation>, ...rest: IPFunction<Rotation>[]): IPFunction<Orientation>;
-export function sub(a: IPFunction<Rotation>, ...rest: IPFunction<Rotation>[]): IPFunction<Rotation>;
+export function sub<R extends BaseValueIntrinsic>(a: R, ...rest: RelativeOf<R>[]): R;
+export function sub<R extends BaseValueIntrinsic>(a: R, b: R): RelativeOf<R>;
+export function sub<R extends BaseValueRelative>(a: R, ...b: R[]): R;
+
+export function sub<R extends BaseValueIntrinsic>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
+export function sub<R extends BaseValueIntrinsic>(a: IPCompiled<R>, b: IPCompiled<R>): IPCompiled<RelativeOf<R>>;
+export function sub<R extends BaseValueRelative>(a: IPCompiled<R>, ...b: IPCompiled<R>[]): IPCompiled<R>;
+
+export function sub<R extends BaseValueIntrinsic>(a: IPFunction<R>, ...rest: IPFunction<RelativeOf<R>>[]): IPFunction<R>;
+export function sub<R extends BaseValueIntrinsic>(a: IPFunction<R>, b: IPFunction<R>): IPFunction<RelativeOf<R>>;
+export function sub<R extends BaseValueRelative>(a: IPFunction<R>, ...b: IPFunction<R>[]): IPFunction<R>;
+
 export function sub(
     a: BaseValue|IPFunction|IPCompiled,
-    ...rest: (BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>)[])
+    ...rest: (BaseValue|IPFunction|IPCompiled)[])
     : BaseValue|IPFunction|IPCompiled {
     return gsub(a, ...rest);
 }
 
 export function gsub(
     a: BaseValue|IPFunction|IPCompiled,
-    ...rest: (BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>)[])
+    ...rest: (BaseValue|IPFunction|IPCompiled)[])
     : BaseValue|IPFunction|IPCompiled
 {
     const check = (pred: (v: any) => boolean) => (rest: any[]) => rest.forEach(v => pred(v) || Throw('Bad value in add'));
@@ -191,7 +195,10 @@ export function gsub(
         return acc;
     } else if (isPFunction(a)) {
         check(isPFunction)(rest);
-        return (rest as unknown as IPFunction<Vector>[]).reduce((ra, v) => new PSub(ra, v), a);
+            // Vector stands in here for any one type.
+        return (rest as unknown as IPFunction<Vector>[])
+            .reduce((ra, v) => new PSub<Vector>(ra, v),
+                a as IPFunctionCalculus<Vector>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);
         const pf = a.pfunction;
@@ -205,12 +212,12 @@ export function gsub(
 
 
 export class PMul<R extends BaseValueRelative> extends BinaryOp<R, number> {
-    constructor(a: IPFunction<R>, b: IPFunction<number>) {
+    constructor(a: IPFunctionCalculus<R>, b: IPFunctionCalculus<number>) {
         super(a, b);
     }
 
-    differentiate(): IPFunction<R> {
-        return new PMul(this.l.derivative(), this.r.derivative());
+    differentiate(): IPFunctionCalculus<R> {
+        return new PMul(this.l.derivative(), this.r);
     }
 
     integrate(): IndefiniteIntegral<R> {
@@ -224,15 +231,13 @@ export class PMul<R extends BaseValueRelative> extends BinaryOp<R, number> {
     }
 }
 
-export function mul(a: number, ...rest: number[]): number;
 export function mul<R extends BaseValueRelative>(a: R, ...rest: number[]): R;
-// noinspection JSUnusedGlobalSymbols
 export function mul<R extends BaseValueRelative>(a: IPCompiled<R>, ...rest: (IPCompiled<number>|number)[]): IPCompiled<R>;
 export function mul<R extends BaseValueRelative>(a: IPFunction<R>, ...rest: (IPFunction<number>|number)[]): IPFunction<R>;
 export function mul(
-    a: BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>,
+    a: BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>|any,
     ...rest: (number|IPFunction<number>|IPCompiled<number>)[])
-    : BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative> {
+    : BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>|any {
     return gmul(a, ...rest);
 }
 
@@ -259,7 +264,9 @@ export function gmul(
         return acc;
     } else if (isPFunction(a)) {
         check(isPFunction)(rest);
-        return (rest as unknown as IPFunction<number>[]).reduce((ra, v) => new PMul(ra, v), a);
+        return (rest as unknown as (IPFunctionCalculus<number> | number)[])
+            .reduce((ra, v) => new PMul(ra, typeof v === 'number' ? new Scalar(v) : v),
+                a as IPFunctionCalculus<Vector>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);
         const pf = a.pfunction;

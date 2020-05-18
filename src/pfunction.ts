@@ -5,8 +5,8 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
-import {BaseValue, TYPE} from "./math-types";
-import {ArgCount, IPCompiled, IPCompileResult, IPFunction, IPFunctionBase, PFunctionDefaults, PFunctionOpts, TexFormatter} from "./base";
+import {BaseValue, BaseValueRelative, TYPE} from "./math-types";
+import {ArgCount, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, PFunctionOpts, TexFormatter} from "./base";
 import {idGen, ViewOf} from "./utils";
 
 /**
@@ -14,7 +14,7 @@ import {idGen, ViewOf} from "./utils";
  */
 export let TIMESTEP: number = 0.001;
 
-export abstract class PFunction<R extends BaseValue = BaseValue, N extends ArgCount = 1> implements IPFunctionBase<R, N> {
+export abstract class  PFunction<R extends BaseValue = BaseValue, N extends ArgCount = 1> implements IPFunctionBase<R, N> {
     /**
      * The time step to be used for numerical integration. Ignored for functions with a defined analytic integral.
      */
@@ -119,15 +119,15 @@ export abstract class PFunction<R extends BaseValue = BaseValue, N extends ArgCo
  * Base class for our object representation, which is bidirectionally paired with implementing functions.
  */
 export abstract class PCalculus<
-    R extends BaseValue = BaseValue
+    R extends BaseValueRelative = BaseValueRelative
     >
     extends PFunction<R>
-    implements IPFunction<R>
+    implements IPFunctionCalculus<R>
 {
     /**
      * Cached derivative
      */
-    private derivative_?: IPFunction<R>;
+    private derivative_?: IPFunctionCalculus<R>;
     /**
      * Cached integral
      */
@@ -140,14 +140,14 @@ export abstract class PCalculus<
         super(opts);
     }
 
-    derivative(): IPFunction<R> {
+    derivative(): IPFunctionCalculus<R> {
         return this.derivative_ || (this.derivative_ = this.differentiate());
     }
 
     /**
      * Compute the derivative of this function. The default is to perform numeric differentiation.
      */
-    abstract differentiate(): IPFunction<R>;
+    abstract differentiate(): IPFunctionCalculus<R>;
 
     /**
      * Return the indefinite integral of this function.
@@ -157,33 +157,9 @@ export abstract class PCalculus<
     }
 
     /**
-     * Compute the integral of this function. The default is to perform a numeric integration.
+     * Compute the integral of this function. We fall back to numeric integration if necessary.
      */
     abstract integrate(): IndefiniteIntegral<R>;
-}
-
-export class IndefiniteIntegralImpl<R extends BaseValue> extends PFunction<R, 2> implements IndefiniteIntegral<R> {
-
-    integrand: IPFunction<R>;
-
-    constructor(integrand: IPFunction<R>, options = PFunctionDefaults[2]) {
-        super(options);
-        this.integrand = integrand;
-    }
-
-    get returnType(): TYPE {
-        return this.integrand.returnType;
-    }
-
-    protected compileFn(): IPCompileResult<R, 2> {
-        throw new Error(`Cannot compile indefinite integrals yet.`);
-        // const f = (this.integrand as IPFunction<BaseValueRelative>).compile()
-        // return (t0: number, t: number) => gsub(f(t), f(t0)) as R;
-    }
-}
-
-export interface IndefiniteIntegral<T extends BaseValue> extends PFunction<T, 2> {
-    integrand: IPFunction<T>;
 }
 
 export function isPFunction<N extends ArgCount>(a: any, n: N): a is IPFunction<BaseValue, N>;
@@ -198,7 +174,3 @@ export function isPCompiled(a: any, n?: ArgCount) {
     return typeof a === 'function' && !!a.pfunction && ((n === undefined) || a.pfunction.nargs === n);
 }
 
-export interface DefiniteIntegral<T extends BaseValue> {
-    from: IPFunction<T>;
-    t0: number;
-}

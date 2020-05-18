@@ -6,9 +6,9 @@
  */
 
 import {ZERO} from "./scalar";
-import {IndefiniteIntegral, PCalculus} from "./pfunction";
+import {PCalculus} from "./pfunction";
 import {TYPE} from "./math-types";
-import {IPCompileResult, IPFunction} from "./base";
+import {IndefiniteIntegral, IPCompileResult, IPFunctionCalculus} from "./base";
 import {AnalyticIntegral} from "./integral";
 
 /**
@@ -22,7 +22,8 @@ export class Poly extends PCalculus<number> {
         super({});
         this.coefficients = coeffs;
     }
-    differentiate(): IPFunction<number> {
+
+    differentiate(): IPFunctionCalculus<number> {
         if (this.coefficients.length < 2) {
             return ZERO;
         } else {
@@ -31,7 +32,7 @@ export class Poly extends PCalculus<number> {
     }
 
     integrate(): IndefiniteIntegral<number> {
-        return new AnalyticIntegral(new Poly(0, ...this.coefficients));
+        return new AnalyticIntegral(this, new Poly(0, ...this.coefficients));
     }
 
     get returnType(): TYPE.SCALAR {
@@ -41,7 +42,6 @@ export class Poly extends PCalculus<number> {
     protected compileFn(): IPCompileResult<number> {
         return makePoly(...this.coefficients);
     }
-
 }
 
 const makePoly = (...coeffs: number[]) => (t: number) => {

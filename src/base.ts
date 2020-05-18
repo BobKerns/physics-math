@@ -10,8 +10,8 @@
  *
  * Each PFFunction object has a corresponding function object and vice versa.
  */
-import {BaseValue, TYPE} from "./math-types";
-import {IndefiniteIntegral, PFunction} from "./pfunction";
+import {BaseValue, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
+import {PFunction} from "./pfunction";
 import {ViewOf} from "./utils";
 
 /**
@@ -155,6 +155,7 @@ export const PFunctionDefaults: [
 ];
 
 export interface IPFunctionBase<R extends BaseValue = BaseValue, N extends ArgCount = 1> {
+    timestep: number;
     tex_?: string;
     name: string;
     readonly returnType: TYPE;
@@ -192,26 +193,60 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, N extends ArgCo
     setName_(name: string): this;
 }
 
+export interface IPFunctionCalculus<R extends BaseValueRelative, N extends ArgCount = 1>
+    extends IPFunctionBase<R, N>, IPCalculus<R> {
+
+}
+
 export type IPFunction<
     R extends BaseValue = BaseValue,
     N extends ArgCount = 1
-    > = N extends 1 ? IPCalculus<R> & IPFunctionBase<R, N> : IPFunctionBase<R, N>;
+    > = N extends 1
+    ? R extends number
+        ? IPFunctionCalculus<number>
+        : R extends Rotation
+            ? IPFunctionCalculus<Rotation>
+            : R extends Vector
+                ? IPFunctionCalculus<Vector>
+                : R extends Point
+                    ? IPFunctionBase<Point, N>
+                    : R extends Orientation
+                        ? IPFunctionBase<Orientation, N>
+                        : never
+    : IPFunctionBase<R, N>;
+
 
 /**
  * Implementing function for a PFunction, extended for derivatives and integrals.
  */
-export interface IPCalculus<R extends BaseValue> {
+export interface IPDifferentiable<R extends BaseValueRelative> {
     timestep: number;
     /**
      * Returns the derivative of this IPFunction
      */
-    derivative(): IPFunction<R>;
-    /**
-     * Returns the integral of this IPFunction.
-     */
-    integrate(): IndefiniteIntegral<R>;
+    derivative(): IPFunctionCalculus<R>;
+}
+/**
+ * Implementing function for a PFunction, extended for derivatives and integrals.
+ */
+export interface IPIntegrable<R extends BaseValueRelative> {
+    timestep: number;
     /**
      * Returns the integral of this IPFunction.
      */
     integral(): IndefiniteIntegral<R>;
+}
+/**
+ * Implementing function for a PFunction, extended for derivatives and integrals.
+ */
+export interface IPCalculus<R extends BaseValueRelative> extends IPDifferentiable<R>, IPIntegrable<R> {
+}
+
+export interface IndefiniteIntegral<R extends BaseValueRelative> extends IPFunctionCalculus<R, 2> {
+    integrand: IPFunctionCalculus<R>;
+}
+
+export interface DefiniteIntegral<R extends BaseValueRelative> extends IPCalculus<R>, IPFunctionBase<R> {
+    from: IndefiniteIntegral<R>;
+    t0: number;
 }

@@ -12,12 +12,12 @@
 import {
     datatype,
     DataTypeOf,
-    IntrinsicOf,
+    IntrinsicOf, isIntrinsic,
     isOrientation,
     isPoint,
-    isPositional,
+    isPositional, isRelative,
     isRotation,
-    isRotational,
+    isRotational, isScalar,
     isScalarValue,
     isVector,
     Orientation,
@@ -33,6 +33,8 @@ import {
     vector
 } from "../math-types";
 import {Constructor} from "../utils";
+import {PFunction} from "../pfunction";
+import {NULL_ROTATION, NULL_VECTOR, ORIGIN, ORIGIN_ORIENTATION, Scalar} from "../scalar";
 
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
 
@@ -50,13 +52,18 @@ const checkType = (v: any, type: TYPE) => expect(datatype(v)).toBe(type);
 
 const testPredicates = (t: any, n: boolean, p: boolean, v: boolean, o: boolean, r: boolean) => {
     describe("predicates", () => {
-        test("isScalar", () => expect(isScalarValue(t)).toBe(n));
-        test("isPoint", () => expect(isPoint(t)).toBe(p));
-        test("isVector", () => expect(isVector(t)).toBe(v));
-        test("isPositional", () => expect(isPositional(t)).toBe(p || v))
-        test("isOrientation", () => expect(isOrientation(t)).toBe(o));
-        test("isRotation", () => expect(isRotation(t)).toBe(r));
-        test("isRotational", () => expect(isRotational(t)).toBe(o || r));
+        describe("values", () => {
+            test("isScalarValue", () => expect(isScalarValue(t)).toBe(n));
+            test("isPoint", () => expect(isPoint(t)).toBe(p));
+            test("isVector", () => expect(isVector(t)).toBe(v));
+            test("isPositional", () => expect(isPositional(t)).toBe(p || v))
+            test("isOrientation", () => expect(isOrientation(t)).toBe(o));
+            test("isRotation", () => expect(isRotation(t)).toBe(r));
+            test("isRotational", () => expect(isRotational(t)).toBe(o || r));
+            test('isRelative', () => expect(isRelative(t)).toBe(n || v || r));
+            test('isIntrinsic', () => expect(isIntrinsic(t)).toBe(p || o));
+            test('isScalar', () => expect(isScalar(t)).toBe(n));
+        });
     });
 };
 
@@ -273,4 +280,19 @@ describe("Types", () => {
             const b: IntrinsicOf<Orientation> = rotation();
         });
     });
+});
+
+
+describe("functional", () => {
+    const group = (name: string, value: any, s: boolean, r: boolean, i: boolean) =>
+        describe(name, () => {
+            test("isScalar", () => expect(isScalar(value)).toBe(s));
+            test("isRelative", () => expect(isRelative(value)).toBe(r));
+            test("isIntrinsic", () => expect(isIntrinsic(value)).toBe(i));
+        });
+    group('scalar', new Scalar(3), true, true, false);
+    group('vector', NULL_VECTOR, false, true, false);
+    group('point', ORIGIN, false, false, true);
+    group('rotation', NULL_ROTATION, false, true, false);
+    group('orientation', ORIGIN_ORIENTATION, false, false, true);
 });

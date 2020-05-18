@@ -7,6 +7,8 @@
 
 import {quat, vec4} from "gl-matrix";
 import {Constructor} from "./utils";
+import {isPCompiled, PFunction} from "./pfunction";
+import {IPCompiled, IPFunction} from "./base";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
@@ -469,7 +471,7 @@ export const isRotational = (v: any): v is Rotational => v instanceof Rotationis
 export const isOrientation = (v: any): v is Orientation => v instanceof Orientation;
 export const isRotation = (v: any): v is Rotation => v instanceof Rotation;
 // noinspection JSUnusedGlobalSymbols
-export const isIntrinsic = (v: any): v is BaseValueIntrinsic => v instanceof Point || v instanceof Orientation;
+export const isIntrinsicValue = (v: any): v is BaseValueIntrinsic => v instanceof Point || v instanceof Orientation;
 // noinspection JSUnusedGlobalSymbols
 export const isScalarValue = (v: any): v is ScalarValue => typeof v === 'number';
 // noinspection JSUnusedGlobalSymbols
@@ -481,3 +483,71 @@ export const point = (x: number = 0, y: number = 0, z: number = 0) => new Point(
 export const rotation = (i = 0, j = 0, k = 0, w = 1) => new Rotation(i, j, k, w);
 // noinspection JSUnusedGlobalSymbols
 export const orientation = (i = 0, j = 0, k = 0, w = 1) => new Orientation(i, j, k, w);
+
+export function isRelative(v: IPFunction): v is IPFunction<BaseValueRelative>;
+export function isRelative(v: IPCompiled): v is IPCompiled<BaseValueRelative>;
+export function isRelative(v: number): v is number;
+export function isRelative(v: Positional): v is Vector;
+export function isRelative(v: Rotational): v is Orientation;
+export function isRelative(v: BaseValue): v is BaseValueRelative;
+export function isRelative(v: any): boolean {
+    const relType = (v: any) => {
+        switch (v.returnType) {
+            case TYPE.ROTATION: return true;
+            case TYPE.VECTOR: return true;
+            case TYPE.SCALAR: return true;
+            default: return false;
+        }
+    };
+    if (typeof v === 'number') return true;
+    if (v instanceof Vector) return true;
+    if (v instanceof Rotation) return true;
+    if (v instanceof PFunction) return relType(v);
+    if (isPCompiled(v)) return relType(v.pfunction);
+    return false;
+}
+
+export function isIntrinsic(v: IPFunction): v is IPFunction<BaseValueIntrinsic>;
+export function isIntrinsic(v: IPCompiled): v is IPCompiled<BaseValueIntrinsic>;
+export function isIntrinsic(v: number): false;
+export function isIntrinsic(v: Positional): v is Point;
+export function isIntrinsic(v: Rotational): v is Orientation;
+export function isIntrinsic(v: BaseValue): v is BaseValueIntrinsic;
+export function isIntrinsic(v: any): boolean {
+    const relType = (v: any) => {
+        switch (v.returnType) {
+            case TYPE.ORIENTATION: return true;
+            case TYPE.POINT: return true;
+            default: return false;
+        }
+    };
+    if (typeof v === 'number') return false;
+    if (v instanceof Point) return true;
+    if (v instanceof Orientation) return true;
+    if (v instanceof PFunction) return relType(v);
+    if (isPCompiled(v)) return relType(v.pfunction);
+    return false;
+}
+
+
+export function isScalar(v: IPFunction): v is IPFunction<number>;
+export function isScalar(v: IPCompiled): v is IPCompiled<number>;
+export function isScalar(v: number): v is number;
+export function isScalar(v: Positional): false;
+export function isScalar(v: Rotational): false;
+export function isScalar(v: BaseValue): v is number;
+export function isScalar(v: any): boolean {
+    const relType = (v: any) => {
+        switch (v.returnType) {
+            case TYPE.SCALAR: return true;
+            default: return false;
+        }
+    };
+    if (typeof v === 'number') return true;
+    if (v instanceof Vectorish) return false;
+    if (v instanceof Rotationish) return false;
+    if (v instanceof PFunction) return relType(v);
+    if (isPCompiled(v)) return relType(v.pfunction);
+    return false;
+}
+
