@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="Physics Math">
+    <module2copyright>
+      <element module="src" copyright="Physics Math" />
+    </module2copyright>
+  </settings>
+</component>

@@ -1,3 +1,10 @@
+/*
+ * @module physics-math
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
+ */
+
 import {quat, vec4} from "gl-matrix";
 import {Constructor} from "./utils";
 

@@ -1,5 +1,11 @@
+/*
+ * @module physics-math
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
+ */
+
 /**
- * @module PhysicsMath Math for physics examples.
  * Turn a function of 1-4 arguments into one that auto-curries.
  * Any arguments omitted or supplied as undefined will result in a new function being returned
  * that accepts the missing arguments.

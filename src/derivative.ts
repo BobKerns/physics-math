@@ -1,3 +1,10 @@
+/*
+ * @module physics-math
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
+ */
+
 import {BaseValue, Point, Rotation, TYPE, Vector} from "./math-types";
 import {IndefiniteIntegral, PCalculus, PFunction} from "./pfunction";
 import {IPCompiled, IPCompileResult, IPFunction} from "./base";

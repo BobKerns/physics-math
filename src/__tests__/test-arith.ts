@@ -1,6 +1,8 @@
-/**
+/*
  * @module physics-math
- * Copyright ©  by Bob Kerns. Licensed under MIT license
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
  */
 
 /**
@@ -9,7 +11,6 @@
 
 import {add, equal, mul, near, sub} from "../arith";
 import {isPoint, isRotation, isVector, point, rotation, vector, orientation, isOrientation, Rotation, Orientation} from "../math-types";
-import {quat} from "gl-matrix";
 
 describe('scalar', () => {
     test('add', () => expect(add(15, 17)).toBe(32));

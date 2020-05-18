@@ -1,6 +1,8 @@
-/**
+/*
  * @module physics-math
- * Copyright ©  by Bob Kerns. Licensed under MIT license
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
  */
 
 import {IPCompiled, IPCompileResult, IPFunction} from "./base";

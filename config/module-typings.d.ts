@@ -1,4 +1,9 @@
-// Copyright  by Bob Kerns. Licensed under MIT license
+/*
+ * @module physics-math
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
+ */
 
 // We supply the missing type information for the terser plugin.
 
@@ -27,5 +32,6 @@ declare module "rollup-plugin-visualizer" {
         open: boolean;
         openOptions: OpenOptions;
     }
+    // noinspection JSDuplicatedDeclaration
     export default function visualizer(options?: Partial<VisualizerOptions>): Plugin;
 }

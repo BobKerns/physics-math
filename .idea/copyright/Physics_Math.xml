@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="allowReplaceRegexp" value="Bob Kerns" />
+    <option name="notice" value="@module &amp;#36;project.name&#10;Copyright &amp;#36;today.year by Bob Kerns. Licensed under MIT license.&#10;&#10;Github: https://github.com/BobKerns/physics-math" />
+    <option name="myName" value="Physics Math" />
+  </copyright>
+</component>

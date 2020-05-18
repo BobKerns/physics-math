@@ -1,6 +1,8 @@
-/**
- * @module PhysicsMath
- * Copyright © 2020 by Bob Kerns. Licensed under MIT license
+/*
+ * @module physics-math
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
  */
 
 import {ZERO} from "./scalar";

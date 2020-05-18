@@ -1,3 +1,10 @@
+/*
+ * @module physics-math
+ * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ *
+ * Github: https://github.com/BobKerns/physics-math
+ */
+
 import {BaseValue, TYPE} from "./math-types";
 import {ArgCount, IPCompiled, IPCompileResult, IPFunction, IPFunctionBase, PFunctionDefaults, PFunctionOpts, TexFormatter} from "./base";
 import {idGen, ViewOf} from "./utils";
