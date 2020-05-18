@@ -2,6 +2,7 @@
  * Copyright © 2019. Licensed under MIT license.
  */
 
+// noinspection JSUnusedGlobalSymbols
 export default {
     preset: 'ts-jest',
     testMatch: [

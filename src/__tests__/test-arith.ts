@@ -83,7 +83,7 @@ describe('orientation', () => {
     test('mul', () => expect(() => mul(v1, 2, 3)).toThrowError());
     test("equal 0", () => expect(equal(v1, orientation())).toBe(true));
     test("coerce", () => expect(Orientation.coerce(v2)).toEqual(Orientation.fromEuler(Math.PI/2, 0, 0)));
-    test("coercex", () => expect(Orientation.coerce(Rotation.fromEuler(Math.PI/2, 0, 0))).toEqual(Orientation.fromEuler(Math.PI/2, 0, 0)));
+    test("coerceX", () => expect(Orientation.coerce(Rotation.fromEuler(Math.PI/2, 0, 0))).toEqual(Orientation.fromEuler(Math.PI/2, 0, 0)));
     test("equal", () =>
         expect(equal(Orientation.coerce(v2), Orientation.fromEuler(Math.PI/2, 0,0))).toBe(true));
     // @ts-expect-error

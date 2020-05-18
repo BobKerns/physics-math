@@ -9,7 +9,7 @@ import {defineAlias, defineUnit, P} from "./units";
 
 /**
  * Collect common unit constants under a U namespace.
- * Using a nsmespace allows precise typescript typing, while keeping the namespace
+ * Using a namespace allows precise typescript typing, while keeping the namespace
  * distinct from the start. Otherwise, import * from './unit-defs' would
  * be dangerous as types are added.
  *
@@ -112,7 +112,7 @@ export namespace U {
 
     // noinspection JSUnusedGlobalSymbols
     export const conductance = defineUnit({length: -2, mass: -1, time: 3, current: 1},
-        {name: 'seimen', symbol: 'S'},
+        {name: 'siemen', symbol: 'S'},
         'conductance');
 
     // noinspection JSUnusedGlobalSymbols
@@ -126,7 +126,7 @@ export namespace U {
         'fluxDensity');
 
     // noinspection JSUnusedGlobalSymbols
-    export const inductace = defineUnit({length: 2, mass: 1, time: -2, current: -2},
+    export const inductance = defineUnit({length: 2, mass: 1, time: -2, current: -2},
         {name: 'henry', symbol: 'H'},
         'inductance');
 
@@ -198,6 +198,7 @@ export namespace U {
         U.length, 0.0000000001, 0,
         'ångstrom');
 
+    // noinspection JSUnusedGlobalSymbols
     export const gram = defineAlias('gram', 'g', {},
         U.mass, 0.001);
 }

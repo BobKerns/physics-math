@@ -191,6 +191,7 @@ describe("Curry4", () => {
         expect(t()).toBe(t);
         expect(t(1)).toBe(1234);
     })
+    // noinspection SpellCheckingInspection
     test('call abcd', () => {
         const t = c(1, 2, 3, 4);
         expect(t).toBe(1234);

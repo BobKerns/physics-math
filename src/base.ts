@@ -1,12 +1,12 @@
 /*
  * @module physics-math
+ * Integrable/differentiable physics functions with LaTex display.
  * Copyright 2020 by Bob Kerns. Licensed under MIT license.
  *
  * Github: https://github.com/BobKerns/physics-math
  */
 
 /**
- * Integrable/differentiable phyics functions with LaTex display.
  *
  * Each PFFunction object has a corresponding function object and vice versa.
  */
@@ -198,7 +198,7 @@ export type IPFunction<
     > = N extends 1 ? IPCalculus<R> & IPFunctionBase<R, N> : IPFunctionBase<R, N>;
 
 /**
- * Implementing function for a PFunction, extended for derivatrives and integrals.
+ * Implementing function for a PFunction, extended for derivatives and integrals.
  */
 export interface IPCalculus<R extends BaseValue> {
     timestep: number;

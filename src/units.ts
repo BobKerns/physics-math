@@ -89,7 +89,7 @@ type UnitTerms = {
 };
 
 /**
- * Turn the sttructured UnitTerms key into a string to do the lookup for unique types.
+ * Turn the structured UnitTerms key into a string to do the lookup for unique types.
  * @param key
  */
 const makeLookupKey = (key: UnitTerms) => {
@@ -131,7 +131,7 @@ export interface PrimitiveSI {
 }
 
 /**
- * The public interface to all units and alieses.
+ * The public interface to all units and aliases.
  */
 export interface Unit<T extends UnitTerms = UnitTerms> {
     /**
@@ -155,7 +155,7 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
     add(u: Unit<T>): this;
 
     /**
-     * Produce new units multipying these units.
+     * Produce new units multiplying these units.
      * @param u
      */
     multiply(u: Unit): Unit;
@@ -431,10 +431,10 @@ export const defineUnit =
         const lookupKey = makeLookupKey(key);
         const addName = (u: Unit<T>) => (n?: string, table = NAMED_UNITS) => {
             if (n) {
-                const enamed = table[n];
-                if (enamed) {
-                    if (enamed !== u) {
-                            throw new Error(`Conflict of name ${n}: ${enamed.name} => ${u.name}`);
+                const eNamed = table[n];
+                if (eNamed) {
+                    if (eNamed !== u) {
+                            throw new Error(`Conflict of name ${n}: ${eNamed.name} => ${u.name}`);
                     }
                 } else {
                     table[n] = u;

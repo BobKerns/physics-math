@@ -1,10 +1,56 @@
 <component name="ProjectDictionaryState">
   <dictionary name="rwk">
     <words>
+      <w>addf</w>
+      <w>arith</w>
+      <w>autocurried</w>
+      <w>bufsize</w>
+      <w>checkins</w>
+      <w>circleci</w>
+      <w>cnst</w>
+      <w>coeffs</w>
+      <w>datatypes</w>
+      <w>deka</w>
+      <w>denom</w>
+      <w>deriv</w>
+      <w>entrypoints</w>
+      <w>exts</w>
+      <w>fempto</w>
+      <w>gadd</w>
+      <w>gmul</w>
+      <w>gsub</w>
+      <w>heta</w>
       <w>kerns</w>
       <w>memoizer</w>
+      <w>mult</w>
+      <w>multf</w>
+      <w>nargs</w>
+      <w>nbuf</w>
+      <w>nkey</w>
+      <w>noninfringement</w>
+      <w>numerics</w>
+      <w>operatorname</w>
+      <w>pdir</w>
+      <w>pfunction</w>
+      <w>quat</w>
+      <w>ramda</w>
+      <w>relpath</w>
+      <w>romberg</w>
+      <w>rotationish</w>
+      <w>rpath</w>
+      <w>seqs</w>
+      <w>siemen</w>
       <w>stepsize</w>
       <w>steridian</w>
+      <w>subf</w>
+      <w>timestep</w>
+      <w>tsbuild</w>
+      <w>unprefixed</w>
+      <w>vectorish</w>
+      <w>versor</w>
+      <w>viewof</w>
+      <w>wasm</w>
+      <w>ångstrom</w>
     </words>
   </dictionary>
 </component>

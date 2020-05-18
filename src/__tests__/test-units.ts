@@ -199,6 +199,7 @@ describe('Parse', () => {
     test('get mg', () =>
         expect(getUnit('mg').toSI(2))
             .toEqual([0.000002, U.mass]));
+    // noinspection SpellCheckingInspection
     test('kilom', () =>
         expect(() => getUnit('kilom'))
             .toThrowError());

@@ -13,7 +13,7 @@ import {IndefiniteIntegral, PCalculus} from "./pfunction";
 import {IPCompileResult, IPFunction} from "./base";
 
 /**
- * Functions that have to be numerically integrated/diffentiated.
+ * Functions that have to be numerically integrated/differentiated.
  */
 
 export class GFunction extends PCalculus<number> {

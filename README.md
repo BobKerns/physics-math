@@ -75,9 +75,6 @@ This hierarchy contains the project's source code and related tests.
 * .npmignore — hides build infrastructure, sources, etc. from the final npm package.
 * travis.yml -- configuration for building automatically on [Travis](https://travis-ci.com/)
 * .circle-ci/ -- configuration for building automatically on [Circle CI](https://circleci.com)
-*  .github/workflows -- configuration for building automatically on GitHub Workflows
+* .github/workflows -- configuration for building automatically on GitHub Workflows
 * rollup.config.js -- redirects to [/config/rollup.config.ts](/config/rollup.config.ts)
-*
-
-[Continuous Integration Integration]: #continuous-integration-integration
 

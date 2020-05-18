@@ -32,6 +32,7 @@ declare module "rollup-plugin-visualizer" {
         open: boolean;
         openOptions: OpenOptions;
     }
-    // noinspection JSDuplicatedDeclaration
+
+    // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols
     export default function visualizer(options?: Partial<VisualizerOptions>): Plugin;
 }

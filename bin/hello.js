@@ -4,7 +4,7 @@
  */
 /**
  * Just a simple demo function.
- * @type {{readonly default: () => string}}
+ * @type {{(): string}}
  */
 const hello = require('../lib/cjs/index.js');
 process.stdout.write(hello() + "\n");

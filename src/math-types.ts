@@ -232,7 +232,7 @@ export class Vector extends Vectorish<0> implements Relative<Point>, DataType<TY
 }
 
 /**
- * Rotation or Orientationm represented as a versor, aka a unit quaternion.
+ * Rotation or Orientation represented as a versor, aka a unit quaternion.
  */
 abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|TYPE.ORIENTATION> {
     protected constructor(i = 0, j = 0, k = 0, w = 1) {
@@ -322,7 +322,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
     }
 
     /**
-     * Because multiplication of quaternions is equal to addition of sphereical vectors on the
+     * Because multiplication of quaternions is equal to addition of spherical vectors on the
      * 3D unit sphere, multiplication of those vectors by a real is the same as exponentiation of
      * their quaternions by a real.
      * @param n
@@ -337,7 +337,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
     }
 
     /**
-     * Because multiplication of quaternions is equal to addition of sphereical vectors on the
+     * Because multiplication of quaternions is equal to addition of spherical vectors on the
      * 3D unit sphere, multiplication of those vectors by a real is the same as exponentiation of
      * their quaternions by a real.
      * @param n

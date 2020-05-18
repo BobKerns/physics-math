@@ -145,7 +145,7 @@ export abstract class PCalculus<
     }
 
     /**
-     * Compute the derivative of this function. The default is to perform numneric differentiation.
+     * Compute the derivative of this function. The default is to perform numeric differentiation.
      */
     abstract differentiate(): IPFunction<R>;
 

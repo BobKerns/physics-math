@@ -5,4 +5,5 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
+// noinspection JSUnusedGlobalSymbols
 export const tools = {};
