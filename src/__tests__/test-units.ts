@@ -18,6 +18,9 @@ import NAMED_UNITS = TEST.NAMED_UNITS_;
 import deleteUnit = TEST.deleteUnit_;
 import {Throw} from "../utils";
 import parsePrefix = TEST.parsePrefix_;
+import RE_whitespace = TEST.RE_whitespace_;
+import RE_prefix_name_concat = TEST.RE_prefix_name_concat_;
+import RE_symbol = TEST.RE_symbol_;
 
 describe("Primitive", () => {
     // If this test fails, the tests need to be revisited for the change in primitives.
@@ -181,38 +184,57 @@ describe(`Aliases`, () => {
 });
 
 describe('Parse', () => {
-    test('parse Mm', () =>
-        expect(parsePrefix('Mm')?.toSI(2))
-            .toEqual([2000000, U.length]));
-    test('get Mm', () =>
-        expect(getUnit('Mm').toSI(2))
-            .toEqual([2000000, U.length]));
-    test('get μm', () =>
-        expect(getUnit('μm').toSI(2))
-            .toEqual([0.000002, U.length]));
-    test('get um', () =>
-        expect(getUnit('um').toSI(2))
-            .toEqual([0.000002, U.length]));
-    test('get Mg', () =>
-        expect(getUnit('Mg').toSI(2))
-            .toEqual([2000, U.mass]));
-    test('get mg', () =>
-        expect(getUnit('mg').toSI(2))
-            .toEqual([0.000002, U.mass]));
-    // noinspection SpellCheckingInspection
-    test('kilom', () =>
-        expect(() => getUnit('kilom'))
-            .toThrowError());
-    test('parse kilometer', () =>
-        expect(parsePrefix('kilometer')?.toSI(2))
-            .toEqual([2000, U.length]));
-    test('kilometer', () =>
-        expect(getUnit('kilometer')?.toSI(2))
-            .toEqual([2000, U.length]));
-    test('kilo-meter', () =>
-        expect(getUnit('kilo-meter')?.toSI(2))
-            .toEqual([2000, U.length]));
-    test('kilo meter', () =>
-        expect(getUnit('kilo meter')?.toSI(2))
-            .toEqual([2000, U.length]));
-})
+    describe(`Regex`, () => {
+        test(`canon1`,
+            () => expect('foo   bar'.replace(RE_whitespace, ' '))
+                .toBe('foo bar'));
+        test(`canon2a`, () =>
+            expect(`kilo meter`.replace(RE_prefix_name_concat,
+                (x: string, p: string, s: string) => `${p}${s}`))
+                .toBe('kilometer'));
+        test(`canon2b`, () =>
+            expect(`kilo-meter`.replace(RE_prefix_name_concat,
+                (x: string, p: string, s: string) => `${p}${s}`))
+                .toBe('kilometer'));
+        test(`symbol mu`, () =>
+            expect(RE_symbol.exec(`μm`)?.map(s => '' + s))
+                .toEqual([`μm`, `μ`, `m`]));
+    });
+
+    describe(`get`, () => {
+        test('parse Mm', () =>
+            expect(parsePrefix('Mm')?.toSI(2))
+                .toEqual([2000000, U.length]));
+        test('get Mm', () =>
+            expect(getUnit('Mm').toSI(2))
+                .toEqual([2000000, U.length]));
+        test('get μm', () =>
+            expect(getUnit('μm').toSI(2))
+                .toEqual([0.000002, U.length]));
+        test('get um', () =>
+            expect(getUnit('um').toSI(2))
+                .toEqual([0.000002, U.length]));
+        test('get Mg', () =>
+            expect(getUnit('Mg').toSI(2))
+                .toEqual([2000, U.mass]));
+        test('get mg', () =>
+            expect(getUnit('mg').toSI(2))
+                .toEqual([0.000002, U.mass]));
+        // noinspection SpellCheckingInspection
+        test('kilom', () =>
+            expect(() => getUnit('kilom'))
+                .toThrowError());
+        test('parse kilometer', () =>
+            expect(parsePrefix('kilometer')?.toSI(2))
+                .toEqual([2000, U.length]));
+        test('kilometer', () =>
+            expect(getUnit('kilometer')?.toSI(2))
+                .toEqual([2000, U.length]));
+        test('kilo-meter', () =>
+            expect(getUnit('kilo-meter')?.toSI(2))
+                .toEqual([2000, U.length]));
+        test('kilo meter', () =>
+            expect(getUnit('kilo meter')?.toSI(2))
+                .toEqual([2000, U.length]));
+    });
+});
