@@ -50,7 +50,7 @@
     "@types/ramda": "^0.26.44",
     "jest": "^26.0.1",
     "jest-mock-proxy": "^3.0.0",
-    "mermaid": "^8.5.0",
+    "mermaid": "^8.5.1",
     "ramda": "^0.26.1",
     "rollup": "^1.32.1",
     "rollup-plugin-terser": "^5.3.0",
