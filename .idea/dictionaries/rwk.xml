@@ -2,6 +2,9 @@
   <dictionary name="rwk">
     <words>
       <w>kerns</w>
+      <w>memoizer</w>
+      <w>stepsize</w>
+      <w>steridian</w>
     </words>
   </dictionary>
 </component>
