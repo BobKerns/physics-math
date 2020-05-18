@@ -3,7 +3,12 @@
   "extends": "../tsconfig.json",
   "files": [
     "error-handling.ts",
-    "test-curry.ts"
+    "test-curry.ts",
+    "test-arith.ts",
+    "test-math-types.ts",
+    "test-pfunction.ts",
+    "test-units.ts",
+    "test-numerics.ts"
   ],
   "include": ["*.ts"],
   "exclude": ["node_modules"],
