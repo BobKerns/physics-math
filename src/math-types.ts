@@ -8,7 +8,8 @@
 import {quat, vec4} from "gl-matrix";
 import {Constructor} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
-import {IPCompiled, IPFunction} from "./base";
+import {BoundValue, InertialFrame, IPCompiled, IPFunction} from "./base";
+import {U} from "./units";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
@@ -194,26 +195,27 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
         return this;
     }
 
-    // noinspection JSUnusedGlobalSymbols
     clone(): this {
         const c = this.constructor as Constructor3N<Vectorish>;
         return new c(this[0], this[1], this[2]) as this;
     }
 }
 
-export class Point extends Vectorish<1> implements Intrinsic<Vector>, DataType<TYPE.POINT> {
+export class Point extends Vectorish<1> implements Intrinsic<Vector>, DataType<TYPE.POINT>, BoundValue<Point, U.length> {
     get type(): TYPE.POINT { return TYPE.POINT; }
 
-    constructor(x = 0, y = 0, z = 0) {
+    readonly frame: InertialFrame;
+    get unit(): U.length { return U.length; };
+    get value(): Point { return this; }
+
+    constructor(frame: InertialFrame, x = 0, y = 0, z = 0) {
         super(x, y, z, 1);
+        this.frame = frame;
     }
 
-    static coerce(p: Point | vec4) {
-        if (isPoint(p)) {
-            return p;
-        } else {
-            return new Point(p[0], p[1], p[2])
-        }
+
+    clone(): this {
+        return new Point(this.frame, this[0], this[1], this[2]) as this;
     }
 }
 
@@ -282,6 +284,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         return this as unknown as quat;
     }
 
+
     /**
      * Addition here is the group operator on the rotation group, i.e. addition of spherical (great-circle)
      * on the versor surface. This corresponds to multiplication of the underlying quaternions.
@@ -294,6 +297,9 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
             a as unknown as quat
         ) as unknown as this;
     }
+
+    abstract create(): Rotationish;
+    abstract clone(): Rotationish;
 
     // noinspection JSUnusedGlobalSymbols
     addf(a: Rotationish): this {
@@ -353,17 +359,6 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         ) as unknown as this;
     }
 
-    // noinspection JSUnusedGlobalSymbols
-    clone(): this {
-        const c = this.constructor as Constructor4N<Rotationish>;
-        return new c(this[0], this[1], this[2], this[3]) as this;
-    }
-
-    create(): this {
-        const c = this.constructor as Constructor<Rotationish> ;
-        return new c() as this;
-    }
-
     /**
      * Normalizes in-place.
      */
@@ -403,7 +398,7 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         return new c(dx/2, dy/w, dz/w);
     }
 
-    static fromEulerX<T extends Rotationish>(cls: Constructor4N<T>, x: number, y: number, z: number) {
+    static fromEulerX<T extends Rotationish>(f: (i:number, j: number, k: number, w: number) => T, x: number, y: number, z: number) {
         const sx = Math.sin(x);
         const cx = Math.cos(x);
         const sy = Math.sin(y);
@@ -415,30 +410,48 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         const j = cx * sy * cz + sx * cy * sz;
         const k = cx * cy * sz - sx * sy * cz;
         const w = cx * cy * cz + sx * sy * sz;
-        return new cls(i, j, k, w);
+        return f(i, j, k, w);
     }
 }
 
 export type Positional = Point | Vector;
 export type Rotational = Orientation | Rotation;
 
-export class Orientation extends Rotationish implements Intrinsic<Rotation>, DataType<TYPE.ORIENTATION> {
-    constructor(i = 0, j = 0, k = 0, w = 1) {
+export class Orientation extends Rotationish
+    implements Intrinsic<Rotation>, DataType<TYPE.ORIENTATION>, BoundValue<Orientation, U.angle> {
+
+    readonly frame: InertialFrame;
+    get unit(): U.angle { return U.angle; };
+    get value(): Orientation { return this; };
+
+    constructor(frame: InertialFrame, i = 0, j = 0, k = 0, w = 1) {
         super(i, j, k, w);
+        this.frame = frame;
     }
     get type(): TYPE.ORIENTATION { return TYPE.ORIENTATION; }
 
-    static coerce(q: Rotationish | quat): Orientation {
+    // noinspection JSUnusedGlobalSymbols
+    clone(): this {
+        return new Orientation(this.frame, this[0], this[1], this[2], this[3]) as this;
+    }
+
+    create(frame: InertialFrame = this.frame): this {
+        return new Orientation(frame) as this;
+    }
+
+    static coerce(frame: InertialFrame, q: Rotationish | quat): Orientation {
         if (isOrientation(q)) {
             return q;
         } else if (isRotation(q)) {
-            return new Orientation(q[0], q[1], q[2], q[3])
+            return new Orientation(frame, q[0], q[1], q[2], q[3])
         } else {
-            return new Orientation(q[0], q[1], q[2], q[3])
+            return new Orientation(frame, q[0], q[1], q[2], q[3])
         }
     }
-    static fromEuler(x: number, y: number, z: number) {
-        return Rotationish.fromEulerX(Orientation, x, y, z);
+    static fromEuler(frame: InertialFrame, x: number, y: number, z: number) {
+        const maker = (i: number, j: number, k: number, w: number) =>
+            new Orientation(frame, i, j, k, w);
+        return Rotationish.fromEulerX(maker, x, y, z);
     }
 }
 
@@ -457,8 +470,32 @@ export class Rotation extends Rotationish implements Relative<Orientation> {
             return new Rotation(q[0], q[1], q[2], q[3])
         }
     }
+
+    clone(): Rotation {
+        return new Rotation(this[0], this[1], this[2], this[3]);
+    }
+
+    create(): Rotation {
+        return new Rotation();
+    }
+
+    /**
+     * Addition here is the group operator on the rotation group, i.e. addition of spherical (great-circle)
+     * on the versor surface. This corresponds to multiplication of the underlying quaternions.
+     * @param a
+     */
+    add(a: Rotationish): this {
+        return quat.multiply(
+            this.create() as unknown as quat,
+            this as unknown as quat,
+            a as unknown as quat
+        ) as unknown as this;
+    }
+
     static fromEuler(x: number, y: number, z: number) {
-        return Rotationish.fromEulerX(Rotation, x, y, z);
+        const maker = (i: number, j: number, k: number, w: number) =>
+            new Rotation(i, j, k, w);
+        return Rotationish.fromEulerX(maker, x, y, z);
     }
 }
 
@@ -477,12 +514,18 @@ export const isScalarValue = (v: any): v is ScalarValue => typeof v === 'number'
 // noinspection JSUnusedGlobalSymbols
 export const isNonScalarValue = (v: any): v is NonScalarValue => isPositional(v) || isRotational(v);
 
-export const vector = (x: number = 0, y: number = 0, z: number = 0) => new Vector(x, y, z);
-export const point = (x: number = 0, y: number = 0, z: number = 0) => new Point(x, y, z);
+export const vector = (x: number = 0, y: number = 0, z: number = 0) =>
+    new Vector(x, y, z);
+export const point = (frame: InertialFrame,
+                      x: number = 0, y: number = 0, z: number = 0) =>
+    new Point(frame, x, y, z);
 // noinspection JSUnusedGlobalSymbols
-export const rotation = (i = 0, j = 0, k = 0, w = 1) => new Rotation(i, j, k, w);
+export const rotation = (i = 0, j = 0, k = 0, w = 1) =>
+    new Rotation(i, j, k, w);
 // noinspection JSUnusedGlobalSymbols
-export const orientation = (i = 0, j = 0, k = 0, w = 1) => new Orientation(i, j, k, w);
+export const orientation = (frame: InertialFrame,
+                            i = 0, j = 0, k = 0, w = 1) =>
+    new Orientation(frame, i, j, k, w);
 
 export function isRelative(v: IPFunction): v is IPFunction<BaseValueRelative>;
 export function isRelative(v: IPCompiled): v is IPCompiled<BaseValueRelative>;

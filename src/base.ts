@@ -13,6 +13,7 @@
 import {BaseValue, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PFunction} from "./pfunction";
 import {ViewOf} from "./utils";
+import {U, Unit} from "./units";
 
 /**
  * A function that generates a LaTeX string.
@@ -25,6 +26,43 @@ export type TexGenerator = (tv: string) => string;
  */
 export type TexFormatter = (tex: string, block: boolean) => Element;
 
+export interface Value<T extends BaseValue = BaseValue, U extends Unit = Unit> {
+    value: T;
+    readonly unit: U;
+}
+
+export interface BoundValue<T extends BaseValue = BaseValue, U extends Unit = Unit> extends Value<T, U> {
+    readonly frame: InertialFrame;
+}
+
+export type Velocity = Value<Vector, U.velocity>;
+export type Time = Value<number, U.time>;
+
+export interface Transform {
+  readonly positionOffset: Vector;
+  readonly angleOffset: Rotation;
+  readonly positionVelocity: Vector;
+  readonly angleVelocity: Rotation;
+  transform(p: Point): Point;
+  transform(v: Vector): Vector;
+  transform(v: Velocity): Velocity;
+  transform(f: Frame): Frame;
+}
+
+export interface Frame {
+    //
+    isInertial(t: number|Time): boolean;
+    transform(other: Frame): (t: number|Time) => Transform;
+}
+
+export interface InertialFrame extends Frame {
+    isInertial(t: number|Time): true;
+}
+
+// noinspection JSUnusedGlobalSymbols
+export interface World {
+    createInertialFrame(offset: Vector, velocity: Velocity, angle: Rotation): InertialFrame;
+}
 
 /**
  * Implementing function for a PFunction of 0 arguments.

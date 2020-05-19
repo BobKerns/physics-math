@@ -8,7 +8,7 @@
 import {Poly} from "./poly";
 import {BaseValueIntrinsic, BaseValueRelative, orientation, Orientation, point, Point, rotation, Rotation, TYPE, vector, Vector} from "./math-types";
 import {PCalculus, PFunction} from "./pfunction";
-import {IndefiniteIntegral, IPCompileResult} from "./base";
+import {IndefiniteIntegral, InertialFrame, IPCompileResult} from "./base";
 import {AnalyticIntegral} from "./integral";
 import {Throw} from "./utils";
 
@@ -123,7 +123,7 @@ export class OrientationConstant<R extends Orientation> extends ConstantIntrinsi
 }
 
 export const ZERO = new Scalar(0).setName_('ZERO');
-export const ORIGIN = new PointConstant(point());
+export const ORIGIN = (frame: InertialFrame) => new PointConstant(point(frame));
 export const NULL_VECTOR = new VectorConstant(vector());
-export const ORIGIN_ORIENTATION = new OrientationConstant(orientation());
+export const ORIGIN_ORIENTATION = (frame: InertialFrame) => new OrientationConstant(orientation(frame));
 export const NULL_ROTATION = new RotationConstant(rotation());

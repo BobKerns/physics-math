@@ -33,10 +33,10 @@ import {
     vector
 } from "../math-types";
 import {Constructor} from "../utils";
-import {PFunction} from "../pfunction";
 import {NULL_ROTATION, NULL_VECTOR, ORIGIN, ORIGIN_ORIENTATION, Scalar} from "../scalar";
+import {Frame, InertialFrame, Time, Transform} from "../base";
 
-type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
+type Constructor4N<R> = Constructor<R, [number, number, number, number]> | Constructor<R, [InertialFrame, number, number, number, number]>;
 
 const checkAny = <T extends Vector|Point|Rotation|Orientation>(type: Constructor4N<T>, p0: number, p1: number, p2: number, p3: number) => (v: T) => {
     expect(v).toBeInstanceOf(type);
@@ -71,6 +71,18 @@ describe("Scalar", () => {
     testPredicates(1, true, false, false, false, false);
 });
 
+class TFrame implements InertialFrame {
+    isInertial(t: number | Time): true {
+        return true;
+    }
+
+    transform(other: Frame): (t: (number | Time)) => Transform {
+        throw new Error('Not implemented');
+    }
+
+}
+
+const frame = new TFrame();
 describe("Vectorish", () => {
     const check = <T extends Vector|Point>(type: Constructor4N<T>, x: number, y: number, z: number, w: 0 | 1) => (v: T) => {
         checkAny(type, x, y, z, w);
@@ -98,20 +110,20 @@ describe("Vectorish", () => {
      });
      describe("Point", () => {
          test("explicit",
-             () => check(Point, 10, 20, 30, 1)(point(10, 20, 30)));
+             () => check(Point, 10, 20, 30, 1)(point(frame,10, 20, 30)));
          test("assign", () => {
-             const p = point();
+             const p = point(frame);
              p.x = 10;
              p.y = 20;
              p.z = 30;
              check(Point, 10, 20,30, 1)(p);
          });
          test("clone",
-             () => check(Point, 10, 20, 30, 1)(point(10, 20, 30).clone()));
+             () => check(Point, 10, 20, 30, 1)(point(frame,10, 20, 30).clone()));
          test("origin",
-             () => check(Point, 0, 0, 0, 1)(point()));
-         test("datatype", () => checkType(point(), TYPE.POINT));
-         testPredicates(point(1, 2, 3), false, true, false, false, false);
+             () => check(Point, 0, 0, 0, 1)(point(frame)));
+         test("datatype", () => checkType(point(frame), TYPE.POINT));
+         testPredicates(point(frame,1, 2, 3), false, true, false, false, false);
      });
  });
 
@@ -143,9 +155,9 @@ describe("Rotationish", () => {
     });
     describe("Orientation", () => {
         test("explicit",
-            () => check(Orientation, 10, 20, 30, 40)(orientation(10, 20, 30, 40)));
+            () => check(Orientation, 10, 20, 30, 40)(orientation(frame,10, 20, 30, 40)));
         test("assign", () => {
-            const v = orientation();
+            const v = orientation(frame);
             v.i = 10;
             v.j = 20;
             v.k = 30;
@@ -153,11 +165,11 @@ describe("Rotationish", () => {
             check(Orientation, 10, 20,30, 40)(v);
         });
         test("clone",
-            () => check(Orientation, 10, 20, 30, 40)(orientation(10, 20, 30, 40).clone()));
+            () => check(Orientation, 10, 20, 30, 40)(orientation(frame,10, 20, 30, 40).clone()));
         test("null",
-            () => check(Orientation, 0, 0, 0, 1)(orientation()));
-        test("datatype", () => checkType(orientation(), TYPE.ORIENTATION));
-        testPredicates(orientation(1, 2, 3), false, false, false, true, false);
+            () => check(Orientation, 0, 0, 0, 1)(orientation(frame)));
+        test("datatype", () => checkType(orientation(frame), TYPE.ORIENTATION));
+        testPredicates(orientation(frame,1, 2, 3), false, false, false, true, false);
     });
 });
 describe("Types", () => {
@@ -253,28 +265,28 @@ describe("Types", () => {
         });
         intrinsic('vector', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: IntrinsicOf<Vector> = point();
+            const a: IntrinsicOf<Vector> = point(frame);
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
             const b: IntrinsicOf<Vector> = vector();
         });
         intrinsic('point', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: IntrinsicOf<Point> = point();
+            const a: IntrinsicOf<Point> = point(frame);
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
             const b: IntrinsicOf<Point> = vector();
         });
         intrinsic('rotation', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: IntrinsicOf<Rotation> = orientation();
+            const a: IntrinsicOf<Rotation> = orientation(frame);
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
             const b: IntrinsicOf<Rotation> = rotation();
         });
         intrinsic('orientation', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: IntrinsicOf<Orientation> = orientation();
+            const a: IntrinsicOf<Orientation> = orientation(frame);
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
             const b: IntrinsicOf<Orientation> = rotation();
@@ -292,7 +304,7 @@ describe("functional", () => {
         });
     group('scalar', new Scalar(3), true, true, false);
     group('vector', NULL_VECTOR, false, true, false);
-    group('point', ORIGIN, false, false, true);
+    group('point', ORIGIN(frame), false, false, true);
     group('rotation', NULL_ROTATION, false, true, false);
-    group('orientation', ORIGIN_ORIENTATION, false, false, true);
+    group('orientation', ORIGIN_ORIENTATION(frame), false, false, true);
 });

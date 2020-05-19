@@ -180,7 +180,7 @@ export function gsub(
         check(isVector)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
-        return new Point(ax, ay, az);
+        return new Point(a.frame, ax, ay, az);
     } else if (isVector(a)) {
         check(isVector)(rest);
         let [ax, ay, az] = a;
