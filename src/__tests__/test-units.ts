@@ -10,8 +10,9 @@
  */
 
 import {
-    defineUnit, getUnit, TEST, Primitive, U, Unit, defineAlias
+    defineUnit, getUnit, TEST, Primitive, Unit, defineAlias
 } from "../units";
+import {U} from "../unit-defs";
 
 import PRIMITIVE_MAP = TEST.PRIMITIVES_MAP_;
 import NAMED_UNITS = TEST.NAMED_UNITS_;

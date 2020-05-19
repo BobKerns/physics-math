@@ -18,3 +18,4 @@ export * from './curry';
 export * from "./math-types";
 export * from "./pfunction";
 export * from './units';
+export * from './unit-defs';

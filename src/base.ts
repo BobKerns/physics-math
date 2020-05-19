@@ -13,7 +13,8 @@
 import {BaseValue, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PFunction} from "./pfunction";
 import {ViewOf} from "./utils";
-import {U, Unit} from "./units";
+import {Unit} from "./units";
+import {U} from './unit-defs';
 
 /**
  * A function that generates a LaTeX string.

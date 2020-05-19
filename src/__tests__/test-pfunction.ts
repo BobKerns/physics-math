@@ -9,7 +9,7 @@
  * Test the common PFunction functionality.
  */
 
- import {PFunction} from "../pfunction";
+import {PFunction} from "../pfunction";
 import {GFunction} from "../general-fns";
 import {TYPE} from "../math-types";
 import {Scalar} from "../scalar";

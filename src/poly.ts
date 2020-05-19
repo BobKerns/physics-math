@@ -15,7 +15,6 @@ import {AnalyticIntegral} from "./integral";
  * Polynomial functions
  */
 
-
 export class Poly extends PCalculus<number> {
     coefficients: number[];
     constructor(...coeffs: number[]) {
@@ -53,3 +52,4 @@ const makePoly = (...coeffs: number[]) => (t: number) => {
     }
     return acc;
 };
+

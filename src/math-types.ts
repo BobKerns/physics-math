@@ -9,7 +9,7 @@ import {quat, vec4} from "gl-matrix";
 import {Constructor} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
 import {BoundValue, InertialFrame, IPCompiled, IPFunction} from "./base";
-import {U} from "./units";
+import {U} from "./unit-defs";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;

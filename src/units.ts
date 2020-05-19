@@ -684,8 +684,6 @@ export namespace P {
     export const candela: Unit<{ candela: 1 }> = PRIMITIVE_MAP.candela;
 }
 
-export {U} from './unit-defs';
-
 /**
  * A namespace for unit test access
  */
