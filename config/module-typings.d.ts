@@ -36,3 +36,7 @@ declare module "rollup-plugin-visualizer" {
     // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols
     export default function visualizer(options?: Partial<VisualizerOptions>): Plugin;
 }
+
+declare module 'rollup-plugin-external-globals' {
+    export default function externalGlobals(globals: any): Plugin;
+}

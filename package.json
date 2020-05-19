@@ -41,7 +41,8 @@
   "homepage": "https://github.com/BobKerns/physics-math#readme",
   "dependencies": {
     "gl-matrix": "^3.3.0",
-    "katex": "^0.11.1"
+    "katex": "^0.11.1",
+    "rollup-plugin-external-globals": "^0.5.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",

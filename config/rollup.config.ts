@@ -16,6 +16,7 @@ import {terser} from 'rollup-plugin-terser';
 import visualizerNoName, {VisualizerOptions} from 'rollup-plugin-visualizer';
 import {OutputOptions, RollupOptions} from "rollup";
 import {chain as flatMap} from 'ramda';
+import externalGlobals from "rollup-plugin-external-globals";
 
 /**
  * The visualizer plugin fails to set the plugin name. We wrap it to remedy that.
@@ -53,12 +54,12 @@ export const outputs = (p: Package) => flatMap((e: OutputOptions) => (e.file ? [
     [
         {
             file: p.browser,
-            name: p.name,
+            name: 'PM',
             format: 'umd',
             sourcemap: true,
             globals: {
-                "ramda": "ramda",
-                "gl-matrix": "glMatrix"
+                // "ramda": "ramda",
+                // "gl-matrix": "glMatrix"
             }
         },
         {
@@ -126,9 +127,15 @@ const options: RollupOptions = {
         commonjs({
             extensions: [".js", ".ts"]
         }),
+        externalGlobals({
+            'gl-matrix': "glMatrix"
+        }),
+        /*
         terser({
             module: true
         }),
+
+         */
         visualizer({
             filename: "build/build-stats.html",
             title: "Build Stats"
