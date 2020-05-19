@@ -17,5 +17,6 @@ export * from './arith';
 export * from './curry';
 export * from "./math-types";
 export * from "./pfunction";
+export * from './poly';
 export * from './units';
 export * from './unit-defs';
