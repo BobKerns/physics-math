@@ -50,6 +50,9 @@
       <w>versor</w>
       <w>viewof</w>
       <w>wasm</w>
+      <w>xadd</w>
+      <w>xnegate</w>
+      <w>xsub</w>
       <w>ångstrom</w>
     </words>
   </dictionary>

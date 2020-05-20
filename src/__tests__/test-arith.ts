@@ -36,6 +36,7 @@ describe('vector', () => {
 });
 
 class TFrame implements InertialFrame {
+    readonly name = 'bar';
     isInertial(t: number | Time): true {
         return true;
     }

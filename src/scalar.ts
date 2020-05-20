@@ -6,59 +6,70 @@
  */
 
 import {Poly} from "./poly";
-import {BaseValueIntrinsic, BaseValueRelative, orientation, Orientation, point, Point, rotation, Rotation, TYPE, vector, Vector} from "./math-types";
-import {PCalculus, PFunction} from "./pfunction";
-import {IndefiniteIntegral, InertialFrame, IPCompileResult} from "./base";
+import {BaseValue, BaseValueInFrame, BaseValueRelative, isBaseValue, TYPE, valueType} from "./math-types";
+import {isPFunction, PCalculus} from "./pfunction";
+import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, Value} from "./base";
 import {AnalyticIntegral} from "./integral";
-import {Throw} from "./utils";
+import {U as UX, U} from "./unit-defs";
+import {CUnit, Divide, Multiply} from "./primitive-units";
 
 /**
  * Scalar constants
  */
 
-export abstract class Constant<R extends BaseValueRelative> extends PCalculus<R> {
-    readonly value: R;
-    protected constructor(value: R) {
+export interface IConstant<
+    R extends BaseValueRelative,
+    U extends CUnit = CUnit,
+    D extends CUnit = Divide<U, UX.time>,
+    I extends CUnit = Multiply<U, UX.time>
+    >
+    extends IPFunctionBase<R, U>,
+        IPCalculus<R, U, D, I>
+{
+
+}
+
+export interface IConstantInFrame<
+    R extends BaseValueInFrame,
+    U extends CUnit = CUnit
+    >
+    extends IPFunctionBase<R, U>
+{
+
+}
+
+export class ScalarConstant<C extends CUnit = CUnit>
+    extends PCalculus<number, C>
+    implements IConstant<number, C> {
+    readonly value: number;
+    readonly unit: C;
+    constructor(value: number, unit: C) {
         // noinspection JSUnusedLocalSymbols
         super({});
         this.value = value;
+        this.unit = unit;
     }
 
-    protected compileFn(): IPCompileResult<R> {
+    protected compileFn(): IPCompileResult<number> {
         const value = this.value;
         return () => value;
-    }
-}
-
-export abstract class ConstantIntrinsic<R extends BaseValueIntrinsic> extends PFunction<R> {
-    readonly value: R;
-    protected constructor(value: R) {
-        // noinspection JSUnusedLocalSymbols
-        super({});
-        this.value = value;
-    }
-
-    protected compileFn(): IPCompileResult<R> {
-        const value = this.value;
-        return () => value;
-    }
-}
-
-export class Scalar extends Constant<number> {
-    constructor(value: number) {
-        super(value);
     }
 
     toTex(tv: string) {
         return `${this.value}`;
     }
 
-    differentiate(): Scalar {
-        return ZERO;
+    differentiate(): IPFunctionCalculus<number, Divide<C, U.time>, 1, Divide<Divide<C, U.time>, U.time>, C> {
+        const t1 = (this.unit as C).divide(U.time);
+        const a = new ScalarConstant(0, t1);
+        return a as unknown as IPFunctionCalculus<number, Divide<C, U.time>, 1, Divide<Divide<C, U.time>, U.time>, C>;
     }
 
-    integrate(): IndefiniteIntegral<number> {
-        return new AnalyticIntegral(this, new Poly(0, this.value));
+    integrate(): IndefiniteIntegral<number, Multiply<C, U.time>, C> {
+        const iUnit = this.unit.multiply(U.time);
+        const p = new Poly(iUnit, 0, this.value);
+        const a = new AnalyticIntegral(this, p, iUnit);
+        return a as unknown as IndefiniteIntegral<number, Multiply<C, U.time>>;
     }
 
     get returnType(): TYPE.SCALAR {
@@ -66,64 +77,36 @@ export class Scalar extends Constant<number> {
     }
 }
 
-export class VectorConstant<R extends Vector> extends Constant<R> {
-    constructor(value: R) {
-        super(value);
+/**
+ * Get an IConstant from a value or a function at T=0;
+ * @param v A value, a PFunction, or a Value.
+ * @param unit a Unit describing the type of constant.
+ */
+export function constant<T extends BaseValueRelative, U extends CUnit>(v: T | IPFunction<T, U> | Value<T, U> | IConstant<T, U>,
+                                                                       unit: U)
+: IConstant<T,  U>;
+export function constant<T extends BaseValueInFrame, U extends CUnit>(v: T | IPFunction<T, U> | Value<T, U> | IConstantInFrame<T, U>,
+                                                                      unit: U)
+: IConstantInFrame<T, U>;
+export function constant<T extends BaseValue, U extends CUnit>(v: BaseValue|IPFunction, unit: U)
+    : any {
+    if (isPFunction(v, unit, 1)) {
+        if (v as unknown instanceof ScalarConstant) {
+            return v;
+        }
+        return v.f(0);
+    } else if (isBaseValue(v)) {
+        if (!unit) {
+            throw new Error('unit argument is required with BaseValues.');
+        }
+        switch (valueType(v)) {
+            case TYPE.SCALAR: return new ScalarConstant(v as number, unit) as unknown as IConstant<number, U>;
+            case TYPE.VECTOR: return v as unknown as IConstant<BaseValueRelative, U>;
+            case TYPE.ROTATION: return v as unknown as IConstant<BaseValueRelative, U>;
+            case TYPE.POINT: return v as unknown as IConstantInFrame<BaseValueInFrame, U>;
+            case TYPE.ORIENTATION: return v as unknown as IConstantInFrame<BaseValueInFrame, U>;
+        }
+        throw new Error(`Unknown value type ${valueType(v)}`);
     }
-
-    differentiate(): VectorConstant<R> {
-        return NULL_VECTOR as VectorConstant<R>;
-    }
-
-    integrate(): IndefiniteIntegral<R> {
-        return Throw("Not yet defined");
-    }
-
-    get returnType(): TYPE.VECTOR {
-        return TYPE.VECTOR;
-    }
+    throw new Error(`Invalid constant`);
 }
-
-export class PointConstant<R extends Point> extends ConstantIntrinsic<R> {
-    constructor(value: R) {
-        super(value);
-    }
-
-    get returnType(): TYPE.POINT {
-        return TYPE.POINT;
-    }
-}
-
-export class RotationConstant<R extends Rotation> extends Constant<R> {
-    constructor(value: R) {
-        super(value);
-    }
-
-    get returnType(): TYPE.ROTATION {
-        return TYPE.ROTATION;
-    }
-
-    differentiate(): RotationConstant<R> {
-        return NULL_ROTATION as RotationConstant<R>;
-    }
-
-    integrate(): IndefiniteIntegral<R> {
-        return Throw(`Not implemented yet.`);
-    }
-}
-
-export class OrientationConstant<R extends Orientation> extends ConstantIntrinsic<R> {
-    constructor(value: R) {
-        super(value);
-    }
-
-    get returnType(): TYPE.ORIENTATION {
-        return TYPE.ORIENTATION;
-    }
-}
-
-export const ZERO = new Scalar(0).setName_('ZERO');
-export const ORIGIN = (frame: InertialFrame) => new PointConstant(point(frame));
-export const NULL_VECTOR = new VectorConstant(vector());
-export const ORIGIN_ORIENTATION = (frame: InertialFrame) => new OrientationConstant(orientation(frame));
-export const NULL_ROTATION = new RotationConstant(rotation());

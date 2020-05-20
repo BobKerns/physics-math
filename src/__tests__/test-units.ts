@@ -9,8 +9,9 @@
  * Test the Units package functionality.
  */
 
+import {Primitive, Unit} from "../primitive-units";
 import {
-    defineUnit, getUnit, TEST, Primitive, Unit, defineAlias
+    defineUnit, getUnit, TEST, defineAlias
 } from "../units";
 import {U} from "../unit-defs";
 
@@ -28,7 +29,7 @@ describe("Primitive", () => {
     test('# of primitives', () => expect(Object.keys(PRIMITIVE_MAP).length).toBe(10));
     (Object.keys(PRIMITIVE_MAP) as (keyof typeof Primitive)[]).forEach(k => {
         const prim = PRIMITIVE_MAP[k];
-        test(`name ${k}`, () => expect(NAMED_UNITS[prim.name]).toBe(prim));
+        test(`name ${k}`, () => expect(NAMED_UNITS[prim.name].name).toBe(prim.name));
     });
     const expectations: { [k in Primitive]: [string, string, string?] } = {
         time: ['second', 's', 't'],
@@ -53,7 +54,7 @@ describe("Primitive", () => {
 });
 
 describe("Define", () => {
-    test("Redefine primitive", () => expect(defineUnit({mass: 1})).toBe(PRIMITIVE_MAP.mass));
+    test("Redefine primitive", () => expect(defineUnit({mass: 1})).toBe(U.mass));
     test("Define w/ bogus primitive",
         // @ts-expect-error
         () => expect(() => defineUnit({bOgUs: 1}))

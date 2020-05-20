@@ -12,7 +12,8 @@
 import {PFunction} from "../pfunction";
 import {GFunction} from "../general-fns";
 import {TYPE} from "../math-types";
-import {Scalar} from "../scalar";
+import {ScalarConstant} from "../scalar";
+import {U} from "../unit-defs";
 
 describe('PFunction', () => {
     test('create',
@@ -22,5 +23,5 @@ describe('PFunction', () => {
     test('type GFunction',
         () => expect(new GFunction((t: number) => 7 * t).returnType).toBe(TYPE.SCALAR));
     test('type Scalar',
-        () => expect(new Scalar(7).returnType).toBe(TYPE.SCALAR));
+        () => expect(new ScalarConstant(7, U.time).returnType).toBe(TYPE.SCALAR));
  });

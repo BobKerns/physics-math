@@ -17,12 +17,14 @@ import {
     Vector,
     BaseValue,
     BaseValueRelative,
-    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE, BaseValueIntrinsic
+    RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE, BaseValueInFrame
 } from "./math-types";
 import {Throw} from "./utils";
 import {isPCompiled, isPFunction, PCalculus} from "./pfunction";
 import {glMatrix} from "gl-matrix";
-import {Scalar} from "./scalar";
+import {U as UX} from './unit-defs';
+import {ScalarConstant} from "./scalar";
+import {CUnit, Divide, Multiply} from "./primitive-units";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.
@@ -30,9 +32,9 @@ import {Scalar} from "./scalar";
 
 
 export function add<R extends BaseValueRelative>(a: R, ...rest: R[]): R;
-export function add<R extends BaseValueIntrinsic>(a: R, ...rest: RelativeOf<R>[]): R;
+export function add<R extends BaseValueInFrame>(a: R, ...rest: RelativeOf<R>[]): R;
 export function add<R extends BaseValueRelative>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
-export function add<R extends BaseValueIntrinsic>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
+export function add<R extends BaseValueInFrame>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
 export function add<R extends Point|Vector>(a: IPCompiled<R>, ...rest: IPCompiled<Vector>[]): IPCompiled<R>;
 export function add<R extends Orientation|Rotation>(a: IPCompiled<R>, ...rest: IPCompiled<Rotation>[]): IPCompiled<R>;
 export function add<R extends number>(a: IPFunction<R>, ...rest: IPFunction<BaseValueRelative>[]): IPFunction<R>;
@@ -85,10 +87,16 @@ export function gadd(
     }
 }
 
-abstract class BinaryOp<R extends BaseValueRelative, X extends BaseValueRelative = R> extends PCalculus<R> {
-    l: IPFunctionCalculus<R>;
-    r: IPFunctionCalculus<X>;
-    protected constructor( l: IPFunctionCalculus<R>, r: IPFunctionCalculus<X>) {
+abstract class BinaryOp<
+    R extends BaseValueRelative,
+    X extends BaseValueRelative,
+    C extends CUnit,
+    D extends CUnit,
+    I extends CUnit>
+    extends PCalculus<R, C, D, I> {
+    l: IPFunctionCalculus<R, C, 1, D, I>;
+    r: IPFunctionCalculus<X, C, 1, D, I>;
+    protected constructor( l: IPFunctionCalculus<R, C, 1, D, I>, r: IPFunctionCalculus<X, C, 1, D, I>) {
         super({});
         this.l = l;
         this.r = r;
@@ -99,18 +107,25 @@ abstract class BinaryOp<R extends BaseValueRelative, X extends BaseValueRelative
     }
 }
 
-export class PAdd<R extends BaseValueRelative> extends BinaryOp<R, R> implements IPFunctionCalculus<R> {
-    constructor(a: IPFunctionCalculus<R>, b: IPFunctionCalculus<R>) {
+export class PAdd<
+    R extends BaseValueRelative,
+    C extends CUnit,
+    D extends CUnit = Divide<C, UX.time>,
+    I extends CUnit = Multiply<C, UX.time>
+    >
+    extends BinaryOp<R, R, C, D, I>
+    implements IPFunctionCalculus<R, C, 1, D, I> {
+    constructor(a: IPFunctionCalculus<R, C, 1, D, I>, b: IPFunctionCalculus<R, C, 1, D, I>) {
         super(a, b);
     }
 
-    differentiate(): IPFunctionCalculus<R> {
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, C> {
         const dl = this.l.derivative();
         const dr = this.r.derivative();
         return new PAdd(dl, dr);
     }
 
-    integrate(): IndefiniteIntegral<R> {
+    integrate(): IndefiniteIntegral<R, I, C> {
         throw new Error(`Integrals of sums not yet supported`);
     }
 
@@ -121,16 +136,26 @@ export class PAdd<R extends BaseValueRelative> extends BinaryOp<R, R> implements
     }
 }
 
-export class PSub<R extends BaseValueRelative> extends BinaryOp<R> {
-    constructor(a: IPFunctionCalculus<R>, b: IPFunctionCalculus<R>) {
+export class PSub<
+    R extends BaseValueRelative,
+    U extends CUnit,
+    D extends CUnit = Divide<U, UX.time>,
+    I extends CUnit = Multiply<U, UX.time>
+    >
+    extends BinaryOp<R, R, U, D, I>
+    implements IPFunctionCalculus<R, U, 1, D, I>
+{
+    constructor(a: IPFunctionCalculus<R, U, 1, D, I>, b: IPFunctionCalculus<R, U, 1, D, I>) {
         super(a, b);
     }
 
-    differentiate(): IPFunctionCalculus<R> {
-        return new PSub(this.l.derivative(), this.r.derivative());
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U> {
+        const dl = this.l.derivative();
+        const dr = this.r.derivative();
+        return new PSub(dl, dr);
     }
 
-    integrate(): IndefiniteIntegral<R> {
+    integrate(): IndefiniteIntegral<R, I, U> {
         throw new Error(`Integrals of differences not yet supported.`);
     }
 
@@ -148,16 +173,16 @@ export class PSub<R extends BaseValueRelative> extends BinaryOp<R> {
  *
  * Returns the same type as the first argument.
  */
-export function sub<R extends BaseValueIntrinsic>(a: R, ...rest: RelativeOf<R>[]): R;
-export function sub<R extends BaseValueIntrinsic>(a: R, b: R): RelativeOf<R>;
+export function sub<R extends BaseValueInFrame>(a: R, ...rest: RelativeOf<R>[]): R;
+export function sub<R extends BaseValueInFrame>(a: R, b: R): RelativeOf<R>;
 export function sub<R extends BaseValueRelative>(a: R, ...b: R[]): R;
 
-export function sub<R extends BaseValueIntrinsic>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
-export function sub<R extends BaseValueIntrinsic>(a: IPCompiled<R>, b: IPCompiled<R>): IPCompiled<RelativeOf<R>>;
+export function sub<R extends BaseValueInFrame>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
+export function sub<R extends BaseValueInFrame>(a: IPCompiled<R>, b: IPCompiled<R>): IPCompiled<RelativeOf<R>>;
 export function sub<R extends BaseValueRelative>(a: IPCompiled<R>, ...b: IPCompiled<R>[]): IPCompiled<R>;
 
-export function sub<R extends BaseValueIntrinsic>(a: IPFunction<R>, ...rest: IPFunction<RelativeOf<R>>[]): IPFunction<R>;
-export function sub<R extends BaseValueIntrinsic>(a: IPFunction<R>, b: IPFunction<R>): IPFunction<RelativeOf<R>>;
+export function sub<R extends BaseValueInFrame>(a: IPFunction<R>, ...rest: IPFunction<RelativeOf<R>>[]): IPFunction<R>;
+export function sub<R extends BaseValueInFrame>(a: IPFunction<R>, b: IPFunction<R>): IPFunction<RelativeOf<R>>;
 export function sub<R extends BaseValueRelative>(a: IPFunction<R>, ...b: IPFunction<R>[]): IPFunction<R>;
 
 export function sub(
@@ -197,7 +222,7 @@ export function gsub(
         check(isPFunction)(rest);
             // Vector stands in here for any one type.
         return (rest as unknown as IPFunction<Vector>[])
-            .reduce((ra, v) => new PSub<Vector>(ra, v),
+            .reduce((ra, v) => new PSub(ra, v),
                 a as IPFunctionCalculus<Vector>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);
@@ -211,16 +236,22 @@ export function gsub(
 }
 
 
-export class PMul<R extends BaseValueRelative> extends BinaryOp<R, number> {
-    constructor(a: IPFunctionCalculus<R>, b: IPFunctionCalculus<number>) {
+export class PMul<
+    R extends BaseValueRelative,
+    U extends CUnit,
+    D extends CUnit,
+    I extends CUnit
+    >
+    extends BinaryOp<R, number, U, D, I> {
+    constructor(a: IPFunctionCalculus<R, U, 1, D, I>, b: IPFunctionCalculus<number, U, 1, D, I>) {
         super(a, b);
     }
 
-    differentiate(): IPFunctionCalculus<R> {
-        return new PMul(this.l.derivative(), this.r);
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U> {
+        throw new Error(`Differentiation of products not yet supported.`);
     }
 
-    integrate(): IndefiniteIntegral<R> {
+    integrate(): IndefiniteIntegral<R, I, U>  {
         throw new Error(`Integration of products not yet supported.`);
     }
 
@@ -265,7 +296,7 @@ export function gmul(
     } else if (isPFunction(a)) {
         check(isPFunction)(rest);
         return (rest as unknown as (IPFunctionCalculus<number> | number)[])
-            .reduce((ra, v) => new PMul(ra, typeof v === 'number' ? new Scalar(v) : v),
+            .reduce((ra, v) => new PMul(ra, typeof v === 'number' ? new ScalarConstant(v, a.unit) : v),
                 a as IPFunctionCalculus<Vector>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);

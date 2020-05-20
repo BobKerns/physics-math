@@ -46,9 +46,20 @@ export interface ViewOf<T = any> {
     value: T;
 }
 
-export function Throw(msg: string = 'Error'): never {
+/**
+ * A functional version of the throw statement.
+ * @param msg
+ */
+export const Throw = (msg: string = 'Error'): never => {
     throw new Error(msg);
 }
+
+/**
+ * Convenience function for marking places not yet implemented.
+ * @param name Optional name for what is not implemented yet.
+ * @constructor
+ */
+export const NYI = (name?: string) => Throw(name ? `Not yet implemented.` : `${name}: Not yet implemented.`);
 
 export interface Constructor<R, A extends [...any[]] = []> {
     new(...args: A): R;

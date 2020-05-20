@@ -9,6 +9,8 @@ import {BaseValue, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PCalculus, PFunction} from "./pfunction";
 import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
 import {AnalyticIntegral} from "./integral";
+import {U} from "./unit-defs";
+import {CUnit} from "./primitive-units";
 
 const bounds = <R extends BaseValue>(f: IPCompiled<R>, t: number): [R, R, number] => {
     const timestep = f.pfunction.timestep;
@@ -97,14 +99,14 @@ const makeDerivativeQ = (f: IPCompiled<Rotation>) => (t: number) => {
 // noinspection JSUnusedGlobalSymbols
 export class QuaternionDerivative extends PFunction<Rotation> {
     private readonly from: PFunction<Rotation>;
-    constructor(f: PFunction<Rotation>) {
-        super({});
+    constructor(f: PFunction<Rotation>, unit: CUnit) {
+        super({unit});
         this.from = f;
         this.setName_(`deriv[${f.name}]`);
     }
 
     differentiate(): PFunction<Rotation> {
-        return new QuaternionDerivative(this);
+        return new QuaternionDerivative(this, this.unit.divide(U.time));
     }
 
     integrate() {

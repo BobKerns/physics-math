@@ -16,356 +16,51 @@
  */
 
 import {Throw, Writeable} from "./utils";
-
-/**
- * String literal parser for LaTeX literals (avoids the need for quoting backslash).
- */
-const TeX = String.raw;
-
-/**
- * Our enumerated primitive units.
- */
-export enum Primitive {
-    time = 'time',
-    mass = 'mass',
-    length = 'length',
-    cycles = 'cycles', // Not SI base
-    angle = 'angle',   // Not SI base
-    solidAngle = 'solidAngle',   // Not SI base
-    current = 'current', // Dunno why this is the SI base
-    temperature = 'temperature',
-    amount = 'amount', // Amount
-    candela = 'candela' // An SI base unit for some reason
-}
-
-/**
- * A total order on units, for canonical display and key generation.
- */
-
-const ORDER: {[K in Primitive]: number} = (i => {
-    return {
-        mass: i++,
-        length: i++,
-        angle: i++,
-        solidAngle: i++,
-        cycles: i++,
-        amount: i++,
-        current: i++,
-        temperature: i++,
-        time: i++,
-        candela: i++
-    };
-})(0);
-
-/**
- * Comparison predicate for primitive units to allow sorting them into a
- * canonical total order.
- *
- * @param a
- * @param b
- */
-const orderUnits = (a: Primitive, b: Primitive) => {
-    if (a === b) return 0;
-    const ia = ORDER[a];
-    const ib = ORDER[b];
-    if (ia === ib) {
-        // Shouldn't happen unless we're extending the set.
-        return a < b ? -1 : 1;
-    }
-    return ia < ib ? -1 : 1;
-};
-
-/**
- * Our supported exponents. A finite list of exponents allows TypeScript to
- * automatically type exponents as numeric literal types.
- */
-export type Exponent = -9|-8|-7|-6|-5|-4|-3|-2|-1|1|2|3|4|5|6|7|8|9;
-
-/**
- * An object of primitive UNIT: Exponent pairs that uniquely describes each type.
- */
-export type UnitTerms = {
-    [u in keyof typeof Primitive]?: Exponent;
-};
-
-/**
- * Turn the structured UnitTerms key into a string to do the lookup for unique types.
- * @param key
- */
-const makeLookupKey = (key: UnitTerms) => {
-    const units = Object.keys(key) as Primitive[];
-    return units
-        .filter(k => (key[k] || 0) !== 0)
-        .sort(orderUnits)
-        .map(k => `${PRIMITIVE_MAP[k]?.symbol || Throw(`Invalid primitive type name "${k} in type key.`)}^${key[k]}`)
-        .join(' ');
-}
-
-export interface PrimitiveUnitAttributes {
-    name: string;
-    symbol: string;
-    varName: string;
-    absolute?: boolean;
-    si_base?: boolean;
-    [k: string]: any;
-}
-
-export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
-    tex?: string;
-    scale?: number;
-    offset?: number;
-}
-
-/**
- * Marker interface indicating standard non-prefixed SI-compatible units.
- */
-export interface SI {
-
-}
-
-/**
- * Marker interface indicating primitive standard non-prefixed SI-compatible units.
- */
-export interface PrimitiveSI {
-
-}
-
-/**
- * The public interface to all units and aliases.
- */
-export interface Unit<T extends UnitTerms = UnitTerms> {
-    /**
-     * Unique lookup key for this type.
-     */
-    readonly key: T;
-    readonly id: string;
-
-    readonly name: string;
-
-    readonly symbol?: string;
-    readonly varName?: string;
-    readonly attributes: UnitAttributes;
-    readonly tex: string;
-
-    /**
-     * Call to check units for addition/subtraction.
-     * Throws an error if the units are not the same.
-     * @param u
-     */
-    add(u: Unit<T>): this;
-
-    /**
-     * Produce new units multiplying these units.
-     * @param u
-     */
-    multiply(u: Unit): Unit;
-
-    /**
-     * Produce new units dividing by these units.
-     * @param u
-     */
-    divide(u: Unit): Unit;
-
-    readonly si: Unit<T> & SI;
-    /**
-     * Convert the given value to (unprefixed) SI units, and return the converted value and the
-     * corresponding SI unit.
-     *
-     * @param v
-     * @return [number, Unit]
-     */
-    toSI<R extends number>(v: R): [R, Unit];
-
-    /**
-     * Convert the given value from (unprefixed) SI units, and return the converted value and
-     * corresponding unit (i.e. this unit).
-     * @param v
-     * @param unit
-     */
-    fromSI<R extends number>(v: R, unit: Unit): [R, this];
-}
-
-/**
- * Base class for all units (and aliases).
- */
-abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
-    readonly key: T;
-    readonly symbol?: string;
-    readonly attributes: UnitAttributes;
-    private id_?: string;
-    // Our cached or supplied LaTeX string.
-    private tex_?: string;
-
-    abstract readonly si: Unit<T> & SI;
-
-    protected constructor(key: T, attributes: UnitAttributes) {
-        this.key = key;
-        this.attributes = attributes;
-        const {tex} = attributes;
-        if (tex) {
-            this.tex_ = tex;
-        }
-    }
-
-    get tex(): string {
-        const makeTex = (key: UnitTerms) => {
-            const units = Object.keys(key) as Primitive[];
-            const numUnits = units
-                .filter(k => (key[k] || 0) > 0)
-                .sort(orderUnits);
-            const num = numUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].tex}${(key[k] || 0) > 1 ? TeX`^(${key[k]})` : TeX``}`)
-                .join(TeX`\dot`);
-            const denomUnits = units
-                .filter(k => (key[k] || 0) < 0)
-                .sort(orderUnits);
-            const denom = denomUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].tex}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
-                .join(TeX`\dot`);
-            return denomUnits.length === 0
-                ? num
-                : TeX`\frac{${num || 1}}{${denom}}`;
-        };
-        return this.tex_ || (
-            this.tex_ = (
-                this.symbol
-                    ? TeX`\text{${this.symbol}}`
-                    : makeTex(this.key)
-            )
-        );
-    }
-
-    get id() {
-        return this.id_ || (this.id_ = makeLookupKey(this.key));
-    }
-    add(u: Unit<T>): this {
-        const t = this;
-        if (u !== t) {
-            throw new Error(`Incompatible types: ${t.name} and ${u.name}`);
-        }
-        return this;
-    }
-
-    abstract readonly name: string;
-
-    private combine<X extends UnitTerms>(u: Unit<X>, dir = 1 | -1): Unit {
-        const nkey: Writeable<UnitTerms> = {};
-        const add = (k: Primitive) => {
-            const n = (this.key[k] || 0) + (u.key[k] || 0) * dir;
-            if (n != 0) {
-                nkey[k] = n as Exponent;
-            }
-        }
-        const scan = (u: Unit) => (Object.keys(u.key) as Primitive[]).forEach(add);
-        scan(this);
-        scan(u);
-        return defineUnit(nkey);
-    }
-
-    multiply<X extends UnitTerms>(u: Unit<X>): Unit {
-        return this.combine(u, 1);
-    }
-
-    divide<X extends UnitTerms>(u: Unit<X>): Unit {
-        return this.combine(u, -1);
-    }
-
-    fromSI<R extends number>(v: R, unit: Unit): [R, this] {
-        return [v, this];
-    }
-
-    toSI<R extends number>(v: R): [R, Unit] {
-        return [v, this];
-    }
-}
-
-/**
- * Our primitive (non-decomposable) units.
- */
-class PrimitiveUnit<U extends Primitive> extends BaseUnit<{[K in U]: 1}>  implements SI, PrimitiveSI {
-    readonly symbol: string;
-    readonly name: string;
-    readonly varName?: string;
-    readonly unit: Primitive;
-    constructor(u: U, name: string, symbol: string, varName?: string, attributes: UnitAttributes = {}) {
-        super({[u]: 1} as {[K in U]: 1}, {name, symbol, varName, ...attributes});
-        this.name = name;
-        this.symbol = symbol;
-        this.varName = varName;
-        this.unit = u;
-    }
-
-    get si(): Unit<{ [K in U]: 1 }> & SI & PrimitiveSI {
-        return this;
-    }
-}
-
-/**
- * Type of our PRIMITIVE_MAP map. This provides one key/value entry for each primitive,
- * indexed by the UNIT enum.
- */
-type PrimitiveMap = {
-    [k in keyof typeof Primitive]: PrimitiveUnit<(typeof Primitive)[k]>
-};
+import {
+    BaseUnit,
+    completeKey,
+    CompleteTerms,
+    CUnit,
+    CUnitTerms,
+    DivideTerms,
+    Exponent,
+    makeLookupKey,
+    MultiplyTerms,
+    orderUnits,
+    Primitive,
+    PRIMITIVE_MAP,
+    primitiveKeys,
+    PrimitiveUnitAttributes,
+    SI,
+    TeX,
+    Unit,
+    UnitAttributes,
+    UnitTerms
+} from "./primitive-units";
 
 /**
  * A map from unit key's string representation to the Unit instance.
  */
 const UNITS: {
-    [k: string]: Unit;
+    [k: string]: CUnit;
 } = {};
 
 /**
  * A map from name to the Unit representing that unit.
  */
-const NAMED_UNITS: {[key: string]: Unit } = { };
+const NAMED_UNITS: {[key: string]: CUnit } = { };
 
 /**
  * A map from symbol for a Unit representing that unit.
  */
-const SYMBOL_UNITS: {[key: string]: Unit } = { };
-
-/**
- * A map from primitive name to its Unit instance.
- */
-const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
-    const val: PrimitiveMap = {} as PrimitiveMap;
-    const defPrimitive = (u: Primitive, name: string, symbol: string, varName?: string,
-                          attributes: UnitAttributes = {}) =>
-    {
-        const primitive = new PrimitiveUnit(u, name, symbol, varName, attributes);
-        (val as any)[u] = primitive;
-        NAMED_UNITS[u] = primitive;
-        NAMED_UNITS[name.toLowerCase()] = primitive;
-        SYMBOL_UNITS[symbol] = primitive;
-        return primitive;
-    }
-    defPrimitive(Primitive.time, 'second','s', 't', {si_base: true});
-    defPrimitive(Primitive.mass, 'kilogram', 'kg', 'm',
-        {si_base: true, scale: 1000});
-    defPrimitive(Primitive.length, 'meter', 'm', 'l', {si_base: true});
-    defPrimitive(Primitive.amount, 'mole', 'mol', 'n', {si_base: true});
-    defPrimitive(Primitive.cycles, 'cycle', 'cycle', 'c');
-    defPrimitive(Primitive.angle, 'radian', 'rad', '𝜃',
-        {tex: TeX`\theta`});
-    defPrimitive(Primitive.solidAngle, 'steridian', 'sr', undefined);
-    defPrimitive(Primitive.current, 'ampere', 'A', 'A', {si_base: true});
-    defPrimitive(Primitive.temperature, 'kelvin', 'K', 'T',
-        {absolute: true, si_base: true});
-    defPrimitive(Primitive.candela, 'candela', 'cd', 'c', {si_base: true})
-    return val as PrimitiveMap;
-})();
-
-// Enter each primitive into the UNITS table by ID.
-Object.values(PRIMITIVE_MAP)
-    .forEach(u => UNITS[u.id] = u);
+const SYMBOL_UNITS: {[key: string]: CUnit } = { };
 
 /**
  * Derived units build on the primitive units through multiplication (integration)
  * and division (differentiation).
  */
-class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> implements SI {
-    readonly name: string;
+// noinspection JSUnusedLocalSymbols
+class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>, SI {
     readonly symbol?: string;
     readonly varName?: string;
     constructor(key: T, attributes: UnitAttributes = {}) {
@@ -377,9 +72,7 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> implements SI {
         if (varName) {
             this.varName = varName;
         }
-        if (name) {
-            this.name = name;
-        } else {
+        if (!name) {
             const units = Object.keys(key) as Primitive[];
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
@@ -398,11 +91,51 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> implements SI {
                 : denomUnits.length === 1
                     ? `${num || 1}/${denom}`
                     : `${num || 1}/(${denom})`;
+        } else {
+            this.name = name;
         }
     }
 
-    get si(): Unit<T> & SI {
-        return this;
+    get si(): CUnit<T> & SI {
+        return this as unknown as CUnit<T> & SI;
+    }
+
+    readonly name: string;
+
+    add(u: CUnit<T>): CUnit<T> {
+        const t = this;
+        if (u !== (t as unknown)) {
+            throw new Error(`Incompatible types: ${t.name} and ${u.name}`);
+        }
+        return u;
+    }
+
+    private combine<X extends UnitTerms>(u: Unit<X>, dir = 1 | -1): CUnit {
+        const nkey: Writeable<UnitTerms> = {};
+        const add = (k: Primitive) => {
+            const n = (this.key[k] || 0) + (u.key[k] || 0) * dir;
+            if (n != 0) {
+                nkey[k] = n as Exponent;
+            }
+        }
+        primitiveKeys.forEach(add);
+        return defineUnit(nkey as CUnitTerms);
+    }
+
+    multiply<X extends CUnitTerms>(u: CUnit<X>): CUnit<MultiplyTerms<T, X>> {
+        return this.combine(u, 1) as CUnit<MultiplyTerms<T, X>>;
+    }
+
+    divide<X extends CUnitTerms>(u: CUnit<X>): CUnit<DivideTerms<T, X>> {
+        return this.combine(u, -1) as CUnit<DivideTerms<T, X>>;
+    }
+
+    fromSI(v: number, unit: CUnit): [number, this] {
+        return [v, this];
+    }
+
+    toSI(v: number): [number, CUnit] {
+        return [v, this];
     }
 }
 
@@ -427,9 +160,10 @@ class DerivedUnit<T extends UnitTerms> extends BaseUnit<T> implements SI {
  * @param names Additional names to use for this type, e.g. newton.
  */
 export const defineUnit =
-    <T extends UnitTerms>(key: T, attributes: UnitAttributes = {}, ...names: string[]): Unit<T> => {
-        const lookupKey = makeLookupKey(key);
-        const addName = (u: Unit<T>) => (n?: string, table = NAMED_UNITS) => {
+    <T extends UnitTerms>(key: T, attributes: UnitAttributes = {}, ...names: string[]): CUnit<CompleteTerms<T>> => {
+        const cKey = completeKey(key);
+        const lookupKey = makeLookupKey(cKey);
+        const addName = (u: CUnit) => (n?: string, table = NAMED_UNITS) => {
             if (n) {
                 const eNamed = table[n];
                 if (eNamed) {
@@ -443,27 +177,27 @@ export const defineUnit =
             return u;
         };
         const {name, symbol} = attributes;
-        const addSpecials = (u: Unit<T>) => {
+        const addSpecials = (u: CUnit) => {
             const an = addName(u);
             an((name || u.name).toLowerCase());
             an(symbol, SYMBOL_UNITS);
         };
-        const addNames = (u: Unit<T>) => {
+        const addNames = (u: CUnit) => {
             const an = addName(u);
             names.forEach(n => an(n.toLowerCase()));
             addSpecials(u);
-        }
-        const existing = UNITS[lookupKey] as Unit<T>;
+        };
+        const existing = UNITS[lookupKey];
         if (existing) {
             addNames(existing);
             // Once set, attributes cannot be modified, but new ones can be added.
             Object.assign(existing.attributes, {...attributes, ...existing.attributes});
-            return existing;
+            return existing as CUnit<CompleteTerms<T>>;
         }
-        const newUnit = new DerivedUnit(key, attributes);
+        const newUnit = new DerivedUnit(cKey, attributes);
         UNITS[lookupKey] = newUnit;
         addNames(newUnit);
-    return newUnit;
+    return newUnit as CUnit<CompleteTerms<T>>;
 };
 
 export interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
@@ -476,14 +210,14 @@ export interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
 export interface Alias {
 
 }
-export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias {
+export class AliasUnit<T extends CUnitTerms> extends BaseUnit<T> implements Alias, CUnit<T> {
     readonly name: string;
     readonly symbol?: string;
-    readonly si: Unit<T>;
+    readonly si: CUnit<T>;
     readonly scale: number;
     readonly offset: number;
 
-    constructor(name: string, symbol: string|undefined, attributes: AliasAttributes, si: Unit<T> & SI, scale: number, offset: number = 0) {
+    constructor(name: string, symbol: string|undefined, attributes: AliasAttributes, si: CUnit<T> & SI, scale: number, offset: number = 0) {
         super(si.key, attributes);
         this.name = name;
         this.symbol = symbol;
@@ -492,25 +226,37 @@ export class AliasUnit<T extends UnitTerms> extends BaseUnit<T> implements Alias
         this.offset = offset;
     }
 
-    toSI<R extends number>(v: R): [R, Unit] {
+    toSI<R extends number>(v: R): [R, CUnit] {
         const siScale = this.si.attributes.scale || 1;
         const siOffset = this.si.attributes.offset || 0;
         return [((v * this.scale + this.offset) / siScale - siOffset) as R, this.si];
     }
 
-    fromSI<R extends number>(v: R, unit: Unit): [R, this] {
+    fromSI<R extends number>(v: R, unit: CUnit): [R, this] {
         const siScale = this.si.attributes.scale || 1;
         const siOffset = this.si.attributes.offset || 0;
         return [((((v - siOffset) * siScale) - this.offset) / this.scale) as R, this];
+    }
+
+    add(u: CUnit<T>): CUnit<T> {
+        return this.si.add(u);
+    }
+
+    divide<T2 extends CUnitTerms>(u: CUnit<T2>): CUnit<DivideTerms<T, T2>> {
+        return this.si.divide(u);
+    }
+
+    multiply<T2 extends CUnitTerms>(u: CUnit<T2>): CUnit<MultiplyTerms<T, T2>> {
+        return this.si.multiply(u);
     }
 }
 
 /**
  * Our defined aliases.
  */
-const ALIASES: {[k: string]: Unit & Alias} = {};
+const ALIASES: {[k: string]: CUnit & Alias} = {};
 
-const SYMBOL_ALIASES: {[k: string]: Unit & Alias} = {};
+const SYMBOL_ALIASES: {[k: string]: CUnit & Alias} = {};
 
 /**
  * Define a unit alias, which can convert to/from a corresponding standard unprefixed SI unit.
@@ -523,11 +269,11 @@ const SYMBOL_ALIASES: {[k: string]: Unit & Alias} = {};
  * @param names
  */
 export const defineAlias =
-    <T extends UnitTerms>(
+    <T extends CUnitTerms>(
         name: string, symbol: string|undefined, attributes: AliasAttributes
-        , si: Unit<T>, scale: number, offset: number = 0,
+        , si: CUnit<T>, scale: number, offset: number = 0,
         ...names: string[]
-    ): Unit<T> & Alias => {
+    ): CUnit<T> & Alias => {
         const alias = new AliasUnit(
             name, symbol, attributes,
             si, scale, offset);
@@ -541,7 +287,7 @@ export const defineAlias =
         addName(name.toLowerCase());
         symbol && addName(symbol, SYMBOL_ALIASES);
         names.forEach(n => addName(n.toLowerCase()));
-        return alias;
+        return alias as AliasUnit<T>;
     };
 
 export type PrefixSymbol = 'Y'|'Z'|'E'|'P'|'T'|'G'|'M'|'k'|'h'|'da'|'d'|'c'|'m'|'μ'|'u'|'n'|'p'|'f'|'a'|'z'|'y';
@@ -612,7 +358,7 @@ const RE_symbol = new RegExp(`(${RE_prefix_symbol.source})?(${RE_identifier.sour
  * @param u
  * @param siOnly true if only non-aliases should be considered.
  */
-const parsePrefix = (u: string, siOnly: boolean = false): Unit | null => {
+const parsePrefix = (u: string, siOnly: boolean = false): CUnit | null => {
     u = u.replace(RE_whitespace, ' ');
     u = u.replace(RE_prefix_name_concat, (s: string, name: string, sym: string) => `${name}${sym}`);
     const name = RE_name.exec(u);
@@ -621,8 +367,8 @@ const parsePrefix = (u: string, siOnly: boolean = false): Unit | null => {
         const base = NAMED_UNITS[name[2]] || (!siOnly && ALIASES[name[2]]);
         if (base && !base.attributes.prefixed) {
             const sym = (prefix.symbol && base.symbol) ? `${prefix.symbol}${base.symbol}` : undefined;
-            const aname = `${prefix.name}${base.name}`;
-            return ALIASES[aname] || defineAlias(aname, sym, {
+            const aName = `${prefix.name}${base.name}`;
+            return ALIASES[aName] || defineAlias(aName, sym, {
                 prefixed: true
             }, base, Math.pow(10, prefix.exponent));
         } else if (prefix) {
@@ -637,9 +383,9 @@ const parsePrefix = (u: string, siOnly: boolean = false): Unit | null => {
     const base = SYMBOL_UNITS[sym[2]] || (!siOnly && SYMBOL_ALIASES[sym[2]]);
     if (base && !base.attributes.prefixed) {
         const sym = (prefix.symbol && base.symbol) ? `${prefix.symbol}${base.symbol}` : undefined;
-        const aname = `${prefix.name}${base.name}`;
-        return ALIASES[aname]
-        || defineAlias(aname, sym, {
+        const aName = `${prefix.name}${base.name}`;
+        return ALIASES[aName]
+        || defineAlias(aName, sym, {
             prefixed: true
         }, base, Math.pow(10, prefix.exponent));
     }
@@ -670,21 +416,6 @@ export const getUnit = (name: string, siOnly: boolean = false) => {
 };
 
 /**
- * Namespace for primitives only; merged into the U namespace.
- */
-export namespace P {
-    export const mass: Unit<{ mass: 1 }> = PRIMITIVE_MAP.mass;
-    export const time: Unit<{ time: 1 }> = PRIMITIVE_MAP.time;
-    export const length: Unit<{ length: 1 }> = PRIMITIVE_MAP.length;
-    export const angle: Unit<{ angle: 1 }> = PRIMITIVE_MAP.angle;
-    export const amount: Unit<{ amount: 1 }> = PRIMITIVE_MAP.amount;
-    export const cycles: Unit<{ cycles: 1 }> = PRIMITIVE_MAP.cycles;
-    export const current: Unit<{ current: 1 }> = PRIMITIVE_MAP.current;
-    export const temperature: Unit<{ temperature: 1 }> = PRIMITIVE_MAP.temperature;
-    export const candela: Unit<{ candela: 1 }> = PRIMITIVE_MAP.candela;
-}
-
-/**
  * A namespace for unit test access
  */
 export namespace TEST {
@@ -692,11 +423,14 @@ export namespace TEST {
     // noinspection JSUnusedGlobalSymbols
     export const UNITS_ = UNITS;
     export const NAMED_UNITS_ = NAMED_UNITS;
+    // noinspection JSUnusedGlobalSymbols
     export const SYMBOL_UNITS_ = SYMBOL_UNITS;
     export const ALIASES_ = ALIASES;
+    // noinspection JSUnusedGlobalSymbols
     export const SYMBOL_ALIASES_ = SYMBOL_ALIASES;
     // noinspection JSUnusedGlobalSymbols
     export const RE_prefix_name_ = RE_prefix_name;
+    // noinspection JSUnusedGlobalSymbols
     export const RE_prefix_symbol_ = RE_prefix_symbol;
     // noinspection JSUnusedGlobalSymbols
     export const RE_identifier_ = RE_identifier;
@@ -719,5 +453,6 @@ export namespace TEST {
             delFrom(ALIASES_);
         }
     };
+    // noinspection JSUnusedGlobalSymbols
     export const parsePrefix_ = parsePrefix;
 }

@@ -5,7 +5,8 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
-import {defineAlias, defineUnit, P} from "./units";
+import {P, Unit, UnitTerms} from "./primitive-units";
+import {defineAlias, defineUnit} from "./units";
 
 /**
  * Collect common unit constants under a U namespace.
@@ -16,31 +17,36 @@ import {defineAlias, defineUnit, P} from "./units";
  * This is a better alternative to prefixing all the names with U_.
  */
 export namespace U {
-    export const mass = P.mass;
+    const cu = <T extends UnitTerms>(p: Unit<T>) => defineUnit(p.key, {name: p.name, ...p.attributes});
+    export const mass = cu(P.mass);
     // noinspection JSUnusedGlobalSymbols
     export type mass = typeof mass;
-    export const length = P.length;
+    export const length = cu(P.length);
     export type length = typeof length;
-    export const time = P.time;
+    export const time = cu(P.time);
     export type time = typeof time;
     // noinspection JSUnusedGlobalSymbols
-    export const angle = P.angle;
+    export const angle = cu(P.angle);
     export type angle = typeof angle;
     // noinspection JSUnusedGlobalSymbols
-    export const amount = P.amount;
+    export const solidAngle = cu(P.solidAngle);
+    // noinspection JSUnusedGlobalSymbols
+    export type solidAngle = typeof solidAngle;
+    // noinspection JSUnusedGlobalSymbols
+    export const amount = cu(P.amount);
     // noinspection JSUnusedGlobalSymbols
     export type amount = typeof amount;
     // noinspection JSUnusedGlobalSymbols
-    export const cycles = P.cycles;
+    export const cycles = cu(P.cycles);
     // noinspection JSUnusedGlobalSymbols
     export type cycles = typeof cycles;
-    export const current = P.current;
+    export const current = cu(P.current);
     export type current = typeof current;
     // noinspection JSUnusedGlobalSymbols
-    export const temperature = P.temperature;
+    export const temperature = cu(P.temperature);
     // noinspection JSUnusedGlobalSymbols
     export type temperature = typeof temperature;
-    export const candela = P.candela;
+    export const candela = cu(P.candela);
     export type candela = typeof candela;
 
     export const unity = defineUnit({},

@@ -13,30 +13,44 @@ import {BaseValueRelative, TYPE} from "./math-types";
 import {PCalculus, PFunction, TIMESTEP} from "./pfunction";
 import {DefiniteIntegral, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus, PFunctionDefaults} from "./base";
 import {sub} from "./arith";
+import {U as UX} from './unit-defs';
+import {CUnit, Divide, Multiply} from "./primitive-units";
 
-const makeDefiniteIntegral = <T extends BaseValueRelative> (f: IndefiniteIntegral<T>) =>
-    (t0: number) => new DefiniteIntegralImpl<T>(f, t0).f;
+const makeDefiniteIntegral = <
+    T extends BaseValueRelative,
+    U extends CUnit,
+    D extends CUnit,
+    I extends CUnit = Multiply<U, UX.time>
+    > (f: IndefiniteIntegral<T, U, D>) =>
+    (t0: number) => new DefiniteIntegralImpl<T, U, D, I>(f, t0).f;
 
-export class DefiniteIntegralImpl<R extends BaseValueRelative> extends PCalculus<R> implements DefiniteIntegral<R> {
-    readonly from: IndefiniteIntegral<R>;
+export class DefiniteIntegralImpl<
+    R extends BaseValueRelative,
+    U extends CUnit,
+    D extends CUnit,
+    I extends CUnit
+    >
+    extends PCalculus<R, U, D, I>
+    implements DefiniteIntegral<R, U, D, I> {
+    readonly from: IndefiniteIntegral<R, U, D, I>;
     readonly t0: number;
 
     get returnType() {
         return this.from.returnType;
     }
 
-    constructor(f: IndefiniteIntegral<R>, t0: number) {
+    constructor(f: IndefiniteIntegral<R, U, D>, t0: number) {
         super(makeDefiniteIntegral(f)(t0));
         this.from = f;
         this.t0 = t0;
     }
 
-    differentiate(): IPFunctionCalculus<R> {
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U> {
         return this.from.integrand;
     }
 
-    integrate(): IndefiniteIntegral<R> {
-        return this.from.integral();
+    integrate(): IndefiniteIntegral<R, I, U, Multiply<I, UX.time>> {
+        return this.from.integral() as unknown as IndefiniteIntegral<R, I, U, Multiply<I, UX.time>>;
     }
 
     protected compileFn(): IPCompileResult<R> {
@@ -44,12 +58,24 @@ export class DefiniteIntegralImpl<R extends BaseValueRelative> extends PCalculus
     }
 }
 
-abstract class IndefiniteIntegralBase<R extends BaseValueRelative> extends PFunction<R, 2> implements IndefiniteIntegral<R> {
+abstract class IndefiniteIntegralBase<
+    R extends BaseValueRelative,
+    U extends CUnit,
+    D extends CUnit,
+    I extends CUnit
+    >
+    extends PFunction<R, U, 2>
+    implements IndefiniteIntegral<R, U, D, I> {
 
-    integrand: IPFunctionCalculus<R>;
+    integrand: IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U>;
 
-    protected constructor(integrand: IPFunctionCalculus<R>, options = PFunctionDefaults[2]) {
-        super(options);
+    protected constructor(
+        integrand: IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U>,
+        unit: U,
+        options = PFunctionDefaults[2]
+    )
+    {
+        super({...options, unit});
         this.integrand = integrand;
     }
 
@@ -59,22 +85,31 @@ abstract class IndefiniteIntegralBase<R extends BaseValueRelative> extends PFunc
 
     protected abstract compileFn(): IPCompileResult<R, 2>;
 
-    abstract integrate(): IndefiniteIntegral<R>;
+    abstract integrate(): IndefiniteIntegral<R, I, U>;
 
-    derivative(): IPFunctionCalculus<R> {
+    derivative(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U> {
         return this.integrand;
     }
 
-    integral(): IndefiniteIntegral<R> {
-        return this.integrate();
+    integral(): IndefiniteIntegral<R, I, U, Multiply<I, UX.time>> {
+        return this.integrate() as unknown as IndefiniteIntegral<R, I, U, Multiply<I, UX.time>>;
     }
 }
 
 // noinspection JSUnusedGlobalSymbols
-export class AnalyticIntegral<R extends BaseValueRelative> extends IndefiniteIntegralBase<R> {
-    readonly expression: IPFunctionCalculus<R>;
-    constructor(integrand: IPFunctionCalculus<R>, integral: IPFunctionCalculus<R>, options = PFunctionDefaults[2]) {
-        super(integrand, options);
+export class AnalyticIntegral<
+    R extends BaseValueRelative,
+    U extends CUnit,
+    D extends CUnit,
+    I extends CUnit
+    >
+    extends IndefiniteIntegralBase<R, U, D, I>
+{
+    readonly expression: IPFunctionCalculus<R, U, 1, D, I>;
+    constructor(integrand: IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U>,
+                integral: IPFunctionCalculus<R, U, 1, D, I>,
+                options = PFunctionDefaults[2]) {
+        super(integrand, integral.unit, options);
         this.expression = integral;
     }
 
@@ -83,8 +118,8 @@ export class AnalyticIntegral<R extends BaseValueRelative> extends IndefiniteInt
         return (t0: number, t: number): R => sub<R>(efn(t), efn(t0));
     }
 
-    integrate(): IndefiniteIntegral<R> {
-        return this.integrand.integral();
+    integrate(): IndefiniteIntegral<R, I, U> {
+        return this.expression.integral();
     }
 }
 export const integrate = (f: IPCompiled<number>) => (t0:number, t: number) => {
@@ -99,13 +134,22 @@ export const integrate = (f: IPCompiled<number>) => (t0:number, t: number) => {
     return a;
 };
 
-export class NumericIntegral extends IndefiniteIntegralBase<number> {
+export class NumericIntegral<
+    U extends CUnit,
+    D extends CUnit,
+    I extends CUnit
+    > extends IndefiniteIntegralBase<number, U, D, I>
+{
     get returnType(): TYPE {
         return TYPE.SCALAR;
     }
-    readonly integrand: IPFunction<number>;
-    constructor(integrand: IPFunction<number>, options = PFunctionDefaults[2] ) {
-        super(integrand, options);
+    readonly integrand: IPFunction<number, D, 1, Divide<D, UX.time>, U>;
+    constructor(
+        integrand: IPFunction<number, D, 1, Divide<U, UX.time>, U>,
+        unit: U,
+        options = PFunctionDefaults[2] )
+    {
+        super(integrand, unit, options);
         this.integrand = integrand;
     }
 
@@ -113,11 +157,11 @@ export class NumericIntegral extends IndefiniteIntegralBase<number> {
         return integrate(this.integrand.compile());
     }
 
-    differentiate(): IPFunction<number> {
+    differentiate(): IPFunction<number, D, 1, Divide<D, UX.time>, U> {
         return this.integrand;
     }
 
-    integrate(): IndefiniteIntegral<number> {
+    integrate(): IndefiniteIntegral<number, I, U> {
         throw new Error('Double integral not supported yet.');
     }
 }

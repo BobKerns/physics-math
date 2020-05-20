@@ -11,6 +11,8 @@ import {TYPE} from "./math-types";
 import {NumericIntegral} from "./integral";
 import {PCalculus} from "./pfunction";
 import {IndefiniteIntegral, IPCompileResult, IPFunctionCalculus} from "./base";
+import {U} from "./unit-defs";
+import {CUnit} from "./primitive-units";
 
 /**
  * Functions that have to be numerically integrated/differentiated.
@@ -18,8 +20,8 @@ import {IndefiniteIntegral, IPCompileResult, IPFunctionCalculus} from "./base";
 
 export class GFunction extends PCalculus<number> {
     explicit: IPCompileResult<number>;
-    constructor(f: IPCompileResult<number>) {
-        super({});
+    constructor(f: IPCompileResult<number>, unit: CUnit) {
+        super({unit});
         this.explicit = f;
     }
 
@@ -28,7 +30,7 @@ export class GFunction extends PCalculus<number> {
     }
 
     integrate(): IndefiniteIntegral<number> {
-        return new NumericIntegral(this);
+        return new NumericIntegral(this, this.unit.multiply(U.time));
     }
 
     get returnType(): TYPE.SCALAR {

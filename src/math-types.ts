@@ -6,9 +6,9 @@
  */
 
 import {quat, vec4} from "gl-matrix";
-import {Constructor} from "./utils";
+import {Constructor, Throw} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
-import {BoundValue, InertialFrame, IPCompiled, IPFunction} from "./base";
+import {ValueInFrame, ExplicitValueBase, InertialFrame, IPCompiled, IPFunction} from "./base";
 import {U} from "./unit-defs";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
@@ -38,7 +38,7 @@ export interface Relative<A> {}
  * Marker interface for types which represent info intrinsic to a particular object,
  * such as position in space (point) or orientation
  */
-export interface Intrinsic<R> {}
+export interface InFrame<R> {}
 
 /**
  * Marker for all non-scalar values
@@ -55,19 +55,19 @@ export interface NonScalarValue extends DataType<TYPE.VECTOR | TYPE.POINT | TYPE
 }
 
 export type RelativeOf<T> = T extends Point ? Vector : T extends Orientation ? Rotation : T;
-export type IntrinsicOf<T> = T extends Vector ? Point : T extends Rotation ? Orientation : T;
+export type InFrameOf<T> = T extends Vector ? Point : T extends Rotation ? Orientation : T;
 
 /**
  * Our primitive datatypes
  */
 export type ScalarValue = number;
 export type BaseValueRelative = ScalarValue | Vector | Rotation;
-export type BaseValueIntrinsic = Point | Orientation;
+export type BaseValueInFrame = Point | Orientation;
 // noinspection JSUnusedGlobalSymbols
 export type BaseValueNonScalar = Point | Vector | Orientation | Rotation;
 // noinspection JSUnusedGlobalSymbols
 export type BaseValueRelativeNonScalar = Vector | Rotation;
-export type BaseValue = BaseValueRelative | BaseValueIntrinsic;
+export type BaseValue = BaseValueRelative | BaseValueInFrame;
 
 abstract class ArrayBase extends Float64Array implements NonScalarValue {
     protected constructor() {
@@ -201,7 +201,7 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
     }
 }
 
-export class Point extends Vectorish<1> implements Intrinsic<Vector>, DataType<TYPE.POINT>, BoundValue<Point, U.length> {
+export class Point extends Vectorish<1> implements InFrame<Vector>, DataType<TYPE.POINT>, ValueInFrame<Point, U.length> {
     get type(): TYPE.POINT { return TYPE.POINT; }
 
     readonly frame: InertialFrame;
@@ -418,7 +418,7 @@ export type Positional = Point | Vector;
 export type Rotational = Orientation | Rotation;
 
 export class Orientation extends Rotationish
-    implements Intrinsic<Rotation>, DataType<TYPE.ORIENTATION>, BoundValue<Orientation, U.angle> {
+    implements InFrame<Rotation>, DataType<TYPE.ORIENTATION>, ValueInFrame<Orientation, U.angle> {
 
     readonly frame: InertialFrame;
     get unit(): U.angle { return U.angle; };
@@ -501,6 +501,19 @@ export class Rotation extends Rotationish implements Relative<Orientation> {
 
 // noinspection JSUnusedGlobalSymbols
 export const isBaseValue = (v: any): v is BaseValue => typeof v === 'number' || v instanceof Vectorish || v instanceof Rotationish;
+export const valueType = (v: any): TYPE =>
+    typeof v === 'number'
+        ? TYPE.SCALAR
+        : v instanceof ArrayBase
+        ? v.type
+        : v instanceof PFunction
+            ? v.returnType
+            : isPCompiled(v)
+                ? v.pfunction.returnType
+                : v instanceof ExplicitValueBase
+                    ? valueType(v.value)
+                    : Throw(`Invalid value: ${v}`);
+
 export const isPositional = (v: any): v is Positional => v instanceof Vectorish;
 export const isPoint = (v: any): v is Point => v instanceof Point;
 export const isVector = (v: any): v is Vector => v instanceof Vector;
@@ -508,7 +521,7 @@ export const isRotational = (v: any): v is Rotational => v instanceof Rotationis
 export const isOrientation = (v: any): v is Orientation => v instanceof Orientation;
 export const isRotation = (v: any): v is Rotation => v instanceof Rotation;
 // noinspection JSUnusedGlobalSymbols
-export const isIntrinsicValue = (v: any): v is BaseValueIntrinsic => v instanceof Point || v instanceof Orientation;
+export const isIntrinsicValue = (v: any): v is BaseValueInFrame => v instanceof Point || v instanceof Orientation;
 // noinspection JSUnusedGlobalSymbols
 export const isScalarValue = (v: any): v is ScalarValue => typeof v === 'number';
 // noinspection JSUnusedGlobalSymbols
@@ -550,12 +563,12 @@ export function isRelative(v: any): boolean {
     return false;
 }
 
-export function isIntrinsic(v: IPFunction): v is IPFunction<BaseValueIntrinsic>;
-export function isIntrinsic(v: IPCompiled): v is IPCompiled<BaseValueIntrinsic>;
+export function isIntrinsic(v: IPFunction): v is IPFunction<BaseValueInFrame>;
+export function isIntrinsic(v: IPCompiled): v is IPCompiled<BaseValueInFrame>;
 export function isIntrinsic(v: number): false;
 export function isIntrinsic(v: Positional): v is Point;
 export function isIntrinsic(v: Rotational): v is Orientation;
-export function isIntrinsic(v: BaseValue): v is BaseValueIntrinsic;
+export function isIntrinsic(v: BaseValue): v is BaseValueInFrame;
 export function isIntrinsic(v: any): boolean {
     const relType = (v: any) => {
         switch (v.returnType) {
