@@ -5,7 +5,7 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
-import {P, Unit, UnitTerms} from "./primitive-units";
+import {IUnitBase, P, PUnitTerms} from "./primitive-units";
 import {defineAlias, defineUnit} from "./units";
 
 /**
@@ -16,8 +16,8 @@ import {defineAlias, defineUnit} from "./units";
  *
  * This is a better alternative to prefixing all the names with U_.
  */
-export namespace U {
-    const cu = <T extends UnitTerms>(p: Unit<T>) => defineUnit(p.key, {name: p.name, ...p.attributes});
+export namespace Units {
+    const cu = <T extends PUnitTerms>(p: IUnitBase<T>) => defineUnit(p.key, {name: p.name, ...p.attributes});
     export const mass = cu(P.mass);
     // noinspection JSUnusedGlobalSymbols
     export type mass = typeof mass;
@@ -178,68 +178,68 @@ export namespace U {
 
     // noinspection JSUnusedGlobalSymbols
     export const minute = defineAlias('minute', 'min', {},
-        U.time, 60);
+        Units.time, 60);
 
     // noinspection JSUnusedGlobalSymbols
     export const hour = defineAlias('hour', 'h', {},
-        U.time, 3600, 0,
+        Units.time, 3600, 0,
         'hr');
 
     // noinspection JSUnusedGlobalSymbols
     export const day = defineAlias('day', 'd', {},
-        U.time, 3600 * 24);
+        Units.time, 3600 * 24);
 
     // noinspection JSUnusedGlobalSymbols
     export const week = defineAlias('week', 'wk', {},
-        U.time, 3600 * 24 * 7);
+        Units.time, 3600 * 24 * 7);
 
     // noinspection JSUnusedGlobalSymbols
     export const celsius = defineAlias('celsius', '°C', {},
-        U.temperature, 273.15);
+        Units.temperature, 273.15);
 
     // noinspection JSUnusedGlobalSymbols
     export const degreeArc = defineAlias('degreeArc', '°', {},
-        U.angle, Math.PI / 180);
+        Units.angle, Math.PI / 180);
 
     // noinspection JSUnusedGlobalSymbols
     export const minuteArc = defineAlias('minuteArc', `'`, {},
-        U.angle, Math.PI / (180 * 60));
+        Units.angle, Math.PI / (180 * 60));
 
     // noinspection JSUnusedGlobalSymbols
     export const secondArc = defineAlias('secondArc', `"`, {},
-        U.angle, Math.PI / (180 * 3600));
+        Units.angle, Math.PI / (180 * 3600));
 
     // noinspection JSUnusedGlobalSymbols
     export const hectare = defineAlias('hectare', `ha`, {},
-        U.area, 10000);
+        Units.area, 10000);
 
     // 'T' would conflict with 'tesla'
     // noinspection JSUnusedGlobalSymbols
     export const tonne = defineAlias('tonne', 'Ton', {},
-        U.mass, 1000);
+        Units.mass, 1000);
 
     // noinspection JSUnusedGlobalSymbols
     export const inch = defineAlias('inch', 'in', {},
-        U.length, 0.0254);
+        Units.length, 0.0254);
 
     // noinspection JSUnusedGlobalSymbols
     export const foot = defineAlias('foot', 'ft', {},
-        U.length, 0.3048);
+        Units.length, 0.3048);
 
     // noinspection JSUnusedGlobalSymbols
     export const yard = defineAlias('yard', 'yd', {},
-        U.length, 0.9144);
+        Units.length, 0.9144);
 
     // noinspection JSUnusedGlobalSymbols
     export const mile = defineAlias('mile', 'mi', {},
-        U.length, 1609.344);
+        Units.length, 1609.344);
 
     // noinspection JSUnusedGlobalSymbols
     export const angstrom = defineAlias('angstrom', 'Å', {},
-        U.length, 0.0000000001, 0,
+        Units.length, 0.0000000001, 0,
         'ångstrom');
 
     // noinspection JSUnusedGlobalSymbols
     export const gram = defineAlias('gram', 'g', {},
-        U.mass, 0.001);
+        Units.mass, 0.001);
 }

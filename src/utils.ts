@@ -66,3 +66,10 @@ export interface Constructor<R, A extends [...any[]] = []> {
 }
 
 export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+
+/**
+ * Coerce a string into a form suitable for passing to a string interpolator.
+ *
+ * @param s
+ */
+export const callSite = (s: string|string[]) => (a => ((a as any).raw = (a as any).raw || a))(s instanceof Array ? s : [s])

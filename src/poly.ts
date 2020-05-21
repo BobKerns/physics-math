@@ -10,17 +10,17 @@ import {PCalculus} from "./pfunction";
 import {TYPE} from "./math-types";
 import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunctionCalculus} from "./base";
 import {AnalyticIntegral} from "./integral";
-import {U as UX} from './unit-defs';
-import {CUnit, Divide, Multiply} from "./primitive-units";
+import {Units} from './unit-defs';
+import {Unit, Divide, Multiply} from "./units";
 
 /**
  * Polynomial functions
  */
 
 export class Poly<
-    U extends CUnit,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    U extends Unit,
+    D extends Unit = Divide<U, Units.time>,
+    I extends Unit = Multiply<U, Units.time>
     >
     extends PCalculus<number, U, D, I>
     implements
@@ -33,21 +33,21 @@ export class Poly<
         this.coefficients = coeffs;
     }
 
-    differentiate(): IPFunctionCalculus<number, D, 1, Divide<D, UX.time>, U> {
-        const du = this.unit.divide(UX.time) as D;
+    differentiate(): IPFunctionCalculus<number, D, 1, Divide<D, Units.time>, U> {
+        const du = this.unit.divide(Units.time) as D;
         if (this.coefficients.length < 2) {
-            return new ScalarConstant(0, du) as unknown as IPFunctionCalculus<number, D, 1, Divide<D, UX.time>, U>;
+            return new ScalarConstant(0, du) as unknown as IPFunctionCalculus<number, D, 1, Divide<D, Units.time>, U>;
         } else {
-            const poly = new Poly<D, Divide<D, UX.time>, U>(du, ...this.coefficients.slice(1));
-            return poly as unknown as IPFunctionCalculus<number, D, 1, Divide<D, UX.time>, U>;
+            const poly = new Poly<D, Divide<D, Units.time>, U>(du, ...this.coefficients.slice(1));
+            return poly as unknown as IPFunctionCalculus<number, D, 1, Divide<D, Units.time>, U>;
         }
     }
 
     integrate(): IndefiniteIntegral<number, I, U> {
-        const iu = this.unit.multiply(UX.time) as I;
+        const iu = this.unit.multiply(Units.time) as I;
         const p = new Poly(iu, 0, ...this.coefficients) as IPFunctionCalculus<number, I, 1, U>;
-        const base = this as IPFunctionCalculus<number, U, 1, D, I>;
-        return new AnalyticIntegral(base, p, iu);
+        const base = this as unknown as IPFunctionCalculus<number, U, 1, D, I>;
+        return new AnalyticIntegral(base, p, iu) as unknown as IndefiniteIntegral<number, I, U>;
     }
 
     get returnType(): TYPE.SCALAR {

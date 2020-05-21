@@ -10,34 +10,47 @@
  *
  * Each PFFunction object has a corresponding function object and vice versa.
  */
-import {BaseValue, BaseValueInFrame, BaseValueRelative, Orientation, Point, rotation, Rotation, TYPE, vector, Vector} from "./math-types";
+import {IUnitBase} from "./primitive-units";
+import {BaseValue, BaseValueInFrame, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PFunction} from "./pfunction";
-import {NYI, ViewOf} from "./utils";
-import {U as UX} from './unit-defs';
-import {constant, IConstant} from "./scalar";
-import {CUnit, Divide, Multiply, Unit} from "./primitive-units";
-
-/**
- * A function that generates a LaTeX string.
- */
-export type TexGenerator = (tv: string) => string;
+import {Throw, ViewOf} from "./utils";
+import {Divide, Multiply, Unit} from "./units";
+import {Units} from './unit-defs';
 
 /**
  * Hook to provide a compatible LaTeX parser, such as an existing KaTeX
  * implementation, such as provided by ObservableHQ.
  */
-export type TexFormatter = (tex: string, block: boolean) => Element;
+export type TexFormatter = (tex: string) => Element;
+interface TexDrivers {
+    inline: TexFormatter;
+    block: TexFormatter;
+}
 
-export interface Value<T extends BaseValue = BaseValue, U extends Unit = Unit> {
+export let TEX_FORMATTER: TexDrivers = {
+    inline: () => Throw(`Call setFormatter(TexFormatter) to enable HTML.`),
+    block: () => Throw(`Call setFormatter(TexFormatter) to enable HTML.`)
+} ;
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Set the converter to convert LaTeX to HTML. This csn be ObservableHQ's tex`...`
+ * string interpolator—the argument will be set up properly.
+ * @param inline
+ * @param block
+ */
+export const setFormatter = (inline: TexFormatter, block: TexFormatter = (inline as any).block || inline) =>
+    TEX_FORMATTER = {inline, block};
+
+export interface Value<T extends BaseValue = BaseValue, U extends IUnitBase = IUnitBase> {
     value: T;
     readonly unit: U;
 }
 
-export interface ValueInFrame<T extends BaseValue = BaseValue, U extends Unit = Unit> extends Value<T, U> {
+export interface ValueInFrame<T extends BaseValue = BaseValue, U extends IUnitBase = IUnitBase> extends Value<T, U> {
     readonly frame: InertialFrame;
 }
 
-export abstract class ExplicitValueBase<T extends BaseValue = BaseValue, U extends Unit = Unit> implements Value<T, U> {
+export abstract class ExplicitValueBase<T extends BaseValue = BaseValue, U extends IUnitBase = IUnitBase> implements Value<T, U> {
     value: T;
     readonly unit: U;
     protected constructor(value: T, unit: U) {
@@ -47,14 +60,14 @@ export abstract class ExplicitValueBase<T extends BaseValue = BaseValue, U exten
 }
 
 // noinspection JSUnusedGlobalSymbols
-export class ExplicitValue<T extends BaseValueRelative = BaseValueRelative, U extends Unit = Unit> extends ExplicitValueBase<T, U> {
+export class ExplicitValue<T extends BaseValueRelative = BaseValueRelative, U extends IUnitBase = IUnitBase> extends ExplicitValueBase<T, U> {
     constructor(value: T, unit: U) {
         super(value, unit);
     }
 }
 
 // noinspection JSUnusedGlobalSymbols
-export class ExplicitValueInFrame<T extends BaseValueInFrame = BaseValueInFrame, U extends Unit = Unit>
+export class ExplicitValueInFrame<T extends BaseValueInFrame = BaseValueInFrame, U extends IUnitBase = IUnitBase>
     extends ExplicitValueBase<T, U>
     implements ValueInFrame<T, U> {
     readonly frame: InertialFrame;
@@ -64,8 +77,8 @@ export class ExplicitValueInFrame<T extends BaseValueInFrame = BaseValueInFrame,
     }
 }
 
-export type Velocity = Value<Vector,UX.velocity>;
-export type Time = Value<number, UX.time>;
+export type Velocity = Value<Vector,Units.velocity>;
+export type Time = Value<number, Units.time>;
 
 export interface Transform {
   readonly positionOffset: Vector;
@@ -84,51 +97,8 @@ export interface Frame {
     transform(other: Frame): (t: number|Time) => Transform;
 }
 
-abstract class FrameImpl implements Frame {
-    parent?: Frame;
-    readonly name: string;
-    protected offset: IConstant<Vector, UX.length>
-    protected rotated: IConstant<Rotation, UX.angle>;
-    isInertial(t: number | Time): boolean {
-        return false;
-    }
-    transform(other: Frame): (t: (number | Time)) => Transform {
-        return NYI(`Transform`);
-    }
-    protected constructor(name: string, parent: Frame|undefined,
-                          offset: IConstant<Vector, UX.length>,
-                          rotated: IConstant<Rotation, UX.angle>) {
-        this.name = name;
-        this.parent = parent;
-        this.offset = offset;
-        this.rotated = rotated;
-    }
-}
-
 export interface InertialFrame extends Frame {
     isInertial(t: number | Time): true;
-}
-
-class InertialFrameImpl extends FrameImpl implements InertialFrame {
-    isInertial(t: number|Time): true {
-        return true;
-    }
-
-    constructor(name: string, parent?: Frame,
-                offset: IConstant<Vector, UX.length> = constant(vector(), UX.length),
-                rotated: IConstant<Rotation, UX.angle> = constant(rotation(), UX.angle)) {
-        super(name, parent, offset, rotated);
-    }
-}
-
-// noinspection JSUnusedGlobalSymbols
-export class World {
-    private parentFrame: InertialFrame = new InertialFrameImpl('Initial', undefined);
-    // noinspection JSUnusedGlobalSymbols
-    createInertialFrame(offset: Vector, velocity: Velocity, angle: Rotation): InertialFrame {
-        return new InertialFrameImpl('Initial', this.parentFrame,
-            constant(offset, UX.length), constant(angle, UX.angle));
-    }
 }
 
 /**
@@ -181,15 +151,16 @@ interface IPCompileResult6<T extends BaseValue> extends Function {
  * Convenience methods added to compiled functions.
  */
 export interface IPCompiledDisplay {
-    /**
-     * Function to generate LaTeX for this implementing function
-     */
-    tex: TexGenerator;
+    tex: string;
+
+    toTex(varName: string): string;
 
     /**
      * Computes an HTML representation for this element.
      */
     html: Element;
+
+    toHtml(varName: string, block: boolean): Element;
 }
 
 /**
@@ -223,20 +194,20 @@ export type IPCompileResult<
     );
 
 
-export interface IPFunctionPtr<P extends IPFunction<BaseValue, CUnit, ArgCount>> {
+export interface IPFunctionPtr<P extends IPFunction<BaseValue, Unit, ArgCount>> {
     pfunction: P;
 }
 
 export type IPCompiled<
     R extends BaseValue = BaseValue,
-    U extends CUnit = CUnit,
+    U extends Unit = Unit,
     N extends ArgCount = 1,
     P extends IPFunction<R, U, N> = IPFunction<R, U, N>
     > = (
         IPCompileResult<R, N> & IPFunctionPtr<P> & IPCompiledDisplay
     );
 
-export interface PFunctionOpts<U extends CUnit, N extends ArgCount = 1> {
+export interface PFunctionOpts<U extends Unit, N extends ArgCount = 1> {
     name?: string,
     vars?: string[],
     unit: U,
@@ -244,13 +215,13 @@ export interface PFunctionOpts<U extends CUnit, N extends ArgCount = 1> {
 }
 
 export const PFunctionDefaults: [
-    Omit<PFunctionOpts<CUnit, 0>, 'unit'>,
-    Omit<PFunctionOpts<CUnit>, 'unit'>,
-    Omit<PFunctionOpts<CUnit, 2>, 'unit'>,
-    Omit<PFunctionOpts<CUnit, 3>, 'unit'>,
-    Omit<PFunctionOpts<CUnit, 4>, 'unit'>,
-    Omit<PFunctionOpts<CUnit, 5>, 'unit'>,
-    Omit<PFunctionOpts<CUnit, 6>, 'unit'>
+    Omit<PFunctionOpts<Unit, 0>, 'unit'>,
+    Omit<PFunctionOpts<Unit>, 'unit'>,
+    Omit<PFunctionOpts<Unit, 2>, 'unit'>,
+    Omit<PFunctionOpts<Unit, 3>, 'unit'>,
+    Omit<PFunctionOpts<Unit, 4>, 'unit'>,
+    Omit<PFunctionOpts<Unit, 5>, 'unit'>,
+    Omit<PFunctionOpts<Unit, 6>, 'unit'>
 ] = [
     {vars: [], nargs: 0},
     {vars: ['t'], nargs: 1},
@@ -261,7 +232,7 @@ export const PFunctionDefaults: [
     {vars: ['t4', 't3', 't2', 't1', 't0', 't'], nargs: 6}
 ];
 
-export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends CUnit = CUnit, N extends ArgCount = 1> {
+export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit = Unit, N extends ArgCount = 1> {
     timestep: number;
     tex_?: string;
     name: string;
@@ -275,21 +246,28 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends CUnit
 
     /**
      * Compute the LaTeX representation of this function.
-     * @param tv The parameter name (or expression)
+     * @param varName The parameter name (or expression)
      */
-    toTex(tv?: string): string;
+    toTex(varName?: string): string;
 
     /**
      * Get the LaTeX representation of this function.  The value is cached.
      * @param tv The parameter name (or expression)
      */
-    tex(tv?: string): any;
+    readonly tex: string;
+
+    /**
+     * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
+     * @param varName Defaults to 't', the name of the variable used in generating LaTeX.
+     * @param block
+     */
+    toHtml(varName?: string, block?: boolean): ViewOf<PFunction<R>> & Element;
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
      * @param block
      */
-    html(block?: boolean): ViewOf<PFunction<R>> & Element;
+    readonly html: ViewOf<PFunction<R>> & Element;
 
     /**
      *
@@ -302,10 +280,10 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends CUnit
 
 export interface IPFunctionCalculus<
     R extends BaseValueRelative,
-    U extends CUnit = CUnit,
+    U extends Unit = Unit,
     N extends ArgCount = 1,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    D extends Unit = Divide<U, Units.time>,
+    I extends Unit = Multiply<U, Units.time>
     >
     extends IPFunctionBase<R, U, N>,
         IPCalculus<R, U, D, I>
@@ -315,10 +293,10 @@ export interface IPFunctionCalculus<
 
 export type IPFunction<
     R extends BaseValue = BaseValue,
-    U extends CUnit = CUnit,
+    U extends Unit = Unit,
     N extends ArgCount = 1,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    D extends Unit = Divide<U, Units.time>,
+    I extends Unit = Multiply<U, Units.time>
     > = N extends 1
     ? R extends number
         ? IPFunctionCalculus<number, U, N, D, I>
@@ -339,15 +317,15 @@ export type IPFunction<
  */
 export interface IPDifferentiable<
     R extends BaseValueRelative,
-    U extends CUnit,
-    D extends CUnit
+    U extends Unit,
+    D extends Unit
     >
 {
     timestep: number;
     /**
      * Returns the derivative of this IPFunction
      */
-    derivative(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U>;
+    derivative(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U>;
 }
 
 /**
@@ -355,8 +333,8 @@ export interface IPDifferentiable<
  */
 export interface IPIntegrable<
     R extends BaseValueRelative,
-    U extends CUnit,
-    I extends CUnit
+    U extends Unit,
+    I extends Unit
     >
 {
     timestep: number;
@@ -370,9 +348,9 @@ export interface IPIntegrable<
  */
 export interface IPCalculus<
     R extends BaseValueRelative,
-    U extends CUnit,
-    D extends CUnit,
-    I extends CUnit
+    U extends Unit,
+    D extends Unit,
+    I extends Unit
     >
     extends
         IPDifferentiable<R, U, D>,
@@ -382,20 +360,20 @@ export interface IPCalculus<
 
 export interface IndefiniteIntegral<
     R extends BaseValueRelative,
-    U extends CUnit = CUnit,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    U extends Unit = Unit,
+    D extends Unit = Divide<U, Units.time>,
+    I extends Unit = Multiply<U, Units.time>
     >
     extends IPFunctionCalculus<R, U, 2, D, I>
 {
-    integrand: IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U>;
+    integrand: IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U>;
 }
 
 export interface DefiniteIntegral<
     R extends BaseValueRelative,
-    U extends CUnit = CUnit,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    U extends Unit = Unit,
+    D extends Unit = Divide<U, Units.time>,
+    I extends Unit = Multiply<U, Units.time>
     >
     extends
         IPCalculus<R, U, D, I>,

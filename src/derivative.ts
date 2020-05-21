@@ -9,8 +9,11 @@ import {BaseValue, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PCalculus, PFunction} from "./pfunction";
 import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
 import {AnalyticIntegral} from "./integral";
-import {U} from "./unit-defs";
-import {CUnit} from "./primitive-units";
+import {Units} from "./unit-defs";
+import {Unit} from "./units";
+import {STYLES} from "./latex";
+
+const tex = String.raw;
 
 const bounds = <R extends BaseValue>(f: IPCompiled<R>, t: number): [R, R, number] => {
     const timestep = f.pfunction.timestep;
@@ -31,14 +34,22 @@ const makeDerivative = (f: IPCompiled<number>) => (t: number) => {
 }
 export class NumericDerivative extends PCalculus<number> {
     private readonly from: IPFunction<number>;
-    constructor(f: IPFunction<number>) {
-        super({});
+    readonly time_derivative: number;
+    readonly base_name: string;
+    constructor(f: IPFunction<number>, unit: Unit, attributes: any = {}) {
+        super({...attributes, unit});
         this.from = f;
+        this.time_derivative = attributes.time_derivative || 1;
         this.setName_(`deriv[${f.name}]`);
+        this.base_name = attributes.base_name || f.name;
     }
 
     differentiate(): IPFunctionCalculus<number> {
-        return new NumericDerivative(this);
+        return new NumericDerivative(this, this.unit.divide(Units.time),
+            {
+                time_derivative: this.time_derivative + 1,
+                base_name: this.base_name
+            });
     }
 
     integrate(): IndefiniteIntegral<number> {
@@ -51,6 +62,16 @@ export class NumericDerivative extends PCalculus<number> {
 
     protected compileFn(): IPCompileResult<number> {
         return makeDerivative(this.from.f);
+    }
+
+    toTex(varName: string = 't'): string {
+        if (!this.time_derivative) return super.toTex(varName);
+        const base = STYLES.function(this.base_name);
+        const call = STYLES.call(tex`${base}(${varName})`);
+        const exp = this.time_derivative !== 1 ? tex`^{${this.time_derivative}}` : '';
+        const op = tex`\dfrac{d${exp}}{d${varName}}`;
+        const unit = STYLES.unit(this.unit.tex);
+        return tex`{{{${op}}{${call}}} \Rightarrow {${unit}}}`
     }
 }
 
@@ -99,14 +120,14 @@ const makeDerivativeQ = (f: IPCompiled<Rotation>) => (t: number) => {
 // noinspection JSUnusedGlobalSymbols
 export class QuaternionDerivative extends PFunction<Rotation> {
     private readonly from: PFunction<Rotation>;
-    constructor(f: PFunction<Rotation>, unit: CUnit) {
+    constructor(f: PFunction<Rotation>, unit: Unit) {
         super({unit});
         this.from = f;
         this.setName_(`deriv[${f.name}]`);
     }
 
     differentiate(): PFunction<Rotation> {
-        return new QuaternionDerivative(this, this.unit.divide(U.time));
+        return new QuaternionDerivative(this, this.unit.divide(Units.time));
     }
 
     integrate() {

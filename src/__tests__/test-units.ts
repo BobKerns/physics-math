@@ -9,11 +9,11 @@
  * Test the Units package functionality.
  */
 
-import {Primitive, Unit} from "../primitive-units";
+import {IUnitBase, Primitive} from "../primitive-units";
 import {
     defineUnit, getUnit, TEST, defineAlias
 } from "../units";
-import {U} from "../unit-defs";
+import {Units} from "../unit-defs";
 
 import PRIMITIVE_MAP = TEST.PRIMITIVES_MAP_;
 import NAMED_UNITS = TEST.NAMED_UNITS_;
@@ -49,23 +49,23 @@ describe("Primitive", () => {
         test(`${k} symbol`, () => expect(PRIMITIVE_MAP[k].symbol).toBe(expectations[k][1]));
         test(`${k} varName`, () => expect(PRIMITIVE_MAP[k].varName).toBe(expectations[k][2]));
     });
-    test('toSI', () => expect(U.mass.toSI(1)).toEqual([1, U.mass]));
-    test('fromSI', () => expect(U.mass.fromSI(1, U.mass)).toEqual([1, U.mass]));
+    test('toSI', () => expect(Units.mass.toSI(1)).toEqual([1, Units.mass]));
+    test('fromSI', () => expect(Units.mass.fromSI(1, Units.mass)).toEqual([1, Units.mass]));
 });
 
 describe("Define", () => {
-    test("Redefine primitive", () => expect(defineUnit({mass: 1})).toBe(U.mass));
+    test("Redefine primitive", () => expect(defineUnit({mass: 1})).toBe(Units.mass));
     test("Define w/ bogus primitive",
         // @ts-expect-error
         () => expect(() => defineUnit({bOgUs: 1}))
             .toThrowError(/.*bOgUs.*/));
     test("Redefine velocity", () =>
         expect(defineUnit({length: 1, time: -1}))
-            .toBe(U.velocity));
+            .toBe(Units.velocity));
     test("Redefine new name", () => {
         const nUnit = defineUnit({length: 1, time: -1}, {}, '_test_name_');
-        expect(nUnit).toBe(U.velocity);
-        expect(getUnit('_test_name_')).toBe(U.velocity);
+        expect(nUnit).toBe(Units.velocity);
+        expect(getUnit('_test_name_')).toBe(Units.velocity);
     });
     test(`Define named`, () => {
         const nUnit = defineUnit({mass: 3}, {name: '_test_bogus_'});
@@ -94,61 +94,61 @@ describe("Define", () => {
             deleteUnit(nUnit);
         }
     });
-    test('No unit', () => expect(defineUnit({})).toBe(U.unity));
+    test('No unit', () => expect(defineUnit({})).toBe(Units.unity));
     test('Add options', () => {
-        expect(U.unity.attributes._test_option_).toBeUndefined();
+        expect(Units.unity.attributes._test_option_).toBeUndefined();
         try {
-            expect(defineUnit({}, {_test_option_: 17})).toBe(U.unity)
-            expect(U.unity.attributes._test_option_).toBe(17);
+            expect(defineUnit({}, {_test_option_: 17})).toBe(Units.unity)
+            expect(Units.unity.attributes._test_option_).toBe(17);
         } finally {
-            delete U.unity.attributes._test_option_;
+            delete Units.unity.attributes._test_option_;
         }
     });
     test('Add options no override', () => {
-        expect(U.unity.attributes.si_base).toBe(true);
+        expect(Units.unity.attributes.si_base).toBe(true);
         try {
-            expect(defineUnit({}, {si_base: false})).toBe(U.unity)
-            expect(U.unity.attributes.si_base).toBe(true);
+            expect(defineUnit({}, {si_base: false})).toBe(Units.unity)
+            expect(Units.unity.attributes.si_base).toBe(true);
         } finally {
-            U.unity.attributes.si_base = true;
+            Units.unity.attributes.si_base = true;
         }
     });
-    test('toSI', () => expect(U.velocity.toSI(1)).toEqual([1, U.velocity]));
-    test('fromSI', () => expect(U.velocity.fromSI(1, U.mass)).toEqual([1, U.velocity]));
+    test('toSI', () => expect(Units.velocity.toSI(1)).toEqual([1, Units.velocity]));
+    test('fromSI', () => expect(Units.velocity.fromSI(1, Units.mass)).toEqual([1, Units.velocity]));
 });
 
 describe(`Unit Arithmetic`, () => {
     describe(`Basics`, () => {
-        test('add OK', () => expect(U.area.add(U.area)).toBe(U.area));
+        test('add OK', () => expect(Units.area.add(Units.area)).toBe(Units.area));
         // @ts-expect-error
-        test('add Bad', () => expect(() => U.area.add(U.length)).toThrowError());
+        test('add Bad', () => expect(() => Units.area.add(Units.length)).toThrowError());
         test('multiply', () => expect(getUnit('m').multiply(getUnit('s'))).toBe(defineUnit({length: 1, time: 1})));
-        test('divide 2', () => expect(U.acceleration.multiply(getUnit('s'))).toBe(U.velocity));
-        test('square', () => expect(U.length.multiply(U.length)).toBe(U.area));
-        test('divide', () => expect(getUnit('m').divide(getUnit('s'))).toBe(U.velocity));
-        test('divide 2', () => expect(U.velocity.divide(getUnit('s'))).toBe(U.acceleration));
-        test('divide cancel', () => expect(U.mass.divide(U.mass)).toBe(U.unity));
+        test('divide 2', () => expect(Units.acceleration.multiply(getUnit('s'))).toBe(Units.velocity));
+        test('square', () => expect(Units.length.multiply(Units.length)).toBe(Units.area));
+        test('divide', () => expect(getUnit('m').divide(getUnit('s'))).toBe(Units.velocity));
+        test('divide 2', () => expect(Units.velocity.divide(getUnit('s'))).toBe(Units.acceleration));
+        test('divide cancel', () => expect(Units.mass.divide(Units.mass)).toBe(Units.unity));
     });
     describe(`Common Combos`, () => {
-        test(`volts x amps`, () => expect(U.voltage.multiply(U.current)).toBe(U.power));
-        test(`time x amps`, () => expect(U.time.multiply(U.current)).toBe(U.charge));
-        test(`force x length`, () => expect(U.force.multiply(U.length)).toBe(U.energy));
-        test(`power x time`, () => expect(U.power.multiply(U.time)).toBe(U.energy));
-        test(`force x time`, () => expect(U.force.multiply(U.time)).toBe(U.momentum));
-        test(`mass x velocity`, () => expect(U.mass.multiply(U.velocity)).toBe(U.momentum));
-        test(`mass x velocity x velocity`, () => expect(U.mass.multiply(U.velocity).multiply(U.velocity)).toBe(U.energy));
-        test(`energy / time`, () => expect(U.energy.divide(U.time)).toBe(U.power));
+        test(`volts x amps`, () => expect(Units.voltage.multiply(Units.current)).toBe(Units.power));
+        test(`time x amps`, () => expect(Units.time.multiply(Units.current)).toBe(Units.charge));
+        test(`force x length`, () => expect(Units.force.multiply(Units.length)).toBe(Units.energy));
+        test(`power x time`, () => expect(Units.power.multiply(Units.time)).toBe(Units.energy));
+        test(`force x time`, () => expect(Units.force.multiply(Units.time)).toBe(Units.momentum));
+        test(`mass x velocity`, () => expect(Units.mass.multiply(Units.velocity)).toBe(Units.momentum));
+        test(`mass x velocity x velocity`, () => expect(Units.mass.multiply(Units.velocity).multiply(Units.velocity)).toBe(Units.energy));
+        test(`energy / time`, () => expect(Units.energy.divide(Units.time)).toBe(Units.power));
     });
     describe(`Common Symbols`, () => {
-        const doTest = ([sym, name, u]: [string, string, Unit]) => {
+        const doTest = ([sym, name, u]: [string, string, IUnitBase]) => {
             test(`Symbol ${sym}`, () => expect(getUnit(sym)).toBe(u));
             test(`Symbol ${sym}`, () => expect(getUnit(name)).toBe(u));
         };
-        const specs: ([string, string, Unit])[] =
+        const specs: ([string, string, IUnitBase])[] =
             [
-                ['J', 'joule', U.energy],
-                ['W', 'watt', U.power],
-                ['N', 'newton', U.force]
+                ['J', 'joule', Units.energy],
+                ['W', 'watt', Units.power],
+                ['N', 'newton', Units.force]
             ];
         specs.forEach(doTest);
     })
@@ -156,21 +156,21 @@ describe(`Unit Arithmetic`, () => {
 
 describe(`Formatting`, () => {
     test(`Simple name`, () =>
-        expect(U.velocity.name).toBe('m/s'));
+        expect(Units.velocity.name).toBe('m/s'));
     test(`Exponent name`, () =>
-        expect(U.acceleration.name).toBe('m/s^2'));
+        expect(Units.acceleration.name).toBe('m/s^2'));
     test(`Primitive TeX`, () =>
-        expect(U.mass.tex).toBe('\\text{kg}'));
+        expect(Units.mass.tex).toBe('\\text{kg}'));
     test(`Simple TeX`, () =>
-        expect(U.velocity.tex).toBe('\\frac{\\text{m}}{\\text{s}}'));
+        expect(Units.velocity.tex).toBe('\\dfrac{\\text{m}}{\\text{s}}'));
     test(`Exponent TeX`, () =>
-        expect(U.acceleration.tex).toBe('\\frac{\\text{m}}{\\text{s}^{2}}'));
+        expect(Units.acceleration.tex).toBe('\\dfrac{\\text{m}}{\\text{s}^{2}}'));
 });
 
 describe(`Aliases`, () => {
     const [aName, aSymbol, aOther] = ['fR0G', 'f0GGY', 'PrinceOnTheLam'];
     const alias = defineAlias(aName, aSymbol, {bill: 'cat'},
-        U.mass, 3.5, 2,
+        Units.mass, 3.5, 2,
         aOther);
     afterAll(() => deleteUnit(alias));
     test(`name`, () => expect(alias.name).toBe(aName));
@@ -181,8 +181,8 @@ describe(`Aliases`, () => {
         expect(() => getUnit(aName, true))
             .toThrowError());
     test(`attribute`, () => expect(alias.attributes.bill).toBe('cat'));
-    test('toSI', () => expect(alias.toSI(1)).toEqual([5.5/1000, U.mass]));
-    test('fromSI', () => expect(alias.fromSI(5.5/1000, U.mass)).toEqual([1, alias]));
+    test('toSI', () => expect(alias.toSI(1)).toEqual([5.5/1000, Units.mass]));
+    test('fromSI', () => expect(alias.fromSI(5.5/1000, Units.mass)).toEqual([1, alias]));
 });
 
 describe('Parse', () => {
@@ -206,37 +206,37 @@ describe('Parse', () => {
     describe(`get`, () => {
         test('parse Mm', () =>
             expect(parsePrefix('Mm')?.toSI(2))
-                .toEqual([2000000, U.length]));
+                .toEqual([2000000, Units.length]));
         test('get Mm', () =>
             expect(getUnit('Mm').toSI(2))
-                .toEqual([2000000, U.length]));
+                .toEqual([2000000, Units.length]));
         test('get μm', () =>
             expect(getUnit('μm').toSI(2))
-                .toEqual([0.000002, U.length]));
+                .toEqual([0.000002, Units.length]));
         test('get um', () =>
             expect(getUnit('um').toSI(2))
-                .toEqual([0.000002, U.length]));
+                .toEqual([0.000002, Units.length]));
         test('get Mg', () =>
             expect(getUnit('Mg').toSI(2))
-                .toEqual([2000, U.mass]));
+                .toEqual([2000, Units.mass]));
         test('get mg', () =>
             expect(getUnit('mg').toSI(2))
-                .toEqual([0.000002, U.mass]));
+                .toEqual([0.000002, Units.mass]));
         // noinspection SpellCheckingInspection
         test('kilom', () =>
             expect(() => getUnit('kilom'))
                 .toThrowError());
         test('parse kilometer', () =>
             expect(parsePrefix('kilometer')?.toSI(2))
-                .toEqual([2000, U.length]));
+                .toEqual([2000, Units.length]));
         test('kilometer', () =>
             expect(getUnit('kilometer')?.toSI(2))
-                .toEqual([2000, U.length]));
+                .toEqual([2000, Units.length]));
         test('kilo-meter', () =>
             expect(getUnit('kilo-meter')?.toSI(2))
-                .toEqual([2000, U.length]));
+                .toEqual([2000, Units.length]));
         test('kilo meter', () =>
             expect(getUnit('kilo meter')?.toSI(2))
-                .toEqual([2000, U.length]));
+                .toEqual([2000, Units.length]));
     });
 });

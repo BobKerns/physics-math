@@ -77,119 +77,11 @@ export const orderUnits = (a: Primitive, b: Primitive) => {
  */
 export type Exponent = -9 | -8 | -7 | -6 | -5 | -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 /**
- * For addition of positive numbers, we let 9 stand for all larger numbers.
- */
-type XADD = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 9],
-    [2, 3, 4, 5, 6, 7, 8, 9, 9, 9],
-    [3, 4, 5, 6, 7, 8, 9, 9, 9, 9],
-    [4, 5, 6, 7, 8, 9, 9, 9, 9, 9],
-    [5, 6, 7, 8, 9, 9, 9, 9, 9, 9],
-    [6, 7, 8, 9, 9, 9, 9, 9, 9, 9],
-    [7, 8, 9, 9, 9, 9, 9, 9, 9, 9],
-    [8, 9, 9, 9, 9, 9, 9, 9, 9, 9],
-    [9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
-];
-/**
- * For subtraction of positive numbers, we have to allow for 9 standing in for larger numbers.
- */
-type XSUB = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8 | 9],
-    [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7 | 8 | 9],
-    [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6 | 7 | 8 | 9],
-    [-4, -3, -2, -1, 0, 1, 2, 3, 4, 5 | 6 | 7 | 8 | 9],
-    [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4 | 5 | 6 | 7 | 8 | 9],
-    [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3 | 4 | 5 | 6 | 7 | 8 | 9],
-    [-7, -6, -5, -4, -3, -2, -1, 0, 1, 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9],
-    [-8, -7, -6, -5, -4, -3, -2, -1, 0, 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9],
-    [-9, -8 | -9, -7 | -8 | -9, -6 | -7 | -8 | -9, -5 | -6 | -7 | -8 | -9,
-        -4 | -5 | -6 | -7 | -8 | -9, -3 | -4 | -5 | -6 | -7 | -8 | -9, -2 | -3 | -4 | -5 | -6 | -7 | -8 | -9,
-        -1 | -2 | -3 | -4 | -5 | -6 | -7 | -8 | -9, 0 | -1 | -2 | -3 | -4 | -5 | -6 | -7 | -8 | -9]
-];
-type M<K extends number, V extends number> = { [k in K]: V };
-type XNEGATE = [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
-    & M<-1, 1> & M<-2, 2> & M<-3, 3> & M<-4, 4> & M<-5, 5> & M<-6, 6> & M<-7, 7> & M<-8, 8> & M<-9, 9>;
-type Negate<A extends number> = XNEGATE[A];
-type Add<A extends number, B extends number> = A extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-    ? B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-        ? XADD[A][B]
-        : XSUB[Negate<B>][A]
-    : B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-        ? XSUB[Negate<A>][B]
-        : Negate<XADD[Negate<A>][Negate<B>]>;
-type Sub<A extends number, B extends number> = A extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-    ? B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-        ? XSUB[B][A]
-        : XADD[Negate<B>][A]
-    : B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-        ? Negate<XADD[Negate<A>][B]>
-        : Negate<XSUB[Negate<B>][Negate<A>]>;
-/**
  * An object of primitive UNIT: Exponent pairs that uniquely describes each type.
  */
-export type UnitTerms = {
+export type PUnitTerms = {
     [u in keyof typeof Primitive]?: Exponent;
 };
-export type CUnitTerms = {
-    [u in keyof typeof Primitive]: Exponent;
-};
-type OrZero<A> = A extends number ? A : 0;
-export type MultiplyTerms<A extends UnitTerms, B extends UnitTerms> = { [K in keyof typeof Primitive]: Add<OrZero<A[K]>, OrZero<B[K]>> };
-// noinspection JSUnusedGlobalSymbols
-export type InvertTerms<A extends UnitTerms> = { [K in keyof typeof Primitive]: Negate<OrZero<A[K]>> };
-export type DivideTerms<A extends UnitTerms, B extends UnitTerms> = { [K in keyof typeof Primitive]: Sub<OrZero<A[K]>, OrZero<B[K]>> };
-export type Multiply<A extends Unit, B extends Unit> =
-    A extends Unit<infer TA>
-        ? B extends Unit<infer TB>
-        ? CUnit<MultiplyTerms<TA, TB>>
-        : never
-        : never;
-export type Divide<A extends CUnit, B extends CUnit> =
-    A extends CUnit<infer TA>
-        ? B extends CUnit<infer TB>
-        ? CUnit<DivideTerms<TA, TB>>
-        : never
-        : never;
-export type CompleteTerms<A extends UnitTerms> = { [K in keyof typeof Primitive]: OrZero<A[K]> };
-// noinspection JSUnusedGlobalSymbols
-export type Complete<U extends Unit> = U extends Unit<infer T> ? CUnit<CompleteTerms<T>> : never;
-// noinspection JSUnusedGlobalSymbols
-export type TermsOfUnit<U extends Unit> = U extends Unit<infer T> ? T : never;
-// noinspection JSUnusedGlobalSymbols
-export type TermsOfCUnit<U extends CUnit> = U extends CUnit<infer T> ? CompleteTerms<T> : never;
-const nullTerms: CompleteTerms<{}> = {
-    time: 0,
-    mass: 0,
-    length: 0,
-    cycles: 0,
-    angle: 0,
-    solidAngle: 0,
-    current: 0,
-    temperature: 0,
-    amount: 0,
-    candela: 0
-};
-const validateKey = (key: UnitTerms) => {
-    (Object.keys(key) as Primitive[])
-        .forEach(k => Primitive[k] || Throw(`Unknown primitive type: ${k}`));
-    return key;
-}
-export const completeKey = <T extends UnitTerms>(key: T): CompleteTerms<T> => ({
-    ...nullTerms, ...validateKey(key)
-}) as CompleteTerms<T>;
-/**
- * Turn the structured UnitTerms key into a string to do the lookup for unique types.
- * @param key
- */
-export const makeLookupKey = (key: UnitTerms) => {
-    const units = Object.keys(Primitive) as Primitive[];
-    return units
-        .sort(orderUnits)
-        .map(k => `${PRIMITIVE_MAP[k]?.symbol || Throw(`Invalid primitive type name "${k} in type key.`)}^${key[k] || 0}`)
-        .join(' ');
-}
 
 export interface PrimitiveUnitAttributes {
     name: string;
@@ -201,19 +93,6 @@ export interface PrimitiveUnitAttributes {
     [k: string]: any;
 }
 
-export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
-    tex?: string;
-    scale?: number;
-    offset?: number;
-}
-
-/**
- * Marker interface indicating standard non-prefixed SI-compatible units.
- */
-export interface SI {
-
-}
-
 /**
  * Marker interface indicating primitive standard non-prefixed SI-compatible units.
  */
@@ -221,10 +100,16 @@ export interface PrimitiveSI {
 
 }
 
+export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
+    tex?: string;
+    scale?: number;
+    offset?: number;
+}
+
 /**
  * The public interface to all units and aliases.
  */
-export interface Unit<T extends UnitTerms = UnitTerms> {
+export interface IUnitBase<T extends PUnitTerms = PUnitTerms> {
     /**
      * Unique lookup key for this type.
      */
@@ -239,50 +124,29 @@ export interface Unit<T extends UnitTerms = UnitTerms> {
     readonly tex: string;
 }
 
-export interface CUnit<T extends CUnitTerms = CUnitTerms> extends Unit<T> {
-    /**
-     * Call to check units for addition/subtraction.
-     * Throws an error if the units are not the same.
-     * @param u
-     */
-    add(u: CUnit<T>): CUnit<T>;
+/**
+ * Turn the structured UnitTerms key into a string to do the lookup for unique types.
+ * @param key
+ */
+export const makeLookupKey = (key: PUnitTerms) => {
+    const units = Object.keys(Primitive) as Primitive[];
+    return units
+        .sort(orderUnits)
+        .map(k => `${PRIMITIVE_MAP[k]?.symbol || Throw(`Invalid primitive type name "${k} in type key.`)}^${key[k] || 0}`)
+        .join(' ');
+}
 
-    /**
-     * Produce new units multiplying these units.
-     * @param u
-     */
-    multiply<T2 extends CUnitTerms>(u: CUnit<T2>): CUnit<MultiplyTerms<T, T2>>;
+/**
+ * Marker interface indicating standard non-prefixed SI-compatible units.
+ */
+export interface SI {
 
-    /**
-     * Produce new units dividing by these units.
-     * @param u
-     */
-    divide<T2 extends CUnitTerms>(u: CUnit<T2>): CUnit<DivideTerms<T, T2>>;
-
-    readonly si: CUnit<T> & SI;
-
-    /**
-     * Convert the given value to (unprefixed) SI units, and return the converted value and the
-     * corresponding SI unit.
-     *
-     * @param v
-     * @return [number, Unit]
-     */
-    toSI(v: number): [number, CUnit];
-
-    /**
-     * Convert the given value from (unprefixed) SI units, and return the converted value and
-     * corresponding unit (i.e. this unit).
-     * @param v
-     * @param unit
-     */
-    fromSI(v: number, unit: CUnit): [number, this];
 }
 
 /**
  * Base class for all units (and aliases).
  */
-export abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
+export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
     readonly key: T;
     readonly symbol?: string;
     readonly attributes: UnitAttributes;
@@ -300,7 +164,7 @@ export abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
     }
 
     get tex(): string {
-        const makeTex = (key: UnitTerms) => {
+        const makeTex = (key: PUnitTerms) => {
             const units = Object.keys(key) as Primitive[];
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
@@ -316,7 +180,7 @@ export abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
                 .join(TeX`\dot`);
             return denomUnits.length === 0
                 ? num
-                : TeX`\frac{${num || 1}}{${denom}}`;
+                : TeX`\dfrac{${num || 1}}{${denom}}`;
         };
         return this.tex_ || (
             this.tex_ = (
@@ -337,7 +201,7 @@ export abstract class BaseUnit<T extends UnitTerms> implements Unit<T> {
 /**
  * Our primitive (non-decomposable) units.
  */
-class PrimitiveUnit<U extends Primitive> extends BaseUnit<{ [K in U]: 1 }> implements SI, PrimitiveSI {
+class PrimitiveUnit<U extends Primitive> extends UnitBase<{ [K in U]: 1 }> implements SI, PrimitiveSI {
     readonly symbol: string;
     readonly name: string;
     readonly varName?: string;
@@ -389,30 +253,30 @@ export const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
  * Namespace for primitives only; merged into the U namespace.
  */
 export namespace P {
-    export const mass: Unit<{ mass: 1 }> = PRIMITIVE_MAP.mass;
+    export const mass: IUnitBase<{ mass: 1 }> = PRIMITIVE_MAP.mass;
     // noinspection JSUnusedGlobalSymbols
     export type mass = typeof mass;
-    export const time: Unit<{ time: 1 }> = PRIMITIVE_MAP.time;
+    export const time: IUnitBase<{ time: 1 }> = PRIMITIVE_MAP.time;
     export type time = typeof time;
-    export const length: Unit<{ length: 1 }> = PRIMITIVE_MAP.length;
+    export const length: IUnitBase<{ length: 1 }> = PRIMITIVE_MAP.length;
     export type length = typeof length;
-    export const angle: Unit<{ angle: 1 }> = PRIMITIVE_MAP.angle;
+    export const angle: IUnitBase<{ angle: 1 }> = PRIMITIVE_MAP.angle;
     export type angle = typeof angle;
-    export const solidAngle: Unit<{ solidAngle: 1 }> = PRIMITIVE_MAP.solidAngle;
+    export const solidAngle: IUnitBase<{ solidAngle: 1 }> = PRIMITIVE_MAP.solidAngle;
     // noinspection JSUnusedGlobalSymbols
     export type solidAngle = typeof solidAngle;
-    export const amount: Unit<{ amount: 1 }> = PRIMITIVE_MAP.amount;
+    export const amount: IUnitBase<{ amount: 1 }> = PRIMITIVE_MAP.amount;
     // noinspection JSUnusedGlobalSymbols
     export type amount = typeof amount;
-    export const cycles: Unit<{ cycles: 1 }> = PRIMITIVE_MAP.cycles;
+    export const cycles: IUnitBase<{ cycles: 1 }> = PRIMITIVE_MAP.cycles;
     // noinspection JSUnusedGlobalSymbols
     export type cycles = typeof cycles;
-    export const current: Unit<{ current: 1 }> = PRIMITIVE_MAP.current;
+    export const current: IUnitBase<{ current: 1 }> = PRIMITIVE_MAP.current;
     // noinspection JSUnusedGlobalSymbols
     export type current = typeof current;
-    export const temperature: Unit<{ temperature: 1 }> = PRIMITIVE_MAP.temperature;
+    export const temperature: IUnitBase<{ temperature: 1 }> = PRIMITIVE_MAP.temperature;
     // noinspection JSUnusedGlobalSymbols
     export type temperature = typeof temperature;
-    export const candela: Unit<{ candela: 1 }> = PRIMITIVE_MAP.candela;
+    export const candela: IUnitBase<{ candela: 1 }> = PRIMITIVE_MAP.candela;
     export type candela = typeof candela;
 }

@@ -1,10 +1,3 @@
-/*
- * @module physics-math
- * Copyright 2020 by Bob Kerns. Licensed under MIT license.
- *
- * Github: https://github.com/BobKerns/physics-math
- */
-
 /**
  * Representation and manipulation of physical units.
  *
@@ -18,51 +11,237 @@
  */
 
 import {Throw, Writeable} from "./utils";
-import {
-    BaseUnit,
-    completeKey,
-    CompleteTerms,
-    CUnit,
-    CUnitTerms,
-    DivideTerms,
-    Exponent,
-    makeLookupKey,
-    MultiplyTerms,
-    orderUnits,
-    Primitive,
-    PRIMITIVE_MAP,
-    primitiveKeys,
-    PrimitiveUnitAttributes,
-    SI,
-    TeX,
-    Unit,
-    UnitAttributes,
-    UnitTerms
-} from "./primitive-units";
+import {Exponent, IUnitBase, makeLookupKey, orderUnits, Primitive, PRIMITIVE_MAP, primitiveKeys, PrimitiveUnitAttributes, SI, TeX, UnitAttributes, UnitBase, PUnitTerms} from "./primitive-units";
+
+/**
+ * For addition of positive numbers, we let 9 stand for all larger numbers.
+ */
+type XADD = [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 9],
+    [2, 3, 4, 5, 6, 7, 8, 9, 9, 9],
+    [3, 4, 5, 6, 7, 8, 9, 9, 9, 9],
+    [4, 5, 6, 7, 8, 9, 9, 9, 9, 9],
+    [5, 6, 7, 8, 9, 9, 9, 9, 9, 9],
+    [6, 7, 8, 9, 9, 9, 9, 9, 9, 9],
+    [7, 8, 9, 9, 9, 9, 9, 9, 9, 9],
+    [8, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+    [9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+];
+/**
+ * For subtraction of positive numbers, we have to allow for 9 standing in for larger numbers.
+ */
+type XSUB = [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8 | 9],
+    [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7 | 8 | 9],
+    [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6 | 7 | 8 | 9],
+    [-4, -3, -2, -1, 0, 1, 2, 3, 4, 5 | 6 | 7 | 8 | 9],
+    [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4 | 5 | 6 | 7 | 8 | 9],
+    [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3 | 4 | 5 | 6 | 7 | 8 | 9],
+    [-7, -6, -5, -4, -3, -2, -1, 0, 1, 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9],
+    [-8, -7, -6, -5, -4, -3, -2, -1, 0, 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9],
+    [-9, -8 | -9, -7 | -8 | -9, -6 | -7 | -8 | -9, -5 | -6 | -7 | -8 | -9,
+        -4 | -5 | -6 | -7 | -8 | -9, -3 | -4 | -5 | -6 | -7 | -8 | -9, -2 | -3 | -4 | -5 | -6 | -7 | -8 | -9,
+        -1 | -2 | -3 | -4 | -5 | -6 | -7 | -8 | -9, 0 | -1 | -2 | -3 | -4 | -5 | -6 | -7 | -8 | -9]
+];
+type M<K extends number, V extends number> = { [k in K]: V };
+type XNEGATE = [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
+    & M<-1, 1> & M<-2, 2> & M<-3, 3> & M<-4, 4> & M<-5, 5> & M<-6, 6> & M<-7, 7> & M<-8, 8> & M<-9, 9>;
+type Negate<A extends number> = XNEGATE[A];
+type Add<A extends number, B extends number> = A extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+    ? B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+        ? XADD[A][B]
+        : XSUB[Negate<B>][A]
+    : B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+        ? XSUB[Negate<A>][B]
+        : Negate<XADD[Negate<A>][Negate<B>]>;
+type Sub<A extends number, B extends number> = A extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+    ? B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+        ? XSUB[B][A]
+        : XADD[Negate<B>][A]
+    : B extends 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+        ? Negate<XADD[Negate<A>][B]>
+        : Negate<XSUB[Negate<B>][Negate<A>]>;
+
+/**
+ * An object with keys being the name of [[Primitive]] types and the values being exponents.
+ * All values are required; supply zero for values not supplied.
+ *
+ * See [[PUnitTerms]] for a partial set where types can be left undefined.
+ * @module Units
+ */
+export type UnitTerms = {
+    [u in keyof typeof Primitive]: Exponent;
+};
+
+/**
+ * If not a number (e.g. undefined), the 0 type literal.
+ */
+type OrZero<A> = A extends number ? A : 0;
+
+/**
+ * Multiply two [[UnitTerms]] (by adding the exponents.)
+ * @module Physical Units
+ */
+export type MultiplyTerms<A extends PUnitTerms, B extends PUnitTerms> = { [K in keyof typeof Primitive]: Add<OrZero<A[K]>, OrZero<B[K]>> };
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Invert a [[UnitTerms]] (by negating the exponents).
+ * @module Physical Units
+ */
+export type InvertTerms<A extends PUnitTerms> = { [K in keyof typeof Primitive]: Negate<OrZero<A[K]>> };
+
+/**
+ * Divide two [[UnitTerms]], A/B
+ * @module Physical Units
+ */
+export type DivideTerms<A extends PUnitTerms, B extends PUnitTerms> = { [K in keyof typeof Primitive]: Sub<OrZero<A[K]>, OrZero<B[K]>> };
+
+/**
+ * Multiply two [[Unit]] types (by adding the exponents).
+ * @module Physical Units
+ */
+export type Multiply<A extends IUnitBase, B extends IUnitBase> =
+    A extends IUnitBase<infer TA>
+        ? B extends IUnitBase<infer TB>
+        ? Unit<MultiplyTerms<TA, TB>>
+        : never
+        : never;
+
+/**
+ * Divide two [[Unit]] types, A/B (by subtracting the exponents).
+ * @module Physical Units
+ */
+export type Divide<A extends Unit, B extends Unit> =
+    A extends Unit<infer TA>
+        ? B extends Unit<infer TB>
+        ? Unit<DivideTerms<TA, TB>>
+        : never
+        : never;
+
+/**
+ * Take a partial set of [[UnitTerms]], and fills in the missing exponents with 0.
+ *
+ * @module Physical Units
+ */
+export type CompleteTerms<A extends PUnitTerms> = { [K in keyof typeof Primitive]: OrZero<A[K]> };
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Takes an [[IUnitBase]] with partially-supplied [[UnitTerms]] and fill in the missing
+ * exponents with 0.
+ *
+ * @internal
+ * @module Physical Units
+ */
+export type Complete<U extends IUnitBase> = U extends IUnitBase<infer T> ? Unit<CompleteTerms<T>> : never;
+// noinspection JSUnusedGlobalSymbols
+export type TermsOfUnitBase<U extends IUnitBase> = U extends IUnitBase<infer T> ? T : never;
+// noinspection JSUnusedGlobalSymbols
+export type TermsOfUnit<U extends Unit> = U extends Unit<infer T> ? CompleteTerms<T> : never;
+
+/**
+ * @internal
+ */
+const nullTerms: CompleteTerms<{}> = {
+    time: 0,
+    mass: 0,
+    length: 0,
+    cycles: 0,
+    angle: 0,
+    solidAngle: 0,
+    current: 0,
+    temperature: 0,
+    amount: 0,
+    candela: 0
+};
+/**
+ * @param key
+ * @internal
+ */
+const validateKey = (key: PUnitTerms) => {
+    (Object.keys(key) as Primitive[])
+        .forEach(k => Primitive[k] || Throw(`Unknown primitive type: ${k}`));
+    return key;
+}
+/**
+ *
+ * @param key
+ * @internal
+ */
+export const completeKey = <T extends PUnitTerms>(key: T): CompleteTerms<T> => ({
+    ...nullTerms, ...validateKey(key)
+}) as CompleteTerms<T>;
+
+/**
+ * A Typescript type corresponding to a specific runtime [[Unit]].
+ *
+ * @module Physical Units
+ */
+export interface Unit<T extends UnitTerms = UnitTerms> extends IUnitBase<T> {
+    /**
+     * Call to check units for addition/subtraction.
+     * Throws an error if the units are not the same.
+     * @param u
+     */
+    add(u: Unit<T>): Unit<T>;
+
+    /**
+     * Produce new units multiplying these units.
+     * @param u
+     */
+    multiply<T2 extends UnitTerms>(u: Unit<T2>): Unit<MultiplyTerms<T, T2>>;
+
+    /**
+     * Produce new units dividing by these units.
+     * @param u
+     */
+    divide<T2 extends UnitTerms>(u: Unit<T2>): Unit<DivideTerms<T, T2>>;
+
+    readonly si: Unit<T> & SI;
+
+    /**
+     * Convert the given value to (unprefixed) SI units, and return the converted value and the
+     * corresponding SI unit.
+     *
+     * @param v
+     * @return [number, Unit]
+     */
+    toSI(v: number): [number, Unit];
+
+    /**
+     * Convert the given value from (unprefixed) SI units, and return the converted value and
+     * corresponding unit (i.e. this unit).
+     * @param v
+     * @param unit
+     */
+    fromSI(v: number, unit: Unit): [number, this];
+}
 
 /**
  * A map from unit key's string representation to the Unit instance.
  */
 const UNITS: {
-    [k: string]: CUnit;
+    [k: string]: Unit;
 } = {};
 
 /**
  * A map from name to the Unit representing that unit.
  */
-const NAMED_UNITS: {[key: string]: CUnit } = { };
+const NAMED_UNITS: {[key: string]: Unit } = { };
 
 /**
  * A map from symbol for a Unit representing that unit.
  */
-const SYMBOL_UNITS: {[key: string]: CUnit } = { };
+const SYMBOL_UNITS: {[key: string]: Unit } = { };
 
 /**
  * Derived units build on the primitive units through multiplication (integration)
  * and division (differentiation).
  */
 // noinspection JSUnusedLocalSymbols
-class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>, SI {
+class DerivedUnit<T extends UnitTerms> extends UnitBase<T> implements Unit<T>, SI {
     readonly symbol?: string;
     readonly varName?: string;
     constructor(key: T, attributes: UnitAttributes = {}) {
@@ -98,13 +277,13 @@ class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>,
         }
     }
 
-    get si(): CUnit<T> & SI {
-        return this as unknown as CUnit<T> & SI;
+    get si(): Unit<T> & SI {
+        return this as unknown as Unit<T> & SI;
     }
 
     readonly name: string;
 
-    add(u: CUnit<T>): CUnit<T> {
+    add(u: Unit<T>): Unit<T> {
         const t = this;
         if (u !== (t as unknown)) {
             throw new Error(`Incompatible types: ${t.name} and ${u.name}`);
@@ -112,8 +291,8 @@ class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>,
         return u;
     }
 
-    private combine<X extends UnitTerms>(u: Unit<X>, dir = 1 | -1): CUnit {
-        const nkey: Writeable<UnitTerms> = {};
+    private combine<X extends PUnitTerms>(u: IUnitBase<X>, dir = 1 | -1): Unit {
+        const nkey: Writeable<PUnitTerms> = {};
         const add = (k: Primitive) => {
             const n = (this.key[k] || 0) + (u.key[k] || 0) * dir;
             if (n != 0) {
@@ -121,22 +300,22 @@ class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>,
             }
         }
         primitiveKeys.forEach(add);
-        return defineUnit(nkey as CUnitTerms);
+        return defineUnit(nkey as UnitTerms);
     }
 
-    multiply<X extends CUnitTerms>(u: CUnit<X>): CUnit<MultiplyTerms<T, X>> {
-        return this.combine(u, 1) as CUnit<MultiplyTerms<T, X>>;
+    multiply<X extends UnitTerms>(u: Unit<X>): Unit<MultiplyTerms<T, X>> {
+        return this.combine(u, 1) as Unit<MultiplyTerms<T, X>>;
     }
 
-    divide<X extends CUnitTerms>(u: CUnit<X>): CUnit<DivideTerms<T, X>> {
-        return this.combine(u, -1) as CUnit<DivideTerms<T, X>>;
+    divide<X extends UnitTerms>(u: Unit<X>): Unit<DivideTerms<T, X>> {
+        return this.combine(u, -1) as Unit<DivideTerms<T, X>>;
     }
 
-    fromSI(v: number, unit: CUnit): [number, this] {
+    fromSI(v: number, unit: Unit): [number, this] {
         return [v, this];
     }
 
-    toSI(v: number): [number, CUnit] {
+    toSI(v: number): [number, Unit] {
         return [v, this];
     }
 }
@@ -164,10 +343,10 @@ class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>,
  * @module Physical Units
  */
 export const defineUnit =
-    <T extends UnitTerms>(key: T, attributes: UnitAttributes = {}, ...names: string[]): CUnit<CompleteTerms<T>> => {
+    <T extends PUnitTerms>(key: T, attributes: UnitAttributes = {}, ...names: string[]): Unit<CompleteTerms<T>> => {
         const cKey = completeKey(key);
         const lookupKey = makeLookupKey(cKey);
-        const addName = (u: CUnit) => (n?: string, table = NAMED_UNITS) => {
+        const addName = (u: Unit) => (n?: string, table = NAMED_UNITS) => {
             if (n) {
                 const eNamed = table[n];
                 if (eNamed) {
@@ -181,12 +360,12 @@ export const defineUnit =
             return u;
         };
         const {name, symbol} = attributes;
-        const addSpecials = (u: CUnit) => {
+        const addSpecials = (u: Unit) => {
             const an = addName(u);
             an((name || u.name).toLowerCase());
             an(symbol, SYMBOL_UNITS);
         };
-        const addNames = (u: CUnit) => {
+        const addNames = (u: Unit) => {
             const an = addName(u);
             names.forEach(n => an(n.toLowerCase()));
             addSpecials(u);
@@ -196,12 +375,12 @@ export const defineUnit =
             addNames(existing);
             // Once set, attributes cannot be modified, but new ones can be added.
             Object.assign(existing.attributes, {...attributes, ...existing.attributes});
-            return existing as CUnit<CompleteTerms<T>>;
+            return existing as Unit<CompleteTerms<T>>;
         }
         const newUnit = new DerivedUnit(cKey, attributes);
         UNITS[lookupKey] = newUnit;
         addNames(newUnit);
-    return newUnit as CUnit<CompleteTerms<T>>;
+    return newUnit as Unit<CompleteTerms<T>>;
 };
 
 export interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
@@ -222,11 +401,11 @@ export interface Alias {
 export class AliasUnit<T extends UnitTerms> extends UnitBase<T> implements Alias, Unit<T> {
     readonly name: string;
     readonly symbol?: string;
-    readonly si: CUnit<T>;
+    readonly si: Unit<T>;
     readonly scale: number;
     readonly offset: number;
 
-    constructor(name: string, symbol: string|undefined, attributes: AliasAttributes, si: CUnit<T> & SI, scale: number, offset: number = 0) {
+    constructor(name: string, symbol: string|undefined, attributes: AliasAttributes, si: Unit<T> & SI, scale: number, offset: number = 0) {
         super(si.key, attributes);
         this.name = name;
         this.symbol = symbol;
@@ -235,27 +414,27 @@ export class AliasUnit<T extends UnitTerms> extends UnitBase<T> implements Alias
         this.offset = offset;
     }
 
-    toSI<R extends number>(v: R): [R, CUnit] {
+    toSI<R extends number>(v: R): [R, Unit] {
         const siScale = this.si.attributes.scale || 1;
         const siOffset = this.si.attributes.offset || 0;
         return [((v * this.scale + this.offset) / siScale - siOffset) as R, this.si];
     }
 
-    fromSI<R extends number>(v: R, unit: CUnit): [R, this] {
+    fromSI<R extends number>(v: R, unit: Unit): [R, this] {
         const siScale = this.si.attributes.scale || 1;
         const siOffset = this.si.attributes.offset || 0;
         return [((((v - siOffset) * siScale) - this.offset) / this.scale) as R, this];
     }
 
-    add(u: CUnit<T>): CUnit<T> {
+    add(u: Unit<T>): Unit<T> {
         return this.si.add(u);
     }
 
-    divide<T2 extends CUnitTerms>(u: CUnit<T2>): CUnit<DivideTerms<T, T2>> {
+    divide<T2 extends UnitTerms>(u: Unit<T2>): Unit<DivideTerms<T, T2>> {
         return this.si.divide(u);
     }
 
-    multiply<T2 extends CUnitTerms>(u: CUnit<T2>): CUnit<MultiplyTerms<T, T2>> {
+    multiply<T2 extends UnitTerms>(u: Unit<T2>): Unit<MultiplyTerms<T, T2>> {
         return this.si.multiply(u);
     }
 }
@@ -263,9 +442,9 @@ export class AliasUnit<T extends UnitTerms> extends UnitBase<T> implements Alias
 /**
  * Our defined aliases.
  */
-const ALIASES: {[k: string]: CUnit & Alias} = {};
+const ALIASES: {[k: string]: Unit & Alias} = {};
 
-const SYMBOL_ALIASES: {[k: string]: CUnit & Alias} = {};
+const SYMBOL_ALIASES: {[k: string]: Unit & Alias} = {};
 
 /**
  * Define a unit alias, which can convert to/from a corresponding standard unprefixed SI unit.
@@ -280,11 +459,11 @@ const SYMBOL_ALIASES: {[k: string]: CUnit & Alias} = {};
  * @module Physical Units
  */
 export const defineAlias =
-    <T extends CUnitTerms>(
+    <T extends UnitTerms>(
         name: string, symbol: string|undefined, attributes: AliasAttributes
-        , si: CUnit<T>, scale: number, offset: number = 0,
+        , si: Unit<T>, scale: number, offset: number = 0,
         ...names: string[]
-    ): CUnit<T> & Alias => {
+    ): Unit<T> & Alias => {
         const alias = new AliasUnit(
             name, symbol, attributes,
             si, scale, offset);
@@ -369,7 +548,7 @@ const RE_symbol = new RegExp(`(${RE_prefix_symbol.source})?(${RE_identifier.sour
  * @param u
  * @param siOnly true if only non-aliases should be considered.
  */
-const parsePrefix = (u: string, siOnly: boolean = false): CUnit | null => {
+const parsePrefix = (u: string, siOnly: boolean = false): Unit | null => {
     u = u.replace(RE_whitespace, ' ');
     u = u.replace(RE_prefix_name_concat, (s: string, name: string, sym: string) => `${name}${sym}`);
     const name = RE_name.exec(u);
@@ -455,9 +634,9 @@ export namespace TEST {
      * Delete a unit created by a test case.
      * @param u
      */
-    export const deleteUnit_ = (u: Unit | null | undefined) => {
+    export const deleteUnit_ = (u: IUnitBase | null | undefined) => {
         if (u) {
-            const delFrom = (table: { [k: string]: Unit }) =>
+            const delFrom = (table: { [k: string]: IUnitBase }) =>
                 Object.keys(table)
                     .forEach(k => table[k] === u && delete table[k]);
             delFrom(NAMED_UNITS_);

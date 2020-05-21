@@ -19,5 +19,10 @@ export * from "./math-types";
 export * from "./pfunction";
 export * from './scalar';
 export * from './poly';
+export * from "./numerics";
 export * from './units';
 export * from './unit-defs';
+export * from './general-fns';
+export {SI} from "./primitive-units";
+export {InertialFrameImpl, World} from "./frame";
+export {setStyle, Styler, StyleKeys, colorStyler, RGB6Color} from './latex'

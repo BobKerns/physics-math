@@ -9,7 +9,7 @@ import {quat, vec4} from "gl-matrix";
 import {Constructor, Throw} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
 import {ValueInFrame, ExplicitValueBase, InertialFrame, IPCompiled, IPFunction} from "./base";
-import {U} from "./unit-defs";
+import {Units} from "./unit-defs";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
@@ -201,11 +201,11 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
     }
 }
 
-export class Point extends Vectorish<1> implements InFrame<Vector>, DataType<TYPE.POINT>, ValueInFrame<Point, U.length> {
+export class Point extends Vectorish<1> implements InFrame<Vector>, DataType<TYPE.POINT>, ValueInFrame<Point, Units.length> {
     get type(): TYPE.POINT { return TYPE.POINT; }
 
     readonly frame: InertialFrame;
-    get unit(): U.length { return U.length; };
+    get unit(): Units.length { return Units.length; };
     get value(): Point { return this; }
 
     constructor(frame: InertialFrame, x = 0, y = 0, z = 0) {
@@ -418,10 +418,10 @@ export type Positional = Point | Vector;
 export type Rotational = Orientation | Rotation;
 
 export class Orientation extends Rotationish
-    implements InFrame<Rotation>, DataType<TYPE.ORIENTATION>, ValueInFrame<Orientation, U.angle> {
+    implements InFrame<Rotation>, DataType<TYPE.ORIENTATION>, ValueInFrame<Orientation, Units.angle> {
 
     readonly frame: InertialFrame;
-    get unit(): U.angle { return U.angle; };
+    get unit(): Units.angle { return Units.angle; };
     get value(): Orientation { return this; };
 
     constructor(frame: InertialFrame, i = 0, j = 0, k = 0, w = 1) {

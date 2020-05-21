@@ -10,18 +10,21 @@ import {BaseValue, BaseValueInFrame, BaseValueRelative, isBaseValue, TYPE, value
 import {isPFunction, PCalculus} from "./pfunction";
 import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, Value} from "./base";
 import {AnalyticIntegral} from "./integral";
-import {U as UX, U} from "./unit-defs";
-import {CUnit, Divide, Multiply} from "./primitive-units";
+import {Units as UX, Units} from "./unit-defs";
+import {Unit, Divide, Multiply} from "./units";
+import {STYLES} from "./latex";
 
 /**
  * Scalar constants
  */
 
+const tex = String.raw;
+
 export interface IConstant<
     R extends BaseValueRelative,
-    U extends CUnit = CUnit,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    U extends Unit = Unit,
+    D extends Unit = Divide<U, UX.time>,
+    I extends Unit = Multiply<U, UX.time>
     >
     extends IPFunctionBase<R, U>,
         IPCalculus<R, U, D, I>
@@ -31,23 +34,21 @@ export interface IConstant<
 
 export interface IConstantInFrame<
     R extends BaseValueInFrame,
-    U extends CUnit = CUnit
+    U extends Unit = Unit
     >
     extends IPFunctionBase<R, U>
 {
 
 }
 
-export class ScalarConstant<C extends CUnit = CUnit>
+export class ScalarConstant<C extends Unit = Unit>
     extends PCalculus<number, C>
     implements IConstant<number, C> {
     readonly value: number;
-    readonly unit: C;
     constructor(value: number, unit: C) {
         // noinspection JSUnusedLocalSymbols
-        super({});
+        super({unit});
         this.value = value;
-        this.unit = unit;
     }
 
     protected compileFn(): IPCompileResult<number> {
@@ -55,21 +56,22 @@ export class ScalarConstant<C extends CUnit = CUnit>
         return () => value;
     }
 
-    toTex(tv: string) {
-        return `${this.value}`;
+    toTex(varName: string) {
+        const unit = STYLES.unit(this.unit.tex);
+        return tex`{${this.value}} {${unit}}`;
     }
 
-    differentiate(): IPFunctionCalculus<number, Divide<C, U.time>, 1, Divide<Divide<C, U.time>, U.time>, C> {
-        const t1 = (this.unit as C).divide(U.time);
+    differentiate(): IPFunctionCalculus<number, Divide<C, Units.time>, 1, Divide<Divide<C, Units.time>, Units.time>, C> {
+        const t1 = (this.unit as C).divide(Units.time);
         const a = new ScalarConstant(0, t1);
-        return a as unknown as IPFunctionCalculus<number, Divide<C, U.time>, 1, Divide<Divide<C, U.time>, U.time>, C>;
+        return a as unknown as IPFunctionCalculus<number, Divide<C, Units.time>, 1, Divide<Divide<C, Units.time>, Units.time>, C>;
     }
 
-    integrate(): IndefiniteIntegral<number, Multiply<C, U.time>, C> {
-        const iUnit = this.unit.multiply(U.time);
+    integrate(): IndefiniteIntegral<number, Multiply<C, Units.time>, C> {
+        const iUnit = this.unit.multiply(Units.time);
         const p = new Poly(iUnit, 0, this.value);
         const a = new AnalyticIntegral(this, p, iUnit);
-        return a as unknown as IndefiniteIntegral<number, Multiply<C, U.time>>;
+        return a as unknown as IndefiniteIntegral<number, Multiply<C, Units.time>, C>;
     }
 
     get returnType(): TYPE.SCALAR {
@@ -82,13 +84,13 @@ export class ScalarConstant<C extends CUnit = CUnit>
  * @param v A value, a PFunction, or a Value.
  * @param unit a Unit describing the type of constant.
  */
-export function constant<T extends BaseValueRelative, U extends CUnit>(v: T | IPFunction<T, U> | Value<T, U> | IConstant<T, U>,
-                                                                       unit: U)
-: IConstant<T,  U>;
-export function constant<T extends BaseValueInFrame, U extends CUnit>(v: T | IPFunction<T, U> | Value<T, U> | IConstantInFrame<T, U>,
+export function constant<T extends BaseValueRelative, U extends Unit>(v: T | IPFunction<T, U> | Value<T, U> | IConstant<T, U>,
                                                                       unit: U)
+: IConstant<T,  U>;
+export function constant<T extends BaseValueInFrame, U extends Unit>(v: T | IPFunction<T, U> | Value<T, U> | IConstantInFrame<T, U>,
+                                                                     unit: U)
 : IConstantInFrame<T, U>;
-export function constant<T extends BaseValue, U extends CUnit>(v: BaseValue|IPFunction, unit: U)
+export function constant<T extends BaseValue, U extends Unit>(v: BaseValue|IPFunction, unit: U)
     : any {
     if (isPFunction(v, unit, 1)) {
         if (v as unknown instanceof ScalarConstant) {

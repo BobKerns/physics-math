@@ -6,6 +6,12 @@
  */
 
 import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
+import {Throw} from "./utils";
+import {isPCompiled, isPFunction, PCalculus} from "./pfunction";
+import {glMatrix} from "gl-matrix";
+import {Units} from './unit-defs';
+import {ScalarConstant} from "./scalar";
+import {Unit, Divide, Multiply} from "./units";
 import {
     isPoint,
     isRotational,
@@ -19,12 +25,6 @@ import {
     BaseValueRelative,
     RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE, BaseValueInFrame
 } from "./math-types";
-import {Throw} from "./utils";
-import {isPCompiled, isPFunction, PCalculus} from "./pfunction";
-import {glMatrix} from "gl-matrix";
-import {U as UX} from './unit-defs';
-import {ScalarConstant} from "./scalar";
-import {CUnit, Divide, Multiply} from "./primitive-units";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.
@@ -90,9 +90,9 @@ export function gadd(
 abstract class BinaryOp<
     R extends BaseValueRelative,
     X extends BaseValueRelative,
-    C extends CUnit,
-    D extends CUnit,
-    I extends CUnit>
+    C extends Unit,
+    D extends Unit,
+    I extends Unit>
     extends PCalculus<R, C, D, I> {
     l: IPFunctionCalculus<R, C, 1, D, I>;
     r: IPFunctionCalculus<X, C, 1, D, I>;
@@ -109,9 +109,9 @@ abstract class BinaryOp<
 
 export class PAdd<
     R extends BaseValueRelative,
-    C extends CUnit,
-    D extends CUnit = Divide<C, UX.time>,
-    I extends CUnit = Multiply<C, UX.time>
+    C extends Unit,
+    D extends Unit = Divide<C, Units.time>,
+    I extends Unit = Multiply<C, Units.time>
     >
     extends BinaryOp<R, R, C, D, I>
     implements IPFunctionCalculus<R, C, 1, D, I> {
@@ -119,7 +119,7 @@ export class PAdd<
         super(a, b);
     }
 
-    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, C> {
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, C> {
         const dl = this.l.derivative();
         const dr = this.r.derivative();
         return new PAdd(dl, dr);
@@ -138,9 +138,9 @@ export class PAdd<
 
 export class PSub<
     R extends BaseValueRelative,
-    U extends CUnit,
-    D extends CUnit = Divide<U, UX.time>,
-    I extends CUnit = Multiply<U, UX.time>
+    U extends Unit,
+    D extends Unit = Divide<U, Units.time>,
+    I extends Unit = Multiply<U, Units.time>
     >
     extends BinaryOp<R, R, U, D, I>
     implements IPFunctionCalculus<R, U, 1, D, I>
@@ -149,7 +149,7 @@ export class PSub<
         super(a, b);
     }
 
-    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U> {
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U> {
         const dl = this.l.derivative();
         const dr = this.r.derivative();
         return new PSub(dl, dr);
@@ -238,16 +238,16 @@ export function gsub(
 
 export class PMul<
     R extends BaseValueRelative,
-    U extends CUnit,
-    D extends CUnit,
-    I extends CUnit
+    U extends Unit,
+    D extends Unit,
+    I extends Unit
     >
     extends BinaryOp<R, number, U, D, I> {
     constructor(a: IPFunctionCalculus<R, U, 1, D, I>, b: IPFunctionCalculus<number, U, 1, D, I>) {
         super(a, b);
     }
 
-    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, UX.time>, U> {
+    differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U> {
         throw new Error(`Differentiation of products not yet supported.`);
     }
 
