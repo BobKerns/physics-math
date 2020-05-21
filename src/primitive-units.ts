@@ -7,6 +7,8 @@
 
 /**
  * Primitive units
+ * @packageDocumentation
+ * @ignore
  */
 
 

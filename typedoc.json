@@ -3,5 +3,8 @@
   "exclude": ["**/__tests__/**"],
   "name": "Physics Math",
   "readme": "src/README.md",
-  "includes": "./"
+  "includes": "./",
+  "plugin": [
+    "@convergencelabs/typedoc-plugin-custom-modules"
+  ]
 }

@@ -13,6 +13,8 @@
  * However, this does not try to be complete, and extends the set of base units somewhat
  * to aid clarity (for example, 'cycles/revolutions') while preserving semantics and standardized presentation.
  * Having units that map to SI '1' is not very helpful sometimes.
+ *
+ * @moduledefinition Physical Units
  */
 
 import {Throw, Writeable} from "./utils";
@@ -154,10 +156,12 @@ class DerivedUnit<T extends CUnitTerms> extends BaseUnit<T> implements CUnit<T>,
  * type U.velocity     = Unit<{distance: 1, time: -1}>
  * type U.acceleration = Unit<{distance: 1, time: -2}>
  * ```
+ * @module Physical Units
  *
  * @param key The key defining the type composition
  * @param attributes Additional attributes describing the type.
  * @param names Additional names to use for this type, e.g. newton.
+ * @module Physical Units
  */
 export const defineUnit =
     <T extends UnitTerms>(key: T, attributes: UnitAttributes = {}, ...names: string[]): CUnit<CompleteTerms<T>> => {
@@ -206,11 +210,16 @@ export interface AliasAttributes extends Partial<PrimitiveUnitAttributes> {
 
 /**
  * Marker interface for aliases.
+ * @internal
  */
 export interface Alias {
 
 }
-export class AliasUnit<T extends CUnitTerms> extends BaseUnit<T> implements Alias, CUnit<T> {
+
+/**
+ * @internal
+ */
+export class AliasUnit<T extends UnitTerms> extends UnitBase<T> implements Alias, Unit<T> {
     readonly name: string;
     readonly symbol?: string;
     readonly si: CUnit<T>;
@@ -260,6 +269,7 @@ const SYMBOL_ALIASES: {[k: string]: CUnit & Alias} = {};
 
 /**
  * Define a unit alias, which can convert to/from a corresponding standard unprefixed SI unit.
+ *
  * @param name
  * @param symbol
  * @param attributes
@@ -267,6 +277,7 @@ const SYMBOL_ALIASES: {[k: string]: CUnit & Alias} = {};
  * @param scale
  * @param offset
  * @param names
+ * @module Physical Units
  */
 export const defineAlias =
     <T extends CUnitTerms>(
@@ -417,6 +428,7 @@ export const getUnit = (name: string, siOnly: boolean = false) => {
 
 /**
  * A namespace for unit test access
+ * @ignore
  */
 export namespace TEST {
     export const PRIMITIVES_MAP_ = PRIMITIVE_MAP;
