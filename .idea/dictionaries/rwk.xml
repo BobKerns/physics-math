@@ -22,6 +22,7 @@
       <w>heta</w>
       <w>kerns</w>
       <w>memoizer</w>
+      <w>moduledefinition</w>
       <w>mult</w>
       <w>multf</w>
       <w>nargs</w>
@@ -35,6 +36,7 @@
       <w>quat</w>
       <w>ramda</w>
       <w>relpath</w>
+      <w>rightarrow</w>
       <w>romberg</w>
       <w>rotationish</w>
       <w>rpath</w>
