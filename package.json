@@ -47,11 +47,8 @@
   },
   "homepage": "https://github.com/BobKerns/physics-math#readme",
   "dependencies": {
-    "@convergencelabs/typedoc-plugin-custom-modules": "^0.4.0",
-    "@convergencelabs/typedoc-theme": "^1.2.0",
     "gl-matrix": "^3.3.0",
-    "katex": "^0.11.1",
-    "rollup-plugin-external-globals": "^0.5.0"
+    "katex": "^0.11.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",
@@ -67,11 +64,14 @@
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.21.2",
     "rollup-plugin-visualizer": "^1.1.1",
+    "rollup-plugin-external-globals": "^0.5.0",
     "ts-jest": "^25.5.1",
     "typedoc": "^0.16.11",
     "typedoc-plugin-external-module-name": "^3.1.0",
     "typedoc-plugin-mermaid": "^1.2.0",
     "typedoc-plugin-npm-externals": "^1.0.0",
+    "@convergencelabs/typedoc-plugin-custom-modules": "^0.4.0",
+    "@convergencelabs/typedoc-theme": "^1.2.0",
     "typescript": "^3.9.2",
     "wcsize": "^1.0.0"
   }
