@@ -18,7 +18,14 @@
     "postbuild": "npm run build:docs",
     "clean": "rm -rf build lib docs",
     "prepublishOnly": "npm run clean && NODE_ENV=production npm run build",
-    "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc -out docs/api src/"
+    "prebuild:docs": "rm -rf node_modules/typedoc/node_modules",
+    "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --stripInternal --mode modules --out docs/api src/",
+    "preserve": "npm run build:devtools",
+    "serve": "NODE_ENV=development SERVE=true rollup -c",
+    "predoc": "npm run build:config && npm run build:docs",
+    "doc": "NODE_ENV=development SERVE=true SERVE_DOC=true rollup -c",
+    "prewatch": "npm run build:devtools",
+    "watch": "NODE_ENV=development rollup -c --watch"
   },
   "bin": {
     "hello": "bin/hello.js"
@@ -56,6 +63,7 @@
     "mermaid": "^8.5.1",
     "ramda": "^0.26.1",
     "rollup": "^1.32.1",
+    "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.21.2",
     "rollup-plugin-visualizer": "^1.1.1",

@@ -17,6 +17,7 @@ import visualizerNoName, {VisualizerOptions} from 'rollup-plugin-visualizer';
 import {OutputOptions, RollupOptions} from "rollup";
 import {chain as flatMap} from 'ramda';
 import externalGlobals from "rollup-plugin-external-globals";
+import serve from "rollup-plugin-serve";
 
 /**
  * The visualizer plugin fails to set the plugin name. We wrap it to remedy that.
@@ -33,6 +34,8 @@ const visualizer = (opts?: Partial<VisualizerOptions>) => {
 const mode = process.env.NODE_ENV;
 // noinspection JSUnusedLocalSymbols
 const dev = mode === 'development';
+const serve_mode = process.env.SERVE && dev;
+const serve_doc = process.env.SERVE_DOC && serve_mode;
 
 /**
  * A rough description of the contents of [[package.json]].
@@ -130,16 +133,24 @@ const options: RollupOptions = {
         externalGlobals({
             'gl-matrix': "glMatrix"
         }),
-        /*
-        terser({
+        ...!dev ? [
+            terser({
             module: true
-        }),
-
-         */
+        })
+        ] : [],
         visualizer({
             filename: "build/build-stats.html",
             title: "Build Stats"
-        })
+        }),
+        ...serve_mode ? [
+            serve({
+                open: !!serve_doc,
+                verbose: true,
+                port: 5000,
+                contentBase: '',
+                openPage: '/docs/api/index.html'
+            })
+        ] : []
     ]
 };
 
