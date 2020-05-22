@@ -56,23 +56,23 @@ const pkg: Package  = require('../package.json');
 export const outputs = (p: Package) => flatMap((e: OutputOptions) => (e.file ? [e] : []),
     [
         {
+            format: 'umd',
             file: p.browser,
             name: 'PM',
-            format: 'umd',
             sourcemap: true,
             globals: {
-                // "ramda": "ramda",
+                "ramda": "ramda",
                 // "gl-matrix": "glMatrix"
             }
         },
         {
-            file: p.main,
             format: 'cjs',
+            file: p.main,
             sourcemap: true
         },
         {
-            file: p.module,
             format: 'esm',
+            file: p.module,
             sourcemap: true
         }
     ]) as OutputOptions;
