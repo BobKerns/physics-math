@@ -5,11 +5,15 @@
  *
  * Github: https://github.com/BobKerns/physics-math
  */
-
 /**
+ * Functions that know their type and units, and can display themselves meaningfully.
  *
  * Each PFFunction object has a corresponding function object and vice versa.
+ * @packageDocumentation
+ * @preferred
+ * @module Functionals
  */
+
 import {IUnitBase} from "./primitive-units";
 import {BaseValue, BaseValueInFrame, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PFunction} from "./pfunction";
@@ -27,10 +31,14 @@ interface TexDrivers {
     block: TexFormatter;
 }
 
+/**
+ * @internal
+ */
 export let TEX_FORMATTER: TexDrivers = {
     inline: () => Throw(`Call setFormatter(TexFormatter) to enable HTML.`),
     block: () => Throw(`Call setFormatter(TexFormatter) to enable HTML.`)
 } ;
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Set the converter to convert LaTeX to HTML. This csn be ObservableHQ's tex`...`
@@ -50,6 +58,9 @@ export interface ValueInFrame<T extends BaseValue = BaseValue, U extends IUnitBa
     readonly frame: InertialFrame;
 }
 
+/**
+ * @internal
+ */
 export abstract class ExplicitValueBase<T extends BaseValue = BaseValue, U extends IUnitBase = IUnitBase> implements Value<T, U> {
     value: T;
     readonly unit: U;
@@ -77,7 +88,14 @@ export class ExplicitValueInFrame<T extends BaseValueInFrame = BaseValueInFrame,
     }
 }
 
+/**
+ * @Category Value type
+ */
 export type Velocity = Value<Vector,Units.velocity>;
+
+/**
+ * @Category Value type
+ */
 export type Time = Value<number, Units.time>;
 
 export interface Transform {
@@ -103,6 +121,7 @@ export interface InertialFrame extends Frame {
 
 /**
  * Implementing function for a PFunction of 0 arguments.
+ * @internal
  */
 interface IPCompileResult0<T extends BaseValue> extends Function {
     (t: number): T;
@@ -110,6 +129,7 @@ interface IPCompileResult0<T extends BaseValue> extends Function {
 
 /**
  * Implementing function for a PFunction of 1 argument.
+ * @internal
  */
 interface IPCompileResult1<T extends BaseValue> extends Function {
     (t: number): T;
@@ -117,18 +137,21 @@ interface IPCompileResult1<T extends BaseValue> extends Function {
 
 /**
  * Implementing function for a PFunction of 2 arguments.
+ * @internal
  */
 interface IPCompileResult2<T extends BaseValue> extends Function {
     (t0: number, t: number): T;
 }
 /**
  * Implementing function for a PFunction of 3 arguments.
+ * @internal
  */
 interface IPCompileResult3<T extends BaseValue> extends Function {
     (t1: number, t0: number, t: number): T;
 }
 /**
  * Implementing function for a PFunction of 4 arguments.
+ * @internal
  */
 interface IPCompileResult4<T extends BaseValue> extends Function {
     (t2: number, t1: number, t0: number, t: number): T;
@@ -136,12 +159,14 @@ interface IPCompileResult4<T extends BaseValue> extends Function {
 
 /**
  * Implementing function for a PFunction of 5 arguments.
+ * @internal
  */
 interface IPCompileResult5<T extends BaseValue> extends Function {
     (t3: number, t2: number, t1: number, t0: number, t: number): T;
 }
 /**
  * Implementing function for a PFunction of 6 arguments.
+ * @internal
  */
 interface IPCompileResult6<T extends BaseValue> extends Function {
     (t4: number, t3: number, t2: number, t1: number, t0: number, t: number): T;
@@ -165,6 +190,7 @@ export interface IPCompiledDisplay {
 
 /**
  * Number of arguments supplied to a function.
+ * @internal
  */
 export type ArgCount = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 

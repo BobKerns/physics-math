@@ -7,7 +7,8 @@
 
 /**
  * Support for LaTex formatting of our expressions and data.
- * @definemodule Styler
+ * @packageDocumentation
+ * @module LaTeX
  */
 
 const tex = String.raw;
@@ -40,7 +41,7 @@ export const STYLES: {[k in StyleKeys]: Styler} = {
 };
 
 /**
- * We take our colors in 6 RGB hex digits.
+ * We take our colors in 6 RGB hex digits, e.g. RRGGBB, {RR, GG, BB} ∈ 00..FF.
  */
 export type RGB6Color = string;
 

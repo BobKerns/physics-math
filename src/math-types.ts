@@ -4,6 +4,10 @@
  *
  * Github: https://github.com/BobKerns/physics-math
  */
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
 
 import {quat, vec4} from "gl-matrix";
 import {Constructor, Throw} from "./utils";

@@ -7,7 +7,11 @@
  * to aid clarity (for example, 'cycles/revolutions') while preserving semantics and standardized presentation.
  * Having units that map to SI '1' is not very helpful sometimes.
  *
- * @moduledefinition Physical Units
+ * See the [[Units.Units]] namespace for definitions of individual units.
+ *
+ * @packageDocumentation
+ * @preferred
+ * @module Units
  */
 
 import {Throw, Writeable} from "./utils";

@@ -4,6 +4,10 @@
  *
  * Github: https://github.com/BobKerns/physics-math
  */
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
 
 import {Poly} from "./poly";
 import {BaseValue, BaseValueInFrame, BaseValueRelative, isBaseValue, TYPE, valueType} from "./math-types";

@@ -5,6 +5,12 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
+/**
+ * Frames—inertial and otherwise.
+ * @packageDocumentation
+ * @module Frame
+ */
+
 import {constant, IConstant} from "./scalar";
 import {rotation, Rotation, vector, Vector} from "./math-types";
 import {Units} from "./unit-defs";

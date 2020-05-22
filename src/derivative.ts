@@ -5,6 +5,11 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
+
 import {BaseValue, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PCalculus, PFunction} from "./pfunction";
 import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";

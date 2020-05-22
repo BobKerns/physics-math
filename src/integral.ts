@@ -7,6 +7,8 @@
 
 /**
  * Classes to support integration
+ * @packageDocumentation
+ * @module Functionals
  */
 
 import {BaseValueRelative, TYPE} from "./math-types";

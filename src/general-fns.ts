@@ -4,7 +4,10 @@
  *
  * Github: https://github.com/BobKerns/physics-math
  */
-
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
 
 import {NumericDerivative} from "./derivative";
 import {TYPE} from "./math-types";

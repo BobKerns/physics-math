@@ -4,7 +4,10 @@
  *
  * Github: https://github.com/BobKerns/physics-math
  */
-
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
 import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
 import {Throw} from "./utils";
 import {isPCompiled, isPFunction, PCalculus} from "./pfunction";

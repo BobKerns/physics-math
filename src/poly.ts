@@ -5,6 +5,11 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
+
 import {ScalarConstant} from "./scalar";
 import {PCalculus} from "./pfunction";
 import {TYPE} from "./math-types";

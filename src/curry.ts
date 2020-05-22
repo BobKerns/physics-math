@@ -12,8 +12,13 @@
  *
  * If all arguments are supplied, the supplied function is called and the value returned.
  * If no arguments are supplied, the same autocurried function is returned.
+ * @packageDocumentation
+ * @module Utils
  */
 
+/**
+ * @internal
+ */
 export interface Function1<R, A> {
     (a: A): R;
     (a?: undefined): Function1<R, A>
@@ -24,6 +29,9 @@ export function curry1<R, A>(f: (a: A) => R): Function1<R, A> {
     return curried as Function1<R, A>;
 }
 
+/**
+ * @internal
+ */
 export interface Function2<R, A, B> {
     (a: A, b: B): R;
     (a: undefined, b: B): Function1<R,A>;
@@ -53,6 +61,9 @@ export function curry2<R, A, B>(f: (a: A, b: B) => R): Function2<R, A, B> {
     return curried as Function2<R, A, B>;
 }
 
+/**
+ * @internal
+ */
 export interface Function3<R, A, B, C> {
     (a: A, b: B, c: C): R;
     (a: undefined, b: B, c: C): Function1<R,A>;
@@ -64,6 +75,17 @@ export interface Function3<R, A, B, C> {
     (a?: undefined, b?: undefined, c?: undefined): Function3<R, A, B, C>;
 }
 
+/**
+ * Take a function of three arguments, and return one that auto-curries. If any of the arguments are
+ * undefined, return a function that accepts that argument.
+ *
+ * If all arguments are undefined, returns itself.
+ * If all arguments are defined, immediately calls f with those arguments
+ * if a is undefined, return a => f(a, b, c)
+ * if b is undefined, return b => f(a, b, c)
+ * if c is undefined, return c => f(a, b, c)
+ * @param f a function of three arguments.
+ */
 export function curry3<R, A, B, C>(f: (a: A, b: B, c: C) => R): Function3<R, A, B, C> {
     const curried = (a?: A, b?: B, c?: C) =>
         a === undefined
@@ -85,6 +107,9 @@ export function curry3<R, A, B, C>(f: (a: A, b: B, c: C) => R): Function3<R, A, 
     return curried as Function3<R, A, B, C>;
 }
 
+/**
+ * @internal
+ */
 export interface Function4<R, A, B, C, D> {
     (a: A, b: B, c: C, d: D): R;
     (a: undefined, b: B, c: C, d: D): Function1<R,A>;
@@ -104,6 +129,18 @@ export interface Function4<R, A, B, C, D> {
     (a?: undefined, b?: undefined, c?: undefined, d?: undefined): Function4<R, A, B, C, D>;
 }
 
+/**
+ * Take a function of four arguments, and return one that auto-curries. If any of the arguments are
+ * undefined, return a function that accepts that argument.
+ *
+ * If all arguments are undefined, returns itself.
+ * If all arguments are defined, immediately calls f with those arguments
+ * if a is undefined, return a => f(a, b, c, d)
+ * if b is undefined, return b => f(a, b, c, d)
+ * if c is undefined, return c => f(a, b, c, d)
+ * if d is undefined, return d => f(a, b, c, d)
+ * @param f a function of four arguments.
+ */
 export function curry4<R, A, B, C, D>(f: (a: A, b: B, c: C, d: D) => R): Function4<R, A, B, C, D> {
     const curried = (a?: A, b?: B, c?: C, d?: D) =>
         a === undefined

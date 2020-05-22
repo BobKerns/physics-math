@@ -6,9 +6,13 @@
  */
 
 /**
- * Numerical methods.
+ * @packageDocumentation
+ * @module Utils
  */
 
+/**
+ * @internal
+ */
 export interface MemoBuffer<T> {
     [k: number]: T;
 
@@ -17,6 +21,9 @@ export interface MemoBuffer<T> {
     readonly length: number;
 }
 
+/**
+ * @internal
+ */
 export interface Memoizer<T> {
     growUp(buffer: MemoBuffer<T>, bufMin: number, min: number, max: number, t: number): [MemoBuffer<T>, number];
     growDown(buffer: MemoBuffer<T>, bufMin: number, min: number, max: number, t: number): [MemoBuffer<T>, number];
@@ -26,6 +33,7 @@ export interface Memoizer<T> {
 
 /**
  * Computes function values at stepsize intervals, doing linear interpolation between those points.
+ * @internal
  */
 export abstract class MemoizerBase<T extends number> implements Memoizer<T> {
     protected readonly f: (n: number) => T;

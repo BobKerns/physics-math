@@ -6,7 +6,10 @@
  */
 
 /**
- * @module PhysicsMath Math library for physics homework examples.
+ * Load the full system with a single import.
+ * @packageDocumentation
+ * @preferred
+ * @module Index
  */
 
 export * from './derivative';

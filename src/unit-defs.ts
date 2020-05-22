@@ -4,7 +4,10 @@
  *
  * Github: https://github.com/BobKerns/physics-math
  */
-
+/**
+ * @packageDocumentation
+ * @module Units
+ */
 import {IUnitBase, P, PUnitTerms} from "./primitive-units";
 import {defineAlias, defineUnit} from "./units";
 

@@ -7,6 +7,8 @@
 
 /**
  * Miscellaneous utilities
+ * @packageDocumentation
+ * @module Utils
  */
 
 interface idGen extends Function {

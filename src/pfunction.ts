@@ -5,6 +5,10 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
+/**
+ * @packageDocumentation
+ * @module Functionals
+ */
 import {BaseValue, BaseValueRelative, TYPE} from "./math-types";
 import {ArgCount, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, PFunctionOpts, TEX_FORMATTER} from "./base";
 import {callSite, idGen, Throw, ViewOf} from "./utils";

@@ -6,9 +6,8 @@
  */
 
 /**
- * Primitive units
  * @packageDocumentation
- * @ignore
+ * @module Units
  */
 
 
@@ -217,7 +216,7 @@ class PrimitiveUnit<U extends Primitive> extends UnitBase<{ [K in U]: 1 }> imple
 }
 
 /**
- * Type of our PRIMITIVE_MAP map. This provides one key/value entry for each primitive,
+ * Type of our [[PRIMITIVE_MAP]] map. This provides one key/value entry for each primitive,
  * indexed by the UNIT enum.
  */
 export type PrimitiveMap = {
@@ -251,6 +250,7 @@ export const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
 })();
 /**
  * Namespace for primitives only; merged into the U namespace.
+ * @internal
  */
 export namespace P {
     export const mass: IUnitBase<{ mass: 1 }> = PRIMITIVE_MAP.mass;
