@@ -17,6 +17,7 @@ import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunctionCalculus} fro
 import {AnalyticIntegral} from "./integral";
 import {Units} from './unit-defs';
 import {Unit, Divide, Multiply} from "./units";
+import {DEFAULT_STYLE, Style} from "./latex";
 
 /**
  * Polynomial functions
@@ -61,6 +62,21 @@ export class Poly<
 
     protected compileFn(): IPCompileResult<number> {
         return makePoly(...this.coefficients);
+    }
+
+    toTex(varName: string = 't', style: Style = DEFAULT_STYLE): string {
+        return this.coefficients
+            .map((v, i) =>
+                v === 0
+                    ? ''
+                    : i === 0
+                    ? style.number(v, style)
+                    : i === 1
+                        ? `{${v} {${varName}}}`
+                        : `{${v} {${varName}}^{${i}}}`)
+            .filter( s => s !== '')
+            .join(' + ')
+            || '0';
     }
 }
 

@@ -14,7 +14,7 @@ import {ArgCount, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, I
 import {callSite, idGen, Throw, ViewOf} from "./utils";
 import {Units} from './unit-defs';
 import {Unit, Divide, Multiply} from "./units";
-import {STYLES} from "./latex";
+import {DEFAULT_STYLE, Style} from "./latex";
 
 /**
  * Default integration timestep. This can be adjusted per-function.
@@ -89,11 +89,12 @@ export abstract class  PFunction<
     /**
      * Compute the LaTeX representation of this function.
      * @param varName The parameter name (or expression)
+     * @param style
      */
-    toTex(varName: string = 't') {
-        const unit = STYLES.unit(this.unit.tex);
-        const op = STYLES.function(this.name);
-        const call = STYLES.call(tex`${op}(${varName})`);
+    toTex(varName: string = 't', style: Style = DEFAULT_STYLE) {
+        const unit = style.unit(this.unit.tex, style);
+        const op = style.function(this.name, style);
+        const call = style.call(tex`${op}(${varName})`, style);
         return tex`{{${call}} \Rightarrow {${unit}}}`;
     }
 
@@ -108,9 +109,11 @@ export abstract class  PFunction<
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
      * @param varName The variable name to be used; ordinarily t (time).
      * @param block
+     * @param style
      */
-    toHtml(varName: string = 't', block: boolean = false): ViewOf<PFunction<R>> & Element {
-        const latex = callSite(this.toTex(varName)); // callSite prepares it for ObservableHQ's tex string interpolator.
+    toHtml(varName: string = 't', block: boolean = false, style: Style = DEFAULT_STYLE): ViewOf<PFunction<R>> & Element {
+        // callSite prepares it for ObservableHQ's tex string interpolator.
+        const latex = callSite(this.toTex(varName, style));
         const fmt = block ? TEX_FORMATTER.block : TEX_FORMATTER.inline;
         const h = fmt(latex) as ViewOf<PFunction<R>> & Element;
         h.value = this as unknown as PFunction<R>;
@@ -121,7 +124,7 @@ export abstract class  PFunction<
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each reference,
      * equivalent to:
      * ```
-     * pFun.toHtml('t', false);
+     * pFun.toHtml();
      * ```
      */
     get html(): ViewOf<PFunction<R>> & Element {

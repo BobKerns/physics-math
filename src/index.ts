@@ -27,5 +27,5 @@ export * from './units';
 export * from './unit-defs';
 export * from './general-fns';
 export {SI} from "./primitive-units";
-export {InertialFrameImpl, World} from "./frame";
-export {setStyle, Styler, StyleKeys, colorStyler, RGB6Color} from './latex'
+export {InertialFrame, Frame, World} from "./frame";
+export {Styler, StyleKey, colorStyler, RGB6Color} from './latex'

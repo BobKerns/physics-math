@@ -12,6 +12,7 @@
 import {constant} from "../scalar";
 import {Units} from "../unit-defs";
 import {GFunction} from "../general-fns";
+import {Poly} from "../poly";
 
 const tex = String.raw;
 
@@ -37,4 +38,10 @@ describe("Derivatives", () => {
     test('GFunction2',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').derivative().derivative().tex)
             .toBe(tex`{{{\dfrac{d^{2}}{dt}}{\operatorname{f}(t)}} \Rightarrow {\textcolor{0000ff}{\dfrac{\text{m}}{\text{s}^{3}}}}}`));
+    test('Polynomial', () => expect(new Poly(Units.angularVelocity, 3, 7, 8).tex)
+        .toBe(tex`3 + {7 {t}} + {8 {t}^{2}}`));
+    test('Polynomial 0-suppress', () => expect(new Poly(Units.angularVelocity, 0, 7, 0, 8).tex)
+        .toBe(tex`{7 {t}} + {8 {t}^{3}}`));
+    test('Polynomial 0', () => expect(new Poly(Units.angularVelocity, 0, 0, 0, 0).tex)
+        .toBe(tex`0`));
 });

@@ -16,7 +16,7 @@ import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionC
 import {AnalyticIntegral} from "./integral";
 import {Units} from "./unit-defs";
 import {Unit} from "./units";
-import {STYLES} from "./latex";
+import {DEFAULT_STYLE, Style} from "./latex";
 
 const tex = String.raw;
 
@@ -69,13 +69,13 @@ export class NumericDerivative extends PCalculus<number> {
         return makeDerivative(this.from.f);
     }
 
-    toTex(varName: string = 't'): string {
-        if (!this.time_derivative) return super.toTex(varName);
-        const base = STYLES.function(this.base_name);
-        const call = STYLES.call(tex`${base}(${varName})`);
+    toTex(varName: string = 't', style: Style = DEFAULT_STYLE): string {
+        if (!this.time_derivative) return super.toTex(varName, style);
+        const base = style.function(this.base_name, style);
+        const call = style.call(tex`${base}(${varName})`, style);
         const exp = this.time_derivative !== 1 ? tex`^{${this.time_derivative}}` : '';
         const op = tex`\dfrac{d${exp}}{d${varName}}`;
-        const unit = STYLES.unit(this.unit.tex);
+        const unit = style.unit(this.unit.tex, style);
         return tex`{{{${op}}{${call}}} \Rightarrow {${unit}}}`
     }
 }

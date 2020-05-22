@@ -20,6 +20,8 @@ import {PFunction} from "./pfunction";
 import {Throw, ViewOf} from "./utils";
 import {Divide, Multiply, Unit} from "./units";
 import {Units} from './unit-defs';
+import {Style} from "./latex";
+import {Frame, InertialFrame} from "./frame";
 
 /**
  * Hook to provide a compatible LaTeX parser, such as an existing KaTeX
@@ -107,16 +109,6 @@ export interface Transform {
   transform(v: Vector): Vector;
   transform(v: Velocity): Velocity;
   transform(f: Frame): Frame;
-}
-
-export interface Frame {
-    readonly name: string;
-    isInertial(t: number|Time): boolean;
-    transform(other: Frame): (t: number|Time) => Transform;
-}
-
-export interface InertialFrame extends Frame {
-    isInertial(t: number | Time): true;
 }
 
 /**
@@ -273,8 +265,9 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit 
     /**
      * Compute the LaTeX representation of this function.
      * @param varName The parameter name (or expression)
+     * @param style
      */
-    toTex(varName?: string): string;
+    toTex(varName?: string, style?: Style): string;
 
     /**
      * Get the LaTeX representation of this function.  The value is cached.
@@ -286,8 +279,9 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit 
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
      * @param varName Defaults to 't', the name of the variable used in generating LaTeX.
      * @param block
+     * @param style
      */
-    toHtml(varName?: string, block?: boolean): ViewOf<PFunction<R>> & Element;
+    toHtml(varName?: string, block?: boolean, style?: Style): ViewOf<PFunction<R>> & Element;
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call

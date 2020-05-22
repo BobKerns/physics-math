@@ -16,7 +16,7 @@ import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunction, IPFunctionB
 import {AnalyticIntegral} from "./integral";
 import {Units as UX, Units} from "./unit-defs";
 import {Unit, Divide, Multiply} from "./units";
-import {STYLES} from "./latex";
+import {DEFAULT_STYLE, Style} from "./latex";
 
 /**
  * Scalar constants
@@ -60,8 +60,8 @@ export class ScalarConstant<C extends Unit = Unit>
         return () => value;
     }
 
-    toTex(varName: string) {
-        const unit = STYLES.unit(this.unit.tex);
+    toTex(varName: string = 't', style: Style = DEFAULT_STYLE) {
+        const unit = style.unit(this.unit.tex, style);
         return tex`{${this.value}} {${unit}}`;
     }
 
