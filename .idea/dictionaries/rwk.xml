@@ -13,6 +13,7 @@
       <w>deka</w>
       <w>denom</w>
       <w>deriv</w>
+      <w>dfrac</w>
       <w>entrypoints</w>
       <w>exts</w>
       <w>fempto</w>
@@ -40,11 +41,14 @@
       <w>romberg</w>
       <w>rotationish</w>
       <w>rpath</w>
+      <w>rrggbb</w>
       <w>seqs</w>
       <w>siemen</w>
       <w>stepsize</w>
       <w>steridian</w>
+      <w>stylers</w>
       <w>subf</w>
+      <w>textcolor</w>
       <w>timestep</w>
       <w>tsbuild</w>
       <w>unprefixed</w>
