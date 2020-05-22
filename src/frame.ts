@@ -15,7 +15,19 @@ import {constant, IConstant} from "./scalar";
 import {rotation, Rotation, vector, Vector} from "./math-types";
 import {Units} from "./unit-defs";
 import {NYI} from "./utils";
-import {Frame, InertialFrame, Time, Transform, Velocity} from "./base";
+import {Time, Transform, Velocity} from "./base";
+
+export interface Frame {
+    readonly name: string;
+
+    isInertial(t: number | Time): boolean;
+
+    transform(other: Frame): (t: number | Time) => Transform;
+}
+
+export interface InertialFrame extends Frame {
+    isInertial(t: number | Time): true;
+}
 
 abstract class FrameImpl implements Frame {
     parent?: Frame;

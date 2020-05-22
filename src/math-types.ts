@@ -12,8 +12,9 @@
 import {quat, vec4} from "gl-matrix";
 import {Constructor, Throw} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
-import {ValueInFrame, ExplicitValueBase, InertialFrame, IPCompiled, IPFunction} from "./base";
+import {ValueInFrame, ExplicitValueBase, IPCompiled, IPFunction} from "./base";
 import {Units} from "./unit-defs";
+import {InertialFrame} from "./frame";
 
 type Constructor3N<R> = Constructor<R, [number, number, number]>;
 type Constructor4N<R> = Constructor<R, [number, number, number, number]>;

@@ -11,7 +11,8 @@
 
 import {add, equal, mul, near, sub} from "../arith";
 import {isPoint, isRotation, isVector, point, rotation, vector, orientation, isOrientation, Rotation, Orientation} from "../math-types";
-import {Frame, InertialFrame, Time, Transform} from "../base";
+import {Time, Transform} from "../base";
+import {Frame, InertialFrame} from "../frame";
 
 describe('scalar', () => {
     test('add', () => expect(add(15, 17)).toBe(32));

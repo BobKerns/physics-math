@@ -9,7 +9,7 @@
  * Tests of the math datatypes.
  */
 
-import {Frame, InertialFrame, Time, Transform} from "../base";
+import {Time, Transform} from "../base";
 import {
     datatype,
     DataTypeOf,
@@ -34,6 +34,7 @@ import {
     vector
 } from "../math-types";
 import {Constructor} from "../utils";
+import {Frame, InertialFrame} from "../frame";
 
 type Constructor4N<R> = Constructor<R, [number, number, number, number]> | Constructor<R, [InertialFrame, number, number, number, number]>;
 
