@@ -5,6 +5,6 @@
   "readme": "src/README.md",
   "includes": "./",
   "plugin": [
-    "@convergencelabs/typedoc-plugin-custom-modules"
+
   ]
 }
