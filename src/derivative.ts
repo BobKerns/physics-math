@@ -17,7 +17,7 @@ import {AnalyticIntegral} from "./integral";
 import {Units} from "./unit-defs";
 import {Unit} from "./units";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
-import {tex} from './utils';
+import {defineTag, tex} from './utils';
 
 const bounds = <R extends BaseValue>(f: IPCompiled<R>, t: number): [R, R, number] => {
     const timestep = f.pfunction.timestep;
@@ -145,3 +145,7 @@ export class RotationDerivative extends PFunction<Rotation> {
         return makeDerivativeQ(this.from.f);
     }
 }
+
+defineTag(RotationDerivative, 'RDeriv');
+defineTag(VectorDerivative, 'VDeriv');
+defineTag(NumericDerivative, 'NDeriv');

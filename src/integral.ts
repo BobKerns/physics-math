@@ -18,7 +18,7 @@ import {sub} from "./arith";
 import {Unit, Divide, Multiply} from "./units";
 import {Units} from './unit-defs';
 import {DEFAULT_STYLE, StyleContext} from "./latex";
-import {tex} from "./utils";
+import {defineTag, tex} from "./utils";
 
 export class DefiniteIntegralImpl<
     R extends BaseValueRelative,
@@ -185,3 +185,8 @@ export class NumericIntegral<
         throw new Error('Double integral not supported yet.');
     }
 }
+
+defineTag(NumericIntegral, 'NumericIntegral');
+defineTag(AnalyticIntegral, 'AnalyticIntegral');
+defineTag(DefiniteIntegralImpl, 'DefiniteIntegral');
+defineTag(IndefiniteIntegralBase, 'IndefiniteIntegral');

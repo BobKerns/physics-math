@@ -11,7 +11,7 @@
  */
 import {BaseValue, BaseValueRelative, TYPE} from "./math-types";
 import {ArgCount, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, PFunctionOpts, TEX_FORMATTER} from "./base";
-import {callSite, idGen, Throw, ViewOf, tex} from "./utils";
+import {callSite, idGen, Throw, ViewOf, tex, defineTag} from "./utils";
 import {Units} from './unit-defs';
 import {Unit, Divide, Multiply} from "./units";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
@@ -146,6 +146,8 @@ export abstract class  PFunction<
         return this;
     }
 }
+
+defineTag(PFunction, 'PFunction');
 
 // noinspection JSUnusedGlobalSymbols
 /**

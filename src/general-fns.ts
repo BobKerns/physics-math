@@ -16,6 +16,7 @@ import {PCalculus} from "./pfunction";
 import {IndefiniteIntegral, IPCompileResult, IPFunctionCalculus} from "./base";
 import {Units} from "./unit-defs";
 import {Unit} from "./units";
+import {defineTag} from "./utils";
 
 /**
  * Functions that have to be numerically integrated/differentiated.
@@ -44,3 +45,5 @@ export class GFunction extends PCalculus<number> {
         return this.explicit;
     }
 }
+
+defineTag(GFunction, 'GFun');

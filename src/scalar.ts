@@ -17,7 +17,7 @@ import {AnalyticIntegral} from "./integral";
 import {Units as UX, Units} from "./unit-defs";
 import {Unit, Divide, Multiply} from "./units";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
-import {tex} from "./utils";
+import {defineTag, tex} from "./utils";
 
 /**
  * Scalar constants
@@ -120,3 +120,5 @@ export function constant<T extends BaseValue, U extends Unit>(v: BaseValue|IPFun
     }
     throw new Error(`Invalid constant`);
 }
+
+defineTag(ScalarConstant, 'Scalar');

@@ -17,7 +17,7 @@
 import {IUnitBase} from "./primitive-units";
 import {BaseValue, BaseValueInFrame, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
 import {PFunction} from "./pfunction";
-import {Throw, ViewOf} from "./utils";
+import {defineTag, Throw, ViewOf} from "./utils";
 import {Divide, Multiply, Unit} from "./units";
 import {Units} from './unit-defs';
 import {StyleContext} from "./latex";
@@ -71,6 +71,8 @@ export abstract class ExplicitValueBase<T extends BaseValue = BaseValue, U exten
         this.unit = unit;
     }
 }
+
+defineTag(ExplicitValueBase.prototype, 'Value');
 
 // noinspection JSUnusedGlobalSymbols
 export class ExplicitValue<T extends BaseValueRelative = BaseValueRelative, U extends IUnitBase = IUnitBase> extends ExplicitValueBase<T, U> {

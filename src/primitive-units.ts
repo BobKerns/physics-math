@@ -11,7 +11,7 @@
  */
 
 
-import {Throw} from "./utils";
+import {defineTag, Throw} from "./utils";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
 
 /**
@@ -283,3 +283,5 @@ export namespace P {
     export const candela: IUnitBase<{ candela: 1 }> = PRIMITIVE_MAP.candela;
     export type candela = typeof candela;
 }
+
+defineTag(PrimitiveUnit, 'PrimitiveUnit');

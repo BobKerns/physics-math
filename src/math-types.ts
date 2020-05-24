@@ -10,7 +10,7 @@
  */
 
 import {quat, vec4} from "gl-matrix";
-import {Constructor, Throw} from "./utils";
+import {Constructor, defineTag, Throw} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
 import {ValueInFrame, ExplicitValueBase, IPCompiled, IPFunction} from "./base";
 import {Units} from "./unit-defs";
@@ -611,4 +611,9 @@ export function isScalar(v: any): boolean {
     if (isPCompiled(v)) return relType(v.pfunction);
     return false;
 }
+
+defineTag(Vector, 'Vector');
+defineTag(Point, 'Point');
+defineTag(Rotation, 'Rotation');
+defineTag(Orientation, 'Orientation');
 

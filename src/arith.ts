@@ -9,7 +9,7 @@
  * @module Functionals
  */
 import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus} from "./base";
-import {Throw} from "./utils";
+import {defineTag, Throw} from "./utils";
 import {isPCompiled, isPFunction, PCalculus} from "./pfunction";
 import {glMatrix} from "gl-matrix";
 import {Units} from './unit-defs';
@@ -390,3 +390,7 @@ export function near<T extends BaseValue>(a: T, b: T, epsilon: number = glMatrix
     }
     return false
 }
+
+defineTag(PAdd, 'Add');
+defineTag(PSub, 'Sub');
+defineTag(PMul, 'Mul');

@@ -14,7 +14,7 @@
  * @module Units
  */
 
-import {Throw, Writeable} from "./utils";
+import {defineTag, Throw, Writeable} from "./utils";
 import {Exponent, IUnitBase, makeLookupKey, orderUnits, Primitive, PRIMITIVE_MAP, primitiveKeys, PrimitiveUnitAttributes, SI, TeX, UnitAttributes, UnitBase, PUnitTerms} from "./primitive-units";
 
 /**
@@ -651,3 +651,6 @@ export namespace TEST {
     // noinspection JSUnusedGlobalSymbols
     export const parsePrefix_ = parsePrefix;
 }
+
+defineTag(DerivedUnit, 'Unit');
+defineTag(AliasUnit, 'Unit');

@@ -77,7 +77,7 @@ export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 export const callSite = (s: string|string[]) => (a => ((a as any).raw = (a as any).raw || a))(s instanceof Array ? s : [s])
 
 /**
- * Greatest Common Demoninator
+ * Greatest Common Denominator
  *
  * Uses the faster division-based version of Euclid's algorithm.
  * @param a
@@ -107,4 +107,20 @@ export const tex = (s: TemplateStringsArray, ...substitutions: any[]) => {
         katex.renderToString(r);
     }
     return r;
+};
+
+/**
+ * Define a @toStringTag for a given class's prototype so that objects show in inspectors with that
+ * tag even if minified. Can accept either a prototype or a class constructor.
+ *
+ * @param proto
+ * @param tag
+ */
+export const defineTag = (proto: Constructor<any, any>|any, tag: string) => {
+    if (typeof proto === 'function') {
+        defineTag(proto.prototype, tag);
+    }
+    Object.defineProperty(proto, Symbol.toStringTag, {
+        get: () => tag
+    });
 };

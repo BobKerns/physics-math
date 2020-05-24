@@ -18,7 +18,7 @@ import {AnalyticIntegral} from "./integral";
 import {Units} from './unit-defs';
 import {Unit, Divide, Multiply} from "./units";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
-import {tex} from './utils';
+import {defineTag, tex} from './utils';
 
 /**
  * Polynomial functions
@@ -114,3 +114,4 @@ const makePoly = (...coeffs: number[]) => (t: number) => {
     return acc;
 };
 
+defineTag(Poly, 'Poly');

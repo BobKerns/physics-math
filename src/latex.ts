@@ -11,7 +11,7 @@
  */
 
 import R from "ramda";
-import {gcd, tex} from "./utils";
+import {defineTag, gcd, tex} from "./utils";
 import {Unit} from "./units";
 import {IUnitBase} from "./primitive-units";
 
@@ -140,6 +140,8 @@ export class StyleContext implements StyleContextHolder {
     }
 }
 
+defineTag(StyleContext, 'StyleContext');
+
 /**
  * This handles adding style formatting to the syntactic expressions components
  * during LaTeX generation. It consists of a set of [[Styler]] functions, each
@@ -230,6 +232,8 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder {
         return new StyleContext(this);
     }
 }
+
+defineTag(Style, 'Style');
 
 export function* fractions(max = 10, maxDenom = 10) {
     for (let i = 0; i < max; i++) {

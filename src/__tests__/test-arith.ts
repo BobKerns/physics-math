@@ -88,7 +88,7 @@ describe('rotation', () => {
 describe('orientation', () => {
     const v1 = Orientation.fromEuler(frame, 0, 0, 0);
     const v2 = Rotation.fromEuler(Math.PI/2, 0, 0);
-    test("l1", () => expect(v1.magnitudeSqr()).toBe(1));
+    test( "l1", () => expect(v1.magnitudeSqr()).toBe(1));
     test("l2", () => expect(v1.magnitudeSqr()).toBe(1));
     test("default", () =>
         expect(orientation(frame)

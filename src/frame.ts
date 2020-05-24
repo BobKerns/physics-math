@@ -14,7 +14,7 @@
 import {constant, IConstant} from "./scalar";
 import {rotation, Rotation, vector, Vector} from "./math-types";
 import {Units} from "./unit-defs";
-import {NYI} from "./utils";
+import {defineTag, NYI} from "./utils";
 import {Time, Transform, Velocity} from "./base";
 
 export interface Frame {
@@ -65,6 +65,8 @@ export class InertialFrameImpl extends FrameImpl implements InertialFrame {
     }
 }
 
+defineTag(FrameImpl, 'Frame');
+
 // noinspection JSUnusedGlobalSymbols
 export class World {
     private parentFrame: InertialFrame = new InertialFrameImpl('Initial', undefined);
@@ -75,3 +77,5 @@ export class World {
             constant(offset || vector(), Units.length), constant(angle || rotation(), Units.angle));
     }
 }
+
+defineTag(World, 'World');
