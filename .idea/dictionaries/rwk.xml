@@ -17,11 +17,13 @@
       <w>entrypoints</w>
       <w>exts</w>
       <w>fempto</w>
+      <w>functionals</w>
       <w>gadd</w>
       <w>gmul</w>
       <w>gsub</w>
       <w>heta</w>
       <w>kerns</w>
+      <w>mathrm</w>
       <w>memoizer</w>
       <w>moduledefinition</w>
       <w>mult</w>
@@ -30,6 +32,7 @@
       <w>nbuf</w>
       <w>nkey</w>
       <w>noninfringement</w>
+      <w>numer</w>
       <w>numerics</w>
       <w>operatorname</w>
       <w>pdir</w>
