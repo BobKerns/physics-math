@@ -295,18 +295,3 @@ describe("Types", () => {
     });
 });
 
-/*
-describe("functional", () => {
-    const group = (name: string, value: any, s: boolean, r: boolean, i: boolean) =>
-        describe(name, () => {
-            test("isScalar", () => expect(isScalar(value)).toBe(s));
-            test("isRelative", () => expect(isRelative(value)).toBe(r));
-            test("isIntrinsic", () => expect(isIntrinsic(value)).toBe(i));
-        });
-    group('scalar', new Scalar(3, U.resistance), true, true, false);
-    group('vector', NULL_VECTOR, false, true, false);
-    group('point', ORIGIN(frame), false, false, true);
-    group('rotation', NULL_ROTATION, false, true, false);
-    group('orientation', NULL_ORIENTATION(frame), false, false, true);
-});
-*/
