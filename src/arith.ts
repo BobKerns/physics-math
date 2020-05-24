@@ -28,6 +28,7 @@ import {
     BaseValueRelative,
     RelativeOf, isScalarValue, Rotational, isPositional, isNonScalarValue, TYPE, BaseValueInFrame
 } from "./math-types";
+import {Poly} from "./poly";
 
 /**
  * Add two BaseValue quantities or BaseValue-valued functions together.
@@ -78,6 +79,21 @@ export function gadd(
         return acc;
     } else if (isPFunction(a)) {
         check(isPFunction)(rest);
+        if (a instanceof Poly) {
+            const polys = [a, ...rest.filter(v => v instanceof Poly)] as unknown as Poly<Unit>[];
+            if (polys.length > 1) {
+                const len = Math.max(...polys.map(p => p.coefficients.length))
+                const result: number[] = [];
+                for (let i = 0; i < len; i++) {
+                    polys.forEach(p => result[i] = (result[i] || 0) + p.coefficients[i]);
+                }
+                const nonPolys: typeof rest = rest.filter(v => !(v instanceof Poly)) as unknown as typeof rest;
+                if (nonPolys.length === 0) {
+                    return new Poly<Unit>(a.unit, ...result);
+                }
+                return gadd(new Poly<Unit>(a.unit, ...result), ...nonPolys);
+            }
+        }
         return (rest as IPFunction<Vector>[]).reduce((ra, v) => new PAdd(ra, v), a as IPFunction<Vector>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);
@@ -100,7 +116,7 @@ abstract class BinaryOp<
     l: IPFunctionCalculus<R, C, 1, D, I>;
     r: IPFunctionCalculus<X, C, 1, D, I>;
     protected constructor( l: IPFunctionCalculus<R, C, 1, D, I>, r: IPFunctionCalculus<X, C, 1, D, I>) {
-        super({});
+        super({unit: l.unit});
         this.l = l;
         this.r = r;
     }
@@ -223,7 +239,22 @@ export function gsub(
         return acc;
     } else if (isPFunction(a)) {
         check(isPFunction)(rest);
-            // Vector stands in here for any one type.
+        if (a instanceof Poly) {
+            const polys = [a, ...rest.filter(v => v instanceof Poly)] as unknown as Poly<Unit>[];
+            if (polys.length > 1) {
+                const len = Math.max(...polys.map(p => p.coefficients.length))
+                const result: number[] = a.coefficients.slice();
+                for (let i = 1; i < len; i++) {
+                    polys.forEach(p => result[i] = (result[i] || 0) - p.coefficients[i]);
+                }
+                const nonPolys: typeof rest = rest.filter(v => !(v instanceof Poly)) as unknown as typeof rest;
+                if (nonPolys.length === 0) {
+                    return new Poly<Unit>(a.unit, ...result);
+                }
+                return gsub(new Poly<Unit>(a.unit, ...result), ...nonPolys);
+            }
+        }
+        // Vector stands in here for any one type.
         return (rest as unknown as IPFunction<Vector>[])
             .reduce((ra, v) => new PSub(ra, v),
                 a as IPFunctionCalculus<Vector>);
@@ -297,9 +328,37 @@ export function gmul(
         }
         return acc;
     } else if (isPFunction(a)) {
+        if (a instanceof Poly) {
+            const polys = [a, ...(rest as unknown[]).filter(v => v instanceof Poly)] as unknown as Poly<Unit>[];
+            if (polys.length > 1) {
+                const result: number[] = [];
+                for (let i = 0; i < polys.length; i++) {
+                    const p = polys[i];
+                    for (let j = 0; j < result.length; j++) {
+                        for (let k = 0; k < p.coefficients.length; k++) {
+                            result[j + k] = (result[j + k] || 0) * p.coefficients[k];
+                        }
+                    }
+                }
+                const nonPolys: typeof rest = (rest as unknown[]).filter(v => !(v instanceof Poly)) as unknown as typeof rest;
+                if (nonPolys.length === 0) {
+                    return new Poly<Unit>(a.unit, ...result);
+                }
+                return gmul(new Poly<Unit>(a.unit, ...result), ...nonPolys);
+            }
+            return (rest as unknown as (IPFunctionCalculus<number>|number)[])
+                .reduce((ra, v) =>
+                        new PMul(ra, typeof v === 'number'
+                            ? new ScalarConstant(v, a.unit)
+                            : v as IPFunctionCalculus<number>),
+                    a as unknown as PMul<number, Unit, any, any>);
+        }
         check(isPFunction)(rest);
         return (rest as unknown as (IPFunctionCalculus<number> | number)[])
-            .reduce((ra, v) => new PMul(ra, typeof v === 'number' ? new ScalarConstant(v, a.unit) : v),
+            .reduce((ra, v) =>
+                    new PMul(ra, typeof v === 'number'
+                        ? new ScalarConstant(v, a.unit)
+                        : v as IPFunctionCalculus<number>),
                 a as IPFunctionCalculus<Vector>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);
