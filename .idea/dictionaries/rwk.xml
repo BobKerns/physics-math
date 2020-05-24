@@ -22,6 +22,7 @@
       <w>gmul</w>
       <w>gsub</w>
       <w>heta</w>
+      <w>katex</w>
       <w>kerns</w>
       <w>mathrm</w>
       <w>memoizer</w>
