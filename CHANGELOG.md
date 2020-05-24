@@ -1,5 +1,11 @@
 # ChangeLog
 
+## Version 0.1.7
+_Date: 2020-05-24_
+* Remember the initial value for DEFAULT_STYLE in INITIAL_STYLE
+* Export NumberFormat
+* Rename QuaternionDerivative to RotationDerivative
+
 ## Version 0.1.6
 _Date: 2020-05-24_
 
