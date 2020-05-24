@@ -131,7 +131,8 @@ const options: RollupOptions = {
             extensions: [".js", ".ts"]
         }),
         externalGlobals({
-            'gl-matrix': "glMatrix"
+            'gl-matrix': "glMatrix",
+            'katex': 'katex'
         }),
         ...!dev ? [
             terser({
