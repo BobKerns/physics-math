@@ -11,17 +11,16 @@
  */
 import {BaseValue, BaseValueRelative, TYPE} from "./math-types";
 import {ArgCount, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, PFunctionOpts, TEX_FORMATTER} from "./base";
-import {callSite, idGen, Throw, ViewOf} from "./utils";
+import {callSite, idGen, Throw, ViewOf, tex} from "./utils";
 import {Units} from './unit-defs';
 import {Unit, Divide, Multiply} from "./units";
-import {DEFAULT_STYLE, Style} from "./latex";
+import {DEFAULT_STYLE, StyleContext} from "./latex";
 
 /**
  * Default integration timestep. This can be adjusted per-function.
  */
 export let TIMESTEP: number = 0.001;
 
-const tex = String.raw;
 
 export abstract class  PFunction<
     R extends BaseValue = BaseValue,
@@ -88,13 +87,17 @@ export abstract class  PFunction<
 
     /**
      * Compute the LaTeX representation of this function.
-     * @param varName The parameter name (or expression)
-     * @param style
+     * @param varName? The parameter name (or expression)
+     * @param ctx?
      */
-    toTex(varName: string = 't', style: Style = DEFAULT_STYLE) {
-        const unit = style.unit(this.unit.tex, style);
-        const op = style.function(this.name, style);
-        const call = style.call(tex`${op}(${varName})`, style);
+    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        const op = ctx.function(this.name);
+        return ctx.call(tex`${op}(${varName})`);
+    }
+
+    toTexWithUnits(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        const call = this.toTex(varName, ctx);
+        const unit = ctx.unit(this.unit);
         return tex`{{${call}} \Rightarrow {${unit}}}`;
     }
 
@@ -102,18 +105,18 @@ export abstract class  PFunction<
      * Get the LaTeX representation of this function.  The value is cached.
      */
     get tex() {
-        return this.tex_ || (this.tex_ = this.toTex());
+        return this.tex_ || (this.tex_ = this.toTexWithUnits());
     }
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
-     * @param varName The variable name to be used; ordinarily t (time).
-     * @param block
-     * @param style
+     * @param varName? The variable name to be used; ordinarily t (time).
+     * @param block?
+     * @param ctx?
      */
-    toHtml(varName: string = 't', block: boolean = false, style: Style = DEFAULT_STYLE): ViewOf<PFunction<R>> & Element {
+    toHtml(varName?: string, block?: boolean, ctx?: StyleContext): ViewOf<PFunction<R>> & Element {
         // callSite prepares it for ObservableHQ's tex string interpolator.
-        const latex = callSite(this.toTex(varName, style));
+        const latex = callSite(this.toTexWithUnits(varName, ctx));
         const fmt = block ? TEX_FORMATTER.block : TEX_FORMATTER.inline;
         const h = fmt(latex) as ViewOf<PFunction<R>> & Element;
         h.value = this as unknown as PFunction<R>;

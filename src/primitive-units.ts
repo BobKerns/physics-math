@@ -12,6 +12,7 @@
 
 
 import {Throw} from "./utils";
+import {DEFAULT_STYLE, StyleContext} from "./latex";
 
 /**
  * String literal parser for LaTeX literals (avoids the need for quoting backslash).
@@ -121,6 +122,7 @@ export interface IUnitBase<T extends PUnitTerms = PUnitTerms> {
     readonly varName?: string;
     readonly attributes: UnitAttributes;
     readonly tex: string;
+    getTex(ctx?: StyleContext): string;
 }
 
 /**
@@ -162,31 +164,33 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
         }
     }
 
-    get tex(): string {
+    getTex(ctx: StyleContext = DEFAULT_STYLE.context): string {
         const makeTex = (key: PUnitTerms) => {
             const units = Object.keys(key) as Primitive[];
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
                 .sort(orderUnits);
             const num = numUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].tex}${(key[k] || 0) > 1 ? TeX`^(${key[k]})` : TeX``}`)
-                .join(TeX`\dot`);
+                .map(k => TeX`${PRIMITIVE_MAP[k].getTex(ctx)}${(key[k] || 0) > 1 ? TeX`^{${key[k]}}` : TeX``}`)
+                .join(TeX`\centerdot`);
             const denomUnits = units
                 .filter(k => (key[k] || 0) < 0)
                 .sort(orderUnits);
             const denom = denomUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].tex}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
-                .join(TeX`\dot`);
+                .map(k => TeX`${PRIMITIVE_MAP[k].getTex(ctx)}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
+                .join(TeX`\centerdot`);
             return denomUnits.length === 0
                 ? num
-                : TeX`\dfrac{${num || 1}}{${denom}}`;
+                : ctx.unitFraction(num, denom);
         };
+        return this.symbol
+            ? ctx.unitSymbol(this)
+            : makeTex(this.key);
+    }
+
+    get tex(): string {
         return this.tex_ || (
-            this.tex_ = (
-                this.symbol
-                    ? TeX`\text{${this.symbol}}`
-                    : makeTex(this.key)
-            )
+            this.tex_ = this.getTex()
         );
     }
 
@@ -239,8 +243,7 @@ export const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
     defPrimitive(Primitive.length, 'meter', 'm', 'l', {si_base: true});
     defPrimitive(Primitive.amount, 'mole', 'mol', 'n', {si_base: true});
     defPrimitive(Primitive.cycles, 'cycle', 'cycle', 'c');
-    defPrimitive(Primitive.angle, 'radian', 'rad', '𝜃',
-        {tex: TeX`\theta`});
+    defPrimitive(Primitive.angle, 'radian', 'rad', '𝜃');
     defPrimitive(Primitive.solidAngle, 'steridian', 'sr', undefined);
     defPrimitive(Primitive.current, 'ampere', 'A', 'A', {si_base: true});
     defPrimitive(Primitive.temperature, 'kelvin', 'K', 'T',

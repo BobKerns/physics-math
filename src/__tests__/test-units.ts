@@ -18,7 +18,7 @@ import {Units} from "../unit-defs";
 import PRIMITIVE_MAP = TEST.PRIMITIVES_MAP_;
 import NAMED_UNITS = TEST.NAMED_UNITS_;
 import deleteUnit = TEST.deleteUnit_;
-import {Throw} from "../utils";
+import {tex, Throw} from "../utils";
 import parsePrefix = TEST.parsePrefix_;
 import RE_whitespace = TEST.RE_whitespace_;
 import RE_prefix_name_concat = TEST.RE_prefix_name_concat_;
@@ -160,11 +160,11 @@ describe(`Formatting`, () => {
     test(`Exponent name`, () =>
         expect(Units.acceleration.name).toBe('m/s^2'));
     test(`Primitive TeX`, () =>
-        expect(Units.mass.tex).toBe('\\text{kg}'));
+        expect(Units.mass.tex).toBe(tex`\text{kg}`));
     test(`Simple TeX`, () =>
-        expect(Units.velocity.tex).toBe('\\dfrac{\\text{m}}{\\text{s}}'));
+        expect(Units.velocity.tex).toBe(tex`\Large{\frac{\text{m}}{\text{s}}}`));
     test(`Exponent TeX`, () =>
-        expect(Units.acceleration.tex).toBe('\\dfrac{\\text{m}}{\\text{s}^{2}}'));
+        expect(Units.acceleration.tex).toBe(tex`\Large{\frac{\text{m}}{\text{s}^{2}}}`));
 });
 
 describe(`Aliases`, () => {

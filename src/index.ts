@@ -28,4 +28,4 @@ export * from './unit-defs';
 export * from './general-fns';
 export {SI} from "./primitive-units";
 export {InertialFrame, Frame, World} from "./frame";
-export {Styler, StyleKey, colorStyler, RGB6Color} from './latex'
+export {Styler, StyleKey, colorStyler, RGB6Color, DEFAULT_STYLE} from './latex'

@@ -16,9 +16,8 @@ import {IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionC
 import {AnalyticIntegral} from "./integral";
 import {Units} from "./unit-defs";
 import {Unit} from "./units";
-import {DEFAULT_STYLE, Style} from "./latex";
-
-const tex = String.raw;
+import {DEFAULT_STYLE, StyleContext} from "./latex";
+import {tex} from './utils';
 
 const bounds = <R extends BaseValue>(f: IPCompiled<R>, t: number): [R, R, number] => {
     const timestep = f.pfunction.timestep;
@@ -69,14 +68,13 @@ export class NumericDerivative extends PCalculus<number> {
         return makeDerivative(this.from.f);
     }
 
-    toTex(varName: string = 't', style: Style = DEFAULT_STYLE): string {
-        if (!this.time_derivative) return super.toTex(varName, style);
-        const base = style.function(this.base_name, style);
-        const call = style.call(tex`${base}(${varName})`, style);
+    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        if (!this.time_derivative) return super.toTex(varName, ctx);
+        const base = ctx.function(this.base_name);
+        const call = ctx.call(tex`${base}(${varName})`);
         const exp = this.time_derivative !== 1 ? tex`^{${this.time_derivative}}` : '';
         const op = tex`\dfrac{d${exp}}{d${varName}}`;
-        const unit = style.unit(this.unit.tex, style);
-        return tex`{{{${op}}{${call}}} \Rightarrow {${unit}}}`
+        return tex`{{${op}}{${call}}}`
     }
 }
 

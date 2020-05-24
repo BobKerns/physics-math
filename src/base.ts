@@ -20,7 +20,7 @@ import {PFunction} from "./pfunction";
 import {Throw, ViewOf} from "./utils";
 import {Divide, Multiply, Unit} from "./units";
 import {Units} from './unit-defs';
-import {Style} from "./latex";
+import {StyleContext} from "./latex";
 import {Frame, InertialFrame} from "./frame";
 
 /**
@@ -264,10 +264,17 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit 
 
     /**
      * Compute the LaTeX representation of this function.
-     * @param varName The parameter name (or expression)
-     * @param style
+     * @param varName? The parameter name (or expression)
+     * @param ctx?
      */
-    toTex(varName?: string, style?: Style): string;
+    toTex(varName?: string, ctx?: StyleContext): string;
+
+    /**
+     * Compute the LaTeX representation of this function including units.
+     * @param varName? The parameter name (or expression)
+     * @param ctx?
+     */
+    toTexWithUnits(varName?: string, ctx?: StyleContext): string;
 
     /**
      * Get the LaTeX representation of this function.  The value is cached.
@@ -277,11 +284,11 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit 
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
-     * @param varName Defaults to 't', the name of the variable used in generating LaTeX.
-     * @param block
-     * @param style
+     * @param varName? Defaults to 't', the name of the variable used in generating LaTeX.
+     * @param block?
+     * @param ctx?
      */
-    toHtml(varName?: string, block?: boolean, style?: Style): ViewOf<PFunction<R>> & Element;
+    toHtml(varName?: string, block?: boolean, ctx?: StyleContext): ViewOf<PFunction<R>> & Element;
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
@@ -386,7 +393,8 @@ export interface IndefiniteIntegral<
     >
     extends IPFunctionCalculus<R, U, 2, D, I>
 {
-    integrand: IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U>;
+    readonly integrand: IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U>;
+    from(t0: number): DefiniteIntegral<R, U, D, I>;
 }
 
 export interface DefiniteIntegral<
@@ -399,6 +407,6 @@ export interface DefiniteIntegral<
         IPCalculus<R, U, D, I>,
         IPFunctionBase<R, U>
 {
-    from: IndefiniteIntegral<R, U, D, I>;
-    t0: number;
+    readonly evaluating: IndefiniteIntegral<R, U, D, I>;
+    readonly from: number;
 }

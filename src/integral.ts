@@ -54,6 +54,13 @@ export class DefiniteIntegralImpl<
         const t0 = this.from;
         return t => f(t0, t);
     }
+
+    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        const inner = this.evaluating.integrand.toTex(varName, ctx);
+        const variable = ctx.variable(varName);
+        const from = ctx.number(this.from);
+        return tex`\int_{${from}}^{${variable}}{{(${inner})}\ \mathrm{d}${variable}}`;
+    }
 }
 
 abstract class IndefiniteIntegralBase<
@@ -100,6 +107,12 @@ abstract class IndefiniteIntegralBase<
 
     integral(): IndefiniteIntegral<R, I, U, Multiply<I, Units.time>> {
         return this.integrate() as unknown as IndefiniteIntegral<R, I, U, Multiply<I, Units.time>>;
+    }
+
+    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        const inner = this.integrand.toTex(varName, ctx);
+        const variable = ctx.variable(varName);
+        return tex`\int{{(${inner})}\ \mathrm{d}${variable}}`;
     }
 }
 

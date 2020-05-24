@@ -16,13 +16,12 @@ import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunction, IPFunctionB
 import {AnalyticIntegral} from "./integral";
 import {Units as UX, Units} from "./unit-defs";
 import {Unit, Divide, Multiply} from "./units";
-import {DEFAULT_STYLE, Style} from "./latex";
+import {DEFAULT_STYLE, StyleContext} from "./latex";
+import {tex} from "./utils";
 
 /**
  * Scalar constants
  */
-
-const tex = String.raw;
 
 export interface IConstant<
     R extends BaseValueRelative,
@@ -60,9 +59,14 @@ export class ScalarConstant<C extends Unit = Unit>
         return () => value;
     }
 
-    toTex(varName: string = 't', style: Style = DEFAULT_STYLE) {
-        const unit = style.unit(this.unit.tex, style);
-        return tex`{${this.value}} {${unit}}`;
+    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        return ctx.number(this.value);
+    }
+
+    toTexWithUnits(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        const value = this.toTex(varName, ctx);
+        const unit = ctx.unit(this.unit);
+        return tex`{{${value}}\ {${unit}}}`;
     }
 
     differentiate(): IPFunctionCalculus<number, Divide<C, Units.time>, 1, Divide<Divide<C, Units.time>, Units.time>, C> {
