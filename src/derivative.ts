@@ -121,7 +121,7 @@ const makeDerivativeQ = (f: IPCompiled<Rotation>) => (t: number) => {
     return new Rotation(di, dj, dk, dw).normalize();
 }
 // noinspection JSUnusedGlobalSymbols
-export class QuaternionDerivative extends PFunction<Rotation> {
+export class RotationDerivative extends PFunction<Rotation> {
     private readonly from: PFunction<Rotation>;
     constructor(f: PFunction<Rotation>, unit: Unit) {
         super({unit});
@@ -130,7 +130,7 @@ export class QuaternionDerivative extends PFunction<Rotation> {
     }
 
     differentiate(): PFunction<Rotation> {
-        return new QuaternionDerivative(this, this.unit.divide(Units.time));
+        return new RotationDerivative(this, this.unit.divide(Units.time));
     }
 
     integrate() {
