@@ -326,7 +326,7 @@ export const colorStyler = (color: RGB6Color): Styler<any> =>
  * The stylers. These handle adding style formatting to the syntactic expressions
  * components.
  */
-export const DEFAULTS: StyleMap = {
+export const DEFAULTS: StyleMap = Object.freeze({
     unit: colorStyler('ff0000'),
     unitFraction: () => (_ctx, numer, denom) => tex`\Large{\frac{${numer}}{${denom}}}`,
     unitSymbol: () => (_ctx, unit) => tex`\text{${unit.symbol}}`,
@@ -340,7 +340,7 @@ export const DEFAULTS: StyleMap = {
     numberPrecision: 4,
     numberSpecials: SPECIAL_NUMBERS,
     numberTrimTrailingZero: true
-};
+});
 
 const DEFAULT_STYLE_FNS: StyleFnMap = {
     unit: (_ctx, u): string => u.getTex(_ctx),
@@ -359,9 +359,16 @@ const DEFAULT_STYLE_FNS: StyleFnMap = {
 };
 
 /**
- * The [[Style]] that items are formatted with by default.
+ * The initial [[DEFAULT_STYLE]].
  */
-export let DEFAULT_STYLE = new Style(DEFAULTS);
+export const INITIAL_STYLE = new Style(DEFAULTS);
+
+// noinspection UnnecessaryLocalVariableJS
+/**
+ * The [[Style]] that items are formatted with by default. May be changed; the
+ * initial value is in [[INITIAL_STYLE]].
+ */
+export let DEFAULT_STYLE = INITIAL_STYLE;
 
 // noinspection JSUnusedGlobalSymbols
 /**
