@@ -17,14 +17,8 @@ import {DefiniteIntegral, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFun
 import {sub} from "./arith";
 import {Unit, Divide, Multiply} from "./units";
 import {Units} from './unit-defs';
-
-const makeDefiniteIntegral = <
-    T extends BaseValueRelative,
-    U extends Unit,
-    D extends Unit,
-    I extends Unit = Multiply<U, Units.time>
-    > (f: IndefiniteIntegral<T, U, D, I>) =>
-    (t0: number) => new DefiniteIntegralImpl<T, U, D, I>(f, t0).f;
+import {DEFAULT_STYLE, StyleContext} from "./latex";
+import {tex} from "./utils";
 
 export class DefiniteIntegralImpl<
     R extends BaseValueRelative,
@@ -34,29 +28,31 @@ export class DefiniteIntegralImpl<
     >
     extends PCalculus<R, U, D, I>
     implements DefiniteIntegral<R, U, D, I> {
-    readonly from: IndefiniteIntegral<R, U, D, I>;
-    readonly t0: number;
+    readonly evaluating: IndefiniteIntegral<R, U, D, I>;
+    readonly from: number;
 
     get returnType() {
-        return this.from.returnType;
+        return this.evaluating.returnType;
     }
 
     constructor(f: IndefiniteIntegral<R, U, D>, t0: number) {
-        super(makeDefiniteIntegral(f)(t0));
-        this.from = f;
-        this.t0 = t0;
+        super({unit: f.unit});
+        this.evaluating = f;
+        this.from = t0;
     }
 
     differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U> {
-        return this.from.integrand;
+        return this.evaluating.integrand;
     }
 
     integrate(): IndefiniteIntegral<R, I, U, Multiply<I, Units.time>> {
-        return this.from.integral() as unknown as IndefiniteIntegral<R, I, U, Multiply<I, Units.time>>;
+        return this.evaluating.integral() as unknown as IndefiniteIntegral<R, I, U, Multiply<I, Units.time>>;
     }
 
     protected compileFn(): IPCompileResult<R> {
-        return makeDefiniteIntegral(this.from)(this.t0);
+        const f = this.evaluating.f;
+        const t0 = this.from;
+        return t => f(t0, t);
     }
 }
 
@@ -79,6 +75,15 @@ abstract class IndefiniteIntegralBase<
     {
         super({...options, unit});
         this.integrand = integrand;
+    }
+
+    from(t0: number): DefiniteIntegral<R, U, D, I> {
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof t0 !== 'number') {
+            throw new Error(`Not a number: ${t0}`);
+        }
+        const xThis: IndefiniteIntegral<R, U, D, I> = this;
+        return new DefiniteIntegralImpl<R, U, D, I>(xThis, t0);
     }
 
     get returnType(): TYPE {
