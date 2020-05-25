@@ -96,11 +96,13 @@ let katex: any = null;
 
 export const tex = (s: TemplateStringsArray, ...substitutions: any[]) => {
     const r = String.raw(s, ...substitutions);
-    if (! katex) {
+    if (katex === null) {
         try {
             katex = require('katex');
         } catch (e) {
             console.warn('Could not load katex', e);
+            // Don't try again. Take advantage of multiple kinds of falsey.
+            katex = false;
         }
     }
     if (katex) {
