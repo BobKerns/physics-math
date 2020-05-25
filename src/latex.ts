@@ -288,7 +288,8 @@ const formatNumber: Styler<number> = (continuation: StylerFn<number>, _style: St
         }
         switch (ctx.numberFormat) {
             case NumberFormat.normal:
-                return n.toString(ctx.numberPrecision);
+                const digits = Math.ceil(Math.log10(n));
+                return n.toFixed(Math.max(ctx.numberPrecision - digits, 0));
             case NumberFormat.scientific:
             case NumberFormat.engineering:
                 const exp = Math.log10(n);

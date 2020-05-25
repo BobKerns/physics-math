@@ -14,7 +14,7 @@ import {Units} from "../unit-defs";
 import {GFunction} from "../general-fns";
 import {Poly} from "../poly";
 import {tex} from '../utils';
-import {DEFAULT_STYLE} from "../latex";
+import {DEFAULT_STYLE, NumberFormat} from "../latex";
 
 describe("Primitives", () => {
     test('ScalarConstant',
@@ -90,6 +90,11 @@ describe('styles', () => {
         test('zero [data]', () =>
             expect(DEFAULT_STYLE.context.number(0))
                 .toBe('0'));
+        const NORMAL = DEFAULT_STYLE.set({numberFormat: NumberFormat.normal, numberPrecision: 4});
+        test("Normal set", () => expect(NORMAL.context.numberFormat).toBe(NumberFormat.normal));
+        test("Normal numbers big", () => expect(NORMAL.context.number(12345678)).toBe('12345678'));
+        test("Normal numbers small", () => expect(NORMAL.context.number(0.000012345678)).toBe('0.00001235'));
+
     });
     describe('units', () => {
         test('No symbol', () =>
