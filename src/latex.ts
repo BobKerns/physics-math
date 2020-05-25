@@ -85,12 +85,16 @@ type StyleFnMap = {
 /**
  * A source of [[StyleContext]] instances. Initially, you obtain a [[StyleContext]] from a [[Style]].
  */
-export interface StyleContextHolder {
+export interface StyleContextHolder<T extends StyleContextHolder<T>> {
     readonly context: StyleContext;
+
+    set(params: StyleMap): T;
+
+    wrap(params: StyleMap): T;
 }
 
 
-export class StyleContext implements StyleContextHolder {
+export class StyleContext implements StyleContextHolder<StyleContext> {
     readonly style: Style;
     readonly parent?: StyleContext;
     constructor(style: Style, parent?: StyleContext, options: any = {}) {
@@ -138,6 +142,14 @@ export class StyleContext implements StyleContextHolder {
         // For now we deal with a single context, but might have nested contexts in the future.
         return this;
     }
+
+    set(params: StyleMap): StyleContext {
+        return this.style.set(params).context;
+    }
+
+    wrap(params: StyleMap): StyleContext {
+        return this.style.wrap(params).context;
+    }
 }
 
 defineTag(StyleContext, 'StyleContext');
@@ -151,7 +163,7 @@ defineTag(StyleContext, 'StyleContext');
  * The [[Style.set]], [[Style.wrap]], and [[Style.wrapWith]] methods can be chained
  * to provide any combination.
  */
-export class Style implements Readonly<StyleFnMap>, StyleContextHolder {
+export class Style implements Readonly<StyleFnMap>, StyleContextHolder<Style> {
     readonly call: StylerFn<string>;
     readonly function: StylerFn<string>;
     readonly variable: StylerFn<string>;
