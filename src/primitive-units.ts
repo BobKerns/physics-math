@@ -11,8 +11,9 @@
  */
 
 
-import {defineTag, Throw} from "./utils";
+import {callSite, defineTag, Throw, ViewOf} from "./utils";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
+import {TEX_FORMATTER} from "./base";
 
 /**
  * String literal parser for LaTeX literals (avoids the need for quoting backslash).
@@ -122,7 +123,10 @@ export interface IUnitBase<T extends PUnitTerms = PUnitTerms> {
     readonly varName?: string;
     readonly attributes: UnitAttributes;
     readonly tex: string;
-    getTex(ctx?: StyleContext): string;
+    toTex(ctx?: StyleContext): string;
+    readonly html: Element & ViewOf<IUnitBase<T>>;
+
+    toHtml(block?: boolean, ctx?: StyleContext): Element & ViewOf<IUnitBase>;
 }
 
 /**
@@ -164,20 +168,20 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
         }
     }
 
-    getTex(ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(ctx: StyleContext = DEFAULT_STYLE.context): string {
         const makeTex = (key: PUnitTerms) => {
             const units = Object.keys(key) as Primitive[];
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
                 .sort(orderUnits);
             const num = numUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].getTex(ctx)}${(key[k] || 0) > 1 ? TeX`^{${key[k]}}` : TeX``}`)
+                .map(k => TeX`${PRIMITIVE_MAP[k].toTex(ctx)}${(key[k] || 0) > 1 ? TeX`^{${key[k]}}` : TeX``}`)
                 .join(TeX`\centerdot`);
             const denomUnits = units
                 .filter(k => (key[k] || 0) < 0)
                 .sort(orderUnits);
             const denom = denomUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].getTex(ctx)}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
+                .map(k => TeX`${PRIMITIVE_MAP[k].toTex(ctx)}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
                 .join(TeX`\centerdot`);
             return denomUnits.length === 0
                 ? num
@@ -190,7 +194,7 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
 
     get tex(): string {
         return this.tex_ || (
-            this.tex_ = this.getTex()
+            this.tex_ = this.toTex()
         );
     }
 
@@ -199,6 +203,19 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
     }
 
     abstract readonly name: string;
+    get html(): Element & ViewOf<this> {
+        return this.toHtml();
+    }
+
+    toHtml(block?: boolean, ctx: StyleContext = DEFAULT_STYLE.context): Element & ViewOf<this> {
+        // callSite prepares it for ObservableHQ's tex string interpolator.
+        const tex = this.toTex(ctx);
+        const latex = callSite(tex);
+        const fmt = block ? TEX_FORMATTER.block : TEX_FORMATTER.inline;
+        const h = fmt(latex) as ViewOf<this> & Element;
+        h.value = this;
+        return h;
+    }
 }
 
 /**

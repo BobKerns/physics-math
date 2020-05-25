@@ -16,7 +16,6 @@
 
 import {IUnitBase} from "./primitive-units";
 import {BaseValue, BaseValueInFrame, BaseValueRelative, Orientation, Point, Rotation, TYPE, Vector} from "./math-types";
-import {PFunction} from "./pfunction";
 import {defineTag, Throw, ViewOf} from "./utils";
 import {Divide, Multiply, Unit} from "./units";
 import {Units} from './unit-defs';
@@ -290,13 +289,13 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit 
      * @param block?
      * @param ctx?
      */
-    toHtml(varName?: string, block?: boolean, ctx?: StyleContext): ViewOf<PFunction<R>> & Element;
+    toHtml(varName?: string, block?: boolean, ctx?: StyleContext): ViewOf<IPFunctionBase<R, U, N>> & Element;
 
     /**
      * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
      * @param block
      */
-    readonly html: ViewOf<PFunction<R>> & Element;
+    readonly html: ViewOf<IPFunctionBase<R, U, N>> & Element;
 
     /**
      *

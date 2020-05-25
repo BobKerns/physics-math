@@ -114,12 +114,12 @@ export abstract class  PFunction<
      * @param block?
      * @param ctx?
      */
-    toHtml(varName?: string, block?: boolean, ctx?: StyleContext): ViewOf<PFunction<R>> & Element {
+    toHtml(varName?: string, block?: boolean, ctx: StyleContext = DEFAULT_STYLE.context): ViewOf<this> & Element {
         // callSite prepares it for ObservableHQ's tex string interpolator.
         const latex = callSite(this.toTexWithUnits(varName, ctx));
         const fmt = block ? TEX_FORMATTER.block : TEX_FORMATTER.inline;
-        const h = fmt(latex) as ViewOf<PFunction<R>> & Element;
-        h.value = this as unknown as PFunction<R>;
+        const h = fmt(latex) as ViewOf<this> & Element;
+        h.value = this;
         return h;
     }
 
@@ -130,7 +130,7 @@ export abstract class  PFunction<
      * pFun.toHtml();
      * ```
      */
-    get html(): ViewOf<PFunction<R>> & Element {
+    get html(): ViewOf<this> & Element {
         return this.toHtml();
     }
 

@@ -376,7 +376,7 @@ export const DEFAULTS: StyleMap = Object.freeze({
 });
 
 const DEFAULT_STYLE_FNS: StyleFnMap = {
-    unit: (_ctx, u): string => u.getTex(_ctx),
+    unit: (_ctx, u): string => u.toTex(_ctx),
     unitFraction: (_ctx, numer, denom) => tex`\dfrac{${numer}}{${denom}}`,
     unitSymbol: (_ctx, unit) => tex`\text{${unit.symbol}}`,
     function: (_ctx, s) => s.toString(),
