@@ -188,7 +188,19 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder {
      * the one in this one.
      */
     set(stylers: Partial<StyleMap>): Style {
-        return Object.freeze(Object.assign(Object.create(this), stylers));
+        const nStyle = Object.create(this);
+        for (const k of Object.keys(stylers)) {
+            const v = (stylers as any)[k];
+            if (nStyle[k] === undefined) {
+                throw new Error(`Invalid style key: ${k}`);
+            }
+            if (typeof v === 'function') {
+                nStyle[k] = v((DEFAULT_STYLE_FNS as any)[k] as StylerFn, this);
+            } else {
+                nStyle[k] = v;
+            }
+        }
+        return Object.freeze(nStyle);
     }
 
     /**
@@ -205,12 +217,16 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder {
             return Object.freeze(result);
         }
         const merge: (n: Partial<StyleMap>, o: Style) => StyleMap =
-            R.mergeWithKey((key: string, a: Styler|Map<any,any>, b: StylerFn|Map<any,any>) =>
-                (key === 'numberFormat' || key === 'numberPrecision')
+            R.mergeWithKey((key: string, a: Styler|Map<any,any>, b: StylerFn|Map<any,any>) => {
+                if ((this as any)[key] === undefined) {
+                    throw new Error(`Invalid style key: ${key}`);
+                }
+                return (key === 'numberFormat' || key === 'numberPrecision')
                     ? a
                     : (key === 'numberSpecials')
-                    ? mergeSpecials(a as Map<number,string>, b as Map<number,string>)
-                    : (<Styler>a)(<StylerFn>b, this));
+                    ? mergeSpecials(a as Map<number, string>, b as Map<number, string>)
+                    : (<Styler>a)(<StylerFn>b, this);
+            });
         return Object.freeze(new Style(merge(stylers, this)));
     }
 
