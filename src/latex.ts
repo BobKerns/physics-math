@@ -372,8 +372,24 @@ export const INITIAL_STYLE = new Style(DEFAULTS);
 /**
  * The [[Style]] that items are formatted with by default. May be changed; the
  * initial value is in [[INITIAL_STYLE]].
+ *
+ * @internal
  */
 export let DEFAULT_STYLE = INITIAL_STYLE;
+
+/**
+ * Set the default style to be used.
+ * @param style
+ */
+export const setStyle = (style: Style): Style => {
+    // noinspection SuspiciousTypeOfGuard
+    if (!(style instanceof Style)) {
+        throw new Error(`Not a style object: ${style}`);
+    }
+    const old = DEFAULT_STYLE;
+    DEFAULT_STYLE = style;
+    return old;
+}
 
 // noinspection JSUnusedGlobalSymbols
 /**
