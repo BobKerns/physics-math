@@ -38,9 +38,9 @@ type StyleKeyData = 'numberSpecials' | 'numberPrecision' | 'numberFormat' | 'num
 export type StyleKey = StyleKeyString | StyleKeyNumber | StyleKeyOther | StyleKeyData;
 
 export enum NumberFormat {
-    normal,
-    scientific,
-    engineering
+    normal = 'normal',
+    scientific = 'scientific',
+    engineering = 'engineering'
 }
 
 /**
