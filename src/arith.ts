@@ -101,8 +101,10 @@ export function gadd(
         const ri = rest as IPCompiled<Vector>[];
         const rpf = ri.map(v => v.pfunction);
         return (gadd(pf, ...rpf) as IPFunction).f;
+    } else if (a === null) {
+        throw new TypeError(`Null argument in add`);
     } else {
-        throw new TypeError(`Unknown type in add: ${{a}}`);
+        throw new TypeError(`Unknown type in add: ${(a as any).constructor.name}`);
     }
 }
 
@@ -123,6 +125,16 @@ abstract class BinaryOp<
 
     get returnType(): TYPE {
         return this.l.returnType;
+    }
+    equiv<T>(f: T): null | this | T {
+        // @ts-ignore
+        if (this === f) return this;
+        if (!super.equiv(f)) return null;
+        // @ts-ignore
+        if (!this.l.equiv(f.l)) return null;
+        // @ts-ignore
+        if (!this.r.equiv(f.r)) return null;
+        return this;
     }
 }
 

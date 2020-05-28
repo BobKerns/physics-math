@@ -45,7 +45,7 @@ export interface IConstantInFrame<
 }
 
 export class ScalarConstant<C extends Unit = Unit>
-    extends PCalculus<number, C>
+    extends PCalculus<number, C, Divide<C, Units.time>, Multiply<C, Units.time>>
     implements IConstant<number, C> {
     readonly value: number;
     constructor(value: number, unit: C) {
@@ -69,10 +69,12 @@ export class ScalarConstant<C extends Unit = Unit>
         return tex`{{${value}}\ {${unit}}}`;
     }
 
-    differentiate(): IPFunctionCalculus<number, Divide<C, Units.time>, 1, Divide<Divide<C, Units.time>, Units.time>, C> {
-        const t1 = (this.unit as C).divide(Units.time);
-        const a = new ScalarConstant(0, t1);
-        return a as unknown as IPFunctionCalculus<number, Divide<C, Units.time>, 1, Divide<Divide<C, Units.time>, Units.time>, C>;
+    differentiate(): ScalarConstant<Divide<C, Units.time>> &
+        IPFunctionCalculus<number, Divide<C, Units.time>, 1, Multiply<C, Units.time>, C> {
+        const dt = (this.unit as C).divide(Units.time) as Divide<C, Units.time>;
+        const result = new ScalarConstant<Divide<C, Units.time>>(0, dt);
+        return result as ScalarConstant<Divide<C, Units.time>> &
+            IPFunctionCalculus<number, Divide<C, Units.time>, 1, Multiply<C, Units.time>, C>;
     }
 
     integrate(): IndefiniteIntegral<number, Multiply<C, Units.time>, C> {
@@ -84,6 +86,19 @@ export class ScalarConstant<C extends Unit = Unit>
 
     get returnType(): TYPE.SCALAR {
         return TYPE.SCALAR;
+    }
+
+    equiv<T>(f: T): null | this | T {
+        // @ts-ignore
+        if (this === f) return this;
+        // noinspection SuspiciousTypeOfGuard
+        if (f instanceof Poly) {
+            if (this.value === f.asConstantValue()) return this;
+            return null;
+        }
+        if (!super.equiv(f)) return null;
+        if (this.value !== (f as never as ScalarConstant).value) return null;
+        return this;
     }
 }
 

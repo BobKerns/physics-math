@@ -251,7 +251,9 @@ export const PFunctionDefaults: [
     {vars: ['t4', 't3', 't2', 't1', 't0', 't'], nargs: 6}
 ];
 
-export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit = Unit, N extends ArgCount = 1> {
+export interface AnyIPFunction {}
+
+export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit = Unit, N extends ArgCount = 1> extends AnyIPFunction {
     timestep: number;
     tex_?: string;
     name: string;
@@ -304,6 +306,20 @@ export interface IPFunctionBase<R extends BaseValue = BaseValue, U extends Unit 
      * @private
      */
     setName_(name: string): this;
+
+    /**
+     * Determine if two functions are known to be equivalent. If so, returns the preferred one, otherwise null
+     * @param f
+     */
+    equiv<T>(f: T): null | this | T;
+
+    /**
+     * Return the simplest form of this function we are capable of. The notion of "simplest" is variable,
+     * such as whether to prefer factored forms or distribute the multiplications. These behaviors can be altered
+     * via the *options* argument.
+     * @param options
+     */
+    simplify(options?: any): IPFunctionBase<R, U, N>;
 }
 
 export interface IPFunctionCalculus<

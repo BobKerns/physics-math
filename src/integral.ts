@@ -61,9 +61,20 @@ export class DefiniteIntegralImpl<
         const from = ctx.number(this.from);
         return tex`\int_{${from}}^{${variable}}{{(${inner})}\ \mathrm{d}${variable}}`;
     }
+
+    equiv<T>(f: T): null | this | T {
+        // @ts-ignore
+        if (this === f) return this;
+        if (!super.equiv(f)) return null;
+        const di = f as unknown as DefiniteIntegralImpl<any,any,any,any>;
+        if (!this.evaluating.equiv(di.evaluating)) return null;
+        // noinspection RedundantIfStatementJS
+        if (this.from !== di.from) return null;
+        return this;
+    }
 }
 
-abstract class IndefiniteIntegralBase<
+export abstract class IndefiniteIntegralBase<
     R extends BaseValueRelative,
     U extends Unit,
     D extends Unit,
@@ -109,6 +120,16 @@ abstract class IndefiniteIntegralBase<
         return this.integrate() as unknown as IndefiniteIntegral<R, I, U, Multiply<I, Units.time>>;
     }
 
+    equiv<T>(f: T): null | this | T {
+        // @ts-ignore
+        if (this === f) return this;
+        if (!super.equiv(f)) return null;
+        const ii = f as unknown as IndefiniteIntegral<any, any, any>;
+        if (!this.integrand.equiv(ii.integrand)) return null;
+        if (this.from !==  ii.from) return null;
+        return this;
+    }
+
     toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         const inner = this.integrand.toTex(varName, ctx);
         const variable = ctx.variable(varName);
@@ -140,6 +161,14 @@ export class AnalyticIntegral<
 
     integrate(): IndefiniteIntegral<R, I, U> {
         return this.expression.integral();
+    }
+
+    equiv<T>(f: T): null| this | T {
+        // @ts-ignore
+        if (this === f) return this
+        if (!super.equiv(f)) return null;
+        if (!this.expression.equiv((f as unknown as AnalyticIntegral<R,U,D,I>).expression)) return null;
+        return this;
     }
 }
 export const integrate = (f: IPCompiled<number>) => (t0:number, t: number) => {
@@ -183,6 +212,15 @@ export class NumericIntegral<
 
     integrate(): IndefiniteIntegral<number, I, U> {
         throw new Error('Double integral not supported yet.');
+    }
+
+    equiv<T>(f: T): null | this | T {
+        // @ts-ignore
+        if (this === f) return this;
+        if (!super.equiv(f)) return null;
+        // @ts-ignore
+        if (!this.integrand.equiv(f.integrand)) return null;
+        return this;
     }
 }
 

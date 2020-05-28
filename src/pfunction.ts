@@ -144,6 +144,22 @@ export abstract class  PFunction<
         (this as any).name = name;
         return this;
     }
+
+    equiv<T>(f: T): null|this|T {
+        // @ts-ignore
+        if (this === f) return this;
+        if (typeof f !== 'object') return null;
+        if (this.constructor !== (f as any).constructor) return null;
+        // @ts-ignore
+        if (this.unit !== f.unit) return null;
+        // @ts-ignore
+        if (this.nargs !== f.nargs) return null;
+        return this;
+    }
+
+    simplify(options: any = {}): IPFunctionBase<R, C, N> {
+        return this;
+    }
 }
 
 defineTag(PFunction, 'PFunction');

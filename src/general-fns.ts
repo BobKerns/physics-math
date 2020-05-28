@@ -24,6 +24,7 @@ import {defineTag} from "./utils";
 
 export class GFunction extends PCalculus<number> {
     explicit: IPCompileResult<number>;
+
     constructor(f: IPCompileResult<number>, unit: Unit, attributes: any = {}) {
         super({...attributes, unit});
         this.explicit = f;
@@ -43,6 +44,15 @@ export class GFunction extends PCalculus<number> {
 
     protected compileFn(): IPCompileResult<number> {
         return this.explicit;
+    }
+
+    equiv<T>(f: T): null | this | T {
+        // @ts-ignore
+        if (this === f) return this;
+        if(!super.equiv(f)) return null;
+        // @ts-ignore
+        if (this.explicit !== f.explicit) return this;
+        return null;
     }
 }
 
