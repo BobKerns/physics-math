@@ -31,11 +31,12 @@ type StyleKeyString = 'function' | 'call' | 'variable';
 type StyleKeyNumber = 'number';
 type StyleKeyOther =  'applyUnits' | 'applyUnitFunction' | 'unit' | 'unitSymbol' | 'unitFraction';
 type StyleKeyData = 'numberSpecials' | 'numberPrecision' | 'numberFormat' | 'numberTrimTrailingZero';
+type StyleKeyStyle = 'exponentStyle';
 
 /**
  * The valid style keys to be used with [[setStyle]].
  */
-export type StyleKey = StyleKeyString | StyleKeyNumber | StyleKeyOther | StyleKeyData;
+export type StyleKey = StyleKeyString | StyleKeyNumber | StyleKeyOther | StyleKeyData | StyleKeyStyle;
 
 export enum NumberFormat {
     normal = 'normal',
@@ -55,7 +56,9 @@ export type StyleMap = {
 } & {
     [k in StyleKeyString]: Styler<string>;
 } & {
-    [j in StyleKeyNumber]: Styler<number>
+    [j in StyleKeyNumber]: Styler<number>;
+} & {
+    [j in StyleKeyStyle]: Style| 'self' | 'exponent';
 } & {
     numberSpecials: Map<number,string>;
     numberPrecision: number;
@@ -137,6 +140,7 @@ export class StyleContext implements StyleContextHolder<StyleContext> {
     get numberPrecision() { return this.style.numberPrecision; }
     get numberFormat() { return this.style.numberFormat; }
     get numberTrimTrailingZero() { return this.style.numberTrimTrailingZero; }
+    get exponentStyle() { return this.style.exponentStyle.context; }
 
     get context() {
         // For now we deal with a single context, but might have nested contexts in the future.
@@ -178,6 +182,8 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder<Style> {
     readonly numberSpecials: Map<number, string>;
     readonly numberTrimTrailingZero: boolean;
 
+    readonly exponentStyle: Style;
+
     constructor(init: StyleMap) {
         // The chain bottoms out at the defaults if they pass it off to their continuations.
         this.call = init.call(DEFAULT_STYLE_FNS.call, this);
@@ -193,6 +199,11 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder<Style> {
         this.numberPrecision = init.numberPrecision;
         this.numberSpecials = init.numberSpecials;
         this.numberTrimTrailingZero = init.numberTrimTrailingZero;
+        this.exponentStyle = init.exponentStyle == 'self'
+            ? this
+            : init.exponentStyle === 'exponent'
+                ? exponentStyle
+                : init.exponentStyle;
     }
 
     /**
@@ -322,7 +333,9 @@ const formatNumber: Styler<number> = (continuation: StylerFn<number>, _style: St
             case NumberFormat.engineering:
                 const exp = Math.log10(n);
                 const eng = ctx.numberFormat === NumberFormat.engineering ? 3 : 1;
-                const trunc = exp < 0 ? Math.ceil(exp / eng) * eng : Math.floor(exp / eng) * eng;
+                const trunc = exp < 0
+                    ? -Math.floor(-(exp - 1)/ eng) * eng
+                    : Math.floor(exp / eng) * eng;
                 const trim = (n: string) =>
                     ctx.numberTrimTrailingZero && n.match(/\./)
                         ? n.replace(/\.?0+$/, '')
@@ -355,6 +368,40 @@ export const colorStyler = (color: RGB6Color): Styler<any> =>
         tex`\textcolor{${color}}{${continuation(ctx, texString, ...rest)}}`;
 
 
+const DEFAULT_STYLE_FNS: StyleFnMap = {
+    unit: (_ctx, u): string => u.toTex(_ctx),
+    unitFraction: (_ctx, numer, denom) => tex`\dfrac{${numer}}{${denom}}`,
+    unitSymbol: (_ctx, unit) => tex`\text{${unit.symbol}}`,
+    function: (_ctx, s) => s.toString(),
+    call: (_ctx, s) => s.toString(),
+    variable: (_ctx, s) => s.toString(),
+    applyUnit: (ctx, s, u) => `${s}\ ${ctx.unit(u)}`,
+    applyUnitFunction: (ctx, s, u) => `${s} \LeftArrow ${ctx.unit(u)}`,
+    number: (_ctx, s) => s.toString(),
+    numberFormat: NumberFormat.scientific,
+    numberPrecision: 4,
+    numberSpecials: SPECIAL_NUMBERS,
+    numberTrimTrailingZero: true,
+    exponentStyle: 'exponent'
+};
+
+const exponentStyle: Style = Object.freeze(new Style({
+    unit: colorStyler('ff0000'),
+    unitFraction: () => (_ctx, numer, denom) => tex`\Large{\frac{${numer}}{${denom}}}`,
+    unitSymbol: () => (_ctx, unit) => tex`\text{${unit.symbol}}`,
+    function: () => (_ctx, op) => tex`\operatorname{${op}}`,
+    call: () => (_ctx, s) => s,
+    variable: () => (_ctx, s: string) => tex`{${s}}`,
+    applyUnit: () => (ctx, v: string | number, u: IUnitBase) => tex`{{${v}}\ {${ctx.unit(u)}}}`,
+    applyUnitFunction: () => (ctx, v: string | number, u: IUnitBase) => tex`{{${v}} \Leftarrow {${ctx.unit(u)}}}`,
+    number: chain(specialNumber, formatNumber),
+    numberFormat: NumberFormat.normal,
+    numberPrecision: 0,
+    numberSpecials: SPECIAL_NUMBERS,
+    numberTrimTrailingZero: true,
+    exponentStyle: 'self'
+}));
+
 /**
  * The stylers. These handle adding style formatting to the syntactic expressions
  * components.
@@ -367,29 +414,15 @@ export const DEFAULTS: StyleMap = Object.freeze({
     call: () => (_ctx, s) => s,
     variable: () => (_ctx, s: string) => tex`{${s}}`,
     applyUnit: () => (ctx, v: string|number, u: IUnitBase) => tex`{{${v}}\ {${ctx.unit(u)}}}`,
-    applyUnitFunction: () => (ctx, v: string|number, u: IUnitBase) => tex`{{${v}} \Rightarrow {${ctx.unit(u)}}}`,
+    applyUnitFunction: () => (ctx, v: string|number, u: IUnitBase) => tex`{{${v}} \Leftarrow {${ctx.unit(u)}}}`,
     number: chain(specialNumber, formatNumber),
     numberFormat: NumberFormat.scientific,
     numberPrecision: 4,
     numberSpecials: SPECIAL_NUMBERS,
-    numberTrimTrailingZero: true
+    numberTrimTrailingZero: true,
+    exponentStyle: exponentStyle
 });
 
-const DEFAULT_STYLE_FNS: StyleFnMap = {
-    unit: (_ctx, u): string => u.toTex(_ctx),
-    unitFraction: (_ctx, numer, denom) => tex`\dfrac{${numer}}{${denom}}`,
-    unitSymbol: (_ctx, unit) => tex`\text{${unit.symbol}}`,
-    function: (_ctx, s) => s.toString(),
-    call: (_ctx, s) => s.toString(),
-    variable: (_ctx, s) => s.toString(),
-    applyUnit: (ctx, s, u) => `${s}\ ${ctx.unit(u)}`,
-    applyUnitFunction: (ctx, s, u) => `${s} \RightArrow ${ctx.unit(u)}`,
-    number: (_ctx, s) => s.toString(),
-    numberFormat: NumberFormat.scientific,
-    numberPrecision: 4,
-    numberSpecials: SPECIAL_NUMBERS,
-    numberTrimTrailingZero: true
-};
 
 /**
  * The initial [[DEFAULT_STYLE]].

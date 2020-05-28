@@ -88,7 +88,9 @@ type OrZero<A> = A extends number ? A : 0;
  * Multiply two [[UnitTerms]] (by adding the exponents.)
  * @module Physical Units
  */
-export type MultiplyTerms<A extends PUnitTerms, B extends PUnitTerms> = { [K in keyof typeof Primitive]: Add<OrZero<A[K]>, OrZero<B[K]>> };
+export type MultiplyTerms<A extends PUnitTerms, B extends PUnitTerms> =
+    { [K in keyof typeof Primitive]: Add<OrZero<A[K]>, OrZero<B[K]>> };
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Invert a [[UnitTerms]] (by negating the exponents).

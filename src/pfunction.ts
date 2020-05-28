@@ -97,8 +97,7 @@ export abstract class  PFunction<
 
     toTexWithUnits(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         const call = this.toTex(varName, ctx);
-        const unit = ctx.unit(this.unit);
-        return tex`{{${call}} \Rightarrow {${unit}}}`;
+        return ctx.applyUnitFunction(call, this.unit);
     }
 
     /**

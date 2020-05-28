@@ -216,6 +216,10 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
         h.value = this;
         return h;
     }
+
+    toString() {
+        return this.name;
+    }
 }
 
 /**
