@@ -29,3 +29,4 @@ export * from './general-fns';
 export {SI} from "./primitive-units";
 export {InertialFrame, Frame, World} from "./frame";
 export {Styler, StyleKey, colorStyler, RGB6Color, setStyle, INITIAL_STYLE, NumberFormat} from './latex'
+export {Piecewise} from './piecewise';
