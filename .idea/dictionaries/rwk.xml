@@ -5,6 +5,7 @@
       <w>arith</w>
       <w>autocurried</w>
       <w>bufsize</w>
+      <w>centerdot</w>
       <w>checkins</w>
       <w>circleci</w>
       <w>cnst</w>
@@ -14,16 +15,20 @@
       <w>denom</w>
       <w>deriv</w>
       <w>dfrac</w>
+      <w>egthickspaceinfty</w>
       <w>entrypoints</w>
       <w>exts</w>
+      <w>falsey</w>
       <w>fempto</w>
       <w>functionals</w>
       <w>gadd</w>
       <w>gmul</w>
       <w>gsub</w>
       <w>heta</w>
+      <w>infty</w>
       <w>katex</w>
       <w>kerns</w>
+      <w>leftarrow</w>
       <w>mathrm</w>
       <w>memoizer</w>
       <w>moduledefinition</w>
@@ -55,6 +60,7 @@
       <w>textcolor</w>
       <w>timestep</w>
       <w>tsbuild</w>
+      <w>typedoc</w>
       <w>unprefixed</w>
       <w>vectorish</w>
       <w>versor</w>
