@@ -1,26 +1,6 @@
 # ChangeLog
 
-## Version 0.1.13
-_date: 2020-05-29_
-
-Take another stab at auto-deploy of docs.
-
-## Version 0.1.12
-_date: 2020-05-29_
-
-Take another stab at auto-deploy of docs.
-
-## Version 0.1.11
-_date: 2020-05-29_
-
-Take another stab at auto-deploy of docs.
-
-## Version 0.1.10
-_date: 2020-05-29_
-
-Take another stab at auto-deploy of docs.
-
-## Version 0.1.9
+## Version 0.1.9 - Version 0.1.14
 _date: 2020-05-29_
 
 Take a stab at auto-deploy of docs.

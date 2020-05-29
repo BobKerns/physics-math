@@ -16,13 +16,14 @@ const mkdir = util.promisify(fs.mkdir);
 const path = require('path');
 const child_process = require('child_process');
 const execFile = util.promisify(child_process.execFile);
+
+const ROOT = path.join(process.mainModule.path, '..');
+const DOCS = path.join(process.env['GITHUB_WORKSPACE'], 'docdest');
 const exec = async (cmd, ...args) => {
-    const {stdout, stderr} = await execFile(cmd, args);
+    const {stdout, stderr} = await execFile(cmd, args, {cwd: DOCS});
     stderr && process.stderr.write(stderr);
     stdout && process.stdout.write(stdout);
 };
-
-const ROOT = path.join(process.mainModule.path, '..');
 
 const run = async () => {
     const version = pkg.version;
@@ -30,7 +31,7 @@ const run = async () => {
     const source = path.join(ROOT, 'build', 'docs');
     const docs = path.join(ROOT, 'docs');
     const target = path.join(docs, tag);
-    console.log('EXISTS', docs, await exists(docs));
+    process.stdout.write(`Destination: ${target}\n`);
     await exists(docs) || await mkdir(docs);
     await exists(target) || await mkdir(target);
     const copyTree = async (from, to) => {
@@ -43,7 +44,7 @@ const run = async () => {
                         await exists(t) || await mkdir(t);
                         return t})
                     .then(t => copyTree(path.join(from, d.name), t))
-                : null));
+                : Promise.resolve(null)));
     }
     console.log(source, target);
     await copyTree(source, target);
