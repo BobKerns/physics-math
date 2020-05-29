@@ -29,7 +29,7 @@ const run = async () => {
     const version = pkg.version;
     const tag = `v${version}`;
     const source = path.join(ROOT, 'build', 'docs');
-    const docs = path.join(ROOT, 'docs');
+    const docs = path.join(DOCS, 'docs');
     const target = path.join(docs, tag);
     process.stdout.write(`Destination: ${target}\n`);
     await exists(docs) || await mkdir(docs);
