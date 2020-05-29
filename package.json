@@ -1,6 +1,6 @@
 {
   "name": "@rwk/physics-math",
-  "version": "0.1.9",
+  "version": "0.1."10,
   "description": "Math for physics homework problems",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -25,10 +25,9 @@
     "docs": "NODE_ENV=development SERVE=true SERVE_DOC=true rollup -c",
     "prewatch": "npm run build:devtools",
     "watch": "NODE_ENV=development rollup -c --watch",
-    "pubdocs": "deploy-docs.js"
+    "pubdocs": "bin/deploy-docs.js"
   },
   "bin": {
-    "hello": "bin/hello.js"
   },
   "repository": {
     "type": "git",

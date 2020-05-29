@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.10
+_date: 2020-05-29_
+
+Take another stab at auto-deploy of docs.
+
 ## Version 0.1.9
 _date: 2020-05-29_
 
