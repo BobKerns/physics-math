@@ -48,7 +48,7 @@ const run = async () => {
     console.log(source, target);
     await copyTree(source, target);
     await exec('git', 'config', 'user.email', '1154903+BobKerns@users.noreply.github.com');
-    await exec('git', 'config', 'user.name', 'ReleaseBot);
+    await exec('git', 'config', 'user.name', 'ReleaseBot');
     await exec('git', 'add', target);
     await exec('git', 'commit', '-m', `Deploy documentation for ${tag}.`);
     await exec('git', 'push');
