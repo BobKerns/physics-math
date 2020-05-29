@@ -1,6 +1,6 @@
 # ChangeLog
 
-## Version 0.1.9 - Version 0.1.14
+## Version 0.1.9 - Version 0.1.15
 _date: 2020-05-29_
 
 Take a stab at auto-deploy of docs.

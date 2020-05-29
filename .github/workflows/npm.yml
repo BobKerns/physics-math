@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: 'Checkout gh-pages'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           ref: 'gh-pages'
           path: 'docdest'
