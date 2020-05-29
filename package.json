@@ -1,6 +1,6 @@
 {
   "name": "@rwk/physics-math",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Math for physics homework problems",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -18,7 +18,7 @@
     "postbuild": "npm run build:docs",
     "clean": "rm -rf build lib docs",
     "prepublishOnly": "npm run clean && NODE_ENV=production npm run build",
-    "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --stripInternal --mode modules --out docs/api src/",
+    "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --stripInternal --mode modules --out build/docs/api src/",
     "preserve": "npm run build:devtools",
     "serve": "NODE_ENV=development SERVE=true rollup -c",
     "predocs": "npm run build:config && npm run build:docs",

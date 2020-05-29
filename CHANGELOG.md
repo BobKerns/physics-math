@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.9
+_date: 2020-05-29_
+
+
+
 ## Version 0.1.8
 _Date: 2020-05-28_
 
@@ -18,7 +23,6 @@ _Date: 2020-05-28_
 * Improve various formatting
 * Add piecewise functions.
 * Try to avoid redundant CI build on release.
-
 
 ## Version 0.1.7
 _Date: 2020-05-24_
