@@ -16,7 +16,11 @@ const mkdir = util.promisify(fs.mkdir);
 const path = require('path');
 const child_process = require('child_process');
 const execFile = util.promisify(child_process.execFile);
-const exec = (cmd, ...args) => execFile(cmd, args);
+const exec = async (cmd, ...args) => {
+    const {stdout, stderr} = await execFile(cmd, args);
+    stderr && process.stderr.write(stderr);
+    stdout && process.stdout.write(stdout);
+};
 
 const ROOT = path.join(process.mainModule.path, '..');
 
