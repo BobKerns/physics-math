@@ -3,7 +3,7 @@
 ## Version 0.1.9
 _date: 2020-05-29_
 
-
+Take a stab at auto-deploy of docs.
 
 ## Version 0.1.8
 _Date: 2020-05-28_

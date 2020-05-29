@@ -17,14 +17,15 @@
     "build": "rollup -c",
     "postbuild": "npm run build:docs",
     "clean": "rm -rf build lib docs",
-    "prepublishOnly": "npm run clean && NODE_ENV=production npm run build",
+    "prepublishOnly": "npm run clean && NODE_ENV=production npm run build && npm run pubdocs",
     "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --stripInternal --mode modules --out build/docs/api src/",
     "preserve": "npm run build:devtools",
     "serve": "NODE_ENV=development SERVE=true rollup -c",
     "predocs": "npm run build:config && npm run build:docs",
     "docs": "NODE_ENV=development SERVE=true SERVE_DOC=true rollup -c",
     "prewatch": "npm run build:devtools",
-    "watch": "NODE_ENV=development rollup -c --watch"
+    "watch": "NODE_ENV=development rollup -c --watch",
+    "pubdocs": "deploy-docs.js"
   },
   "bin": {
     "hello": "bin/hello.js"

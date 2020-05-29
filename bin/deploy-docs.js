@@ -11,8 +11,12 @@ const fs = require('fs');
 const util = require('util');
 const copyFile = util.promisify(fs.copyFile);
 const readdir = util.promisify(fs.readdir);
+const exists = util.promisify(fs.exists);
 const mkdir = util.promisify(fs.mkdir);
 const path = require('path');
+const child_process = require('child_process');
+const execFile = util.promisify(child_process.execFile);
+const exec = (cmd, ...args) => execFile(cmd, args);
 
 const ROOT = path.join(process.mainModule.path, '..');
 
@@ -22,20 +26,26 @@ const run = async () => {
     const source = path.join(ROOT, 'build', 'docs');
     const docs = path.join(ROOT, 'docs');
     const target = path.join(docs, tag);
-    await mkdir(docs);
-    await mkdir(target);
+    console.log('EXISTS', docs, await exists(docs));
+    await exists(docs) || await mkdir(docs);
+    await exists(target) || await mkdir(target);
     const copyTree = async (from, to) => {
         const dir = await readdir(path.resolve(ROOT, from), {withFileTypes: true});
         return  Promise.all(dir.map(d => d.isFile()
             ? copyFile(path.join(from, d.name), path.join(to, d.name))
             : d.isDirectory()
                 ? Promise.resolve(path.join(to, d.name))
-                    .then(async t => (await mkdir(t), t))
+                    .then(async t => {
+                        await exists(t) || await mkdir(t);
+                        return t})
                     .then(t => copyTree(path.join(from, d.name), t))
                 : null));
     }
     console.log(source, target);
-    return copyTree(source, target);
+    await copyTree(source, target);
+    await exec('git', 'add', target);
+    await exec('git', 'commit', '-m', `Deploy documentation for ${tag}.`);
+    await exec('git', 'push');
 }
 run().catch(e => console.error(e));
 
