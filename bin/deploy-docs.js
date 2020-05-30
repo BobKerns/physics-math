@@ -125,7 +125,9 @@ const run = async () => {
     process.stdout.write(`GITHUB_WORKSPACE: ${github}\n`);
     process.stdout.write(`ROOT: ${ROOT}\n`);
     process.stdout.write(`DOCS: ${DOCS}\n`);
+    process.stdout.write(`docs: ${docs}\n`);
     process.stdout.write(`Destination: ${target}\n`);
+    await mkdir(DOCS);
     await mkdir(docs);
     await mkdir(target);
     await Promise.all([

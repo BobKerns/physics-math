@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.21
+_date: 2020-05-29_
+
+* Diagnostic build
+
 ## Version 0.1.20
 _date: 2020-05-29_
 

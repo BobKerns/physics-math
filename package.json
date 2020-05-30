@@ -1,6 +1,6 @@
 {
   "name": "@rwk/physics-math",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Math for physics homework problems",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
