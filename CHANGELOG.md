@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.25
+_date: 2020-05-30_
+
+* More documentation tweaks and cleanups.
+
 ## Version 0.1.24
 _date: 2020-05-30_
 

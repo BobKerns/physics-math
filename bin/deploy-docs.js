@@ -92,7 +92,7 @@ const html = (title, body) => `<!DOCTYPE html>
 
     <!-- To automatically render math in text elements, include the auto-render extension: -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
-        onload="renderMathInElement(document.body);"></script>
+        onload="renderMathInElement(document.body, [{left: '$\`', right: '\`$', display: false},{left: '$$', right: '$$', display: true},{left: '\\(', right: '\\)', display: false},{left: '\\[', right: '\\]', display: true}]);"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.0.3/styles/xcode.css" integrity="sha256-OI7B0pICACICPVbs30FdQ/l6qL8TnsfhyGAdg5m5NzQ=" crossorigin="anonymous">
 </head>
@@ -152,7 +152,8 @@ const run = async () => {
     await mkdir(target);
     await Promise.all([
         ['CHANGELOG.md', 'Change Log'],
-        ['README.md', `Physics Math / Newton's Spherical Cow`, 'index']
+        ['README.md', `Physics Math / Newton's Spherical Cow`],
+        ['README.md', `Physics Math / Newton's Spherical Cow`, path.join(target, 'README')]
     ].map(([f, title, f2]) =>
         convert(path.resolve(ROOT, f), path.resolve(docs, f2 || f), title || path.basename(f, '.md'))));
     const release_body = await releases();
