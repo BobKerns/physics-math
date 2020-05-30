@@ -14,10 +14,11 @@ const copyFile = fs.copyFile;
 const readdir = fs.readdir;
 const mkdir = async d => {
     try {
-        await fs.mkdir(d)
+        await fs.mkdir(d);
+        console.log(`Created: ${d}`);
     } catch (e) {
         // already exists.
-        console.log(e.message);
+        console.log(`Exists: ${d}`);;
     }
     return d;
 }
@@ -117,6 +118,9 @@ const run = async () => {
     const source = path.join(ROOT, 'build', 'docs');
     const docs = path.join(DOCS, 'docs');
     const target = path.join(docs, tag);
+    process.stdout.write(`GITHUB_WORKSPACE: ${github}\n`);
+    process.stdout.write(`ROOT: ${ROOT}\n`);
+    process.stdout.write(`DOCS: ${DOCS}\n`);
     process.stdout.write(`Destination: ${target}\n`);
     await mkdir(docs);
     await mkdir(target);
@@ -124,7 +128,7 @@ const run = async () => {
         ['CHANGELOG.md', 'Change Log'],
         ['README.md', `Physics Math / Newton's Spherical Cow`, 'index']
     ].map(([f, title, f2]) =>
-        convert(path.resolve(ROOT, f), path.resolve(source, f2 || f), title || path.basename(f, '.md'))));
+        convert(path.resolve(ROOT, f), path.resolve(docs, f2 || f), title || path.basename(f, '.md'))));
     const release_body = await releases();
     const release_page = `# Newton's Spherical Cow / Physics-Math release documentation
  ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
