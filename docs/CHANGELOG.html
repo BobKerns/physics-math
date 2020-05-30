@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Change Log</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.0.3/styles/xcode.css" integrity="sha256-OI7B0pICACICPVbs30FdQ/l6qL8TnsfhyGAdg5m5NzQ=" crossorigin="anonymous">
+</head>
+<body><h1 id="changelog">ChangeLog</h1>
+<h2 id="version-0124">Version 0.1.24</h2>
+<p><em>date: 2020-05-30</em></p>
+<ul>
+<li>Generate more documentation site glue.</li>
+</ul>
+<h2 id="version-0117---0123">Version 0.1.17 - 0.1.23</h2>
+<p><em>date: 2020-05-29</em></p>
+<ul>
+<li>Rudimentary doc site prep.</li>
+<li>Support LaTeX in generated documentation.</li>
+</ul>
+<h2 id="version-019---version-0116">Version 0.1.9 - Version 0.1.16</h2>
+<p><em>date: 2020-05-29</em></p>
+<p>Take a stab at auto-deploy of docs.</p>
+<h2 id="version-018">Version 0.1.8</h2>
+<p><em>Date: 2020-05-28</em></p>
+<ul>
+<li>Fix &#39;normal&#39; number formatting.</li>
+<li>Fix scientific and engineering number formatting.</li>
+<li>NumberFormat enum is now string-valued to reduce confusion.</li>
+<li>Unit&#39;s now get the same .html/.tex protocol as expressions.<ul>
+<li>Data objects like Vectors will get this soon.</li>
+</ul>
+</li>
+<li>StyleContext now proxies the .set and .wrap methods, allowing easier local control.</li>
+<li>Style keys are now validated. No more freestyle styles.</li>
+<li>Only try to load katex once. If it refuses, move on.</li>
+<li>Add missing &#39;serve&#39; package dev dependency.</li>
+<li>Update to Typescript 3.9.3.</li>
+<li>Add the ObservableHQ test page for the package.</li>
+<li>Use \Leftarrow to mark function units<ul>
+<li>e.g. \( \operatorname{f}(t) \Leftarrow {\dfrac{m}{s}} \)</li>
+</ul>
+</li>
+<li>Improve various formatting</li>
+<li>Add piecewise functions.</li>
+<li>Try to avoid redundant CI build on release.</li>
+</ul>
+<h2 id="version-017">Version 0.1.7</h2>
+<p><em>Date: 2020-05-24</em></p>
+<ul>
+<li>Remember the initial value for DEFAULT_STYLE in INITIAL_STYLE</li>
+<li>Export NumberFormat</li>
+<li>Rename QuaternionDerivative to RotationDerivative</li>
+</ul>
+<h2 id="version-016">Version 0.1.6</h2>
+<p><em>Date: 2020-05-24</em></p>
+<ul>
+<li>Polynomial Arithmetic</li>
+<li>Number formats.</li>
+<li>Improved styling protocol</li>
+<li>Consistent expression of units at the outermost edge.</li>
+<li>Functions display units as \( \operatorname{f}(t) \Rightarrow {\dfrac{m}{s}} \)</li>
+<li>Integration/differentiation of polynomials is now correct.</li>
+<li>Indefinite and definite integrals now display.</li>
+</ul>
+<h2 id="version-015">Version 0.1.5</h2>
+<p><em>Date: 2020-05-22</em></p>
+<ul>
+<li>API documentation modularity.</li>
+<li>Update to typedoc 0.7.17 and remove workarounds.</li>
+<li>LaTeX styling API to manage style separately from semantics.</li>
+<li>Polynomials format correctly.</li>
+<li>Ramda is now a runtime dependency.</li>
+</ul>
+</body>
+</html>
