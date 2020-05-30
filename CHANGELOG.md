@@ -1,36 +1,11 @@
 # ChangeLog
 
-## Version 0.1.23
-_date: 2020-05-29_
+## Version 0.1.24
+_date: 2020-05-30_
 
-* Don't delete the docs/ directory mid-build.
+* Generate more documentation site glue.
 
-## Version 0.1.22
-_date: 2020-05-29_
-
-* Diagnostic build
-
-## Version 0.1.21
-_date: 2020-05-29_
-
-* Diagnostic build
-
-## Version 0.1.20
-_date: 2020-05-29_
-
-* Improve error handling in creating needed directories.
-
-## Version 0.1.19
-_date: 2020-05-29_
-
-* Create necessary directories when converting markdown files.
-
-## Version 0.1.18
-_date: 2020-05-29_
-
-* Create necessary directories when converting markdown files.
-
-## Version 0.1.17
+## Version 0.1.17 - 0.1.23
 _date: 2020-05-29_
 
 * Rudimentary doc site prep.

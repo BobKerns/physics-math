@@ -105,6 +105,7 @@ const convertContent = async (content, htmlFile, title) => {
     const dir = path.dirname(htmlFile);
     await mkdir(dir);
     const xFormed = marked(content);
+    console.log(`Writing: ${htmlFile} (${title})`);
     await writeFile(htmlFile, html(title, xFormed));
     return htmlFile;
 };
@@ -113,8 +114,20 @@ const releases = async () =>
     (await (await fetch('https://api.github.com/repos/BobKerns/physics-math/releases'))
         .json())
         .filter(e => e.published_at > '2020-05-29T18:25:38Z')
-        .map(r => `* [${r.name}](https://bobkerns.github.io/physics-math/docs/${r.tag_name}/index.html) ${r.prerelease ? ' (prerelease)' : ''}}`)
+        .map(r => `* [${r.name}](https://bobkerns.github.io/physics-math/docs/${r.tag_name}/api/index.html) ${r.prerelease ? ' (prerelease)' : ''}}`)
         .join('\n');
+
+const Throw = m => {
+    throw new Error(m);
+};
+
+const thisRelease = async(tag) =>
+    github ?
+        (await (await fetch('https://api.github.com/repos/BobKerns/physics-math/releases'))
+            .json())
+            .filter(e => e.tag_name === tag)
+            [0] || Throw(`No release tagged ${tag} found.`)
+        : {name: 'Local Build', body: 'Local build'}
 
 const run = async () => {
     const version = pkg.version;
@@ -140,6 +153,16 @@ const run = async () => {
  ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
  ${release_body}`;
     await convertContent(release_page, path.resolve(docs, 'index.html'), "NSC / Math Releases");
+    const release = thisRelease(tag);
+    if (! release) {
+        throw new Error(`Can't find this release: ${tag}`);
+    }
+    const release_landing = `# ${release.name}
+    ${release.body || ''}
+* [API documentation](api/index.html)
+* [CHANGELOG](../CHANGELOG.html)
+`;
+    await convertContent(release_landing, path.resolve(target, 'index.html'), release.name);
     const copyTree = async (from, to) => {
         const dir = await readdir(path.resolve(ROOT, from), {withFileTypes: true});
         return  Promise.all(dir.map(d => d.isFile()
@@ -150,13 +173,14 @@ const run = async () => {
                     .then(t => copyTree(path.join(from, d.name), t))
                 : Promise.resolve(null)));
     }
-    console.log(source, target);
     await copyTree(source, target);
     // Only check in as part of the packaging workflow.
     if (github) {
         await exec('git', 'config', 'user.email', '1154903+BobKerns@users.noreply.github.com');
         await exec('git', 'config', 'user.name', 'ReleaseBot');
         await exec('git', 'add', target);
+        await exec('git', 'add', 'docs/index.html');
+        await exec('git', 'add', 'docs/CHANGELOG.html');
         await exec('git', 'commit', '-m', `Deploy documentation for ${tag}.`);
         await exec('git', 'push');
     }

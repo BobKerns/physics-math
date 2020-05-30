@@ -12,8 +12,6 @@ jobs:
         with:
           ref: 'gh-pages'
           path: 'build/docdest'
-      - name: 'check files'
-        run: ls -lR
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v1
         with:

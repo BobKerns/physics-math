@@ -30,6 +30,7 @@ node_modules
 /docs/v*
 /docs/local
 /docs/index.html
+/docs/CHANGELOG.html
 /lib
 /devtools/build
 /devtools/dist
