@@ -6,6 +6,13 @@
  * Github: https://github.com/BobKerns/physics-math
  */
 
+/*
+ * This file handles documentation releases. In the context of a github release workflow,
+ * it expects the gh-pages branch to be checked out into build/docdest. The generated API
+ * documentation will be installed into build/docdest/docs/{tag}/api, and the site glue
+ * will be updated with appropriate links.
+ */
+
 const pkg = require('../package.json');
 const github = process.env['GITHUB_WORKSPACE'];
 const fs = require('fs/promises');
@@ -114,7 +121,7 @@ const releases = async () =>
     (await (await fetch('https://api.github.com/repos/BobKerns/physics-math/releases'))
         .json())
         .filter(e => e.published_at > '2020-05-29T18:25:38Z')
-        .map(r => `* [${r.name}](https://bobkerns.github.io/physics-math/docs/${r.tag_name}/api/index.html) ${r.prerelease ? ' (prerelease)' : ''}}`)
+        .map(r => `* [${r.name}](https://bobkerns.github.io/physics-math/docs/${r.tag_name}/api/index.html) ${r.prerelease ? ' (prerelease)' : ''}`)
         .join('\n');
 
 const Throw = m => {
@@ -151,12 +158,10 @@ const run = async () => {
     const release_body = await releases();
     const release_page = `# Newton's Spherical Cow / Physics-Math release documentation
  ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
+ * [CHANGELOG](./CHANGELOG.html)
  ${release_body}`;
     await convertContent(release_page, path.resolve(docs, 'index.html'), "NSC / Math Releases");
-    const release = thisRelease(tag);
-    if (! release) {
-        throw new Error(`Can't find this release: ${tag}`);
-    }
+    const release = await thisRelease(tag);
     const release_landing = `# ${release.name}
     ${release.body || ''}
 * [API documentation](api/index.html)
