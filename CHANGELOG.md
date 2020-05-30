@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.23
+_date: 2020-05-29_
+
+* Don't delete the docs/ directory mid-build.
+
 ## Version 0.1.22
 _date: 2020-05-29_
 
