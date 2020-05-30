@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.20
+_date: 2020-05-29_
+
+* Improve error handling in creating needed directories.
+
 ## Version 0.1.19
 _date: 2020-05-29_
 

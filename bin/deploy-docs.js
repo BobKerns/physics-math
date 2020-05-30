@@ -17,8 +17,12 @@ const mkdir = async d => {
         await fs.mkdir(d);
         console.log(`Created: ${d}`);
     } catch (e) {
-        // already exists.
-        console.log(`Exists: ${d}`);;
+        if (e.code === 'EEXIST') {
+            // already exists.
+            console.log(`Exists: ${d}`)
+        } else {
+            throw e;
+        }
     }
     return d;
 }
