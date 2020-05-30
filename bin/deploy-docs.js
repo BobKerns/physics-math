@@ -97,6 +97,8 @@ const convert = async (from, to, title) => {
 };
 
 const convertContent = async (content, htmlFile, title) => {
+    const dir = path.dirname(htmlFile);
+    await mkdir(dir);
     const xFormed = marked(content);
     await writeFile(htmlFile, html(title, xFormed));
     return htmlFile;
@@ -127,7 +129,7 @@ const run = async () => {
     const release_page = `# Newton's Spherical Cow / Physics-Math release documentation
  ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
  ${release_body}`;
-    convertContent(release_page, path.resolve(docs, 'index.html'), "NSC / Math Releases");
+    await convertContent(release_page, path.resolve(docs, 'index.html'), "NSC / Math Releases");
     const copyTree = async (from, to) => {
         const dir = await readdir(path.resolve(ROOT, from), {withFileTypes: true});
         return  Promise.all(dir.map(d => d.isFile()

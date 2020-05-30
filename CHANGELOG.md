@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.18
+_date: 2020-05-29_
+
+* Create necessary directories when converting markdown files.
+
 ## Version 0.1.17
 _date: 2020-05-29_
 
