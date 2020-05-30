@@ -1,0 +1,628 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>IPFunctionBase | Physics Math</title>
+	<meta name="description" content="Documentation for Physics Math">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Physics Math</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/functionals.html">Functionals</a>
+				</li>
+				<li>
+					<a href="functionals.ipfunctionbase.html">IPFunctionBase</a>
+				</li>
+			</ul>
+			<h1>Interface IPFunctionBase&lt;R, U, N&gt;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>R<span class="tsd-signature-symbol">: </span><a href="../modules/functionals.html#basevalue" class="tsd-signature-type">BaseValue</a></h4>
+					</li>
+					<li>
+						<h4>U<span class="tsd-signature-symbol">: </span><a href="units.unit.html" class="tsd-signature-type">Unit</a></h4>
+					</li>
+					<li>
+						<h4>N<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArgCount</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="functionals.anyipfunction.html" class="tsd-signature-type">AnyIPFunction</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">IPFunctionBase</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="functionals.iconstant.html" class="tsd-signature-type">IConstant</a>
+									</li>
+									<li>
+										<a href="functionals.iconstantinframe.html" class="tsd-signature-type">IConstantInFrame</a>
+									</li>
+									<li>
+										<a href="functionals.ipfunctioncalculus.html" class="tsd-signature-type">IPFunctionCalculus</a>
+									</li>
+									<li>
+										<a href="functionals.definiteintegral.html" class="tsd-signature-type">DefiniteIntegral</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/functionals.analyticintegral.html" class="tsd-signature-type">AnalyticIntegral</a></li>
+					<li><a href="../classes/functionals.binaryop.html" class="tsd-signature-type">BinaryOp</a></li>
+					<li><a href="../classes/functionals.definiteintegralimpl.html" class="tsd-signature-type">DefiniteIntegralImpl</a></li>
+					<li><a href="../classes/functionals.gfunction.html" class="tsd-signature-type">GFunction</a></li>
+					<li><a href="../classes/functionals.indefiniteintegralbase.html" class="tsd-signature-type">IndefiniteIntegralBase</a></li>
+					<li><a href="../classes/functionals.numericderivative.html" class="tsd-signature-type">NumericDerivative</a></li>
+					<li><a href="../classes/functionals.numericintegral.html" class="tsd-signature-type">NumericIntegral</a></li>
+					<li><a href="../classes/functionals.padd.html" class="tsd-signature-type">PAdd</a></li>
+					<li><a href="../classes/functionals.pcalculus.html" class="tsd-signature-type">PCalculus</a></li>
+					<li><a href="../classes/functionals.pfunction.html" class="tsd-signature-type">PFunction</a></li>
+					<li><a href="../classes/functionals.pmul.html" class="tsd-signature-type">PMul</a></li>
+					<li><a href="../classes/functionals.psub.html" class="tsd-signature-type">PSub</a></li>
+					<li><a href="../classes/functionals.piecewise.html" class="tsd-signature-type">Piecewise</a></li>
+					<li><a href="../classes/functionals.piecewiseindefiniteintegral.html" class="tsd-signature-type">PiecewiseIndefiniteIntegral</a></li>
+					<li><a href="../classes/functionals.poly.html" class="tsd-signature-type">Poly</a></li>
+					<li><a href="../classes/functionals.rotationderivative.html" class="tsd-signature-type">RotationDerivative</a></li>
+					<li><a href="../classes/functionals.scalarconstant.html" class="tsd-signature-type">ScalarConstant</a></li>
+					<li><a href="../classes/functionals.vectorderivative.html" class="tsd-signature-type">VectorDerivative</a></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#f" class="tsd-kind-icon">f</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#html" class="tsd-kind-icon">html</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#nargs" class="tsd-kind-icon">nargs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#returntype" class="tsd-kind-icon">return<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#tex" class="tsd-kind-icon">tex</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#tex_" class="tsd-kind-icon">tex_</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#timestep" class="tsd-kind-icon">timestep</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#unit" class="tsd-kind-icon">unit</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#compile" class="tsd-kind-icon">compile</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="functionals.ipfunctionbase.html#equiv" class="tsd-kind-icon">equiv</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-private"><a href="functionals.ipfunctionbase.html#setname_" class="tsd-kind-icon">set<wbr>Name_</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#simplify" class="tsd-kind-icon">simplify</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#tohtml" class="tsd-kind-icon">to<wbr>Html</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#totex" class="tsd-kind-icon">to<wbr>Tex</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="functionals.ipfunctionbase.html#totexwithunits" class="tsd-kind-icon">to<wbr>Tex<wbr>With<wbr>Units</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="f" class="tsd-anchor"></a>
+					<h3>f</h3>
+					<div class="tsd-signature tsd-kind-icon">f<span class="tsd-signature-symbol">:</span> <a href="../modules/functionals.html#ipcompiled" class="tsd-signature-type">IPCompiled</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L264">src/base.ts:264</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="html" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> html</h3>
+					<div class="tsd-signature tsd-kind-icon">html<span class="tsd-signature-symbol">:</span> <a href="utils.viewof.html" class="tsd-signature-type">ViewOf</a><span class="tsd-signature-symbol">&lt;</span><a href="functionals.ipfunctionbase.html" class="tsd-signature-type">IPFunctionBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Element</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L300">src/base.ts:300</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Produce HTML from the LaTeX representation. Produces a new HTML element on each call</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd></dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L259">src/base.ts:259</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nargs" class="tsd-anchor"></a>
+					<h3>nargs</h3>
+					<div class="tsd-signature tsd-kind-icon">nargs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">N</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L262">src/base.ts:262</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="returntype" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> return<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">return<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../enums/functionals.type.html" class="tsd-signature-type">TYPE</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L260">src/base.ts:260</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="tex" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> tex</h3>
+					<div class="tsd-signature tsd-kind-icon">tex<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L286">src/base.ts:286</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Get the LaTeX representation of this function.  The value is cached.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The parameter name (or expression)</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="tex_" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> tex_</h3>
+					<div class="tsd-signature tsd-kind-icon">tex_<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L258">src/base.ts:258</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="timestep" class="tsd-anchor"></a>
+					<h3>timestep</h3>
+					<div class="tsd-signature tsd-kind-icon">timestep<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L257">src/base.ts:257</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="unit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> unit</h3>
+					<div class="tsd-signature tsd-kind-icon">unit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">U</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L261">src/base.ts:261</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="compile" class="tsd-anchor"></a>
+					<h3>compile</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">compile<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/functionals.html#ipcompiled" class="tsd-signature-type">IPCompiled</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L266">src/base.ts:266</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/functionals.html#ipcompiled" class="tsd-signature-type">IPCompiled</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+					<a name="equiv" class="tsd-anchor"></a>
+					<h3>equiv</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">equiv&lt;T&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L314">src/base.ts:314</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Determine if two functions are known to be equivalent. If so, returns the preferred one, otherwise null</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-private">
+					<a name="setname_" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Name_</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Name_<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L308">src/base.ts:308</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set a name of the function</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="simplify" class="tsd-anchor"></a>
+					<h3>simplify</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">simplify<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="functionals.ipfunctionbase.html" class="tsd-signature-type">IPFunctionBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L322">src/base.ts:322</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the simplest form of this function we are capable of. The notion of &quot;simplest&quot; is variable,
+										such as whether to prefer factored forms or distribute the multiplications. These behaviors can be altered
+									via the <em>options</em> argument.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="functionals.ipfunctionbase.html" class="tsd-signature-type">IPFunctionBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="tohtml" class="tsd-anchor"></a>
+					<h3>to<wbr>Html</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Html<span class="tsd-signature-symbol">(</span>varName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, block<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span>, ctx<span class="tsd-signature-symbol">?: </span><a href="../classes/latex.stylecontext.html" class="tsd-signature-type">StyleContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.viewof.html" class="tsd-signature-type">ViewOf</a><span class="tsd-signature-symbol">&lt;</span><a href="functionals.ipfunctionbase.html" class="tsd-signature-type">IPFunctionBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Element</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L294">src/base.ts:294</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Produce HTML from the LaTeX representation. Produces a new HTML element on each call</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> varName: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> block: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ctx: <a href="../classes/latex.stylecontext.html" class="tsd-signature-type">StyleContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.viewof.html" class="tsd-signature-type">ViewOf</a><span class="tsd-signature-symbol">&lt;</span><a href="functionals.ipfunctionbase.html" class="tsd-signature-type">IPFunctionBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Element</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="totex" class="tsd-anchor"></a>
+					<h3>to<wbr>Tex</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Tex<span class="tsd-signature-symbol">(</span>varName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, ctx<span class="tsd-signature-symbol">?: </span><a href="../classes/latex.stylecontext.html" class="tsd-signature-type">StyleContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L273">src/base.ts:273</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Compute the LaTeX representation of this function.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> varName: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ctx: <a href="../classes/latex.stylecontext.html" class="tsd-signature-type">StyleContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="totexwithunits" class="tsd-anchor"></a>
+					<h3>to<wbr>Tex<wbr>With<wbr>Units</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Tex<wbr>With<wbr>Units<span class="tsd-signature-symbol">(</span>varName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, ctx<span class="tsd-signature-symbol">?: </span><a href="../classes/latex.stylecontext.html" class="tsd-signature-type">StyleContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/ef8ad13/src/base.ts#L280">src/base.ts:280</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Compute the LaTeX representation of this function including units.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> varName: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ctx: <a href="../classes/latex.stylecontext.html" class="tsd-signature-type">StyleContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/frame.html">Frame</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/functionals.html">Functionals</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/index.html">Index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/latex.html">La<wbr>TeX</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/units.html">Units</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/utils.html">Utils</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="functionals.ipfunctionbase.html" class="tsd-kind-icon">IPFunction<wbr>Base</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#f" class="tsd-kind-icon">f</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#html" class="tsd-kind-icon">html</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#nargs" class="tsd-kind-icon">nargs</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#returntype" class="tsd-kind-icon">return<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#tex" class="tsd-kind-icon">tex</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#tex_" class="tsd-kind-icon">tex_</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#timestep" class="tsd-kind-icon">timestep</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#unit" class="tsd-kind-icon">unit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#compile" class="tsd-kind-icon">compile</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+								<a href="functionals.ipfunctionbase.html#equiv" class="tsd-kind-icon">equiv</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-private">
+								<a href="functionals.ipfunctionbase.html#setname_" class="tsd-kind-icon">set<wbr>Name_</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#simplify" class="tsd-kind-icon">simplify</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#tohtml" class="tsd-kind-icon">to<wbr>Html</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#totex" class="tsd-kind-icon">to<wbr>Tex</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="functionals.ipfunctionbase.html#totexwithunits" class="tsd-kind-icon">to<wbr>Tex<wbr>With<wbr>Units</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script
+src="https://unpkg.com/mermaid/dist/mermaid.min.js"
+></script>
+<script>
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    </script>
+</body>
+</html>
