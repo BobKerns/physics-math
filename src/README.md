@@ -1,3 +1,5 @@
 # Physics Math functions
 
-[[include:README.md]]
+## API Documentation
+
+See the project [README.md](../README.md) .

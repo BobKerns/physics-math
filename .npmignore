@@ -15,3 +15,9 @@ typedoc.json
 .circleci/
 .github/
 bin/
+observablehq/
+_config.yml
+.idea/
+CHANGELOG.md
+README.md
+docdest/

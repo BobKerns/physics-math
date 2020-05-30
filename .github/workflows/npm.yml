@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: 'gh-pages'
-          path: 'docdest'
+          path: 'build/docdest'
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v1
         with:

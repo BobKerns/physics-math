@@ -1,5 +1,11 @@
 # ChangeLog
 
+## Version 0.1.17
+_date: 2020-05-29_
+
+* Rudimentary doc site prep.
+* Support LaTeX in generated documentation.
+
 ## Version 0.1.9 - Version 0.1.16
 _date: 2020-05-29_
 
@@ -20,6 +26,7 @@ _Date: 2020-05-28_
 * Update to Typescript 3.9.3.
 * Add the ObservableHQ test page for the package.
 * Use \Leftarrow to mark function units
+  * e.g. \\( \operatorname{f}(t) \Leftarrow {\dfrac{m}{s}} \\)
 * Improve various formatting
 * Add piecewise functions.
 * Try to avoid redundant CI build on release.
@@ -38,7 +45,7 @@ _Date: 2020-05-24_
 * Number formats.
 * Improved styling protocol
 * Consistent expression of units at the outermost edge.
-* Functions display units as $` \operatorname{f}(t) \Rightarrow {\dfrac{m}{s}} `$
+* Functions display units as \\( \operatorname{f}(t) \Rightarrow {\dfrac{m}{s}} \\)
 * Integration/differentiation of polynomials is now correct.
 * Indefinite and definite integrals now display.
 

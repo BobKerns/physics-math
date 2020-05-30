@@ -1,6 +1,6 @@
 {
   "name": "@rwk/physics-math",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Math for physics homework problems",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -27,8 +27,7 @@
     "watch": "NODE_ENV=development rollup -c --watch",
     "pubdocs": "bin/deploy-docs.js"
   },
-  "bin": {
-  },
+  "bin": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BobKerns/physics-math.git"
@@ -55,9 +54,12 @@
     "@types/jest": "^24.9.1",
     "@types/katex": "^0.11.0",
     "@types/ramda": "^0.26.44",
+    "highlight.js": "^10.0.3",
     "jest": "^26.0.1",
     "jest-mock-proxy": "^3.0.0",
+    "marked": "^1.1.0",
     "mermaid": "^8.5.1",
+    "node-fetch": "^2.6.0",
     "ramda": "^0.26.1",
     "rollup": "^1.32.1",
     "rollup-plugin-external-globals": "^0.5.0",

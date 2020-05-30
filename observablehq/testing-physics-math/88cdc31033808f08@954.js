@@ -1,4 +1,4 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@950
+// https://observablehq.com/@bobkerns/testing-physics-math@954
 import define1 from "./e93997d5089d7165@2264.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
 
@@ -13,9 +13,9 @@ Newton's Spherical Cow).
 Repo: https://github.com/BobKerns/physics-math.git \ 
 NPM: https://www.npmjs.com/package/@rwk/physics-math \ 
 Issues: https://github.com/BobKerns/physics-math/issues \ 
-Documentation: http://localhost:5000/docs/api/ *
+Documentation: [on GitHub](https://bobkerns.github.io/physics-math/docs/v0.1.16/api/index.html) *
 
-  * Documentation currently requires checking out the repo and running a local server.
+  * Documentation before v0.1.16 requires checking out the repo and running a local server.
 
 The current version of this page probably corresponds to work not yet released, so expect errors when running against release versions.
 `
@@ -223,7 +223,7 @@ md`## Appendix`
 await (await fetch(
   'https://api.github.com/repos/BobKerns/physics-math/releases'
 )).json())
-  .filter(e => e.tag_name > 'v0.1.2')
+  .filter(e => e.published_at > '2020-05-19T12:39:22Z')
   .map(r =>
     Object.defineProperty(r, Symbol.toStringTag, {
       get: () => `Release_${r.tag_name}`
