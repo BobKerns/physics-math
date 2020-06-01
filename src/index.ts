@@ -15,8 +15,8 @@
 */
 
 import "source-map-support/register";
-import { PluginHost } from "typedoc/dist/lib/utils";
-import { LinkRewriterPlugin } from "./plugin";
+import {ParameterType, PluginHost} from "typedoc/dist/lib/utils";
+import {LinkRewriterPlugin} from "./plugin";
 
 function load(host: PluginHost) {
     const app = host.owner;
@@ -25,6 +25,12 @@ function load(host: PluginHost) {
     }
 
     app.renderer.addComponent("linkrewriter", new LinkRewriterPlugin(app.renderer));
+
+    app.options.addDeclaration({
+        help: "The path to a JSON file or JS file exporting a Links object.",
+        name: "rewriteLinks",
+        type: ParameterType.String
+    })
 }
 
 export = load;

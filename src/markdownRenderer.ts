@@ -14,10 +14,12 @@
    limitations under the License.
 */
 
+import {Renderer} from 'marked';
+
 const fence = "```";
 const tick = "`";
 
-export class MarkdownRenderer implements marked.Renderer {
+export class MarkdownRenderer extends Renderer {
     private _tableHeader = "";
 
     // blocks
@@ -69,7 +71,7 @@ export class MarkdownRenderer implements marked.Renderer {
     tablerow(content: string): string {
         return `|${content}\n`;
     }
-    
+
     // inlines
     codespan(code: string): string {
         return `${tick}${decode(code)}${tick}`;
@@ -89,11 +91,11 @@ export class MarkdownRenderer implements marked.Renderer {
     image(href: string, title: string | null, text: string): string {
         // TODO: handle unescaped and unbalanced [] in text
         // TODO: handle unescaped ", ', and () in title
-        return `![${decode(text)}](${href}${title !== null ? ` "${decode(title)}"` : ""})`;
+        return `![${decode(text)}](${href}${(title !== null && title !== undefined) ? ` "${decode(title)}"` : ""})`;
     }
     link(href: string, title: string, text: string): string {
         // TODO: handle unescaped ", ', and () in title
-        return `[${text}](${href}${title !== null ? ` "${decode(title)}"` : ""})`;
+        return `[${text}](${href}${(title !== null &&  title !== undefined) ? ` "${decode(title)}"` : ""})`;
     }
     text(text: string): string {
         return decode(text);
