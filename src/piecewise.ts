@@ -22,13 +22,6 @@ import {gadd} from "./arith";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
 import {NYI, tex} from "./utils";
 
-type TVPairs<
-    R extends BaseValueRelative = BaseValueRelative,
-    C extends Unit = Unit,
-    D extends Unit = Divide<C, Units.time>,
-    I extends Unit = Multiply<C, Units.time>
-    > = [number, IPCalculus<R, C, D, I>, ...TVPairs<R, C, D, I>[]]
-
 export class Piecewise<
     R extends BaseValueRelative = BaseValueRelative,
     C extends Unit = Unit,
@@ -36,7 +29,7 @@ export class Piecewise<
     I extends Unit = Multiply<C, Units.time>
     > extends PCalculus<R, C, D, I> {
     private start_times: number[] = [];
-    private functions: IPFunctionCalculus<R, C, 1, D, I>[] = [];
+    private functions: IPFunctionCalculus<R, C, 0|1, D, I>[] = [];
     private readonly type: TYPE;
     constructor(unit: Unit, type: TYPE = unit.attributes.type || TYPE.SCALAR) {
         super({unit});
@@ -48,7 +41,7 @@ export class Piecewise<
      * @param t
      * @param f
      */
-    add(t: number, f: number|IPFunctionCalculus<R, C, 1, D, I>): this {
+    add(t: number, f: number|IPFunctionCalculus<R, C, 0|1, D, I>): this {
         if (typeof f === 'number') {
             if (this.returnType === TYPE.SCALAR) {
                 return this.add(t, new ScalarConstant(f, this.unit) as unknown as IPFunctionCalculus<R, C, 1, D, I>);
@@ -92,10 +85,8 @@ export class Piecewise<
      * Add a series of segments, e.g. pw.at(t0, f0, t1, f1, t2, f2, ...);
      * @param pairs alternating time and value pairs.
      */
-    at(...pairs: TVPairs): this {
-        for (let i = 0; i < pairs.length; i += 2) {
-            this.add(pairs[i] as number, pairs[i+1] as IPFunctionCalculus<R, C, 1, D, I>);
-        }
+    at(...pairs: [number, number|IPFunctionCalculus<R, C, 0|1, D, I>][]): this {
+        pairs.map(([t, v]) => this.add(t, v));
         return this;
     }
 

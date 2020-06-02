@@ -13,7 +13,7 @@ import {Piecewise} from "../piecewise";
 import {TYPE} from "../math-types";
 import {Units} from "../unit-defs";
 import {Poly} from "../poly";
-import {ScalarConstant} from "../scalar";
+import {constant, ScalarConstant} from "../scalar";
 
 describe("add", () => {
     test('uninitialized', () =>
@@ -91,5 +91,18 @@ describe("add", () => {
             .toBe(1);
         expect((pw as any).functions[0])
             .toBeInstanceOf(ScalarConstant);
+    });
+});
+
+describe("calculus", () => {
+    const PW_constants = new Piecewise(Units.length, TYPE.SCALAR);
+    PW_constants.initial(0);
+    PW_constants.at([1, 3], [2, (5 * Math.PI) / 2], [3, 0]);
+    describe('derivative', () => {
+        const D = PW_constants.derivative();
+        test(`Derivative constants => 0`, () =>
+            [-0.5, 0.5, 1.5, 2.5, 3.5].forEach(n =>
+                expect(D.f(n))
+                    .toBe(0)));
     });
 });
