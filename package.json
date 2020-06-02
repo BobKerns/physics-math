@@ -8,6 +8,7 @@
   "jsdelivr": "lib/umd/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
+    "build:imports": "cd imports/typedoc-plugin-linkrewriter && npm run build",
     "prebuild:config": "tsc --project config/tsconfig.json",
     "build:config": "",
     "prebuild:devtools": "npm run build:config",
@@ -19,6 +20,7 @@
     "postbuild": "npm run build:docs",
     "clean": "rm -rf build lib docs",
     "prepublishOnly": "NODE_ENV=production npm run build && npm run pubdocs",
+    "prebuild:docs": "test -e node_modules/typedoc-plugin-linkrewriter/dist/index.js || (npm run build:imports && npm install)",
     "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --stripInternal --rewriteLinks build/config/link-rewriter.js --mode modules --out build/docs/api src/",
     "preserve": "npm run build:devtools",
     "serve": "NODE_ENV=development SERVE=true rollup -c",
