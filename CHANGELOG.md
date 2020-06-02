@@ -1,5 +1,16 @@
 # ChangeLog
 
+## Version 0.1.26
+_date: 2020-06-02_
+
+* Vector, Point, Rotation, Orientation now satisfy IPFunction directly; only numbers need to be wrapped.
+* This means they also now have units, which become required arguments for their construction, so constant(),
+  vector(), point(), rotation(), and orientation() now require them.
+* Arithmetic requires compatible units.
+* The TypeScript typing for units got a bit simpler and a bit more reliable, but still fails on certain key inferences.
+* LaTeX generation got a bit more consistent, and the setup git simpler.
+* Implement link rewriting for typedoc-generated doc so it can link to non-TSDoc-generated documents.
+
 ## Version 0.1.25
 _date: 2020-05-30_
 
@@ -67,4 +78,6 @@ _Date: 2020-05-22_
 * LaTeX styling API to manage style separately from semantics.
 * Polynomials format correctly.
 * Ramda is now a runtime dependency.
+
+[Version 0.1.5]: #version-015
 
