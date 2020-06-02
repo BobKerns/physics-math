@@ -159,8 +159,8 @@ const run = async () => {
     const release_body = await releases();
     const release_page = `# Newton's Spherical Cow / Physics-Math release documentation
  ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
- * [CHANGELOG](./CHANGELOG.html)
- ${release_body}`;
+* [CHANGELOG](./CHANGELOG.html)
+${release_body}`;
     await convertContent(release_page, path.resolve(docs, 'index.html'), "NSC / Math Releases");
     const release = await thisRelease(tag);
     const release_landing = `# ${release.name}
