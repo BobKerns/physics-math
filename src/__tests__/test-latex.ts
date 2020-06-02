@@ -25,16 +25,16 @@ describe("Primitives", () => {
             .toBe(tex`{{3}\ {\textcolor{ff0000}{\text{s}}}}`));
     test('GFunction',
         () => expect(new GFunction(() => 3, Units.mass).setName_('f').toTex())
-            .toBe(tex`\operatorname{f}(t)`));
+            .toBe(tex`\operatorname{f}({t})`));
     test('GFunction w units',
         () => expect(new GFunction(() => 3, Units.mass).setName_('f').tex)
-            .toBe(tex`{{\operatorname{f}(t)} \Leftarrow {\textcolor{ff0000}{\text{kg}}}}`));
+            .toBe(tex`{{\operatorname{f}({t})} \Leftarrow {\textcolor{ff0000}{\text{kg}}}}`));
     test('GFunction Param',
         () => expect(new GFunction(() => 3, Units.mass).setName_('f').toTex('x'))
-            .toBe(tex`\operatorname{f}(x)`));
+            .toBe(tex`\operatorname{f}({x})`));
     test('GFunction Param w/ units',
         () => expect(new GFunction(() => 3, Units.mass).setName_('f').toTexWithUnits('x'))
-            .toBe(tex`{{\operatorname{f}(x)} \Leftarrow {\textcolor{ff0000}{\text{kg}}}}`));
+            .toBe(tex`{{\operatorname{f}({x})} \Leftarrow {\textcolor{ff0000}{\text{kg}}}}`));
     test('Acceleration',
         () => expect(constant(3, Units.acceleration).toTex())
             .toBe(tex`3`));
@@ -46,16 +46,16 @@ describe("Primitives", () => {
 describe("Derivatives", () => {
     test('GFunction',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').derivative().toTex())
-            .toBe(tex`{{\dfrac{d}{dt}}{\operatorname{f}(t)}}`));
+            .toBe(tex`{{\dfrac{d}{dt}}{\operatorname{f}({t})}}`));
     test('GFunction w/ units',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').derivative().tex)
-            .toBe(tex`{{{{\dfrac{d}{dt}}{\operatorname{f}(t)}}} \Leftarrow {\textcolor{ff0000}{\Large{\frac{\text{m}}{\text{s}^{2}}}}}}`));
+            .toBe(tex`{{{{\dfrac{d}{dt}}{\operatorname{f}({t})}}} \Leftarrow {\textcolor{ff0000}{\Large{\frac{\text{m}}{\text{s}^{2}}}}}}`));
     test('GFunction2',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').derivative().derivative().toTex())
-            .toBe(tex`{{\dfrac{d^{2}}{dt}}{\operatorname{f}(t)}}`));
+            .toBe(tex`{{\dfrac{d^{2}}{dt}}{\operatorname{f}({t})}}`));
     test('GFunction2 w/ units',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').derivative().derivative().tex)
-            .toBe(tex`{{{{\dfrac{d^{2}}{dt}}{\operatorname{f}(t)}}} \Leftarrow {\textcolor{ff0000}{\Large{\frac{\text{m}}{\text{s}^{3}}}}}}`));
+            .toBe(tex`{{{{\dfrac{d^{2}}{dt}}{\operatorname{f}({t})}}} \Leftarrow {\textcolor{ff0000}{\Large{\frac{\text{m}}{\text{s}^{3}}}}}}`));
     test('Polynomial',
         () => expect(new Poly(Units.angularVelocity, 3, 7, 8).toTex())
             .toBe(tex`3 + {7 {t}} + {8 {t}^{2}}`));
@@ -73,10 +73,10 @@ describe("Derivatives", () => {
 describe('Integrals', () => {
     test('GFunction',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').integral().toTex())
-            .toBe(tex`\int{{(\operatorname{f}(t))}\ \mathrm{d}{t}}`));
+            .toBe(tex`\int{{(\operatorname{f}({t}))}\ \mathrm{d}{t}}`));
     test('GFunction with units',
         () => expect(new GFunction(() => 3, Units.velocity).setName_('f').integral().tex)
-            .toBe(tex`{{\int{{(\operatorname{f}(t))}\ \mathrm{d}{t}}} \Leftarrow {\textcolor{ff0000}{\text{m}}}}`));
+            .toBe(tex`{{\int{{(\operatorname{f}({t}))}\ \mathrm{d}{t}}} \Leftarrow {\textcolor{ff0000}{\text{m}}}}`));
 });
 
 describe('styles', () => {

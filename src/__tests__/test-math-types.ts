@@ -13,7 +13,7 @@ import {Time, Transform} from "../base";
 import {
     datatype,
     DataTypeOf,
-    InFrameOf, isIntrinsic,
+    InFrameOf,
     isOrientation,
     isPoint,
     isPositional, isRelative,
@@ -33,12 +33,14 @@ import {
     Vector,
     vector
 } from "../math-types";
-import {Constructor} from "../utils";
+import {Constructor, Throw} from "../utils";
 import {Frame, InertialFrame} from "../frame";
+import {isUnit, Unit} from "../units";
+import {Units} from "../unit-defs";
 
-type Constructor4N<R> = Constructor<R, [number, number, number, number]> | Constructor<R, [InertialFrame, number, number, number, number]>;
+type Constructor4N<R, W> = Constructor<R, [Unit, number, number, number, W]> | Constructor<R, [InertialFrame, number, number, number, W]>;
 
-const checkAny = <T extends Vector|Point|Rotation|Orientation>(type: Constructor4N<T>, p0: number, p1: number, p2: number, p3: number) => (v: T) => {
+const checkAny = <T extends Vector|Point|Rotation|Orientation,W>(type: Constructor4N<T,W>, p0: number, p1: number, p2: number, p3?: number|0|1) => (v: T) => {
     expect(v).toBeInstanceOf(type);
     expect(v).toBeInstanceOf(Float64Array);
     expect(v.length).toBe(4);
@@ -61,7 +63,6 @@ const testPredicates = (t: any, n: boolean, p: boolean, v: boolean, o: boolean, 
             test("isRotation", () => expect(isRotation(t)).toBe(r));
             test("isRotational", () => expect(isRotational(t)).toBe(o || r));
             test('isRelative', () => expect(isRelative(t)).toBe(n || v || r));
-            test('isIntrinsic', () => expect(isIntrinsic(t)).toBe(p || o));
             test('isScalar', () => expect(isScalar(t)).toBe(n));
         });
     });
@@ -83,93 +84,101 @@ class TFrame implements InertialFrame {
 
 }
 
+function check<U extends Unit>(type: Constructor4N<Vector<U>,0>, unit: U, x: number, y: number, z: number, w: 0): (v: Vector<U>) => void;
+function check(type: Constructor4N<Point,0>, unit: InertialFrame, x: number, y: number, z: number, w: 1): (p: Point) => void;
+function check<U extends Unit>(type: Constructor4N<Rotation<U>,0>, unit: U, x: number, y: number, z: number, w: number): (v: Rotation<U>) => void;
+function check(type: Constructor4N<Orientation,number>, unit: InertialFrame, x: number, y: number, z: number, w: number): (p: Orientation) => void;
+function check<U extends Unit, T extends Vector<U>|Point>(type: any, unitOrFrame: U|InertialFrame, x: number, y: number, z: number, w: number) {
+    return (v: T) => {
+        checkAny(type, x, y, z, w);
+        const unit: Unit = isUnit(unitOrFrame)
+            ? unitOrFrame
+            : type === Point
+                ? Units.length
+                : type === Orientation
+                    ? Units.angle
+                    : Throw(`Unknown type: ${type}`);
+        expect(v.unit).toBe(unit);
+        expect(v[0]).toBe(x);
+        expect(v[1]).toBe(y);
+        expect(v[2]).toBe(z);
+        expect(v[3]).toBe(w);
+    };
+}
+
 const frame = new TFrame();
 describe("Vectorish", () => {
-    const check = <T extends Vector|Point>(type: Constructor4N<T>, x: number, y: number, z: number, w: 0 | 1) => (v: T) => {
-        checkAny(type, x, y, z, w);
-        expect(v.x).toBe(x);
-        expect(v.y).toBe(y);
-        expect(v.z).toBe(z);
-        expect(v.w).toBe(w);
-    };
      describe("Vector", () => {
          test("null",
-             () => check(Vector, 0, 0, 0, 0)(vector()));
+             () => check(Vector, Units.length, 0, 0, 0, 0)(vector(Units.length)()));
          test("explicit",
-             () => check(Vector, 10, 20, 30, 0)(vector(10, 20, 30)));
+             () => check(Vector, Units.length, 10, 20, 30, 0)(vector(Units.length,10, 20, 30)));
          test("assign", () => {
-             const v = vector();
+             const v = vector(Units.velocity)();
              v.x = 10;
              v.y = 20;
              v.z = 30;
-             check(Vector, 10, 20,30, 0)(v);
+             check(Vector, Units.velocity, 10, 20,30, 0)(v);
          });
          test("clone",
-             () => check(Vector, 10, 20, 30, 0)(vector(10, 20, 30).clone()));
-         test("datatype", () => checkType(vector(), TYPE.VECTOR));
-         testPredicates(vector(1, 2, 3), false, false, true, false, false);
+             () => check(Vector, Units.length, 10, 20, 30, 0)(vector(Units.length,10, 20, 30).clone()));
+         test("datatype", () => checkType(vector(Units.length)(), TYPE.VECTOR));
+         testPredicates(vector(Units.length, 1, 2, 3), false, false, true, false, false);
      });
      describe("Point", () => {
          test("explicit",
-             () => check(Point, 10, 20, 30, 1)(point(frame,10, 20, 30)));
+             () => check(Point, frame, 10, 20, 30, 1)(point(frame,10, 20, 30)));
          test("assign", () => {
-             const p = point(frame);
+             const p = point(frame)();
              p.x = 10;
              p.y = 20;
              p.z = 30;
-             check(Point, 10, 20,30, 1)(p);
+             check(Point, frame, 10, 20,30, 1)(p);
          });
          test("clone",
-             () => check(Point, 10, 20, 30, 1)(point(frame,10, 20, 30).clone()));
+             () => check(Point, frame, 10, 20, 30, 1)(point(frame,10, 20, 30).clone()));
          test("origin",
-             () => check(Point, 0, 0, 0, 1)(point(frame)));
-         test("datatype", () => checkType(point(frame), TYPE.POINT));
+             () => check(Point, frame, 0, 0, 0, 1)(point(frame)()));
+         test("datatype", () => checkType(point(frame)(), TYPE.POINT));
          testPredicates(point(frame,1, 2, 3), false, true, false, false, false);
      });
  });
 
 describe("Rotationish", () => {
-    const check = <T extends Rotation|Orientation>(type: Constructor4N<T>, i: number, j: number, k: number, w: number) => (v: T) => {
-        checkAny(type, i, j, k, w);
-        expect(v.i).toBe(i);
-        expect(v.j).toBe(j);
-        expect(v.k).toBe(k);
-        expect(v.w).toBe(w);
-    };
     describe("Rotation", () => {
         test("explicit",
-            () => check(Rotation,10, 20, 30, 40)(rotation(10, 20, 30, 40)));
+            () => check(Rotation, Units.angle, 10, 20, 30, 40)(rotation(Units.angle, 10, 20, 30, 40)));
         test("assign", () => {
-            const r = rotation();
+            const r = rotation(Units.angle)();
             r.i = 10;
             r.j = 20;
             r.k = 30;
             r.w = 40;
-            check(Rotation, 10, 20,30, 40)(r);
+            check(Rotation, Units.angle, 10, 20,30, 40)(r);
         });
         test("clone",
-            () => check(Rotation,10, 20, 30, 40)(rotation(10, 20, 30, 40).clone()));
+            () => check(Rotation, Units.angle, 10, 20, 30, 40)(rotation(Units.angle, 10, 20, 30, 40).clone()));
         test("null",
-            () => check(Rotation,0, 0, 0, 1)(rotation()));
-        test("datatype", () => checkType(rotation(), TYPE.ROTATION));
-        testPredicates(rotation(1, 2, 3), false, false, false, false, true);
+            () => check(Rotation, Units.angle, 0, 0, 0, 1)(rotation(Units.angle)()));
+        test("datatype", () => checkType(rotation(Units.angle)(), TYPE.ROTATION));
+        testPredicates(rotation(Units.angle, 1, 2, 3), false, false, false, false, true);
     });
     describe("Orientation", () => {
         test("explicit",
-            () => check(Orientation, 10, 20, 30, 40)(orientation(frame,10, 20, 30, 40)));
+            () => check(Orientation, frame, 10, 20, 30, 40)(orientation(frame, 10, 20, 30, 40)));
         test("assign", () => {
-            const v = orientation(frame);
+            const v = orientation(frame)();
             v.i = 10;
             v.j = 20;
             v.k = 30;
             v.w = 40;
-            check(Orientation, 10, 20,30, 40)(v);
+            check(Orientation, frame, 10, 20,30, 40)(v);
         });
         test("clone",
-            () => check(Orientation, 10, 20, 30, 40)(orientation(frame,10, 20, 30, 40).clone()));
+            () => check(Orientation, frame, 10, 20, 30, 40)(orientation(frame, 10, 20, 30, 40).clone()));
         test("null",
-            () => check(Orientation, 0, 0, 0, 1)(orientation(frame)));
-        test("datatype", () => checkType(orientation(frame), TYPE.ORIENTATION));
+            () => check(Orientation, frame, 0, 0, 0, 1)(orientation(frame)()));
+        test("datatype", () => checkType(orientation(frame)(), TYPE.ORIENTATION));
         testPredicates(orientation(frame,1, 2, 3), false, false, false, true, false);
     });
 });
@@ -228,69 +237,69 @@ describe("Types", () => {
             test(`relative ${name}`, () => expect(fn()).toBeUndefined());
         relative('scalar', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: RelativeOf<ScalarValue> = 5;
+            const a: RelativeOf<ScalarValue<Unit>> = 5;
         });
         relative('vector', () => {
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const a: RelativeOf<Vector> = point();
+            const a: RelativeOf<Vector> = point(frame)();
             // noinspection JSUnusedLocalSymbols
-            const b: RelativeOf<Vector> = vector();
+            const b: RelativeOf<Vector> = vector(Units.length)();
         });
         relative('point', () => {
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const a: RelativeOf<Point> = point();
+            const a: RelativeOf<Point> = point(frame)();
             // noinspection JSUnusedLocalSymbols
-            const b: RelativeOf<Point> = vector();
+            const b: RelativeOf<Point> = vector(Units.length)();
         });
         relative('rotation', () => {
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const a: RelativeOf<Rotation> = orientation();
+            const a: RelativeOf<Rotation> = orientation(frame)();
             // noinspection JSUnusedLocalSymbols
-            const b: RelativeOf<Rotation> = rotation();
+            const b: RelativeOf<Rotation> = rotation(Units.angle)();
         });
         relative('orientation', () => {
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const a: RelativeOf<Orientation> = orientation();
+            const a: RelativeOf<Orientation> = orientation(frame)();
             // noinspection JSUnusedLocalSymbols
-            const b: RelativeOf<Orientation> = rotation();
+            const b: RelativeOf<Orientation> = rotation(Units.angle)();
         });
         const intrinsic = (name: string, fn: () => void) =>
             test(`intrinsic ${name}`, () => expect(fn()).toBeUndefined());
         intrinsic('scalar', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: InFrameOf<ScalarValue> = 5;
+            const a: InFrameOf<ScalarValue<Unit>> = 5;
         });
         intrinsic('vector', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: InFrameOf<Vector> = point(frame);
+            const a: InFrameOf<Vector> = point(frame)();
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const b: InFrameOf<Vector> = vector();
+            const b: InFrameOf<Vector> = vector(Units.length)();
         });
         intrinsic('point', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: InFrameOf<Point> = point(frame);
+            const a: InFrameOf<Point> = point(frame)();
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const b: InFrameOf<Point> = vector();
+            const b: InFrameOf<Point> = vector(Units.length)();
         });
         intrinsic('rotation', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: InFrameOf<Rotation> = orientation(frame);
+            const a: InFrameOf<Rotation> = orientation(frame)();
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const b: InFrameOf<Rotation> = rotation();
+            const b: InFrameOf<Rotation> = rotation(Units.angle)();
         });
         intrinsic('orientation', () => {
             // noinspection JSUnusedLocalSymbols
-            const a: InFrameOf<Orientation> = orientation(frame);
+            const a: InFrameOf<Orientation> = orientation(frame)();
             // @ts-expect-error
             // noinspection JSUnusedLocalSymbols
-            const b: InFrameOf<Orientation> = rotation();
+            const b: InFrameOf<Orientation> = rotation(Units.angle)();
         });
     });
 });

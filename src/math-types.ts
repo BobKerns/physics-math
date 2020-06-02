@@ -10,14 +10,16 @@
  */
 
 import {quat, vec4} from "gl-matrix";
-import {Constructor, defineTag, Throw} from "./utils";
+import {callSite, Constructor, defineTag, NYI, Throw, ViewOf} from "./utils";
 import {isPCompiled, PFunction} from "./pfunction";
-import {ValueInFrame, ExplicitValueBase, IPCompiled, IPFunction} from "./base";
+import {Value, ValueInFrame, IPCompiled, IPFunction, Relative, IPFunctionCalculus, IPCompileResult, TEX_FORMATTER, IndefiniteIntegral, IPFunctionBase, Variable} from "./base";
 import {Units} from "./unit-defs";
 import {InertialFrame} from "./frame";
+import {Divide, Multiply, Unit} from "./units";
+import {DEFAULT_STYLE, Style, StyleContext} from "./latex";
 
-type Constructor3N<R> = Constructor<R, [number, number, number]>;
-type Constructor4N<R> = Constructor<R, [number, number, number, number]>;
+type Constructor3N<R> = Constructor<R, [Unit, number, number, number]>;
+type Constructor4N<R> = Constructor<R, [Unit, number, number, number, number]>;
 
 export enum TYPE {
     SCALAR,
@@ -34,16 +36,6 @@ interface DataType<T extends TYPE> {
 export type DataTypeOf<D> = D extends number ? TYPE.SCALAR : D extends DataType<infer T> ? T : never;
 
 export const datatype = (d: any): TYPE => typeof d === 'number' ? TYPE.SCALAR : d.type;
-/**
- * Marker interface for types which represent relative info, such as vectors or rotations
- */
-export interface Relative<A> {}
-
-/**
- * Marker interface for types which represent info intrinsic to a particular object,
- * such as position in space (point) or orientation
- */
-export interface InFrame<R> {}
 
 /**
  * Marker for all non-scalar values
@@ -65,29 +57,40 @@ export type InFrameOf<T> = T extends Vector ? Point : T extends Rotation ? Orien
 /**
  * Our primitive datatypes
  */
-export type ScalarValue = number;
-export type BaseValueRelative = ScalarValue | Vector | Rotation;
+export type ScalarValue<U extends Unit> = number;
+export type BaseValueRelative<U extends Unit = Unit> = ScalarValue<U> | Vector<U> | Rotation<U>;
 export type BaseValueInFrame = Point | Orientation;
 // noinspection JSUnusedGlobalSymbols
-export type BaseValueNonScalar = Point | Vector | Orientation | Rotation;
+export type BaseValueNonScalar = Point | Vector | Orientation | Rotation | NonScalarValue;
 // noinspection JSUnusedGlobalSymbols
-export type BaseValueRelativeNonScalar = Vector | Rotation;
-export type BaseValue = BaseValueRelative | BaseValueInFrame;
+export type BaseValueRelativeNonScalar<U extends Unit = Unit> = Vector<U> | Rotation<U>;
+export type BaseValue = number | BaseValueNonScalar;
 
-abstract class ArrayBase extends Float64Array implements NonScalarValue {
-    protected constructor() {
-        super(4);
-    }
+abstract class ArrayBase<
+    C extends Unit<any>
+    >
+    extends Float64Array
+    implements
+        NonScalarValue,
+        Value<NonScalarValue, C>
+{
     0: number;
     1: number;
     2: number;
     3: number;
+    readonly unit: C;
+
+    protected constructor(unit: C) {
+        super(4);
+        this.unit = unit;
+    }
+    get value(): this { return this; }
     abstract get type(): TYPE.POINT | TYPE.VECTOR | TYPE.ORIENTATION | TYPE.ROTATION;
     assign(): this;
-    assign(other: ArrayBase): this;
+    assign(other: ArrayBase<C>): this;
     assign(a: number, b: number, c: number): this;
     assign(a: number, b: number, c: number, d: number): this;
-    assign(a: number|ArrayBase = 0, b: number = 0, c: number = 0, d: number = this[3]): this {
+    assign(a: number|ArrayBase<C> = 0, b: number = 0, c: number = 0, d: number = this[3]): this {
         if (typeof a === 'number') {
             this[0] = a;
             this[1] = b;
@@ -102,6 +105,7 @@ abstract class ArrayBase extends Float64Array implements NonScalarValue {
         return this;
     }
 
+
     // noinspection JSUnusedGlobalSymbols
     magnitude(): number {
         return vec4.len(this as unknown as vec4);
@@ -110,16 +114,121 @@ abstract class ArrayBase extends Float64Array implements NonScalarValue {
     magnitudeSqr(): number {
         return vec4.squaredLength(this as unknown as vec4);
     }
+
+    equiv<T>(f: T): this | null {
+        if (Object.getPrototypeOf(f) !== Object.getPrototypeOf(this)) return null;
+        const x = f as unknown as ArrayBase<C>
+        if (x.unit !== this.unit) return null;
+        if (x.length !== this.length) return null;
+        if (x[0] !== this[0]) return null;
+        if (x[0] !== this[0]) return null;
+        if (x[0] !== this[0]) return null;
+        if (x[0] !== this[0]) return null;
+        return this;
+    }
+
+    protected compileFn(): IPCompileResult<NonScalarValue, 0> {
+        return () => this;
+    }
+
+    f_?: IPCompiled<BaseValue, C, 0>;
+
+    /**
+     * The implementing function
+     */
+    get f(): IPCompiled<BaseValue, C, 0> {
+        return this.f_ || (this.f_ = this.compile());
+    }
+
+    compile(): IPCompiled<NonScalarValue, C, 0> {
+        const bare = this.compileFn();
+        Reflect.defineProperty(bare, 'pfunction', {
+            value: this,
+            configurable: false,
+            writable: false
+        });
+        Reflect.defineProperty(bare, 'html', {
+            get: () => this.toHtml('t', false)
+        });
+        Reflect.defineProperty(bare, 'toTex', {
+            value: (varName: string) => this.toTex(varName)
+        });
+        Reflect.defineProperty(bare, 'tex', {
+            get: () => this.toTex()
+        });
+        return bare as IPCompiled<NonScalarValue, C, 0>;
+    }
+
+    /**
+     * Compute the LaTeX representation of this function.
+     * @param varName? The parameter name (or expression)
+     * @param ctx?
+     */
+    abstract toTex(varName?: Variable, ctx?: StyleContext): string;
+
+    toTexWithUnits(varName: Variable = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+        const call = this.toTex(varName, ctx);
+        return ctx.applyUnitFunction(call, this.unit);
+    }
+
+    /**
+     * Cached LaTeX string
+     */
+    tex_?: string;
+    style_?: Style;
+
+    /**
+     * Get the LaTeX representation of this function.  The value is cached.
+     */
+    get tex() {
+        if (this.tex_ && this.style_ === DEFAULT_STYLE) {
+            return this.tex_;
+        }
+        this.style_ = DEFAULT_STYLE;
+        return (this.tex_ = this.toTexWithUnits());
+    }
+
+
+    /**
+     * Produce HTML from the LaTeX representation. Produces a new HTML element on each call
+     * @param varName?? The variable name to be used; ordinarily t (time).
+     * @param block??
+     * @param ctx??
+     */
+    toHtml(varName?: Variable, block?: boolean, ctx?: StyleContext): ViewOf<this> & Element {
+        // callSite prepares it for ObservableHQ's tex string interpolator.
+        const latex = callSite(this.toTexWithUnits(varName, ctx));
+        const fmt = block ? TEX_FORMATTER.block : TEX_FORMATTER.inline;
+        const h = fmt(latex) as ViewOf<this> & Element;
+        h.value = this;
+        return h;
+    }
+
+    /**
+     * Produce HTML from the LaTeX representation. Produces a new HTML element on each reference,
+     * equivalent to:
+     * ```
+     * pFun.toHtml();
+     * ```
+     */
+    get html(): ViewOf<this> & Element {
+        return this.toHtml();
+    }
 }
 
+const checkUnits = (a: Value, b: Value): true | never =>
+    (a.unit === b.unit)
+    || Throw(`Incompatible units: ${a.unit} vs ${b.unit}`);
 
-abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements DataType<TYPE.VECTOR|TYPE.POINT> {
+abstract class Vectorish<C extends Unit, W extends 0 | 1 = 0 | 1>
+    extends ArrayBase<C>
+    implements DataType<TYPE.VECTOR|TYPE.POINT> {
     0: number;
     1: number;
     2: number;
     3: W;
-    protected constructor(x = 0, y = 0, z = 0, w: W) {
-        super();
+    protected constructor(unit: C, x = 0, y = 0, z = 0, w: W) {
+        super(unit);
         this[0] = x;
         this[1] = y;
         this[2] = z;
@@ -160,26 +269,30 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
         return this[3];
     }
 
-    add(v: Vector): this {
-        const c = this.constructor as typeof Vector;
-        return new c(this[0] + v[0], this[1] + v[1], this[2] + v[2]) as unknown as this;
+    add(v: Vector<C>): this {
+        checkUnits(this, v);
+        const c = this.constructor as Constructor3N<Vectorish<C, W>>;
+        return new c(this.unit, this[0] + v[0], this[1] + v[1], this[2] + v[2]) as unknown as this;
     }
 
     // noinspection JSUnusedGlobalSymbols
-    addf(v: Vector): this {
+    addf(v: Vector<C>): this {
+        checkUnits(this, v);
         this[0] += v[0];
         this[1] += v[1];
         this[2] += v[2];
         return this;
     }
 
-    sub(v: Vector): this {
-        const c = this.constructor as typeof Vector;
-        return new c(this[0] - v[0], this[1] - v[1], this[2] - v[2]) as unknown as this;
+    sub(v: Vector<C>): this {
+        checkUnits(this, v);
+        const c = this.constructor as Constructor3N<Vectorish<C, W>>;
+        return new c(this.unit, this[0] - v[0], this[1] - v[1], this[2] - v[2]) as unknown as this;
     }
 
     // noinspection JSUnusedGlobalSymbols
-    subf(v: Vector): this {
+    subf(v: Vector<C>): this {
+        checkUnits(this, v);
         this[0] -= v[0];
         this[1] -= v[1];
         this[2] -= v[2];
@@ -188,8 +301,8 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
 
     // noinspection JSUnusedGlobalSymbols
     mult(n: number): this {
-        const c = this.constructor as typeof Vector;
-        return new c(this[0] * n, this[1] * n, this[2] * n) as unknown as this;
+        const c = this.constructor as Constructor3N<Vectorish<C, W>>;
+        return new c(this.unit, this[0] * n, this[1] * n, this[2] * n) as unknown as this;
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -201,20 +314,23 @@ abstract class Vectorish<W extends 0 | 1 = 0 | 1> extends ArrayBase implements D
     }
 
     clone(): this {
-        const c = this.constructor as Constructor3N<Vectorish>;
-        return new c(this[0], this[1], this[2]) as this;
+        const c = this.constructor as Constructor3N<Vectorish<C, W>>;
+        return new c(this.unit, this[0], this[1], this[2]) as this;
     }
 }
 
-export class Point extends Vectorish<1> implements InFrame<Vector>, DataType<TYPE.POINT>, ValueInFrame<Point, Units.length> {
+export class Point
+    extends Vectorish<Units.length, 1>
+    implements
+        DataType<TYPE.POINT>,
+        ValueInFrame<Point, Units.length>
+{
     get type(): TYPE.POINT { return TYPE.POINT; }
 
     readonly frame: InertialFrame;
-    get unit(): Units.length { return Units.length; };
-    get value(): Point { return this; }
 
     constructor(frame: InertialFrame, x = 0, y = 0, z = 0) {
-        super(x, y, z, 1);
+        super(Units.length, x, y, z, 1);
         this.frame = frame;
     }
 
@@ -222,30 +338,66 @@ export class Point extends Vectorish<1> implements InFrame<Vector>, DataType<TYP
     clone(): this {
         return new Point(this.frame, this[0], this[1], this[2]) as this;
     }
+
+    toTex(varName: string | undefined, ctx: StyleContext | undefined): string {
+        return "";
+    }
 }
 
-export class Vector extends Vectorish<0> implements Relative<Point>, DataType<TYPE.VECTOR> {
+export class Vector<
+    U extends Unit = Units.length,
+    D extends Divide<U, Units.time> = Divide<U, Units.time>,
+    I extends Multiply<U, Units.time> = Multiply<U, Units.time>
+>
+    extends Vectorish<U, 0>
+    implements
+        Relative,
+        Value<Vector<U, D, I>,U>,
+        DataType<TYPE.VECTOR>,
+        IPFunctionCalculus<Vector<U, D, I>, U, 0, D, I>
+{
     get type(): TYPE.VECTOR { return TYPE.VECTOR; }
 
-    constructor(x = 0, y = 0, z = 0) {
-        super(x, y, z, 0);
+    constructor(unit: U, x = 0, y = 0, z = 0, w: 0 = 0) {
+        super(unit, x, y, z, w);
     }
 
-    static coerce(v: Vector | vec4) {
-        if (isVector(v)) {
-            return v;
-        } else {
-            return new Vector(v[0], v[1], v[2])
-        }
+    get returnType() : TYPE.VECTOR { return TYPE.VECTOR; }
+
+    // @ts-ignore
+    derivative(): IPFunctionCalculus<Vector<D, Divide<D, Units.time>, U>, D, 1, Divide<D, Units.time>, U> {
+        type T = Divide<D, Units.time>;
+        const v = new Vector<D, T>(this.unit.divide(Units.time) as D);
+        return v as unknown as IPFunctionCalculus<Vector<D, T>, D, 1, T, U> ;
     }
+
+    // @ts-ignore
+    integral(): IndefiniteIntegral<Vector<U>, Multiply<Unit, Units.time>, Unit> {
+        return NYI();
+    }
+
+    simplify(options?: any): IPFunctionBase<Vector<U, D, I>, U, 0> {
+        return this as unknown as IPFunctionCalculus<Vector<U, D, I>, U, 0, D, I>;
+    }
+
+    toTex(varName?: Variable, ctx?: StyleContext): string {
+        return "";
+    }
+
+    toTexWithUnits(varName?: Variable, ctx?: StyleContext): string {
+        return "";
+    }
+
+    get name(): string { return 'V'; };
+    get nargs(): 0 { return 0; };
 }
 
 /**
  * Rotation or Orientation represented as a versor, aka a unit quaternion.
  */
-abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|TYPE.ORIENTATION> {
-    protected constructor(i = 0, j = 0, k = 0, w = 1) {
-        super();
+abstract class Rotationish<C extends Unit> extends ArrayBase<C> implements DataType<TYPE.ROTATION|TYPE.ORIENTATION> {
+    protected constructor(unit: C, i = 0, j = 0, k = 0, w = 1) {
+        super(unit);
         this[0] = i;
         this[1] = j;
         this[2] = k;
@@ -295,7 +447,8 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
      * on the versor surface. This corresponds to multiplication of the underlying quaternions.
      * @param a
      */
-    add(a: Rotationish): this {
+    add(a: Rotationish<C>): this {
+        checkUnits(this, a);
         return quat.multiply(
             this.create() as unknown as quat,
             this as unknown as quat,
@@ -303,11 +456,12 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         ) as unknown as this;
     }
 
-    abstract create(): Rotationish;
-    abstract clone(): Rotationish;
+    abstract create(): Rotationish<C>;
+    abstract clone(): Rotationish<C>;
 
     // noinspection JSUnusedGlobalSymbols
-    addf(a: Rotationish): this {
+    addf(a: Rotationish<C>): this {
+        checkUnits(this, a);
         return quat.multiply(
             this as unknown as quat,
             this as unknown as quat,
@@ -315,7 +469,8 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
         ) as unknown as this;
     }
 
-    sub(a: Rotationish): this {
+    sub(a: Rotationish<C>): this {
+        checkUnits(this, a);
         return quat.multiply(
             this.create() as unknown as quat,
             this as unknown as quat,
@@ -325,7 +480,8 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
     }
 
     // noinspection JSUnusedGlobalSymbols
-    subf(a: Rotationish): this {
+    subf(a: Rotationish<C>): this {
+        checkUnits(this, a);
         return quat.multiply(
             this as unknown as quat,
             this as unknown as quat,
@@ -374,12 +530,12 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
 
     // noinspection JSUnusedGlobalSymbols
     conjugate() {
-        const c = this.constructor as Constructor4N<Rotationish>;
-        return new c(-this[0], -this[1], -this[2], this[3]);
+        const c = this.constructor as Constructor4N<Rotationish<C>>;
+        return new c(this.unit, -this[0], -this[1], -this[2], this[3]);
     }
 
     // noinspection JSUnusedGlobalSymbols
-    rotate<T extends Rotationish>(b: T) {
+    rotate<T extends Rotationish<C>>(b: T) {
         const ax = this[0];
         const ay = this[1];
         const az = this[2];
@@ -400,10 +556,12 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
 
         const w = dw === 0 ? 1 : dw;
         let c = b.constructor as Constructor3N<T>;
-        return new c(dx/2, dy/w, dz/w);
+        return new c(this.unit,dx/2, dy/w, dz/w);
     }
 
-    static fromEulerX<T extends Rotationish>(f: (i:number, j: number, k: number, w: number) => T, x: number, y: number, z: number) {
+    static fromEulerX<U extends Unit, T extends Rotationish<U>>(
+        f: (i:number, j: number, k: number, w: number) => T,
+        x: number, y: number, z: number) {
         const sx = Math.sin(x);
         const cx = Math.cos(x);
         const sy = Math.sin(y);
@@ -422,15 +580,16 @@ abstract class Rotationish extends ArrayBase implements DataType<TYPE.ROTATION|T
 export type Positional = Point | Vector;
 export type Rotational = Orientation | Rotation;
 
-export class Orientation extends Rotationish
-    implements InFrame<Rotation>, DataType<TYPE.ORIENTATION>, ValueInFrame<Orientation, Units.angle> {
-
+export class Orientation
+    extends Rotationish<Units.angle>
+    implements
+        DataType<TYPE.ORIENTATION>,
+        ValueInFrame<Orientation, Units.angle>
+{
     readonly frame: InertialFrame;
-    get unit(): Units.angle { return Units.angle; };
-    get value(): Orientation { return this; };
 
     constructor(frame: InertialFrame, i = 0, j = 0, k = 0, w = 1) {
-        super(i, j, k, w);
+        super(Units.angle, i, j, k, w);
         this.frame = frame;
     }
     get type(): TYPE.ORIENTATION { return TYPE.ORIENTATION; }
@@ -444,7 +603,7 @@ export class Orientation extends Rotationish
         return new Orientation(frame) as this;
     }
 
-    static coerce(frame: InertialFrame, q: Rotationish | quat): Orientation {
+    static coerce<U extends Unit>(frame: InertialFrame, q: Rotationish<U> | quat): Orientation {
         if (isOrientation(q)) {
             return q;
         } else if (isRotation(q)) {
@@ -458,30 +617,30 @@ export class Orientation extends Rotationish
             new Orientation(frame, i, j, k, w);
         return Rotationish.fromEulerX(maker, x, y, z);
     }
+
+    toTex(varName: string | undefined, ctx: StyleContext | undefined): string {
+        return NYI('toTex');
+    }
 }
 
-export class Rotation extends Rotationish implements Relative<Orientation> {
-    constructor(i = 0, j = 0, k = 0, w = 1) {
-        super(i, j, k, w);
+export class Rotation<C extends Unit = Units.angle>
+    extends Rotationish<C>
+    implements Relative
+{
+    toTex(varName?: string | undefined, ctx?: StyleContext | undefined): string {
+        throw NYI('toTex');
+    }
+    constructor(unit: C, i = 0, j = 0, k = 0, w = 1) {
+        super(unit, i, j, k, w);
     }
     get type(): TYPE.ROTATION { return TYPE.ROTATION; }
 
-    static coerce(q: Rotationish | quat): Rotation {
-        if (isRotation(q)) {
-            return q;
-        } else if (isOrientation(q)) {
-            return new Rotation(q[0], q[1], q[2], q[3])
-        } else {
-            return new Rotation(q[0], q[1], q[2], q[3])
-        }
+    clone(): Rotation<C> {
+        return new Rotation(this.unit, this[0], this[1], this[2], this[3]);
     }
 
-    clone(): Rotation {
-        return new Rotation(this[0], this[1], this[2], this[3]);
-    }
-
-    create(): Rotation {
-        return new Rotation();
+    create(): Rotation<C> {
+        return new Rotation(this.unit);
     }
 
     /**
@@ -489,7 +648,8 @@ export class Rotation extends Rotationish implements Relative<Orientation> {
      * on the versor surface. This corresponds to multiplication of the underlying quaternions.
      * @param a
      */
-    add(a: Rotationish): this {
+    add(a: Rotationish<C>): this {
+        checkUnits(this, a);
         return quat.multiply(
             this.create() as unknown as quat,
             this as unknown as quat,
@@ -497,10 +657,10 @@ export class Rotation extends Rotationish implements Relative<Orientation> {
         ) as unknown as this;
     }
 
-    static fromEuler(x: number, y: number, z: number) {
+    static fromEuler<U extends Unit>(unit: U, x: number, y: number, z: number) {
         const maker = (i: number, j: number, k: number, w: number) =>
-            new Rotation(i, j, k, w);
-        return Rotationish.fromEulerX(maker, x, y, z);
+            new Rotation(unit, i, j, k, w);
+        return Rotationish.fromEulerX<U, Rotation<U>>(maker, x, y, z);
     }
 }
 
@@ -515,9 +675,7 @@ export const valueType = (v: any): TYPE =>
             ? v.returnType
             : isPCompiled(v)
                 ? v.pfunction.returnType
-                : v instanceof ExplicitValueBase
-                    ? valueType(v.value)
-                    : Throw(`Invalid value: ${v}`);
+                : Throw(`Invalid value: ${v}`);
 
 export const isPositional = (v: any): v is Positional => v instanceof Vectorish;
 export const isPoint = (v: any): v is Point => v instanceof Point;
@@ -528,22 +686,47 @@ export const isRotation = (v: any): v is Rotation => v instanceof Rotation;
 // noinspection JSUnusedGlobalSymbols
 export const isIntrinsicValue = (v: any): v is BaseValueInFrame => v instanceof Point || v instanceof Orientation;
 // noinspection JSUnusedGlobalSymbols
-export const isScalarValue = (v: any): v is ScalarValue => typeof v === 'number';
+export const isScalarValue = (v: any): v is ScalarValue<Unit> => typeof v === 'number';
 // noinspection JSUnusedGlobalSymbols
 export const isNonScalarValue = (v: any): v is NonScalarValue => isPositional(v) || isRotational(v);
 
-export const vector = (x: number = 0, y: number = 0, z: number = 0) =>
-    new Vector(x, y, z);
-export const point = (frame: InertialFrame,
-                      x: number = 0, y: number = 0, z: number = 0) =>
-    new Point(frame, x, y, z);
+export function vector<U extends Unit>(unit: U): (x?: number, y?: number, z?: number) => Vector<U>;
+export function vector<U extends Unit>(unit: U, x?: number, y?: number, z?: number): Vector<U>;
+export function vector<U extends Unit>(unit: U, x?: number, y?: number, z?: number) {
+    if (x === undefined) {
+        return (x?: number, y?: number, z?: number) => new Vector<U>(unit, x || 0, y || 0, z || 0);
+    }
+    return new Vector<U>(unit, x, y || 0, z || 0);
+}
+
+export function point<F extends InertialFrame>(frame: F): (x?: number, y?: number, z?: number) => Point;
+export function point<F extends InertialFrame>(frame: F, x?: number, y?: number, z?: number): Point;
+export function point<F extends InertialFrame>(frame: F, x?: number, y?: number, z?: number) {
+    if (x === undefined) {
+        return (x?: number, y?: number, z?: number) => new Point(frame, x || 0, y || 0, z || 0);
+    }
+    return new Point(frame, x, y || 0, z || 0);
+}
+
 // noinspection JSUnusedGlobalSymbols
-export const rotation = (i = 0, j = 0, k = 0, w = 1) =>
-    new Rotation(i, j, k, w);
+export function rotation<U extends Unit>(unit: U): (x?: number, y?: number, z?: number, w?: number) => Rotation<U>;
+export function rotation<U extends Unit>(unit: U, x?: number, y?: number, z?: number, w?: number): Rotation<U>;
+export function rotation<U extends Unit>(unit: U, x?: number, y?: number, z?: number, w?: number) {
+    if (x === undefined) {
+        return (x?: number, y?: number, z?: number, w?: number) => new Rotation<U>(unit, x || 0, y || 0, z || 0, w || 1);
+    }
+    return new Rotation<U>(unit, x, y || 0, z || 0, w || 0);
+}
+
 // noinspection JSUnusedGlobalSymbols
-export const orientation = (frame: InertialFrame,
-                            i = 0, j = 0, k = 0, w = 1) =>
-    new Orientation(frame, i, j, k, w);
+export function orientation<F extends InertialFrame>(frame: F): (x?: number, y?: number, z?: number, w?: number) => Orientation;
+export function orientation<F extends InertialFrame>(frame: F, x?: number, y?: number, z?: number, w?: number): Orientation;
+export function orientation<F extends InertialFrame>(frame: F, x?: number, y?: number, z?: number, w?: number) {
+    if (x === undefined) {
+        return (x?: number, y?: number, z?: number, w?: number) => new Orientation(frame, x || 0, y || 0, z || 0, w || 1);
+    }
+    return new Orientation(frame, x, y || 0, z || 0, w || 1);
+}
 
 export function isRelative(v: IPFunction): v is IPFunction<BaseValueRelative>;
 export function isRelative(v: IPCompiled): v is IPCompiled<BaseValueRelative>;
@@ -567,29 +750,6 @@ export function isRelative(v: any): boolean {
     if (isPCompiled(v)) return relType(v.pfunction);
     return false;
 }
-
-export function isIntrinsic(v: IPFunction): v is IPFunction<BaseValueInFrame>;
-export function isIntrinsic(v: IPCompiled): v is IPCompiled<BaseValueInFrame>;
-export function isIntrinsic(v: number): false;
-export function isIntrinsic(v: Positional): v is Point;
-export function isIntrinsic(v: Rotational): v is Orientation;
-export function isIntrinsic(v: BaseValue): v is BaseValueInFrame;
-export function isIntrinsic(v: any): boolean {
-    const relType = (v: any) => {
-        switch (v.returnType) {
-            case TYPE.ORIENTATION: return true;
-            case TYPE.POINT: return true;
-            default: return false;
-        }
-    };
-    if (typeof v === 'number') return false;
-    if (v instanceof Point) return true;
-    if (v instanceof Orientation) return true;
-    if (v instanceof PFunction) return relType(v);
-    if (isPCompiled(v)) return relType(v.pfunction);
-    return false;
-}
-
 
 export function isScalar(v: IPFunction): v is IPFunction<number>;
 export function isScalar(v: IPCompiled): v is IPCompiled<number>;

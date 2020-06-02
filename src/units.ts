@@ -654,5 +654,7 @@ export namespace TEST {
     export const parsePrefix_ = parsePrefix;
 }
 
+export const isUnit = (u: any): u is Unit => u instanceof DerivedUnit || u instanceof AliasUnit;
+
 defineTag(DerivedUnit, 'Unit');
 defineTag(AliasUnit, 'Unit');

@@ -12,9 +12,9 @@
 import {Poly} from "./poly";
 import {BaseValue, BaseValueInFrame, BaseValueRelative, isBaseValue, TYPE, valueType} from "./math-types";
 import {isPFunction, PCalculus} from "./pfunction";
-import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunction, IPFunctionBase, IPFunctionCalculus, Value} from "./base";
+import {IndefiniteIntegral, IPCompileResult, IPFunction, IPFunctionCalculus, Value, Variable} from "./base";
 import {AnalyticIntegral} from "./integral";
-import {Units as UX, Units} from "./unit-defs";
+import {Units} from "./unit-defs";
 import {Unit, Divide, Multiply} from "./units";
 import {DEFAULT_STYLE, StyleContext} from "./latex";
 import {defineTag, tex} from "./utils";
@@ -22,31 +22,10 @@ import {defineTag, tex} from "./utils";
 /**
  * Scalar constants
  */
-
-export interface IConstant<
-    R extends BaseValueRelative,
-    U extends Unit = Unit,
-    D extends Unit = Divide<U, UX.time>,
-    I extends Unit = Multiply<U, UX.time>
-    >
-    extends IPFunctionBase<R, U>,
-        IPCalculus<R, U, D, I>
-{
-
-}
-
-export interface IConstantInFrame<
-    R extends BaseValueInFrame,
-    U extends Unit = Unit
-    >
-    extends IPFunctionBase<R, U>
-{
-
-}
-
 export class ScalarConstant<C extends Unit = Unit>
     extends PCalculus<number, C, Divide<C, Units.time>, Multiply<C, Units.time>>
-    implements IConstant<number, C> {
+    implements Value<number, C>
+{
     readonly value: number;
     constructor(value: number, unit: C) {
         // noinspection JSUnusedLocalSymbols
@@ -59,11 +38,11 @@ export class ScalarConstant<C extends Unit = Unit>
         return () => value;
     }
 
-    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(varName: Variable = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         return ctx.number(this.value);
     }
 
-    toTexWithUnits(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTexWithUnits(varName: Variable = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         const value = this.toTex(varName, ctx);
         const unit = ctx.unit(this.unit);
         return tex`{{${value}}\ {${unit}}}`;
@@ -107,12 +86,12 @@ export class ScalarConstant<C extends Unit = Unit>
  * @param v A value, a PFunction, or a Value.
  * @param unit a Unit describing the type of constant.
  */
-export function constant<T extends BaseValueRelative, U extends Unit>(v: T | IPFunction<T, U> | Value<T, U> | IConstant<T, U>,
+export function constant<T extends BaseValueRelative, U extends Unit>(v: T | IPFunction<T, U> | Value<T, U>,
                                                                       unit: U)
-: IConstant<T,  U>;
-export function constant<T extends BaseValueInFrame, U extends Unit>(v: T | IPFunction<T, U> | Value<T, U> | IConstantInFrame<T, U>,
+: Value<T,  U>;
+export function constant<T extends BaseValueInFrame, U extends Unit>(v: T | IPFunction<T, U> | Value<T, U>,
                                                                      unit: U)
-: IConstantInFrame<T, U>;
+: Value<T, U>;
 export function constant<T extends BaseValue, U extends Unit>(v: BaseValue|IPFunction, unit: U)
     : any {
     if (isPFunction(v, unit, 1)) {
@@ -125,11 +104,11 @@ export function constant<T extends BaseValue, U extends Unit>(v: BaseValue|IPFun
             throw new Error('unit argument is required with BaseValues.');
         }
         switch (valueType(v)) {
-            case TYPE.SCALAR: return new ScalarConstant(v as number, unit) as unknown as IConstant<number, U>;
-            case TYPE.VECTOR: return v as unknown as IConstant<BaseValueRelative, U>;
-            case TYPE.ROTATION: return v as unknown as IConstant<BaseValueRelative, U>;
-            case TYPE.POINT: return v as unknown as IConstantInFrame<BaseValueInFrame, U>;
-            case TYPE.ORIENTATION: return v as unknown as IConstantInFrame<BaseValueInFrame, U>;
+            case TYPE.SCALAR: return new ScalarConstant(v as number, unit);
+            case TYPE.VECTOR: return v;
+            case TYPE.ROTATION: return v;
+            case TYPE.POINT: return v;
+            case TYPE.ORIENTATION: return v;
         }
         throw new Error(`Unknown value type ${valueType(v)}`);
     }

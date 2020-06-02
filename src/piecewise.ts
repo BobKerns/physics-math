@@ -15,7 +15,7 @@ import {PCalculus} from "./pfunction";
 import {BaseValueRelative, TYPE} from "./math-types";
 import {Divide, Multiply, Unit} from "./units";
 import {Units} from "./unit-defs";
-import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunctionCalculus, PFunctionDefaults} from "./base";
+import {IndefiniteIntegral, IPCalculus, IPCompileResult, IPFunctionCalculus, PFunctionDefaults, Variable} from "./base";
 import {ScalarConstant} from "./scalar";
 import {IndefiniteIntegralBase} from "./integral";
 import {gadd} from "./arith";
@@ -147,7 +147,7 @@ export class Piecewise<
         return this.type;
     }
 
-    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(varName?: Variable, ctx?: StyleContext): string {
         const cond = (min: number, max: number) => {
             const left = min === Number.NEGATIVE_INFINITY ? tex`{-\negthickspace\infty}<` : tex`{${min}}<`;
             const right = max === Number.POSITIVE_INFINITY ? tex`\le{\infty}` : tex`\le{${max}}`;
@@ -223,7 +223,7 @@ class PiecewiseIndefiniteIntegral<
         throw NYI(`Double Piecewise Integration`);
     }
 
-    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(varName?: Variable, ctx?: StyleContext): string {
         const cond = (min: number, max: number) => {
             const left = min === Number.NEGATIVE_INFINITY ? tex`{-\negthickspace\infty}<` : tex`{${min}}<`;
             const right = max === Number.POSITIVE_INFINITY ? tex`\le{\infty}` : tex`\le{${max}}`;

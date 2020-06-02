@@ -13,7 +13,7 @@
 
 import {BaseValueRelative, TYPE} from "./math-types";
 import {PCalculus, PFunction, TIMESTEP} from "./pfunction";
-import {DefiniteIntegral, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus, PFunctionDefaults} from "./base";
+import {DefiniteIntegral, IndefiniteIntegral, IPCompiled, IPCompileResult, IPFunction, IPFunctionCalculus, PFunctionDefaults, Variable} from "./base";
 import {sub} from "./arith";
 import {Unit, Divide, Multiply} from "./units";
 import {Units} from './unit-defs';
@@ -55,7 +55,7 @@ export class DefiniteIntegralImpl<
         return t => f(t0, t);
     }
 
-    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(varName: Variable = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         const inner = this.evaluating.integrand.toTex(varName, ctx);
         const variable = ctx.variable(varName);
         const from = ctx.number(this.from);
@@ -130,7 +130,7 @@ export abstract class IndefiniteIntegralBase<
         return this;
     }
 
-    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(varName: Variable = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         const inner = this.integrand.toTex(varName, ctx);
         const variable = ctx.variable(varName);
         return tex`\int{{(${inner})}\ \mathrm{d}${variable}}`;

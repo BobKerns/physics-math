@@ -13,7 +13,7 @@
 import {ScalarConstant} from "./scalar";
 import {PCalculus} from "./pfunction";
 import {TYPE} from "./math-types";
-import {IPCalculus, IPCompileResult, IPFunctionCalculus} from "./base";
+import {IPCalculus, IPCompileResult, IPFunctionCalculus, Variable} from "./base";
 import {AnalyticIntegral} from "./integral";
 import {Units} from './unit-defs';
 import {Unit, Divide, Multiply} from "./units";
@@ -73,7 +73,7 @@ export class Poly<
         return makePoly(...this.coefficients);
     }
 
-    toTex(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTex(varName: Variable = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
         return this.coefficients
             .map((v, i) =>
                 v === 0
@@ -93,7 +93,7 @@ export class Poly<
             || '0';
     }
 
-    toTexWithUnits(varName: string = 't', ctx: StyleContext = DEFAULT_STYLE.context): string {
+    toTexWithUnits(varName: Variable = 't', ctx: StyleContext= DEFAULT_STYLE.context): string {
         const val = this.toTex(varName, ctx)
         const nz = this.coefficients.filter(k => k !== 0).length;
         return nz > 1

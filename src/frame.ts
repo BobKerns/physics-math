@@ -11,7 +11,6 @@
  * @module Frame
  */
 
-import {constant, IConstant} from "./scalar";
 import {rotation, Rotation, vector, Vector} from "./math-types";
 import {Units} from "./unit-defs";
 import {defineTag, NYI} from "./utils";
@@ -32,8 +31,8 @@ export interface InertialFrame extends Frame {
 abstract class FrameImpl implements Frame {
     parent?: Frame;
     readonly name: string;
-    protected offset: IConstant<Vector, Units.length>
-    protected rotated: IConstant<Rotation, Units.angle>;
+    protected offset: Vector;
+    protected rotated: Rotation;
 
     isInertial(t: number | Time): boolean {
         return false;
@@ -44,8 +43,8 @@ abstract class FrameImpl implements Frame {
     }
 
     protected constructor(name: string, parent: Frame | undefined,
-                          offset: IConstant<Vector, Units.length>,
-                          rotated: IConstant<Rotation, Units.angle>) {
+                          offset: Vector,
+                          rotated: Rotation) {
         this.name = name;
         this.parent = parent;
         this.offset = offset;
@@ -59,8 +58,8 @@ export class InertialFrameImpl extends FrameImpl implements InertialFrame {
     }
 
     constructor(name: string, parent?: Frame,
-                offset: IConstant<Vector, Units.length> = constant(vector(), Units.length),
-                rotated: IConstant<Rotation, Units.angle> = constant(rotation(), Units.angle)) {
+                offset: Vector = vector(Units.length, 0, 0, 0),
+                rotated: Rotation = rotation(Units.angle, 0, 0, 0)) {
         super(name, parent, offset, rotated);
     }
 }
@@ -74,7 +73,9 @@ export class World {
     // noinspection JSUnusedGlobalSymbols
     createInertialFrame(offset: Vector, velocity: Velocity, angle: Rotation): InertialFrame {
         return new InertialFrameImpl('Initial', this.parentFrame,
-            constant(offset || vector(), Units.length), constant(angle || rotation(), Units.angle));
+            offset || vector(Units.length)(),
+            angle || rotation(Units.angle)()
+        );
     }
 }
 

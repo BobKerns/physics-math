@@ -31,7 +31,7 @@ export class GFunction extends PCalculus<number> {
     }
 
     differentiate(): IPFunctionCalculus<number> {
-        return new NumericDerivative(this, this.unit.divide(Units.time));
+        return new NumericDerivative(this, this, this.unit.divide(Units.time));
     }
 
     integrate(): IndefiniteIntegral<number> {

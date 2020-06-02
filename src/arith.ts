@@ -37,13 +37,17 @@ import {Poly} from "./poly";
 
 export function add<R extends BaseValueRelative>(a: R, ...rest: R[]): R;
 export function add<R extends BaseValueInFrame>(a: R, ...rest: RelativeOf<R>[]): R;
-export function add<R extends BaseValueRelative>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
+export function add<U extends Unit, R extends Vector<U>|Rotation<U>>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
 export function add<R extends BaseValueInFrame>(a: IPCompiled<R>, ...rest: IPCompiled<RelativeOf<R>>[]): IPCompiled<R>;
 export function add<R extends Point|Vector>(a: IPCompiled<R>, ...rest: IPCompiled<Vector>[]): IPCompiled<R>;
-export function add<R extends Orientation|Rotation>(a: IPCompiled<R>, ...rest: IPCompiled<Rotation>[]): IPCompiled<R>;
+export function add<U extends Unit, R extends Rotation<U>>(a: R, ...rest: R[]): R;
+export function add<R extends Orientation>(a: R, ...rest: Rotation<Units.angle>[]): R;
+export function add<U extends Unit, R extends Rotation<U>>(a: IPCompiled<R>, ...rest: IPCompiled<R>[]): IPCompiled<R>;
+export function add<R extends Orientation>(a: IPCompiled<R>, ...rest: IPCompiled<Rotation>[]): IPCompiled<R>;
 export function add<R extends number>(a: IPFunction<R>, ...rest: IPFunction<BaseValueRelative>[]): IPFunction<R>;
 export function add<R extends Point|Vector>(a: IPFunction<R>, ...rest: IPFunction<Vector>[]): IPFunction<R>;
-export function add<R extends Orientation|Rotation>(a: IPFunction<R>, ...rest: IPFunction<Rotation>[]): IPFunction<R>;
+export function add<U extends Unit, R extends Rotation<U>>(a: IPFunction<R>, ...rest: IPFunction<R>[]): IPFunction<R>;
+export function add<R extends Orientation>(a: IPFunction<R>, ...rest: IPFunction<Rotation>[]): IPFunction<R>;
 export function add(
     a: BaseValue|IPFunction|IPCompiled,
     ...rest: (BaseValueRelative|IPFunction|IPCompiled)[])
@@ -61,24 +65,19 @@ export function gadd(
         check(isScalarValue)(rest);
         return (rest as number[]).reduce((acc, v) => acc + v, a);
     } else if (isPositional(a)) {
-        check(isVector)(rest);
+        check(v => isVector(v) && a.unit === v.unit)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax += v[0], ay += v[1], az += v[2]));
         return a.clone().assign(ax, ay, az);
-    } else if (isVector(a)) {
-        check(isVector)(rest);
-        let [ax, ay, az] = a as unknown as number[];
-        (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
-        return new Vector(ax, ay, az);
     } else if (isRotational(a)) {
-        check(isRotation)(rest);
+        check(v => isRotation(v) && a.unit === v.unit)(rest);
         const acc = a.clone();
         for (const v of rest as Rotational[]) {
             acc.addf(v);
         }
         return acc;
     } else if (isPFunction(a)) {
-        check(isPFunction)(rest);
+        check(v => isPFunction(v) && a.unit === v.unit)(rest);
         if (a instanceof Poly) {
             const polys = [a, ...rest.filter(v => v instanceof Poly)] as unknown as Poly<Unit>[];
             if (polys.length > 1) {
@@ -96,7 +95,7 @@ export function gadd(
         }
         return (rest as IPFunction<Vector>[]).reduce((ra, v) => new PAdd(ra, v), a as IPFunction<Vector>);
     } else if (isPCompiled(a)) {
-        check(isPCompiled)(rest);
+        check(v => isPCompiled(v) && a.pfunction.unit === v.pfunction.unit)(rest);
         const pf = a.pfunction;
         const ri = rest as IPCompiled<Vector>[];
         const rpf = ri.map(v => v.pfunction);
@@ -148,6 +147,9 @@ export class PAdd<
     implements IPFunctionCalculus<R, C, 1, D, I> {
     constructor(a: IPFunctionCalculus<R, C, 1, D, I>, b: IPFunctionCalculus<R, C, 1, D, I>) {
         super(a, b);
+        if (a.unit !== b.unit) {
+            throw new Error(`Incompatible units: ${a.unit} vs ${b.unit}`);
+        }
     }
 
     differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, C> {
@@ -178,6 +180,9 @@ export class PSub<
 {
     constructor(a: IPFunctionCalculus<R, U, 1, D, I>, b: IPFunctionCalculus<R, U, 1, D, I>) {
         super(a, b);
+        if (a.unit !== b.unit) {
+            throw new Error(`Incompatible units: ${a.unit} vs ${b.unit}`);
+        }
     }
 
     differentiate(): IPFunctionCalculus<R, D, 1, Divide<D, Units.time>, U> {
@@ -233,24 +238,24 @@ export function gsub(
         check(isScalarValue)(rest);
         return (rest as number[]).reduce((acc, v) => acc - v, a);
     } else if (isPoint(a)) {
-        check(isVector)(rest);
+        check(v => isVector(v) && a.unit === v.unit)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
         return new Point(a.frame, ax, ay, az);
     } else if (isVector(a)) {
-        check(isVector)(rest);
+        check(v => isVector(v) && a.unit === v.unit)(rest);
         let [ax, ay, az] = a;
         (rest as Vector[]).forEach(v => (ax -= v[0], ay -= v[1], az -= v[2]));
-        return new Vector(ax, ay, az);
+        return new Vector(a.unit, ax, ay, az);
     } else if (isRotational(a)) {
-        check(isRotation)(rest);
+        check(v => isRotation(v) && a.unit === v.unit)(rest);
         const acc = a.clone();
         for (const v of rest) {
             acc.subf(v as Rotation);
         }
         return acc;
     } else if (isPFunction(a)) {
-        check(isPFunction)(rest);
+        check(v => isPFunction(v) && a.unit === v.unit)(rest);
         if (a instanceof Poly) {
             const polys = [a, ...rest.filter(v => v instanceof Poly)] as unknown as Poly<Unit>[];
             if (polys.length > 1) {
@@ -271,7 +276,7 @@ export function gsub(
             .reduce((ra, v) => new PSub(ra, v),
                 a as IPFunctionCalculus<Vector>);
     } else if (isPCompiled(a)) {
-        check(isPCompiled)(rest);
+        check(v => isPCompiled(v) && a.pfunction.unit === v.pfunction.unit)(rest);
         const pf = a.pfunction;
         const ri = rest as IPCompiled<Vector>[];
         const rpf = ri.map(v => v.pfunction);
@@ -321,19 +326,20 @@ export function mul(
 export function gmul(
     a: BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>,
     ...rest: (number|IPFunction<number>|IPCompiled<number>)[])
-    : BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>
+    : BaseValueRelative|IPFunction<BaseValueRelative>|IPCompiled<BaseValueRelative>|IPFunctionCalculus<BaseValueRelative>
 {
     const check = (pred: (v: any) => boolean) => (rest: any[]) => rest.forEach(v => pred(v) || Throw('Bad value in add'));
+    const isScalar = (u: Unit) => (v: any) => isScalarValue(v) || ((v instanceof ScalarConstant) && v.unit === u);
     if (typeof a === 'number') {
         check(isScalarValue)(rest);
         return (rest as number[]).reduce((acc, v) => acc * v, a);
     } else if (isVector(a)) {
-        check(isScalarValue)(rest);
+        check(isScalar(a.unit))(rest);
         let [ax, ay, az] = a;
         (rest as number[]).forEach(v => (ax *= v, ay *= v, az *= v));
-        return new Vector(ax, ay, az);
+        return new Vector(a.unit, ax, ay, az);
     } else if (isRotation(a)) {
-        check(isScalarValue)(rest);
+        check(isScalar(a.unit))(rest);
         const acc = a.clone();
         for (const v of rest as number[]) {
             acc.multf(v);
@@ -365,13 +371,13 @@ export function gmul(
                             : v as IPFunctionCalculus<number>),
                     a as unknown as PMul<number, Unit, any, any>);
         }
-        check(isPFunction)(rest);
+        check(v => isPFunction(v) && a.unit === v.unit)(rest);
         return (rest as unknown as (IPFunctionCalculus<number> | number)[])
             .reduce((ra, v) =>
                     new PMul(ra, typeof v === 'number'
                         ? new ScalarConstant(v, a.unit)
                         : v as IPFunctionCalculus<number>),
-                a as IPFunctionCalculus<Vector>);
+                a as IPFunctionCalculus<BaseValueRelative>);
     } else if (isPCompiled(a)) {
         check(isPCompiled)(rest);
         const pf = a.pfunction;
