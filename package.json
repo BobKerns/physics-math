@@ -8,7 +8,7 @@
   "jsdelivr": "lib/umd/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
-    "build:imports": "cd imports/typedoc-plugin-linkrewriter && npm run build",
+    "build:imports": "cd imports/typedoc-plugin-linkrewriter && npm install && npm run build",
     "prebuild:config": "tsc --project config/tsconfig.json",
     "build:config": "",
     "prebuild:devtools": "npm run build:config",
