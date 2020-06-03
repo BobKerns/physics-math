@@ -14,6 +14,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.0.3/styles/xcode.css" integrity="sha256-OI7B0pICACICPVbs30FdQ/l6qL8TnsfhyGAdg5m5NzQ=" crossorigin="anonymous">
 </head>
 <body><h1 id="changelog">ChangeLog</h1>
+<h2 id="version-0126">Version 0.1.26</h2>
+<p><em>date: 2020-06-02</em></p>
+<ul>
+<li>Vector, Point, Rotation, Orientation now satisfy IPFunction directly; only numbers need to be wrapped.</li>
+<li>This means they also now have units, which become required arguments for their construction, so constant(),
+vector(), point(), rotation(), and orientation() now require them.</li>
+<li>Arithmetic requires compatible units.</li>
+<li>The TypeScript typing for units got a bit simpler and a bit more reliable, but still fails on certain key inferences.</li>
+<li>LaTeX generation got a bit more consistent, and the setup git simpler.</li>
+<li>Implement link rewriting for typedoc-generated doc so it can link to non-TSDoc-generated documents.</li>
+<li>Change Piecewise.at to take tuples rather than alternating pairs.</li>
+<li>Fix Piecewise integration bug.</li>
+<li>Update ObservableHQ page for the changes.</li>
+</ul>
 <h2 id="version-0125">Version 0.1.25</h2>
 <p><em>date: 2020-05-30</em></p>
 <ul>
