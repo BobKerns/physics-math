@@ -1,4 +1,4 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@954
+// https://observablehq.com/@bobkerns/testing-physics-math@992
 import define1 from "./e93997d5089d7165@2264.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
 
@@ -13,11 +13,15 @@ Newton's Spherical Cow).
 Repo: https://github.com/BobKerns/physics-math.git \ 
 NPM: https://www.npmjs.com/package/@rwk/physics-math \ 
 Issues: https://github.com/BobKerns/physics-math/issues \ 
-Documentation: [on GitHub](https://bobkerns.github.io/physics-math/docs/v0.1.16/api/index.html) *
+Documentation: [on GitHub](https://bobkerns.github.io/physics-math/docs/v0.1.16/api/index.html) \ 
+ObservableHQ: [Home for this page](https://observablehq.com/@bobkerns/testing-physics-math). \ 
+Local Doc: https://localhost:5000/docs/local/ \ 
+Local ObservableHQ: [Read-only copy](http://localhost:5000/observablehq/testing-physics-math/index.html)
 
-  * Documentation before v0.1.16 requires checking out the repo and running a local server.
-
-The current version of this page probably corresponds to work not yet released, so expect errors when running against release versions.
+The current version of this page probably corresponds to work not yet released, so expect errors when running against release versions. This can be worked around via:
+~~~javascript
+  isVersion(semverRange)
+~~~
 `
 )});
   main.variable(observer("viewof VERSION_NAME")).define("viewof VERSION_NAME", ["releases_by_name","select","release_names"], async function(releases_by_name,select,release_names)
@@ -171,11 +175,15 @@ Fprime.tex
   main.variable(observer()).define(["PM","Units"], function(PM,Units){return(
 new PM.Poly(Units.length, Math.sqrt(2)).html
 )});
-  main.variable(observer("viewof PW")).define("viewof PW", ["PM","Units"], function(PM,Units)
+  main.variable(observer("viewof PW")).define("viewof PW", ["PM","Units","isVersion"], function(PM,Units,isVersion)
 {
   const PW = new PM.Piecewise(Units.length, PM.TYPE.SCALAR);
   PW.initial(0);
-  PW.at(1, 3, 2, (5 * Math.PI) / 2, 3, 0);
+  if (isVersion("<0.1.26")) {
+    PW.at(1, 3, 2, (5 * Math.PI) / 2, 3, 0);
+  } else {
+    PW.at([1, 3], [2, (5 * Math.PI) / 2], [3, 0]);
+  }
   return PW.html;
 }
 );
@@ -190,12 +198,20 @@ tex`{{\left.\begin{cases}0  &\text{\ if\ } &-\infty&<t\le&1\\3.000  &\text{\ if\
 PW.derivative().html
 )});
   main.variable(observer()).define(["PW"], function(PW){return(
+[-0.5, 0.5, 1.5, 2.5, 3.5].map(PW.derivative().f)
+)});
+  main.variable(observer()).define(["PW"], function(PW){return(
 PW.integral().html
 )});
   main.variable(observer()).define(["PW"], function(PW){return(
-PW.integral()
-  .from(0)
-  .f(2)
+[
+  PW.integral()
+    .from(0)
+    .f(2),
+  PW.integral()
+    .from(0)
+    .f(3)
+]
 )});
   main.variable(observer()).define(["PM","Units"], function(PM,Units){return(
 PM.INITIAL_STYLE.context.unit(Units.velocity)
@@ -223,7 +239,7 @@ md`## Appendix`
 await (await fetch(
   'https://api.github.com/repos/BobKerns/physics-math/releases'
 )).json())
-  .filter(e => e.published_at > '2020-05-19T12:39:22Z')
+  .filter(e => e.published_at >= '2020-05-29T18:25:38Z')
   .map(r =>
     Object.defineProperty(r, Symbol.toStringTag, {
       get: () => `Release_${r.tag_name}`
@@ -282,6 +298,12 @@ await import('https://unpkg.com/gl-matrix@3.3.0/esm/index.js?module')
   main.import("button", child1);
   const child2 = runtime.module(define2);
   main.import("callSite", child2);
+  main.variable(observer("semver")).define("semver", ["require"], function(require){return(
+require('https://bundle.run/semver@7.3.2')
+)});
+  main.variable(observer("isVersion")).define("isVersion", ["semver","VERSION"], function(semver,VERSION){return(
+range => semver.satisfies(semver.coerce(VERSION), range)
+)});
   main.variable(observer("NumberFormats")).define("NumberFormats", ["PM"], function(PM){return(
 Object.keys(PM.NumberFormat).filter(v => v.length > 1)
 )});
@@ -311,7 +333,21 @@ OSTYLE, new PM.Poly(PM.Units.length, 3783.99).html
 PM.INITIAL_STYLE.context.number(3783.99)
 )});
   main.variable(observer()).define(["PM"], function(PM){return(
-PM.INITIAL_STYLE.context.exponentStyle
+PM.INITIAL_STYLE.context.exponentStyle.number(3783.99)
+)});
+  main.variable(observer()).define(["md"], async function(md){return(
+md`## Release Documentation Links
+${(await (await fetch(
+  'https://api.github.com/repos/BobKerns/physics-math/releases'
+)).json())
+  .filter(e => e.published_at >= '2020-05-29T18:25:38Z')
+  .map(
+    r =>
+      `* [${r.name}](https://bobkerns.github.io/physics-math/docs/${
+        r.tag_name
+      }/index.html) ${r.prerelease ? ' (prerelease)' : ''}`
+  )
+  .join('\n')}`
 )});
   return main;
 }
