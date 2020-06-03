@@ -105,4 +105,17 @@ describe("calculus", () => {
                 expect(D.f(n))
                     .toBe(0)));
     });
+    describe('integeral', () => {
+        const D = PW_constants.integral();
+        test(`Integral constants`, () =>
+            [
+                [-0.5, 0.5, 0],
+                [0.5, 1.5, 3/2],
+                [1.5, 2.5, 3/2 + (5 * Math.PI)/4],
+                [2.5, 3.5, (5 * Math.PI)/4],
+                [3.5, 4.5, 0]
+            ].forEach(([l, u, v]) =>
+                expect(D.f(l, u))
+                    .toBeCloseTo(v, Number.EPSILON * 4)));
+    });
 });

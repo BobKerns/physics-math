@@ -193,18 +193,23 @@ class PiecewiseIndefiniteIntegral<
 
     protected compileFn(): IPCompileResult<R, 2> {
         return (t0, t) => {
+            const starts = this.start_times;
             let result: R|null = null;
+            let tx = t0;
             for (let i = 0; i < this.start_times.length; i++) {
-                let tx = t0;
-                if (this.start_times[i] <= t0) {
-                    const lim = (this.start_times[i + 1] === null) ? t : this.start_times[i + 1];
-                    if (result === null) {
-                        result = this.integrals[i].f(tx, lim)
-                    } else {
-                        result = gadd(result, this.integrals[i].f(tx, lim)) as R;
+                const lim = (this.start_times[i + 1] === undefined) ? t : this.start_times[i + 1];
+                if (starts[i] <= tx) {
+                    const l = Math.max(starts[i], tx);
+                    const u = Math.min(t, lim);
+                    if (tx < u) {
+                        if (result === null) {
+                            result = this.integrals[i].f(l, u);
+                        } else {
+                            result = gadd(result, this.integrals[i].f(tx, u)) as R;
+                        }
                     }
-                    tx = lim;
                 }
+                tx = Math.max(tx, lim);
             }
             return result!;
         };
