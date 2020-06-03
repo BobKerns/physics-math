@@ -10,6 +10,9 @@ _date: 2020-06-02_
 * The TypeScript typing for units got a bit simpler and a bit more reliable, but still fails on certain key inferences.
 * LaTeX generation got a bit more consistent, and the setup git simpler.
 * Implement link rewriting for typedoc-generated doc so it can link to non-TSDoc-generated documents.
+* Change Piecewise.at to take tuples rather than alternating pairs.
+* Fix Piecewise integration bug.
+* Update ObservableHQ page for the changes.
 
 ## Version 0.1.25
 _date: 2020-05-30_
