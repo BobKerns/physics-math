@@ -1,4 +1,4 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@1312
+// https://observablehq.com/@bobkerns/testing-physics-math@1317
 import define1 from "./e93997d5089d7165@2264.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
 
@@ -14,10 +14,10 @@ Repo: https://github.com/BobKerns/physics-math.git \
 ${TAG} tree: https://github.com/BobKerns/physics-math.git/tree/${TAG}/ \ 
 NPM: https://www.npmjs.com/package/@rwk/physics-math \ 
 Issues: https://github.com/BobKerns/physics-math/issues \ 
-Documentation: [on GitHub](https://bobkerns.github.io/physics-math/docs/${TAG}api/index.html) \ 
-ObservableHQ: [Home for this page](https://observablehq.com/@bobkerns/testing-physics-math). [Captured version](https://jsdelivr.com/package/npm/rwk/physics-math@{VERSION}/observablehq/testing-physics-math/) \ 
+Documentation: [on GitHub](https://bobkerns.github.io/physics-math/docs/${TAG}/api/index.html) \ 
+ObservableHQ: [Home for this page](https://observablehq.com/@bobkerns/testing-physics-math). [Captured version](https://bobkerns.github.io/physics-math/docs/${TAG}/observablehq/testing-physics-math/) \ 
 Local Doc: https://localhost:5000/docs/local/ \ 
-Local ObservableHQ: [Read-only copy](http://localhost:5000/observablehq/testing-physics-math/index.html)
+Local ObservableHQ: [Read-only copy](http://localhost:5000/docs/local/observablehq/testing-physics-math/)
 
 The current version of this page probably corresponds to work not yet released, so expect errors when running against release versions. This can be worked around via:
 ~~~javascript

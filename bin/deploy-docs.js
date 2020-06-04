@@ -142,6 +142,9 @@ const run = async () => {
     const source = path.join(ROOT, 'build', 'docs');
     const docs = path.join(DOCS, 'docs');
     const target = path.join(docs, tag);
+    const ohq = path.join(ROOT, 'observablehq');
+    const target_ohq = path.join(target, 'observablehq');
+
     process.stdout.write(`GITHUB_WORKSPACE: ${github}\n`);
     process.stdout.write(`ROOT: ${ROOT}\n`);
     process.stdout.write(`DOCS: ${DOCS}\n`);
@@ -150,6 +153,7 @@ const run = async () => {
     await mkdir(DOCS);
     await mkdir(docs);
     await mkdir(target);
+    await mkdir(target_ohq);
     await Promise.all([
         ['CHANGELOG.md', 'Change Log'],
         ['README.md', `Physics Math / Newton's Spherical Cow`],
@@ -180,6 +184,7 @@ ${release_body}`;
                 : Promise.resolve(null)));
     }
     await copyTree(source, target);
+    await copyTree(ohq, target_ohq);
     // Only check in as part of the packaging workflow.
     if (github) {
         await exec('git', 'config', 'user.email', '1154903+BobKerns@users.noreply.github.com');

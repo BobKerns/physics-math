@@ -27,10 +27,7 @@ build/
 node_modules
 /build
 /dist
-/docs/v*
-/docs/local
-/docs/index.html
-/docs/CHANGELOG.html
+/docs
 /lib
 /devtools/build
 /devtools/dist
