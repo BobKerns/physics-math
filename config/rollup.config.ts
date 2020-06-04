@@ -61,7 +61,7 @@ export const outputs = (p: Package) => flatMap((e: OutputOptions) => (e.file ? [
             name: 'PM',
             sourcemap: true,
             globals: {
-                "ramda": "ramda",
+                // "ramda": "ramda",
                 // "gl-matrix": "glMatrix"
             }
         },
@@ -132,7 +132,8 @@ const options: RollupOptions = {
         }),
         externalGlobals({
             'gl-matrix': "glMatrix",
-            'katex': 'katex'
+            'katex': 'katex',
+            'ramda': 'ramda'
         }),
         ...!dev ? [
             terser({
