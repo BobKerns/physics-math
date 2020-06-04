@@ -1,0 +1,1434 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Units | Physics Math</title>
+	<meta name="description" content="Documentation for Physics Math">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Physics Math</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="units.html">Units</a>
+				</li>
+			</ul>
+			<h1>Module Units</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Representation and manipulation of physical units.</p>
+					</div>
+					<p>These are based on SI, and in particular the
+						(Guide for the Use of the International System of Units (SI))<a href="https://physics.nist.gov/cuu/pdf/sp811.pdf" class="external">https://physics.nist.gov/cuu/pdf/sp811.pdf</a>(<a href="https://physics.nist.gov/cuu/pdf/sp811.pdf%5D">https://physics.nist.gov/cuu/pdf/sp811.pdf]</a>)
+						However, this does not try to be complete, and extends the set of base units somewhat
+						to aid clarity (for example, &#39;cycles/revolutions&#39;) while preserving semantics and standardized presentation.
+					Having units that map to SI &#39;1&#39; is not very helpful sometimes.</p>
+					<p>See the <a href="units.units-1.html">Units.Units</a> namespace for definitions of individual units.</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Namespaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="units.units-1.html" class="tsd-kind-icon">Units</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/units.primitive.html" class="tsd-kind-icon">Primitive</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="../classes/units.derivedunit.html" class="tsd-kind-icon">Derived<wbr>Unit</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-is-not-exported"><a href="../classes/units.prefix.html" class="tsd-kind-icon">Prefix</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="../classes/units.primitiveunit.html" class="tsd-kind-icon">Primitive<wbr>Unit</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/units.unitbase.html" class="tsd-kind-icon">Unit<wbr>Base</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/units.aliasattributes.html" class="tsd-kind-icon">Alias<wbr>Attributes</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/units.iunitbase.html" class="tsd-kind-icon">IUnit<wbr>Base</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/units.primitivesi.html" class="tsd-kind-icon">PrimitiveSI</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/units.primitiveunitattributes.html" class="tsd-kind-icon">Primitive<wbr>Unit<wbr>Attributes</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/units.si.html" class="tsd-kind-icon">SI</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/units.unit.html" class="tsd-kind-icon">Unit</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/units.unitattributes.html" class="tsd-kind-icon">Unit<wbr>Attributes</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="units.html#add" class="tsd-kind-icon">Add</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#completeterms" class="tsd-kind-icon">Complete<wbr>Terms</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#divide" class="tsd-kind-icon">Divide</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#divideterms" class="tsd-kind-icon">Divide<wbr>Terms</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#exponent" class="tsd-kind-icon">Exponent</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#invertterms" class="tsd-kind-icon">Invert<wbr>Terms</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="units.html#m" class="tsd-kind-icon">M</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#multiply" class="tsd-kind-icon">Multiply</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#multiplyterms" class="tsd-kind-icon">Multiply<wbr>Terms</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="units.html#negate" class="tsd-kind-icon">Negate</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="units.html#orzero" class="tsd-kind-icon">Or<wbr>Zero</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#punitterms" class="tsd-kind-icon">PUnit<wbr>Terms</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#prefixexponent" class="tsd-kind-icon">Prefix<wbr>Exponent</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#prefixname" class="tsd-kind-icon">Prefix<wbr>Name</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#prefixsymbol" class="tsd-kind-icon">Prefix<wbr>Symbol</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#primitivemap" class="tsd-kind-icon">Primitive<wbr>Map</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="units.html#sub" class="tsd-kind-icon">Sub</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#termsofunit" class="tsd-kind-icon">Terms<wbr>OfUnit</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#termsofunitbase" class="tsd-kind-icon">Terms<wbr>OfUnit<wbr>Base</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="units.html#unitterms" class="tsd-kind-icon">Unit<wbr>Terms</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#xadd" class="tsd-kind-icon">XADD</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#xnegate" class="tsd-kind-icon">XNEGATE</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#xsub" class="tsd-kind-icon">XSUB</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#aliases" class="tsd-kind-icon">ALIASES</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#named_units" class="tsd-kind-icon">NAMED_<wbr>UNITS</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#order" class="tsd-kind-icon">ORDER</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#prefixes" class="tsd-kind-icon">PREFIXES</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="units.html#primitive_map" class="tsd-kind-icon">PRIMITIVE_<wbr>MAP</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_identifier" class="tsd-kind-icon">RE_<wbr>identifier</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_name" class="tsd-kind-icon">RE_<wbr>name</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_prefix_name" class="tsd-kind-icon">RE_<wbr>prefix_<wbr>name</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_prefix_name_concat" class="tsd-kind-icon">RE_<wbr>prefix_<wbr>name_<wbr>concat</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_prefix_symbol" class="tsd-kind-icon">RE_<wbr>prefix_<wbr>symbol</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_symbol" class="tsd-kind-icon">RE_<wbr>symbol</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_whitespace" class="tsd-kind-icon">RE_<wbr>whitespace</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#re_whitespace_sep" class="tsd-kind-icon">RE_<wbr>whitespace_<wbr>sep</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#symbol_aliases" class="tsd-kind-icon">SYMBOL_<wbr>ALIASES</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#symbol_units" class="tsd-kind-icon">SYMBOL_<wbr>UNITS</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="units.html#tex" class="tsd-kind-icon">TeX</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#units-2" class="tsd-kind-icon">UNITS</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="units.html#primitivekeys" class="tsd-kind-icon">primitive<wbr>Keys</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#definealias" class="tsd-kind-icon">define<wbr>Alias</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="units.html#defineunit" class="tsd-kind-icon">define<wbr>Unit</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="units.html#getunit" class="tsd-kind-icon">get<wbr>Unit</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="units.html#isunit" class="tsd-kind-icon">is<wbr>Unit</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="units.html#makelookupkey" class="tsd-kind-icon">make<wbr>Lookup<wbr>Key</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="units.html#orderunits" class="tsd-kind-icon">order<wbr>Units</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="units.html#parseprefix" class="tsd-kind-icon">parse<wbr>Prefix</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+					<a name="add" class="tsd-anchor"></a>
+					<h3>Add</h3>
+					<div class="tsd-signature tsd-kind-icon">Add&lt;A, B&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">XADD</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">XSUB</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">XSUB</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">XADD</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L56">src/units.ts:56</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+						<li>
+							<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="completeterms" class="tsd-anchor"></a>
+					<h3>Complete<wbr>Terms</h3>
+					<div class="tsd-signature tsd-kind-icon">Complete<wbr>Terms&lt;A&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L134">src/units.ts:134</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Take a partial set of <a href="units.html#unitterms">UnitTerms</a>, and fills in the missing exponents with 0.</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="divide" class="tsd-anchor"></a>
+					<h3>Divide</h3>
+					<div class="tsd-signature tsd-kind-icon">Divide&lt;A, B&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TA<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TB<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DivideTerms</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TA</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TB</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L122">src/units.ts:122</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Divide two <a href="../interfaces/units.unit.html">Unit</a> types, A/B (by subtracting the exponents).</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a></h4>
+						</li>
+						<li>
+							<h4>B<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="divideterms" class="tsd-anchor"></a>
+					<h3>Divide<wbr>Terms</h3>
+					<div class="tsd-signature tsd-kind-icon">Divide<wbr>Terms&lt;A, B&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L105">src/units.ts:105</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Divide two <a href="units.html#unitterms">UnitTerms</a>, A/B</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+						</li>
+						<li>
+							<h4>B<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="exponent" class="tsd-anchor"></a>
+					<h3>Exponent</h3>
+					<div class="tsd-signature tsd-kind-icon">Exponent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L79">src/primitive-units.ts:79</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Our supported exponents. A finite list of exponents allows TypeScript to
+							automatically type exponents as numeric literal types.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="invertterms" class="tsd-anchor"></a>
+					<h3>Invert<wbr>Terms</h3>
+					<div class="tsd-signature tsd-kind-icon">Invert<wbr>Terms&lt;A&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L99">src/units.ts:99</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Invert a <a href="units.html#unitterms">UnitTerms</a> (by negating the exponents).</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+					<a name="m" class="tsd-anchor"></a>
+					<h3>M</h3>
+					<div class="tsd-signature tsd-kind-icon">M&lt;K, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L52">src/units.ts:52</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+						<li>
+							<h4>V<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="multiply" class="tsd-anchor"></a>
+					<h3>Multiply</h3>
+					<div class="tsd-signature tsd-kind-icon">Multiply&lt;A, B&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">IUnitBase</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TA<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">IUnitBase</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TB<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MultiplyTerms</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TA</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TB</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L111">src/units.ts:111</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Multiply two <a href="../interfaces/units.unit.html">Unit</a> types (by adding the exponents).</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a></h4>
+						</li>
+						<li>
+							<h4>B<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="multiplyterms" class="tsd-anchor"></a>
+					<h3>Multiply<wbr>Terms</h3>
+					<div class="tsd-signature tsd-kind-icon">Multiply<wbr>Terms&lt;A, B&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L91">src/units.ts:91</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Multiply two <a href="units.html#unitterms">UnitTerms</a> (by adding the exponents.)</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+						</li>
+						<li>
+							<h4>B<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+					<a name="negate" class="tsd-anchor"></a>
+					<h3>Negate</h3>
+					<div class="tsd-signature tsd-kind-icon">Negate&lt;A&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">XNEGATE</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L55">src/units.ts:55</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+					<a name="orzero" class="tsd-anchor"></a>
+					<h3>Or<wbr>Zero</h3>
+					<div class="tsd-signature tsd-kind-icon">Or<wbr>Zero&lt;A&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">0</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L85">src/units.ts:85</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If not a number (e.g. undefined), the 0 type literal.</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="punitterms" class="tsd-anchor"></a>
+					<h3>PUnit<wbr>Terms</h3>
+					<div class="tsd-signature tsd-kind-icon">PUnit<wbr>Terms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L83">src/primitive-units.ts:83</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object of primitive UNIT: Exponent pairs that uniquely describes each type.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="prefixexponent" class="tsd-anchor"></a>
+					<h3>Prefix<wbr>Exponent</h3>
+					<div class="tsd-signature tsd-kind-icon">Prefix<wbr>Exponent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">24</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-24</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L499">src/units.ts:499</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="prefixname" class="tsd-anchor"></a>
+					<h3>Prefix<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">Prefix<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"yotta"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"zetta"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"exa"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"peta"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"tera"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"giga"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"mega"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"kilo"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hecto"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"deka"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"deci"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"centi"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"milli"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"micro"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"nano"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pico"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"fempto"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"atto"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"zepto"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"yocto"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L500">src/units.ts:500</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="prefixsymbol" class="tsd-anchor"></a>
+					<h3>Prefix<wbr>Symbol</h3>
+					<div class="tsd-signature tsd-kind-icon">Prefix<wbr>Symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Y"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Z"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"E"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"P"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"T"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"G"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"M"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"k"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"h"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"da"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"d"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"c"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"m"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"μ"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"u"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"n"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"p"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"f"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"a"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"z"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"y"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L498">src/units.ts:498</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="primitivemap" class="tsd-anchor"></a>
+					<h3>Primitive<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">Primitive<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L253">src/primitive-units.ts:253</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type of our <a href="units.html#primitive_map">PRIMITIVE_MAP</a> map. This provides one key/value entry for each primitive,
+							indexed by the UNIT enum.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+					<a name="sub" class="tsd-anchor"></a>
+					<h3>Sub</h3>
+					<div class="tsd-signature tsd-kind-icon">Sub&lt;A, B&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">XSUB</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">XADD</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">XADD</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">XSUB</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">B</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Negate</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L63">src/units.ts:63</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+						<li>
+							<h4>B<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="termsofunit" class="tsd-anchor"></a>
+					<h3>Terms<wbr>OfUnit</h3>
+					<div class="tsd-signature tsd-kind-icon">Terms<wbr>OfUnit&lt;U&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">U</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> T<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">CompleteTerms</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L148">src/units.ts:148</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>U<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="termsofunitbase" class="tsd-anchor"></a>
+					<h3>Terms<wbr>OfUnit<wbr>Base</h3>
+					<div class="tsd-signature tsd-kind-icon">Terms<wbr>OfUnit<wbr>Base&lt;U&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">U</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">IUnitBase</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> T<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L146">src/units.ts:146</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>U<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="unitterms" class="tsd-anchor"></a>
+					<h3>Unit<wbr>Terms</h3>
+					<div class="tsd-signature tsd-kind-icon">Unit<wbr>Terms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L78">src/units.ts:78</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object with keys being the name of <a href="../enums/units.primitive.html">Primitive</a> types and the values being exponents.
+							All values are required; supply zero for values not supplied.</p>
+						</div>
+						<p>See <a href="units.html#punitterms">PUnitTerms</a> for a partial set where types can be left undefined.</p>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+					<a name="xadd" class="tsd-anchor"></a>
+					<h3>XADD</h3>
+					<div class="tsd-signature tsd-kind-icon">XADD<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L23">src/units.ts:23</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For addition of positive numbers, we let 9 stand for all larger numbers.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+					<a name="xnegate" class="tsd-anchor"></a>
+					<h3>XNEGATE</h3>
+					<div class="tsd-signature tsd-kind-icon">XNEGATE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="units.html#m" class="tsd-signature-type">M</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L53">src/units.ts:53</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+					<a name="xsub" class="tsd-anchor"></a>
+					<h3>XSUB</h3>
+					<div class="tsd-signature tsd-kind-icon">XSUB<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-5</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-6</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-7</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-8</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-9</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L38">src/units.ts:38</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For subtraction of positive numbers, we have to allow for 9 standing in for larger numbers.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="aliases" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> ALIASES</h3>
+					<div class="tsd-signature tsd-kind-icon">ALIASES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L459">src/units.ts:459</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Our defined aliases.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>k: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Alias</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="named_units" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> NAMED_<wbr>UNITS</h3>
+					<div class="tsd-signature tsd-kind-icon">NAMED_<wbr>UNITS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L240">src/units.ts:240</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map from name to the Unit representing that unit.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="order" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> ORDER</h3>
+					<div class="tsd-signature tsd-kind-icon">ORDER<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = (i &#x3D;&gt; {return {mass: i++,length: i++,angle: i++,solidAngle: i++,cycles: i++,amount: i++,current: i++,temperature: i++,time: i++,candela: i++};})(0)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L44">src/primitive-units.ts:44</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A total order on units, for canonical display and key generation.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="prefixes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> PREFIXES</h3>
+					<div class="tsd-signature tsd-kind-icon">PREFIXES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = ((t: {[K in PrefixSymbol]: [PrefixExponent, PrefixName, string?]} &#x3D; {Y: [24, &#x27;yotta&#x27;],Z: [21, &#x27;zetta&#x27;],E: [18, &#x27;exa&#x27;],P: [15, &#x27;peta&#x27;],T: [12, &#x27;tera&#x27;],G: [9, &#x27;giga&#x27;],M: [6, &#x27;mega&#x27;],k: [3, &#x27;kilo&#x27;],h: [2, &#x27;hecto&#x27;],da: [1, &#x27;deka&#x27;],d: [-1, &#x27;deci&#x27;],c: [-2, &#x27;centi&#x27;],m: [-3, &#x27;milli&#x27;],μ: [-6, &#x27;micro&#x27;, TeX&#x60;\mu&#x60;],u: [-6, &#x27;micro&#x27;, TeX&#x60;\mu&#x60;], // Alternative for typing-impaired.n: [-9, &#x27;nano&#x27;],p: [-12, &#x27;pico&#x27;],f: [-15, &#x27;fempto&#x27;],a: [-18, &#x27;atto&#x27;],z: [-21, &#x27;zepto&#x27;],y: [-24, &#x27;yocto&#x27;]}) &#x3D;&gt; {const pt: any &#x3D; {};Object.keys(t).forEach(k &#x3D;&gt; {const kk &#x3D; k &#x3D;&#x3D;&#x3D; &#x27;u&#x27; ? &#x27;μ&#x27; : k;const a &#x3D; t[kk as PrefixSymbol] as [PrefixExponent, PrefixName, string?];const p &#x3D; new Prefix(kk as PrefixSymbol, ...a)pt[k] &#x3D; p;pt[p.exponent] &#x3D; p;pt[p.name] &#x3D; p;});return pt as {[K in PrefixSymbol|PrefixName|PrefixExponent]: Prefix};})()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L517">src/units.ts:517</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="primitive_map" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> PRIMITIVE_<wbr>MAP</h3>
+					<div class="tsd-signature tsd-kind-icon">PRIMITIVE_<wbr>MAP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="units.html#primitivemap" class="tsd-signature-type">PrimitiveMap</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = (() &#x3D;&gt; {const val: PrimitiveMap &#x3D; {} as PrimitiveMap;const defPrimitive &#x3D; (u: Primitive, name: string, symbol: string, varName?: string,attributes: UnitAttributes &#x3D; {}) &#x3D;&gt; {const primitive &#x3D; new PrimitiveUnit(u, name, symbol, varName, attributes);(val as any)[u] &#x3D; primitive;primitive.names.push(u);return primitive;}defPrimitive(Primitive.time, &#x27;second&#x27;, &#x27;s&#x27;, &#x27;t&#x27;, {si_base: true});defPrimitive(Primitive.mass, &#x27;kilogram&#x27;, &#x27;kg&#x27;, &#x27;m&#x27;,{si_base: true, scale: 1000});defPrimitive(Primitive.length, &#x27;meter&#x27;, &#x27;m&#x27;, &#x27;l&#x27;, {si_base: true});defPrimitive(Primitive.amount, &#x27;mole&#x27;, &#x27;mol&#x27;, &#x27;n&#x27;, {si_base: true});defPrimitive(Primitive.cycles, &#x27;cycle&#x27;, &#x27;cycle&#x27;, &#x27;c&#x27;);defPrimitive(Primitive.angle, &#x27;radian&#x27;, &#x27;rad&#x27;, &#x27;𝜃&#x27;);defPrimitive(Primitive.solidAngle, &#x27;steridian&#x27;, &#x27;sr&#x27;, undefined);defPrimitive(Primitive.current, &#x27;ampere&#x27;, &#x27;A&#x27;, &#x27;A&#x27;, {si_base: true});defPrimitive(Primitive.temperature, &#x27;kelvin&#x27;, &#x27;K&#x27;, &#x27;T&#x27;,{absolute: true, si_base: true});defPrimitive(Primitive.candela, &#x27;candela&#x27;, &#x27;cd&#x27;, &#x27;c&#x27;, {si_base: true})return val as PrimitiveMap;})()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L259">src/primitive-units.ts:259</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map from primitive name to its Unit instance.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_identifier" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>identifier</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /[\p{L}\p{Pc}\p{Pd}\p{S}][\p{L}\p{Pc}\p{Pd}\p{S}\p{N}]*/u</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L554">src/units.ts:554</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>name</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = new RegExp(&#x60;(${RE_prefix_name.source})?(${RE_identifier.source})&#x60;, &#x27;u&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L558">src/units.ts:558</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_prefix_name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>prefix_<wbr>name</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>prefix_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /yotta|zetta|exa|peta|tera|giga|mega|kilo|hecto|deka|deci|centi|milli|micro|nano|pico|fempto|atto|zepto|yocto/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L552">src/units.ts:552</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_prefix_name_concat" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>prefix_<wbr>name_<wbr>concat</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>prefix_<wbr>name_<wbr>concat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = new RegExp(&#x60;(${RE_prefix_name.source})${RE_whitespace_sep.source}(${RE_identifier.source})&#x60;, &#x27;ug&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L557">src/units.ts:557</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_prefix_symbol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>prefix_<wbr>symbol</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>prefix_<wbr>symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /Y|Z|E|P|T|G|M|k|h|da|d|c|m|μ|u|n|p|f|a|z|y/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L553">src/units.ts:553</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_symbol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>symbol</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = new RegExp(&#x60;(${RE_prefix_symbol.source})?(${RE_identifier.source})&#x60;, &#x27;u&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L559">src/units.ts:559</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_whitespace" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>whitespace</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>whitespace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /[\p{Z}\p{C}\p{M}]+/u</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L555">src/units.ts:555</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="re_whitespace_sep" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> RE_<wbr>whitespace_<wbr>sep</h3>
+					<div class="tsd-signature tsd-kind-icon">RE_<wbr>whitespace_<wbr>sep<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /[\p{Z}\p{C}\p{M}\p{Pd}]+/u</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L556">src/units.ts:556</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="symbol_aliases" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> SYMBOL_<wbr>ALIASES</h3>
+					<div class="tsd-signature tsd-kind-icon">SYMBOL_<wbr>ALIASES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L461">src/units.ts:461</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>k: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Alias</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="symbol_units" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> SYMBOL_<wbr>UNITS</h3>
+					<div class="tsd-signature tsd-kind-icon">SYMBOL_<wbr>UNITS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L245">src/units.ts:245</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map from symbol for a Unit representing that unit.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="tex" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> TeX</h3>
+					<div class="tsd-signature tsd-kind-icon">TeX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">raw</span><span class="tsd-signature-symbol"> = String.raw</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L21">src/primitive-units.ts:21</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>String literal parser for LaTeX literals (avoids the need for quoting backslash).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="units-2" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> UNITS</h3>
+					<div class="tsd-signature tsd-kind-icon">UNITS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L233">src/units.ts:233</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map from unit key&#39;s string representation to the Unit instance.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>k: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="primitivekeys" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> primitive<wbr>Keys</h3>
+					<div class="tsd-signature tsd-kind-icon">primitive<wbr>Keys<span class="tsd-signature-symbol">:</span> <a href="../enums/units.primitive.html" class="tsd-signature-type">Primitive</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = Object.keys(Primitive) as Primitive[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L39">src/primitive-units.ts:39</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="definealias" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> define<wbr>Alias</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">define<wbr>Alias&lt;T&gt;<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, symbol<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, attributes<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.aliasattributes.html" class="tsd-signature-type">AliasAttributes</a>, si<span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, scale<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, offset<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, <span class="tsd-signature-symbol">...</span>names<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Alias</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L475">src/units.ts:475</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Define a unit alias, which can convert to/from a corresponding standard unprefixed SI unit.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="units.html#unitterms" class="tsd-signature-type">UnitTerms</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>symbol: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+								</li>
+								<li>
+									<h5>attributes: <a href="../interfaces/units.aliasattributes.html" class="tsd-signature-type">AliasAttributes</a></h5>
+								</li>
+								<li>
+									<h5>si: <a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>scale: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> offset: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>names: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Alias</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="defineunit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> define<wbr>Unit</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">define<wbr>Unit&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, attributes<span class="tsd-signature-symbol">?: </span><a href="../interfaces/units.unitattributes.html" class="tsd-signature-type">UnitAttributes</a>, <span class="tsd-signature-symbol">...</span>names<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><a href="units.html#completeterms" class="tsd-signature-type">CompleteTerms</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L353">src/units.ts:353</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Define a derived type.</p>
+								</div>
+								<p>The numbers in the keys are exponents for primitive types. They are taken as type literals,</p>
+								<p>This ensures, for example, that the types of U.velocity and U.acceleration are distinct.</p>
+								<pre><code class="language-javascript"><span class="hljs-keyword">const</span> U.velocity     = defineUnit({<span class="hljs-attr">distance</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">time</span>: <span class="hljs-number">-1</span>});
+<span class="hljs-keyword">const</span> U.acceleration = defineUnit({<span class="hljs-attr">distance</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">time</span>: <span class="hljs-number">-2</span>});</code></pre>
+								<p>Results in types of:</p>
+								<pre><code>type U.velocity     = Unit&lt;{distance: 1, time: -1}&gt;<span class="hljs-built_in">
+type </span>U.acceleration = Unit&lt;{distance: 1, time: -2}&gt;</code></pre>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The key defining the type composition</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> attributes: <a href="../interfaces/units.unitattributes.html" class="tsd-signature-type">UnitAttributes</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Additional attributes describing the type.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>names: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Additional names to use for this type, e.g. newton.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><a href="units.html#completeterms" class="tsd-signature-type">CompleteTerms</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getunit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Unit</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Unit<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, siOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L619">src/units.ts:619</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a unit by name.</p>
+								</div>
+								<p>To process a # + unit into standard unprefixed SI, do:</p>
+								<pre><code class="language-javascript"><span class="hljs-keyword">const</span> [siVal, siUnit] = getUnit(unitName).toSI(val);</code></pre>
+								<p>To just get the standard SI unit, do:</p>
+								<pre><code class="language-javascript"><span class="hljs-keyword">const</span> siUnit = getUnit(unitName).si;</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> siOnly: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>if true, only unscaled SI units are returned.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="isunit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> is<wbr>Unit</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Unit<span class="tsd-signature-symbol">(</span>u<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">u</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">Unit</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L670">src/units.ts:670</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>u: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">u</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">Unit</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="makelookupkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> make<wbr>Lookup<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">make<wbr>Lookup<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L138">src/primitive-units.ts:138</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Turn the structured UnitTerms key into a string to do the lookup for unique types.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <a href="units.html#punitterms" class="tsd-signature-type">PUnitTerms</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="orderunits" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> order<wbr>Units</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">order<wbr>Units<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><a href="../enums/units.primitive.html" class="tsd-signature-type">Primitive</a>, b<span class="tsd-signature-symbol">: </span><a href="../enums/units.primitive.html" class="tsd-signature-type">Primitive</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/primitive-units.ts#L65">src/primitive-units.ts:65</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Comparison predicate for primitive units to allow sorting them into a
+									canonical total order.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>a: <a href="../enums/units.primitive.html" class="tsd-signature-type">Primitive</a></h5>
+								</li>
+								<li>
+									<h5>b: <a href="../enums/units.primitive.html" class="tsd-signature-type">Primitive</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="parseprefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> parse<wbr>Prefix</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Prefix<span class="tsd-signature-symbol">(</span>u<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, siOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/c59f8f7/src/units.ts#L566">src/units.ts:566</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Parse a prefixed expression into a suitable Alias. Returns null if not found.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>u: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> siOnly: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>true if only non-aliases should be considered.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/units.unit.html" class="tsd-signature-type">Unit</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="frame.html">Frame</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="functionals.html">Functionals</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="index.html">Index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="latex.html">La<wbr>TeX</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="units.html">Units</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="utils.html">Utils</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/units.primitive.html" class="tsd-kind-icon">Primitive</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../classes/units.derivedunit.html" class="tsd-kind-icon">Derived<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../classes/units.prefix.html" class="tsd-kind-icon">Prefix</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../classes/units.primitiveunit.html" class="tsd-kind-icon">Primitive<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/units.unitbase.html" class="tsd-kind-icon">Unit<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/units.aliasattributes.html" class="tsd-kind-icon">Alias<wbr>Attributes</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/units.iunitbase.html" class="tsd-kind-icon">IUnit<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/units.primitivesi.html" class="tsd-kind-icon">PrimitiveSI</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/units.primitiveunitattributes.html" class="tsd-kind-icon">Primitive<wbr>Unit<wbr>Attributes</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/units.si.html" class="tsd-kind-icon">SI</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/units.unit.html" class="tsd-kind-icon">Unit</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/units.unitattributes.html" class="tsd-kind-icon">Unit<wbr>Attributes</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="units.html#add" class="tsd-kind-icon">Add</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#completeterms" class="tsd-kind-icon">Complete<wbr>Terms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#divide" class="tsd-kind-icon">Divide</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#divideterms" class="tsd-kind-icon">Divide<wbr>Terms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#exponent" class="tsd-kind-icon">Exponent</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#invertterms" class="tsd-kind-icon">Invert<wbr>Terms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="units.html#m" class="tsd-kind-icon">M</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#multiply" class="tsd-kind-icon">Multiply</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#multiplyterms" class="tsd-kind-icon">Multiply<wbr>Terms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="units.html#negate" class="tsd-kind-icon">Negate</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="units.html#orzero" class="tsd-kind-icon">Or<wbr>Zero</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#punitterms" class="tsd-kind-icon">PUnit<wbr>Terms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#prefixexponent" class="tsd-kind-icon">Prefix<wbr>Exponent</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#prefixname" class="tsd-kind-icon">Prefix<wbr>Name</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#prefixsymbol" class="tsd-kind-icon">Prefix<wbr>Symbol</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#primitivemap" class="tsd-kind-icon">Primitive<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="units.html#sub" class="tsd-kind-icon">Sub</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#termsofunit" class="tsd-kind-icon">Terms<wbr>OfUnit</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#termsofunitbase" class="tsd-kind-icon">Terms<wbr>OfUnit<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="units.html#unitterms" class="tsd-kind-icon">Unit<wbr>Terms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#xadd" class="tsd-kind-icon">XADD</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#xnegate" class="tsd-kind-icon">XNEGATE</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#xsub" class="tsd-kind-icon">XSUB</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#aliases" class="tsd-kind-icon">ALIASES</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#named_units" class="tsd-kind-icon">NAMED_<wbr>UNITS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#order" class="tsd-kind-icon">ORDER</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#prefixes" class="tsd-kind-icon">PREFIXES</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="units.html#primitive_map" class="tsd-kind-icon">PRIMITIVE_<wbr>MAP</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_identifier" class="tsd-kind-icon">RE_<wbr>identifier</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_name" class="tsd-kind-icon">RE_<wbr>name</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_prefix_name" class="tsd-kind-icon">RE_<wbr>prefix_<wbr>name</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_prefix_name_concat" class="tsd-kind-icon">RE_<wbr>prefix_<wbr>name_<wbr>concat</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_prefix_symbol" class="tsd-kind-icon">RE_<wbr>prefix_<wbr>symbol</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_symbol" class="tsd-kind-icon">RE_<wbr>symbol</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_whitespace" class="tsd-kind-icon">RE_<wbr>whitespace</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#re_whitespace_sep" class="tsd-kind-icon">RE_<wbr>whitespace_<wbr>sep</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#symbol_aliases" class="tsd-kind-icon">SYMBOL_<wbr>ALIASES</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#symbol_units" class="tsd-kind-icon">SYMBOL_<wbr>UNITS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="units.html#tex" class="tsd-kind-icon">TeX</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#units-2" class="tsd-kind-icon">UNITS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="units.html#primitivekeys" class="tsd-kind-icon">primitive<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#definealias" class="tsd-kind-icon">define<wbr>Alias</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="units.html#defineunit" class="tsd-kind-icon">define<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="units.html#getunit" class="tsd-kind-icon">get<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="units.html#isunit" class="tsd-kind-icon">is<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="units.html#makelookupkey" class="tsd-kind-icon">make<wbr>Lookup<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="units.html#orderunits" class="tsd-kind-icon">order<wbr>Units</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="units.html#parseprefix" class="tsd-kind-icon">parse<wbr>Prefix</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script
+src="https://unpkg.com/mermaid/dist/mermaid.min.js"
+></script>
+<script>
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    </script>
+</body>
+</html>
