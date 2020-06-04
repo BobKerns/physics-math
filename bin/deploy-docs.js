@@ -206,13 +206,14 @@ const run = async () => {
         convert(join(ROOT, f), f2 || join(docs, f), title)));
     const release_body = await releases();
     const release_page = `# Newton's Spherical Cow / Physics-Math release documentation
- ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
+${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
 * [CHANGELOG](./CHANGELOG.html)
 ${release_body}`;
     await convertContent(release_page, join(docs, 'index.html'), "NSC / Math Releases");
     const release = await thisRelease(TAG);
     const release_landing = `# ${release.name}
     ${release.body || ''}
+
 * [Captured ObservableHQ Test Page](observablehq/testing-physics-math/)
 * [Live ObservableHQ Test Page](https://observablehq.com/@bobkerns/testing-physics-math)
 * [Test Page Integration Instructions](observablehq/testing-physics-math/README.html)
