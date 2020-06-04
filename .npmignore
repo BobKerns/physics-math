@@ -15,7 +15,7 @@ typedoc.json
 .circleci/
 .github/
 bin/
-observablehq/
+observablehq/*.tgz
 _config.yml
 .idea/
 CHANGELOG.md
