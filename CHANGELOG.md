@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 0.1.29
+_date: 2020-06-03_
+
+* Publish the ObservableHQ content to the Github Pages.
+
 ## Version 0.1.28
 _date: 2020-06-03_
 
