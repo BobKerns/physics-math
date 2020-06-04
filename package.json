@@ -1,11 +1,12 @@
 {
   "name": "@rwk/physics-math",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "Math for physics homework problems",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "browser": "lib/umd/index.js",
   "jsdelivr": "lib/umd/index.js",
+  "unpkg": "lib/umd/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
     "build:imports": "cd imports/typedoc-plugin-linkrewriter && npm install && npm run build",

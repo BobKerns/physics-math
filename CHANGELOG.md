@@ -1,5 +1,12 @@
 # ChangeLog
 
+## Version 0.1.28
+_date: 2020-06-03_
+
+* Add unpkg: entry in package.json
+* Update ObservableHQ content
+* Include ObservableHQ content in the npm package.
+
 ## Version 0.1.27
 _date: 2020-06-03_
 
