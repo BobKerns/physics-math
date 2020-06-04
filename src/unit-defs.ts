@@ -20,7 +20,12 @@ import {defineAlias, defineUnit} from "./units";
  * This is a better alternative to prefixing all the names with U_.
  */
 export namespace Units {
-    const cu = <T extends PUnitTerms>(p: IUnitBase<T>) => defineUnit(p.key, {name: p.name, ...p.attributes});
+    const cu = <T extends PUnitTerms>(p: IUnitBase<T>) =>
+        defineUnit(p.key, {
+            name: p.name,
+            ...p.attributes,
+            names: [p.name, ...p.names || []]
+        });
     export const mass = cu(P.mass);
     // noinspection JSUnusedGlobalSymbols
     export type mass = typeof mass;

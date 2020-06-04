@@ -90,6 +90,7 @@ export interface PrimitiveUnitAttributes {
     varName: string;
     absolute?: boolean;
     si_base?: boolean;
+    names?: string[];
 
     [k: string]: any;
 }
@@ -98,7 +99,7 @@ export interface PrimitiveUnitAttributes {
  * Marker interface indicating primitive standard non-prefixed SI-compatible units.
  */
 export interface PrimitiveSI {
-
+    name?: string;
 }
 
 export interface UnitAttributes extends Partial<PrimitiveUnitAttributes> {
@@ -118,6 +119,7 @@ export interface IUnitBase<T extends PUnitTerms = PUnitTerms> {
     readonly id: string;
 
     readonly name: string;
+    readonly names: string[];
 
     readonly symbol?: string;
     readonly varName?: string;
@@ -158,6 +160,8 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
     private id_?: string;
     // Our cached or supplied LaTeX string.
     private tex_?: string;
+
+    readonly names: string[] = [];
 
     protected constructor(key: T, attributes: UnitAttributes) {
         this.key = key;
@@ -237,6 +241,8 @@ class PrimitiveUnit<U extends Primitive> extends UnitBase<{ [K in U]: 1 }> imple
         this.symbol = symbol;
         this.varName = varName;
         this.unit = u;
+        this.names.push(name);
+        symbol && this.names.push(symbol);
     }
 }
 
@@ -256,6 +262,7 @@ export const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
                           attributes: UnitAttributes = {}) => {
         const primitive = new PrimitiveUnit(u, name, symbol, varName, attributes);
         (val as any)[u] = primitive;
+        primitive.names.push(u);
         return primitive;
     }
     defPrimitive(Primitive.time, 'second', 's', 't', {si_base: true});
