@@ -6,6 +6,7 @@ _date: 2020-06-03_
 * Use Ramda directly (now that it's fixed). Avoids problems with some loaders.
 * Fix missing names for units (like "mass").
 * Block some SI prefix abuse (e.g. 'kilom', 'kmeter'). Needs rationalized naming to do better.
+* Drastically narrow the set of public exports to make things less confusing.
 
 ## Version 0.1.26
 _date: 2020-06-02_
