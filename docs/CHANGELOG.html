@@ -14,6 +14,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.0.3/styles/xcode.css" integrity="sha256-OI7B0pICACICPVbs30FdQ/l6qL8TnsfhyGAdg5m5NzQ=" crossorigin="anonymous">
 </head>
 <body><h1 id="changelog">ChangeLog</h1>
+<h2 id="version-0127">Version 0.1.27</h2>
+<p><em>date: 2020-06-03</em></p>
+<ul>
+<li>Use Ramda directly (now that it&#39;s fixed). Avoids problems with some loaders.</li>
+<li>Fix missing names for units (like &quot;mass&quot;).</li>
+<li>Block some SI prefix abuse (e.g. &#39;kilom&#39;, &#39;kmeter&#39;). Needs rationalized naming to do better.</li>
+<li>Drastically narrow the set of public exports to make things less confusing.</li>
+</ul>
 <h2 id="version-0126">Version 0.1.26</h2>
 <p><em>date: 2020-06-02</em></p>
 <ul>
@@ -27,6 +35,7 @@ vector(), point(), rotation(), and orientation() now require them.</li>
 <li>Change Piecewise.at to take tuples rather than alternating pairs.</li>
 <li>Fix Piecewise integration bug.</li>
 <li>Update ObservableHQ page for the changes.</li>
+<li>Support loading via <code>PM = require(&quot;@rwk/physics-math@0.1.26&quot;); // no extra path needed.</code></li>
 </ul>
 <h2 id="version-0125">Version 0.1.25</h2>
 <p><em>date: 2020-05-30</em></p>
