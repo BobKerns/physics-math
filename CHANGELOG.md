@@ -1,5 +1,12 @@
 # ChangeLog
 
+## Version 0.1.27
+_date: 2020-06-03_
+
+* Use Ramda directly (now that it's fixed). Avoids problems with some loaders.
+* Fix missing names for units (like "mass").
+* Block some SI prefix abuse (e.g. 'kilom', 'kmeter'). Needs rationalized naming to do better.
+
 ## Version 0.1.26
 _date: 2020-06-02_
 
@@ -13,6 +20,7 @@ _date: 2020-06-02_
 * Change Piecewise.at to take tuples rather than alternating pairs.
 * Fix Piecewise integration bug.
 * Update ObservableHQ page for the changes.
+* Support loading via `PM = require("@rwk/physics-math@0.1.26"); // no extra path needed.`
 
 ## Version 0.1.25
 _date: 2020-05-30_
@@ -82,5 +90,4 @@ _Date: 2020-05-22_
 * Polynomials format correctly.
 * Ramda is now a runtime dependency.
 
-[Version 0.1.5]: #version-015
 
