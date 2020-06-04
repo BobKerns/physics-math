@@ -75,10 +75,12 @@ const DOCS =
         ? join(github, 'build/docdest')
         : ROOT;
 
-const DOCBASE =
+const SITEBASE =
     github
         ? '/physics-math'
-        : '/docs';
+        : '/';
+
+const DOCBASE = `${SITEBASE}/docs`
 
 const marked = require('marked');
 marked.setOptions({
