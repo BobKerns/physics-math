@@ -1,0 +1,653 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Style | Physics Math</title>
+	<meta name="description" content="Documentation for Physics Math">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Physics Math</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/latex.html">LaTeX</a>
+				</li>
+				<li>
+					<a href="latex.style.html">Style</a>
+				</li>
+			</ul>
+			<h1>Class Style</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This handles adding style formatting to the syntactic expressions components
+							during LaTeX generation. It consists of a set of <a href="../modules/latex.html#styler">Styler</a> functions, each
+							of which can modify the generated LaTeX, typically by wrapping it with additional
+						directives.</p>
+					</div>
+					<p>The <a href="latex.style.html#set">Style.set</a>, <a href="latex.style.html#wrap">Style.wrap</a>, and [[Style.wrapWith]] methods can be chained
+					to provide any combination.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Style</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-symbol">{}</span></li>
+					<li><a href="../interfaces/latex.stylecontextholder.html" class="tsd-signature-type">StyleContextHolder</a><span class="tsd-signature-symbol">&lt;</span><a href="latex.style.html" class="tsd-signature-type">Style</a><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="latex.style.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#applyunit" class="tsd-kind-icon">apply<wbr>Unit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#applyunitfunction" class="tsd-kind-icon">apply<wbr>Unit<wbr>Function</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#call" class="tsd-kind-icon">call</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#exponentstyle" class="tsd-kind-icon">exponent<wbr>Style</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#function" class="tsd-kind-icon">function</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#number" class="tsd-kind-icon">number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#numberformat" class="tsd-kind-icon">number<wbr>Format</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#numberprecision" class="tsd-kind-icon">number<wbr>Precision</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#numberspecials" class="tsd-kind-icon">number<wbr>Specials</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#numbertrimtrailingzero" class="tsd-kind-icon">number<wbr>Trim<wbr>Trailing<wbr>Zero</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#unit" class="tsd-kind-icon">unit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#unitfraction" class="tsd-kind-icon">unit<wbr>Fraction</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#unitsymbol" class="tsd-kind-icon">unit<wbr>Symbol</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="latex.style.html#variable" class="tsd-kind-icon">variable</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="latex.style.html#context" class="tsd-kind-icon">context</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="latex.style.html#set" class="tsd-kind-icon">set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="latex.style.html#wrap" class="tsd-kind-icon">wrap</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="latex.style.html#wrapwithnewstyle" class="tsd-kind-icon">wrap<wbr>With<wbr>New<wbr>Style</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Style<span class="tsd-signature-symbol">(</span>init<span class="tsd-signature-symbol">: </span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="latex.style.html" class="tsd-signature-type">Style</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L177">src/latex.ts:177</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>init: <a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="latex.style.html" class="tsd-signature-type">Style</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="applyunit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> apply<wbr>Unit</h3>
+					<div class="tsd-signature tsd-kind-icon">apply<wbr>Unit<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L170">src/latex.ts:170</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="applyunitfunction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> apply<wbr>Unit<wbr>Function</h3>
+					<div class="tsd-signature tsd-kind-icon">apply<wbr>Unit<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L171">src/latex.ts:171</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="call" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> call</h3>
+					<div class="tsd-signature tsd-kind-icon">call<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/functionals.html#ipfunction" class="tsd-signature-type">IPFunction</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><a href="../modules/functionals.html#variable" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L163">src/latex.ts:163</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="exponentstyle" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> exponent<wbr>Style</h3>
+					<div class="tsd-signature tsd-kind-icon">exponent<wbr>Style<span class="tsd-signature-symbol">:</span> <a href="latex.style.html" class="tsd-signature-type">Style</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L177">src/latex.ts:177</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="function" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> function</h3>
+					<div class="tsd-signature tsd-kind-icon">function<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/functionals.html#ipfunction" class="tsd-signature-type">IPFunction</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L164">src/latex.ts:164</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="number" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> number</h3>
+					<div class="tsd-signature tsd-kind-icon">number<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L166">src/latex.ts:166</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="numberformat" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> number<wbr>Format</h3>
+					<div class="tsd-signature tsd-kind-icon">number<wbr>Format<span class="tsd-signature-symbol">:</span> <a href="../enums/latex.numberformat.html" class="tsd-signature-type">NumberFormat</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L172">src/latex.ts:172</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="numberprecision" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> number<wbr>Precision</h3>
+					<div class="tsd-signature tsd-kind-icon">number<wbr>Precision<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L173">src/latex.ts:173</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="numberspecials" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> number<wbr>Specials</h3>
+					<div class="tsd-signature tsd-kind-icon">number<wbr>Specials<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L174">src/latex.ts:174</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="numbertrimtrailingzero" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> number<wbr>Trim<wbr>Trailing<wbr>Zero</h3>
+					<div class="tsd-signature tsd-kind-icon">number<wbr>Trim<wbr>Trailing<wbr>Zero<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L175">src/latex.ts:175</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="unit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> unit</h3>
+					<div class="tsd-signature tsd-kind-icon">unit<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L167">src/latex.ts:167</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="unitfraction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> unit<wbr>Fraction</h3>
+					<div class="tsd-signature tsd-kind-icon">unit<wbr>Fraction<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L169">src/latex.ts:169</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="unitsymbol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> unit<wbr>Symbol</h3>
+					<div class="tsd-signature tsd-kind-icon">unit<wbr>Symbol<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/units.iunitbase.html" class="tsd-signature-type">IUnitBase</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L168">src/latex.ts:168</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="variable" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> variable</h3>
+					<div class="tsd-signature tsd-kind-icon">variable<span class="tsd-signature-symbol">:</span> <a href="../modules/latex.html#stylerfn" class="tsd-signature-type">StylerFn</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L165">src/latex.ts:165</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="context" class="tsd-anchor"></a>
+					<h3>context</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> context<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="latex.stylecontext.html" class="tsd-signature-type">StyleContext</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L262">src/latex.ts:262</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="latex.stylecontext.html" class="tsd-signature-type">StyleContext</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="set" class="tsd-anchor"></a>
+					<h3>set</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>stylers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="latex.style.html" class="tsd-signature-type">Style</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/latex.stylecontextholder.html">StyleContextHolder</a>.<a href="../interfaces/latex.stylecontextholder.html#set">set</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L205">src/latex.ts:205</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a new <a href="latex.style.html">Style</a> with each [[Styler][] in <code>stylers</code> replacing
+									the one in this one.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>stylers: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="latex.style.html" class="tsd-signature-type">Style</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="wrap" class="tsd-anchor"></a>
+					<h3>wrap</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">wrap<span class="tsd-signature-symbol">(</span>stylers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="latex.style.html" class="tsd-signature-type">Style</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/latex.stylecontextholder.html">StyleContextHolder</a>.<a href="../interfaces/latex.stylecontextholder.html#wrap">wrap</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L227">src/latex.ts:227</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a new <a href="latex.style.html">Style</a> with each <a href="../modules/latex.html#styler">Styler</a> in <code>stylers</code> wrapping
+										the one in this one. Each of the supplied <a href="../modules/latex.html#styler">Styler</a> will receive
+										the result of calling the current styler on the original string
+									and this styler.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>stylers: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="latex.style.html" class="tsd-signature-type">Style</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="wrapwithnewstyle" class="tsd-anchor"></a>
+					<h3>wrap<wbr>With<wbr>New<wbr>Style</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">wrap<wbr>With<wbr>New<wbr>Style<span class="tsd-signature-symbol">(</span>stylers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="latex.style.html" class="tsd-signature-type">Style</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/290c533/src/latex.ts#L255">src/latex.ts:255</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a new <a href="latex.style.html">Style</a> with each <a href="../modules/latex.html#styler">Styler</a> in <code>stylers</code> wrapping
+										the one in this one. Each of the supplied <a href="../modules/latex.html#styler">Styler</a> will receive
+										the result of calling the current styler on the original string
+									and the new styler.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>stylers: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/latex.html#stylemap" class="tsd-signature-type">StyleMap</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="latex.style.html" class="tsd-signature-type">Style</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/frame.html">Frame</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/functionals.html">Functionals</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/index.html">Index</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/latex.html">La<wbr>TeX</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/units.html">Units</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/utils.html">Utils</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/latex.numberformat.html" class="tsd-kind-icon">Number<wbr>Format</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="latex.style.html" class="tsd-kind-icon">Style</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="latex.style.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#applyunit" class="tsd-kind-icon">apply<wbr>Unit</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#applyunitfunction" class="tsd-kind-icon">apply<wbr>Unit<wbr>Function</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#call" class="tsd-kind-icon">call</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#exponentstyle" class="tsd-kind-icon">exponent<wbr>Style</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#function" class="tsd-kind-icon">function</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#number" class="tsd-kind-icon">number</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#numberformat" class="tsd-kind-icon">number<wbr>Format</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#numberprecision" class="tsd-kind-icon">number<wbr>Precision</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#numberspecials" class="tsd-kind-icon">number<wbr>Specials</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#numbertrimtrailingzero" class="tsd-kind-icon">number<wbr>Trim<wbr>Trailing<wbr>Zero</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#unit" class="tsd-kind-icon">unit</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#unitfraction" class="tsd-kind-icon">unit<wbr>Fraction</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#unitsymbol" class="tsd-kind-icon">unit<wbr>Symbol</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="latex.style.html#variable" class="tsd-kind-icon">variable</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="latex.style.html#context" class="tsd-kind-icon">context</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="latex.style.html#set" class="tsd-kind-icon">set</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="latex.style.html#wrap" class="tsd-kind-icon">wrap</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="latex.style.html#wrapwithnewstyle" class="tsd-kind-icon">wrap<wbr>With<wbr>New<wbr>Style</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="latex.stylecontext.html" class="tsd-kind-icon">Style<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/latex.stylecontextholder.html" class="tsd-kind-icon">Style<wbr>Context<wbr>Holder</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/latex.html#rgb6color" class="tsd-kind-icon">RGB6<wbr>Color</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../modules/latex.html#stylefnfor" class="tsd-kind-icon">Style<wbr>FnFor</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#stylefnmap" class="tsd-kind-icon">Style<wbr>FnMap</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/latex.html#stylekey" class="tsd-kind-icon">Style<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#stylekeydata" class="tsd-kind-icon">Style<wbr>Key<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#stylekeystyler" class="tsd-kind-icon">Style<wbr>Key<wbr>Styler</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/latex.html#stylemap" class="tsd-kind-icon">Style<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/latex.html#styler" class="tsd-kind-icon">Styler</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../modules/latex.html#stylerfn" class="tsd-kind-icon">Styler<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/latex.html#defaults" class="tsd-kind-icon">DEFAULTS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/latex.html#initial_style" class="tsd-kind-icon">INITIAL_<wbr>STYLE</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/latex.html#latex_style_keys" class="tsd-kind-icon">LATEX_<wbr>STYLE_<wbr>KEYS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/latex.html#special_numbers" class="tsd-kind-icon">SPECIAL_<wbr>NUMBERS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#exponentstyle-1" class="tsd-kind-icon">exponent<wbr>Style</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#specials" class="tsd-kind-icon">specials</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/latex.html#chain" class="tsd-kind-icon">chain</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/latex.html#colorstyler" class="tsd-kind-icon">color<wbr>Styler</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#exponenterror" class="tsd-kind-icon">exponent<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#formatnumber" class="tsd-kind-icon">format<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/latex.html#fractions" class="tsd-kind-icon">fractions</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/latex.html#setstyle" class="tsd-kind-icon">set<wbr>Style</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/latex.html#specialnumber" class="tsd-kind-icon">special<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/latex.html#default_style_fns" class="tsd-kind-icon">DEFAULT_<wbr>STYLE_<wbr>FNS</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script
+src="https://unpkg.com/mermaid/dist/mermaid.min.js"
+></script>
+<script>
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    </script>
+</body>
+</html>
