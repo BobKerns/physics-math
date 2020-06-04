@@ -1,7 +1,14 @@
 # ChangeLog
 
+## Version 0.1.30
+_date: 2020-06-04_
+
+* Fixed broken link to CHANGELOG in published README
+* Convert README.md in ObservableHQ package.
+* Add more links to the release landing page.
+
 ## Version 0.1.29
-_date: 2020-06-03_
+_date: 2020-06-04_
 
 * Publish the ObservableHQ content to the Github Pages.
 
