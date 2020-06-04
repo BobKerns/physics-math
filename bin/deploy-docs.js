@@ -11,10 +11,24 @@
  * it expects the gh-pages branch to be checked out into build/docdest. The generated API
  * documentation will be installed into build/docdest/docs/{tag}/api, and the site glue
  * will be updated with appropriate links.
+ *
+ * We do a bit of shuffling:
+ * * The project CHANGELOG.md is at the global (top) in the target.
+ * * The project README.md is versioned to each release tag, and the most
+ *   recent one is also put at top level.
+ *
+ * They are converted to HTML, and links adjusted accordingly.
+ *
+ * The observablehq/ directory is copied to the release tag, and its README.md
+ * is translated to HTML.
  */
 
 const pkg = require('../package.json');
 const github = process.env['GITHUB_WORKSPACE'];
+
+const VERSION = pkg.version;
+const TAG = github ? `v${VERSION}` : 'local';
+
 const fs = require('fs/promises');
 const util = require('util');
 const copyFile = fs.copyFile;
@@ -37,10 +51,35 @@ const readFile = async f => fs.readFile(f, 'utf8');
 const writeFile = async (f, data) => fs.writeFile(f, data, 'utf8');
 
 const path = require('path');
+const join = path.join;
+const resolve = path.resolve;
+const dirname = path.dirname;
+const basename = path.basename;
+
 const child_process = require('child_process');
 const execFile = util.promisify(child_process.execFile);
 
 const hljs = require('highlight.js');
+
+const fetch = require('node-fetch');
+
+/**
+ * The root of our repo
+ * @type {string}
+ */
+const ROOT = join(process.mainModule.path, '..');
+
+// In the workflow, point this to where we checked out the gh-pages branch.
+const DOCS =
+    github
+        ? join(github, 'build/docdest')
+        : ROOT;
+
+const DOCBASE =
+    github
+        ? '/physics-math'
+        : '/docs';
+
 const marked = require('marked');
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -52,23 +91,22 @@ marked.setOptions({
 });
 const renderer = {
     link(href, title, text) {
-        console.log('link', href, title, text);
-        if (href) {
-            return `<a href=${href.replace(/\.md$/i, '.html')} ${title ? `title="${title}"` : ''}>${text}</a>`
-        }
+        const rewrite = () => {
+            if (href.match(/(?:\.\/)?README.md$/)) {
+                return `${DOCBASE}/${TAG}/README.html`;
+            } else if (href.match(/(?:\.\/)?CHANGELOG.md$/)) {
+                return `${DOCBASE}/CHANGELOG.html`;
+            }
+            return href.replace(/\.md$/i, '.html');
+        };
+        const nHref = rewrite(href);
+        console.log('link', href, title, text, nHref);
+        return`<a href=${nHref} ${title ? `title="${title}"` : ''}>${text}</a>`;
     }
 };
 
 marked.use({renderer });
 
-const fetch = require('node-fetch');
-
-const ROOT = path.resolve(process.mainModule.path, '..');
-// In the workflow, point this to where we checked out the gh-pages branch.
-const DOCS =
-    github
-        ? path.resolve(github, 'build/docdest')
-        : ROOT;
 const exec = async (cmd, ...args) => {
     const {stdout, stderr} = await execFile(cmd, args, {cwd: DOCS});
     stderr && process.stderr.write(stderr);
@@ -76,7 +114,7 @@ const exec = async (cmd, ...args) => {
 };
 
 const copy = async (from, to) => {
-    const dir = path.dirname(to);
+    const dir = dirname(to);
     await mkdir(dir);
     await copyFile(from, to);
 }
@@ -100,16 +138,22 @@ const html = (title, body) => `<!DOCTYPE html>
 </html>`;
 
 const convert = async (from, to, title) => {
-    const dir = path.dirname(to);
-    const fname = path.basename(to, '.md') + '.html';
-    const htmlFile = path.resolve(dir, fname);
+    console.log('Converting', from, to);
+    const dir = dirname(to);
+    const fname = basename(to).replace(/\.md$/i, '.html');
+    const htmlFile = join(dir, fname);
     await mkdir(dir);
     const content = await readFile(from);
     return await convertContent(content, htmlFile, title);
 };
 
 const convertContent = async (content, htmlFile, title) => {
-    const dir = path.dirname(htmlFile);
+    const extractTitle = () => {
+        const t1 = content.match(/^# (.*)$/m);
+        return t1 ? t1[1] : basename(htmlFile, '.html');
+    }
+    title = title || extractTitle();
+    const dir = dirname(htmlFile);
     await mkdir(dir);
     const xFormed = marked(content);
     console.log(`Writing: ${htmlFile} (${title})`);
@@ -134,16 +178,14 @@ const thisRelease = async(tag) =>
             .json())
             .filter(e => e.tag_name === tag)
             [0] || Throw(`No release tagged ${tag} found.`)
-        : {name: 'Local Build', body: 'Local build'}
+        : {name: 'Local Build', body: 'Local build'} // fake release
 
 const run = async () => {
-    const version = pkg.version;
-    const tag = github ? `v${version}` : 'local';
-    const source = path.join(ROOT, 'build', 'docs');
-    const docs = path.join(DOCS, 'docs');
-    const target = path.join(docs, tag);
-    const ohq = path.join(ROOT, 'observablehq');
-    const target_ohq = path.join(target, 'observablehq');
+    const source = join(ROOT, 'build', 'docs');
+    const docs = join(DOCS, 'docs');
+    const target = join(docs, TAG);
+    const ohq = join(ROOT, 'observablehq');
+    const target_ohq = join(target, 'observablehq');
 
     process.stdout.write(`GITHUB_WORKSPACE: ${github}\n`);
     process.stdout.write(`ROOT: ${ROOT}\n`);
@@ -157,30 +199,38 @@ const run = async () => {
     await Promise.all([
         ['CHANGELOG.md', 'Change Log'],
         ['README.md', `Physics Math / Newton's Spherical Cow`],
-        ['README.md', `Physics Math / Newton's Spherical Cow`, path.join(target, 'README')]
+        ['README.md', `Physics Math / Newton's Spherical Cow`, join(target, 'README.html')]
     ].map(([f, title, f2]) =>
-        convert(path.resolve(ROOT, f), path.resolve(docs, f2 || f), title || path.basename(f, '.md'))));
+        convert(join(ROOT, f), f2 || join(docs, f), title)));
     const release_body = await releases();
     const release_page = `# Newton's Spherical Cow / Physics-Math release documentation
  ${!github ? `* [local](http://localhost:5000/docs/local/index.html)` : ``}
 * [CHANGELOG](./CHANGELOG.html)
 ${release_body}`;
-    await convertContent(release_page, path.resolve(docs, 'index.html'), "NSC / Math Releases");
-    const release = await thisRelease(tag);
+    await convertContent(release_page, join(docs, 'index.html'), "NSC / Math Releases");
+    const release = await thisRelease(TAG);
     const release_landing = `# ${release.name}
     ${release.body || ''}
+* [Captured ObservableHQ Test Page](observablehq/testing-physics-math/)
+* [Live ObservableHQ Test Page](https://observablehq.com/@bobkerns/testing-physics-math)
+* [Test Page Integration Instructions](observablehq/testing-physics-math/README.html)
 * [API documentation](api/index.html)
 * [CHANGELOG](../CHANGELOG.html)
+* [GitHub](https://github.com/BobKerns/physics-math.git)
+* [GitHub ${TAG} tree](https://github.com/BobKerns/physics-math.git/tree/${TAG}/)
 `;
-    await convertContent(release_landing, path.resolve(target, 'index.html'), release.name);
+    await convertContent(release_landing, join(target, 'index.html'), release.name);
     const copyTree = async (from, to) => {
-        const dir = await readdir(path.resolve(ROOT, from), {withFileTypes: true});
-        return  Promise.all(dir.map(d => d.isFile()
-            ? copyFile(path.join(from, d.name), path.join(to, d.name))
-            : d.isDirectory()
-                ? Promise.resolve(path.join(to, d.name))
+        const dir = await readdir(resolve(ROOT, from), {withFileTypes: true});
+        return  Promise.all(dir.map(d =>
+            d.isFile()
+                ? d.name.endsWith('.md')
+                ? convert(join(from, d.name), join(to, d.name.replace(/\.md$/, '.html')))
+                : copyFile(join(from, d.name), join(to, d.name))
+                : d.isDirectory()
+                ? Promise.resolve(join(to, d.name))
                     .then(mkdir)
-                    .then(t => copyTree(path.join(from, d.name), t))
+                    .then(t => copyTree(join(from, d.name), t))
                 : Promise.resolve(null)));
     }
     await copyTree(source, target);
@@ -192,11 +242,11 @@ ${release_body}`;
         await exec('git', 'add', target);
         await exec('git', 'add', 'docs/index.html');
         await exec('git', 'add', 'docs/CHANGELOG.html');
-        await exec('git', 'commit', '-m', `Deploy documentation for ${tag}.`);
+        await exec('git', 'commit', '-m', `Deploy documentation for ${TAG}.`);
         await exec('git', 'push');
     }
 }
 run().catch(e => {
-    process.stderr.write(`Error: ${e.message}`);
+    process.stderr.write(`Error: ${e.message}\n${e.stack}`);
     process.exit(-128);
 });
