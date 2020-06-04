@@ -17,6 +17,7 @@ import {IndefiniteIntegral, IPCompileResult, IPFunctionCalculus} from "./base";
 import {Units} from "./unit-defs";
 import {Unit} from "./units";
 import {defineTag} from "./utils";
+import {curry3} from "./curry";
 
 /**
  * Functions that have to be numerically integrated/differentiated.
@@ -57,3 +58,9 @@ export class GFunction extends PCalculus<number> {
 }
 
 defineTag(GFunction, 'GFun');
+
+/**
+ * Construct a numeric PFunction.
+ */
+export const gFunction = curry3((unit: Unit, name: string, fn: (t: number) => number) => new GFunction(fn, unit, {name}));
+

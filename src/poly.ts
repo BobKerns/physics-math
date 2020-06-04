@@ -145,4 +145,6 @@ const makePoly = (...coeffs: number[]) => (t: number) => {
     return acc;
 };
 
+export const poly = (unit: Unit, ...coefficients: number[]) => new Poly(unit, ...coefficients);
+
 defineTag(Poly, 'Poly');
