@@ -485,8 +485,10 @@ export const defineAlias =
             const lc = n.toLowerCase();
             const conflict = ALIASES[lc] || NAMED_UNITS[lc] || SYMBOL_ALIASES[n] || SYMBOL_UNITS[n];
             alias.names.push(n);
-            conflict
-                ? Throw(`Name conflict for alias ${n} with unit ${conflict.name}`)
+            conflict ?
+                conflict !== alias
+                    ? Throw(`Name conflict for alias ${n} with unit ${conflict.name}`)
+                    :null
                 : (table[n] = alias);
         };
         addName(name.toLowerCase());

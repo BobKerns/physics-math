@@ -227,6 +227,10 @@ export namespace Units {
         Units.mass, 1000);
 
     // noinspection JSUnusedGlobalSymbols
+    export const tonUS = defineAlias('ton (US)', 'Ton (US)', {},
+        Units.mass, 987.186);
+
+    // noinspection JSUnusedGlobalSymbols
     export const inch = defineAlias('inch', 'in', {},
         Units.length, 0.0254);
 
@@ -241,6 +245,14 @@ export namespace Units {
     // noinspection JSUnusedGlobalSymbols
     export const mile = defineAlias('mile', 'mi', {},
         Units.length, 1609.344);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const nautical_mile = defineAlias('nautical mile', 'NM', {},
+        Units.length, 1852);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const knot = defineAlias('knot', 'kt', {},
+        Units.velocity, 1852 / 3600);
 
     // noinspection JSUnusedGlobalSymbols
     export const angstrom = defineAlias('angstrom', 'Å', {},
