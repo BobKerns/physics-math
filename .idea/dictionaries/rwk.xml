@@ -28,6 +28,7 @@
       <w>gsub</w>
       <w>heta</w>
       <w>infty</w>
+      <w>ints</w>
       <w>katex</w>
       <w>kerns</w>
       <w>leftarrow</w>
@@ -70,6 +71,7 @@
       <w>viewof</w>
       <w>wasm</w>
       <w>xadd</w>
+      <w>xgcd</w>
       <w>xnegate</w>
       <w>xsub</w>
       <w>ångstrom</w>
