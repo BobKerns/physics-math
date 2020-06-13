@@ -51,7 +51,7 @@ export abstract class  PFunction<
             throw new Error(`Supplied argument names [${vars.join(', ')}do not match defined nargs=${nargs}.`);
         }
         this.nargs = nargs;
-        this.name = idGen(name || this.constructor.name);
+        this.name = name || idGen(this.constructor.name, '_');
         this.unit = unit || Throw(`Missing unit argument`);
     }
 
