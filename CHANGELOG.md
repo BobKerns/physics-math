@@ -12,6 +12,7 @@ _date: 2020-06-12_
 * Fix landing page indentation for local mode.
 * Point at the right location for CHANGELOG.html
 * Update the ObservableHQ test landing page.
+* Now requires Node.JS >= 13.0 (and modern browsers).
 
 ## Version 0.1.30
 _date: 2020-06-04_
