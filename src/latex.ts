@@ -11,7 +11,8 @@
  */
 
 import R from "ramda";
-import {defineTag, gcd, tex, Throw} from "./utils";
+import {defineTag, tex, Throw} from "./utils";
+import {gcd} from './algebra';
 import {Unit} from "./units";
 import {IUnitBase} from "./primitive-units";
 import {IPFunction, Variable} from "./base";

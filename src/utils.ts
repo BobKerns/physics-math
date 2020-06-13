@@ -76,22 +76,6 @@ export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
  */
 export const callSite = (s: string|string[]) => (a => ((a as any).raw = (a as any).raw || a))(s instanceof Array ? s : [s])
 
-/**
- * Greatest Common Denominator
- *
- * Uses the faster division-based version of Euclid's algorithm.
- * @param a
- * @param b
- */
-export const gcd = (a: number, b: number) => {
-    while (b != 0) {
-        const t = b;
-        b = a % b;
-        a = t;
-    }
-    return a;
-}
-
 let katex: any = null;
 
 export const tex = (s: TemplateStringsArray, ...substitutions: any[]) => {
@@ -126,3 +110,10 @@ export const defineTag = (proto: Constructor<any, any>|any, tag: string) => {
         get: () => tag
     });
 };
+
+/**
+ * Return the negation of a predicate.
+ * @param pred
+ */
+export const not = <T>(pred: (a: T) => boolean): ((a: T) => boolean) => a => !pred(a);
+
