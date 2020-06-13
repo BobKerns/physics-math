@@ -1,10 +1,11 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@1317
+// https://observablehq.com/@bobkerns/testing-physics-math@1365
 import define1 from "./e93997d5089d7165@2264.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
+import define3 from "./4e8bebdde0debc65@139.js";
 
 export default function define(runtime, observer) {
   const main = runtime.module();
-  main.variable(observer()).define(["md","TAG"], function(md,TAG){return(
+  main.variable(observer()).define(["md","TAG","isVersion"], function(md,TAG,isVersion){return(
 md`# Testing Physics-Math
 
 This page is a testing page for the Physics Math package I am developing. (Part of a bigger project,
@@ -15,13 +16,17 @@ ${TAG} tree: https://github.com/BobKerns/physics-math.git/tree/${TAG}/ \
 NPM: https://www.npmjs.com/package/@rwk/physics-math \ 
 Issues: https://github.com/BobKerns/physics-math/issues \ 
 Documentation: [on GitHub](https://bobkerns.github.io/physics-math/docs/${TAG}/api/index.html) \ 
-ObservableHQ: [Home for this page](https://observablehq.com/@bobkerns/testing-physics-math). [Captured version](https://bobkerns.github.io/physics-math/docs/${TAG}/observablehq/testing-physics-math/) \ 
-Local Doc: https://localhost:5000/docs/local/ \ 
-Local ObservableHQ: [Read-only copy](http://localhost:5000/docs/local/observablehq/testing-physics-math/)
+ObservableHQ: [Home for this page](https://observablehq.com/@bobkerns/testing-physics-math). \ 
+${
+  isVersion('local')
+    ? `Local Doc: http://localhost:5000/docs/local/ \ 
+Local ObservableHQ: [Read-only copy](http://localhost:5000/docs/local/observablehq/testing-physics-math/)`
+    : `>  `
+}
 
 The current version of this page probably corresponds to work not yet released, so expect errors when running against release versions. This can be worked around via:
 ~~~javascript
-  isVersion(semverRange)
+  isVersion(semverRange|'local') // 'local' is always newer.
 ~~~
 `
 )});
@@ -53,7 +58,7 @@ VERSION === 'localhost'
 md`## ${VERSION_NAME}
 
 Loaded at ${LOAD_TIME} via:
-~~~
+~~~javascript
   PM = require('${LIBRARY_URL}')
 ~~~
 ${
@@ -189,7 +194,7 @@ but will probably always be the default.`
   main.variable(observer("viewof G")).define("viewof G", ["isVersion","gFunction","Units","PM"], function(isVersion,gFunction,Units,PM){return(
 isVersion('>=0.1.27')
   ? gFunction(Units.velocity, 'f', t => t).html
-  : new PM.GFunction(t => t, Units.velocity).setName_('f').htm
+  : new PM.GFunction(t => t, Units.velocity).setName_('f').html
 )});
   main.variable(observer("G")).define("G", ["Generators", "viewof G"], (G, _) => G.input(_));
   main.variable(observer()).define(["PM","G","TIME"], function(PM,G,TIME){return(
@@ -309,16 +314,23 @@ md`## Appendix
 Identify what releases are available, and once one is selected, load it.`
 )});
   main.variable(observer("releases")).define("releases", ["check_release"], async function(check_release){return(
-(check_release,
-await (await fetch(
-  'https://api.github.com/repos/BobKerns/physics-math/releases'
-)).json())
-  .filter(e => e.published_at >= '2020-05-29T18:25:38Z')
-  .map(r =>
-    Object.defineProperty(r, Symbol.toStringTag, {
-      get: () => `Release_${r.tag_name}`
-    })
-  )
+check_release,
+[
+  {
+    name: 'localhost',
+    tag_name: 'local',
+    body: `Server running on localhost:5000`
+  },
+  ...(await (await fetch(
+    'https://api.github.com/repos/BobKerns/physics-math/releases'
+  )).json())
+    .filter(e => e.published_at >= '2020-05-29T18:25:38Z')
+    .map(r =>
+      Object.defineProperty(r, Symbol.toStringTag, {
+        get: () => `Release_${r.tag_name}`
+      })
+    )
+]
 )});
   main.variable(observer("releases_by_name")).define("releases_by_name", ["releases"], function(releases){return(
 ((t = {}) => (
@@ -326,11 +338,11 @@ await (await fetch(
 ))()
 )});
   main.variable(observer("release_names")).define("release_names", ["releases"], function(releases){return(
-['localhost', ...releases.map(e => e.name)]
+releases.map(e => e.name)
 )});
   main.variable(observer("TAG")).define("TAG", ["VERSION_NAME","releases_by_name"], function(VERSION_NAME,releases_by_name){return(
 VERSION_NAME === 'localhost'
-  ? undefined
+  ? 'local'
   : releases_by_name[VERSION_NAME].tag_name
 )});
   main.variable(observer("VERSION")).define("VERSION", ["TAG"], function(TAG){return(
@@ -343,9 +355,9 @@ md`As of 0.1.26, no extra path info is needed beyond "@rwk/physics-math@<version
 ~~~
 > (I can't seem to convince the module-require-debugger of that, though!)`
 )});
-  main.variable(observer("LIBRARY_URL")).define("LIBRARY_URL", ["reload","VERSION","isVersion"], function(reload,VERSION,isVersion){return(
+  main.variable(observer("LIBRARY_URL")).define("LIBRARY_URL", ["reload","isVersion","VERSION"], function(reload,isVersion,VERSION){return(
 reload,
-VERSION === 'localhost'
+isVersion('local')
   ? `http://localhost:5000/lib/umd/index.js?${Date.now()}`
   : isVersion(">=0.1.26")
   ? `@rwk/physics-math@${VERSION}`
@@ -364,7 +376,7 @@ LIBRARY_URL, new Date()
     PM.setFormatter(tex);
     return PM;
   } catch (e) {
-    if (VERSION === 'localhost') {
+    if (VERSION === 'local') {
       try {
         await fetch(LIBRARY_URL, { method: 'HEAD', mode: 'no-cors' });
         return `URL exists but the require encountered an error: ${e.message}`;
@@ -496,16 +508,23 @@ await import('https://unpkg.com/gl-matrix@3.3.0/esm/index.js?module')
   main.variable(observer("semver")).define("semver", ["require"], function(require){return(
 require('https://bundle.run/semver@7.3.2')
 )});
-  main.variable(observer()).define(["md","isVersion"], function(md,isVersion){return(
+  main.variable(observer()).define(["md","VERSION","isVersion"], function(md,VERSION,isVersion){return(
 md`### Predicate to conditionalize on the VERSION.
 ~~~javascript
+VERSION = "${VERSION}"
+
 isVersion(">=0.1.26"); // => ${isVersion(">=0.1.26")}
 isVersion(">=0.1.16"); // => ${isVersion(">=0.1.16")}
 isVersion(">=0.2.26"); // => ${isVersion(">=0.2.26")}
+isVersion("local"); // ${isVersion("local")}
 ~~~`
 )});
-  main.variable(observer("isVersion")).define("isVersion", ["semver","VERSION"], function(semver,VERSION){return(
-range => semver.satisfies(semver.coerce(VERSION), range)
+  main.variable(observer("isVersion")).define("isVersion", ["VERSION","semver"], function(VERSION,semver){return(
+range =>
+  VERSION === range ||
+  (VERSION === 'local'
+    ? range.startsWith('>')
+    : semver.satisfies(semver.coerce(VERSION), range))
 )});
   main.variable(observer()).define(["md"], function(md){return(
 md`### Selectable number formats for our configuration menu.`
@@ -554,6 +573,11 @@ ${(await (await fetch(
       }/index.html) ${r.prerelease ? ' (prerelease)' : ''}`
   )
   .join('\n')}`
+)});
+  const child3 = runtime.module(define3);
+  main.import("applyHljsStyle", child3);
+  main.variable(observer()).define(["applyHljsStyle"], function(applyHljsStyle){return(
+applyHljsStyle('vs')
 )});
   return main;
 }
