@@ -7,6 +7,7 @@
 
 // We supply the missing type information for the terser plugin.
 
+
 declare module "rollup-plugin-terser" {
     import {Plugin} from "rollup";
     import {MinifyOptions} from "terser";
@@ -78,4 +79,14 @@ interface ServeOptions {
 declare module 'rollup-plugin-serve' {
     // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols
     export default function serve(options?: ServeOptions): Plugin;
+}
+
+declare module '@observablehq/stdlib' {
+    export namespace Generator {
+        export function observe<T>(f: (notify: (n: T) => void) => void): AsyncIterableIterator<T>;
+    }
+}
+
+declare module 'acorn-optional-chaining' {
+    export default function <T>(p: T): T;
 }

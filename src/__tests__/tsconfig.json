@@ -8,7 +8,8 @@
     "test-math-types.ts",
     "test-pfunction.ts",
     "test-units.ts",
-    "test-numerics.ts"
+    "test-numerics.ts",
+    "../modules.d.ts"
   ],
   "include": ["*.ts"],
   "exclude": ["node_modules"],

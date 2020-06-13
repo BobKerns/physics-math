@@ -38,6 +38,11 @@ const serve_mode = process.env.SERVE && dev;
 const serve_doc = process.env.SERVE_DOC && serve_mode;
 
 /**
+ * Avoid non-support of ?. optional chaining.
+ */
+const DISABLE_TERSER = true;
+
+/**
  * A rough description of the contents of [[package.json]].
  */
 interface Package {
@@ -103,7 +108,7 @@ const dbg: any = {name: 'dbg'};
  * @param from
  * @param resolved
  */
-const checkExternal = (id: string, from: string, resolved: boolean) =>
+const checkExternal = (id: string, from?: string, resolved?: boolean): boolean =>
     (resolved
         ? /node_modules/.test(id)
         : !/^\./.test(id));
@@ -113,7 +118,6 @@ const options: RollupOptions = {
     output: outputs(pkg),
     external: checkExternal,
     plugins: [
-        // dbg,
         resolve({
             // Check for these in package.json
             mainFields: mainFields(pkg, ['module', 'main', 'browser'])
@@ -132,10 +136,10 @@ const options: RollupOptions = {
         }),
         externalGlobals({
             'gl-matrix': "glMatrix",
-            'katex': 'katex',
+            //'katex': 'katex',
             'ramda': 'ramda'
         }),
-        ...!dev ? [
+        ...(!dev && !DISABLE_TERSER) ? [
             terser({
             module: true
         })
