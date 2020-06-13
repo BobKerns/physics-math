@@ -1,5 +1,18 @@
 # ChangeLog
 
+## Version 0.1.31
+_date: 2020-06-12_
+
+* Add basic graphing function
+* Fixed a number formatting bug that affected scientific and engineering notation.
+* Add routines for primality, xgcd, etc.
+* Add units for US Ton, nautical mile, knot.
+* Made ranges mappable, filterable, etc.
+* Update dependencies
+* Fix landing page indentation for local mode.
+* Point at the right location for CHANGELOG.html
+* Update the ObservableHQ test landing page.
+
 ## Version 0.1.30
 _date: 2020-06-04_
 
