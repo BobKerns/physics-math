@@ -324,10 +324,10 @@ const formatNumber: Styler<number> = (continuation: StylerFn<number>, _style: St
                 return n.toFixed(Math.max(ctx.numberPrecision - digits, 0));
             case NumberFormat.scientific:
             case NumberFormat.engineering:
-                const exp = Math.log10(n);
+                const exp = Math.log10(Math.abs(n));
                 const eng = ctx.numberFormat === NumberFormat.engineering ? 3 : 1;
                 const trunc = exp < 0
-                    ? -Math.floor(-(exp - 1)/ eng) * eng
+                    ? -Math.floor(-(exp - 0.5)/ eng) * eng
                     : Math.floor(exp / eng) * eng;
                 const trim = (n: string) =>
                     ctx.numberTrimTrailingZero && n.match(/\./)
@@ -337,7 +337,10 @@ const formatNumber: Styler<number> = (continuation: StylerFn<number>, _style: St
                     return trim(n.toPrecision(ctx.numberPrecision))
                 }
                 const mantissa = n / Math.pow(10, trunc);
-                return tex`${trim(mantissa.toPrecision(ctx.numberPrecision))} x 10^{${trunc}}`;
+                if (trunc == 0) {
+                    return tex`${trim(mantissa.toPrecision(ctx.numberPrecision))}`;
+                }
+                return tex`${trim(mantissa.toPrecision(ctx.numberPrecision))} \operatorname{x} 10^{${trunc}}`;
         }
     };
 

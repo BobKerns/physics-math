@@ -88,9 +88,28 @@ describe('styles', () => {
             test('zero [data]', () =>
                 expect(INITIAL_STYLE.numberSpecials.get(0))
                     .not.toBeDefined());
-            test('zero [data]', () =>
+            test('zero [data] format', () =>
                 expect(INITIAL_STYLE.context.number(0))
                     .toBe('0'));
+            test('negative exponent', () =>
+                expect(INITIAL_STYLE.context.number(0.00000001))
+                    .toBe(tex`1 \operatorname{x} 10^{-8}`));
+            test('negative number negative exponent', () =>
+                expect(INITIAL_STYLE.context.number(-0.00000001))
+                    .toBe(tex`-1 \operatorname{x} 10^{-8}`));
+            test('8', () =>
+                expect(INITIAL_STYLE.context.number(8))
+                    .toBe('8'));
+            test('80', () =>
+                expect(INITIAL_STYLE.context.number(80))
+                    .toBe(tex`8 \operatorname{x} 10^{1}`));
+            test('-8', () =>
+                expect(INITIAL_STYLE.context.number(-8))
+                    .toBe('-8'));
+            test('-80', () =>
+                expect(INITIAL_STYLE.context.number(-80))
+                    .toBe(tex`-8 \operatorname{x} 10^{1}`));
+
         });
         describe('normal', () => {
             const NORMAL = INITIAL_STYLE.set({numberFormat: NumberFormat.normal, numberPrecision: 4});
@@ -107,27 +126,33 @@ describe('styles', () => {
             test('3.00', () =>
                 expect(SCI.number(3))
                     .toBe("3.00"));
+            test('100', () =>
+                expect(SCI.number(100))
+                    .toBe(tex`1.00 \operatorname{x} 10^{2}`));
             test('300', () =>
                 expect(SCI.number(300))
-                    .toBe(tex`3.00 x 10^{2}`));
+                    .toBe(tex`3.00 \operatorname{x} 10^{2}`));
             test('3000', () =>
                 expect(SCI.number(3000))
-                    .toBe(tex`3.00 x 10^{3}`));
+                    .toBe(tex`3.00 \operatorname{x} 10^{3}`));
+            test('0.01', () =>
+                expect(SCI.number(0.01))
+                    .toBe(tex`1.00 \operatorname{x} 10^{-2}`));
             test('0.03', () =>
                 expect(SCI.number(0.03))
-                    .toBe(tex`3.00 x 10^{-2}`));
+                    .toBe(tex`3.00 \operatorname{x} 10^{-2}`));
             test('0.003', () =>
                 expect(SCI.number(0.003))
-                    .toBe(tex`3.00 x 10^{-3}`));
+                    .toBe(tex`3.00 \operatorname{x} 10^{-3}`));
             test('3.01', () =>
                 expect(SCI.number(3.01))
                     .toBe("3.01"));
             test('301', () =>
                 expect(SCI.number(301))
-                    .toBe(tex`3.01 x 10^{2}`));
+                    .toBe(tex`3.01 \operatorname{x} 10^{2}`));
             test('0.00301', () =>
                 expect(SCI.number(0.00301))
-                    .toBe(tex`3.01 x 10^{-3}`));
+                    .toBe(tex`3.01 \operatorname{x} 10^{-3}`));
         });
         describe('Scientific Loose', () => {
             const SCI = INITIAL_STYLE.set({
@@ -140,25 +165,25 @@ describe('styles', () => {
                     .toBe("3"));
             test('300', () =>
                 expect(SCI.number(300))
-                    .toBe(tex`3 x 10^{2}`));
+                    .toBe(tex`3 \operatorname{x} 10^{2}`));
             test('3000', () =>
                 expect(SCI.number(3000))
-                    .toBe(tex`3 x 10^{3}`));
+                    .toBe(tex`3 \operatorname{x} 10^{3}`));
             test('0.03', () =>
                 expect(SCI.number(0.03))
-                    .toBe(tex`3 x 10^{-2}`));
+                    .toBe(tex`3 \operatorname{x} 10^{-2}`));
             test('0.003', () =>
                 expect(SCI.number(0.003))
-                    .toBe(tex`3 x 10^{-3}`));
+                    .toBe(tex`3 \operatorname{x} 10^{-3}`));
             test('3.01', () =>
                 expect(SCI.number(3.01))
                     .toBe("3.01"));
             test('301', () =>
                 expect(SCI.number(301))
-                    .toBe(tex`3.01 x 10^{2}`));
+                    .toBe(tex`3.01 \operatorname{x} 10^{2}`));
             test('0.00301', () =>
                 expect(SCI.number(0.00301))
-                    .toBe(tex`3.01 x 10^{-3}`));
+                    .toBe(tex`3.01 \operatorname{x} 10^{-3}`));
         });
 
         describe('Engineering', () => {
@@ -173,15 +198,21 @@ describe('styles', () => {
             test('300', () =>
                 expect(SCI.number(300))
                     .toBe(tex`300`));
+            test('1000', () =>
+                expect(SCI.number(1000))
+                    .toBe(tex`1.00 \operatorname{x} 10^{3}`));
             test('3000', () =>
                 expect(SCI.number(3000))
-                    .toBe(tex`3.00 x 10^{3}`));
+                    .toBe(tex`3.00 \operatorname{x} 10^{3}`));
             test('0.03', () =>
                 expect(SCI.number(0.03))
                     .toBe(tex`0.0300`));
+            test('0.001', () =>
+                expect(SCI.number(0.001))
+                    .toBe(tex`1.00 \operatorname{x} 10^{-3}`));
             test('0.003', () =>
                 expect(SCI.number(0.003))
-                    .toBe(tex`3.00 x 10^{-3}`));
+                    .toBe(tex`3.00 \operatorname{x} 10^{-3}`));
             test('3.01', () =>
                 expect(SCI.number(3.01))
                     .toBe("3.01"));
@@ -190,7 +221,7 @@ describe('styles', () => {
                     .toBe(tex`301`));
             test('0.00301', () =>
                 expect(SCI.number(0.00301))
-                    .toBe(tex`3.01 x 10^{-3}`));
+                    .toBe(tex`3.01 \operatorname{x} 10^{-3}`));
         });
     });
     describe('units', () => {
