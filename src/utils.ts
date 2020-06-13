@@ -15,7 +15,71 @@ interface idGen extends Function {
     seqs: {[k: string]: Iterator<number>}
 }
 
-export function* range(start = 0, end = Number.MAX_SAFE_INTEGER, step = 1) {
+function* Foo() {}
+const GenProto = ((Foo()).constructor).prototype;
+
+abstract class MappableGenerator<T extends any = any> implements Generator<T>, Iterable<T> {
+
+    abstract next(): IteratorResult<T>;
+
+    abstract [Symbol.iterator](): Generator<T>;
+
+    abstract return(value: any): IteratorResult<T>;
+
+    abstract throw(e: any): IteratorResult<T>;
+
+    asArray(): T[] {
+        return [...this];
+    }
+
+    forEach(f: (v: T) => void) {
+        while (true) {
+            const r = this.next();
+            if (r.done) return;
+            f(r.value);
+        }
+    }
+
+    map<V>(f: (v: T) => V): V[] {
+        const result: V[] = [];
+        while (true) {
+            const r = this.next();
+            if (r.done) return result;
+            result.push(f(r.value));
+        }
+    }
+
+    filter(p: (v: T) => boolean): T[] {
+        const result: T[] = [];
+        while (true) {
+            const r = this.next();
+            if (r.done) return result;
+            if (p(r.value)) {
+                result.push(r.value)
+            }
+        }
+    }
+
+    some(p: (v: T) => boolean): boolean {
+        while (true) {
+            const r = this.next();
+            if (r.done) return false;
+            if (p(r.value)) return true;
+        }
+    }
+
+    every(p: (v: T) => boolean): boolean {
+        while (true) {
+            const r = this.next();
+            if (r.done) return true;
+            if (!p(r.value)) return false;
+        }
+    }
+}
+
+Object.setPrototypeOf(MappableGenerator.prototype, GenProto);
+
+function* range2(start = 0, end = Number.MAX_SAFE_INTEGER, step = 1) {
     let x = start;
     if (step > 0) {
         while (x < end) {
@@ -31,6 +95,12 @@ export function* range(start = 0, end = Number.MAX_SAFE_INTEGER, step = 1) {
         throw new Error("Step must not be zero.");
     }
 }
+
+export const range = (start = 0, end = Number.MAX_SAFE_INTEGER, step = 1): MappableGenerator<number> => {
+    const r: Partial<MappableGenerator<number>> = range2(start, end, step);
+    Object.setPrototypeOf(r, MappableGenerator.prototype);
+    return r as MappableGenerator<number>;
+};
 
 export function idGen(prefix = 'gen', sep = '-'): string {
     const fn: idGen = idGen as unknown as idGen;
