@@ -20,7 +20,13 @@ export {
     Transform, Variable, Value, ValueInFrame, IPCompiled, Relative, InFrame,
     IndefiniteIntegral
 } from './base';
-export {range} from './utils';
+export {
+    range,
+    isGenerator, MappableGenerator, toGenerator,
+    isIterable, toIterable,
+    isIterator, toIterator,
+    isFunction,
+} from './utils';
 export {add, sub, mul, equal, near} from './arith';
 export * from './curry';
 export {
