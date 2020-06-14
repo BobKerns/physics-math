@@ -1,0 +1,1647 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>MappableGenerator | Physics Math</title>
+	<meta name="description" content="Documentation for Physics Math">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Physics Math</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/utils.html">Utils</a>
+				</li>
+				<li>
+					<a href="utils.mappablegenerator.html">MappableGenerator</a>
+				</li>
+			</ul>
+			<h1>Class MappableGenerator&lt;T, TReturn, TNext&gt;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+					<li>
+						<h4>TReturn</h4>
+					</li>
+					<li>
+						<h4>TNext</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">MappableGenerator</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TNext</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="utils.mappablegenerator.html#returning" class="tsd-kind-icon">returning</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#_symbol_iterator_" class="tsd-kind-icon">[<wbr>Symbol.iterator]</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#asarray" class="tsd-kind-icon">as<wbr>Array</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#concat" class="tsd-kind-icon">concat</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#every" class="tsd-kind-icon">every</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#filter" class="tsd-kind-icon">filter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="utils.mappablegenerator.html#flat" class="tsd-kind-icon">flat</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="utils.mappablegenerator.html#flatmap" class="tsd-kind-icon">flat<wbr>Map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#join" class="tsd-kind-icon">join</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="utils.mappablegenerator.html#map" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#next" class="tsd-kind-icon">next</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="utils.mappablegenerator.html#reduce" class="tsd-kind-icon">reduce</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#return" class="tsd-kind-icon">return</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#slice" class="tsd-kind-icon">slice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#some" class="tsd-kind-icon">some</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="utils.mappablegenerator.html#throw" class="tsd-kind-icon">throw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#concat-1" class="tsd-kind-icon">concat</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#every-1" class="tsd-kind-icon">every</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#extend" class="tsd-kind-icon">extend</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#filter-1" class="tsd-kind-icon">filter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#flat-1" class="tsd-kind-icon">flat</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#flatmap-1" class="tsd-kind-icon">flat<wbr>Map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#map-1" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#reduce-1" class="tsd-kind-icon">reduce</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#slice-1" class="tsd-kind-icon">slice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="utils.mappablegenerator.html#some-1" class="tsd-kind-icon">some</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="returning" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> returning</h3>
+					<div class="tsd-signature tsd-kind-icon">returning<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L37">src/utils.ts:37</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="_symbol_iterator_" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> [<wbr>Symbol.iterator]</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">[<wbr>Symbol.iterator]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L40">src/utils.ts:40</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Generator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="asarray" class="tsd-anchor"></a>
+					<h3>as<wbr>Array</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">as<wbr>Array<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L46">src/utils.ts:46</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="concat" class="tsd-anchor"></a>
+					<h3>concat</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">concat<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>gens<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L280">src/utils.ts:280</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Concatenates generators (or iterators or iterables).</p>
+								</div>
+								<p>Ensures that any supplied generators are terminated when this is terminated.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>gens: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>zero or more additional [Genable] to provide values.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="every" class="tsd-anchor"></a>
+					<h3>every</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">every<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L354">src/utils.ts:354</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>idx: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="filter" class="tsd-anchor"></a>
+					<h3>filter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TNext</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L100">src/utils.ts:100</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TNext</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="flat" class="tsd-anchor"></a>
+					<h3>flat</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">flat&lt;D&gt;<span class="tsd-signature-symbol">(</span>depth<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/utils.html#flatgen" class="tsd-signature-type">FlatGen</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L143">src/utils.ts:143</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> depth: <span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> = 1 as D</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/utils.html#flatgen" class="tsd-signature-type">FlatGen</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="flatmap" class="tsd-anchor"></a>
+					<h3>flat<wbr>Map</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">flat<wbr>Map&lt;D, R&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span>, depth<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L185">src/utils.ts:185</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+								</li>
+								<li>
+									<h4>R</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>idx: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> depth: <span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> = 1 as D</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="foreach" class="tsd-anchor"></a>
+					<h3>for<wbr>Each</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">for<wbr>Each<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L50">src/utils.ts:50</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="join" class="tsd-anchor"></a>
+					<h3>join</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">join<span class="tsd-signature-symbol">(</span>sep<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L366">src/utils.ts:366</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Trivial, but handy, same as <strong>Array.prototype.join</strong>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sep: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="map" class="tsd-anchor"></a>
+					<h3>map</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">map&lt;V&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">V</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L58">src/utils.ts:58</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>V</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">V</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">V</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="next" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> next</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L38">src/utils.ts:38</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="reduce" class="tsd-anchor"></a>
+					<h3>reduce</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">reduce&lt;A&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+						<li class="tsd-signature tsd-kind-icon">reduce&lt;A&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span>, init<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L315">src/utils.ts:315</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Like Array.prototype.reduce, but the 3rd argument to the reducing function (&quot;array&quot;) is omitted
+									because there is no array.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>acc: <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L322">src/utils.ts:322</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Like Array.prototype.reduce, but the 3rd argument to the reducing function (&quot;array&quot;) is omitted
+									because there is no array.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>A</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>acc: <span class="tsd-signature-type">A</span></h5>
+														</li>
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>init: <span class="tsd-signature-type">A</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="return" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> return</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">return<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L42">src/utils.ts:42</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="slice" class="tsd-anchor"></a>
+					<h3>slice</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">slice<span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, end<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L232">src/utils.ts:232</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> start: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> end: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = Number.POSITIVE_INFINITY</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="some" class="tsd-anchor"></a>
+					<h3>some</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">some<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L346">src/utils.ts:346</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>idx: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="throw" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> throw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">throw<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L44">src/utils.ts:44</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="concat-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> concat</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">concat&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>gens<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L290">src/utils.ts:290</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Concatenates generators (or iterators or iterables).</p>
+								</div>
+								<p>Ensures that any supplied generators are terminated when this is terminated.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>gens: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>zero or more additional [Genable] to provide values.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="every-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> every</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">every&lt;T&gt;<span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L358">src/utils.ts:358</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>p: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>idx: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="extend" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> extend</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">extend&lt;T, R, N&gt;<span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L369">src/utils.ts:369</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+								<li>
+									<h4>R</h4>
+								</li>
+								<li>
+									<h4>N</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="filter-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> filter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">filter&lt;T&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L104">src/utils.ts:104</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>iter: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="flat-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> flat</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">flat&lt;T, D&gt;<span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, depth<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/utils.html#flatgen" class="tsd-signature-type">FlatGen</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L147">src/utils.ts:147</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> depth: <span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> = 1 as D</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/utils.html#flatgen" class="tsd-signature-type">FlatGen</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="flatmap-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> flat<wbr>Map</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">flat<wbr>Map&lt;T, D, R&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span>, depth<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">D</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L189">src/utils.ts:189</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+								<li>
+									<h4>D<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
+								</li>
+								<li>
+									<h4>R</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>idx: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> depth: <span class="tsd-signature-type">D</span><span class="tsd-signature-symbol"> = 1 as D</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="map-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> map</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">map&lt;V, T&gt;<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">V</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L62">src/utils.ts:62</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>V</h4>
+								</li>
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">V</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">V</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>iter: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="reduce-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> reduce</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">reduce&lt;T, A&gt;<span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+						<li class="tsd-signature tsd-kind-icon">reduce&lt;T, A&gt;<span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span>, init<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L333">src/utils.ts:333</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Reduces <strong>gen</strong> like <strong>Array.prototype.reduce</strong>, but the 3rd argument to the reducing function (&quot;array&quot;)
+									is omitted because there is no array.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+								<li>
+									<h4>A</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>acc: <span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L341">src/utils.ts:341</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Reduces <strong>gen</strong> like <strong>Array.prototype.reduce</strong>, but the 3rd argument to the reducing function (&quot;array&quot;)
+									is omitted because there is no array.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+								<li>
+									<h4>A</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">A</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>acc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span>, v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>acc: <span class="tsd-signature-type">A</span></h5>
+														</li>
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>init: <span class="tsd-signature-type">A</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">A</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="slice-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> slice</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">slice&lt;T&gt;<span class="tsd-signature-symbol">(</span>iter<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, start<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, end<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L236">src/utils.ts:236</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iter: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> start: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> end: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = Number.POSITIVE_INFINITY</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="utils.mappablegenerator.html" class="tsd-signature-type">MappableGenerator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="some-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> some</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">some&lt;T&gt;<span class="tsd-signature-symbol">(</span>gen<span class="tsd-signature-symbol">: </span><a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/BobKerns/physics-math/blob/40ba7ba/src/utils.ts#L350">src/utils.ts:350</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gen: <a href="../modules/utils.html#genable" class="tsd-signature-type">Genable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>p: <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>v: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>idx: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> thisArg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_algebra_.html">&quot;algebra&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/frame.html">Frame</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/functionals.html">Functionals</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/index.html">Index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/latex.html">La<wbr>TeX</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/units.html">Units</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/utils.html">Utils</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/graph.html">graph</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="utils.mappablegenerator.html" class="tsd-kind-icon">Mappable<wbr>Generator</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#returning" class="tsd-kind-icon">returning</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#_symbol_iterator_" class="tsd-kind-icon">[<wbr>Symbol.iterator]</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#asarray" class="tsd-kind-icon">as<wbr>Array</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#concat" class="tsd-kind-icon">concat</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#every" class="tsd-kind-icon">every</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#filter" class="tsd-kind-icon">filter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="utils.mappablegenerator.html#flat" class="tsd-kind-icon">flat</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="utils.mappablegenerator.html#flatmap" class="tsd-kind-icon">flat<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#join" class="tsd-kind-icon">join</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="utils.mappablegenerator.html#map" class="tsd-kind-icon">map</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#next" class="tsd-kind-icon">next</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="utils.mappablegenerator.html#reduce" class="tsd-kind-icon">reduce</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#return" class="tsd-kind-icon">return</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#slice" class="tsd-kind-icon">slice</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#some" class="tsd-kind-icon">some</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="utils.mappablegenerator.html#throw" class="tsd-kind-icon">throw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#concat-1" class="tsd-kind-icon">concat</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#every-1" class="tsd-kind-icon">every</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#extend" class="tsd-kind-icon">extend</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#filter-1" class="tsd-kind-icon">filter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#flat-1" class="tsd-kind-icon">flat</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#flatmap-1" class="tsd-kind-icon">flat<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#map-1" class="tsd-kind-icon">map</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#reduce-1" class="tsd-kind-icon">reduce</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#slice-1" class="tsd-kind-icon">slice</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="utils.mappablegenerator.html#some-1" class="tsd-kind-icon">some</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="utils.numericmemoizer.html" class="tsd-kind-icon">Numeric<wbr>Memoizer</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="utils.rangememoizer.html" class="tsd-kind-icon">Range<wbr>Memoizer</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/utils.constructor.html" class="tsd-kind-icon">Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/utils.viewof.html" class="tsd-kind-icon">View<wbr>Of</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/utils.idgen.html" class="tsd-kind-icon">id<wbr>Gen</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#flatgen" class="tsd-kind-icon">Flat<wbr>Gen</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../modules/utils.html#genable" class="tsd-kind-icon">Genable</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#writeable" class="tsd-kind-icon">Writeable</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/utils.html#genproto" class="tsd-kind-icon">Gen<wbr>Proto</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/utils.html#katex" class="tsd-kind-icon">katex</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/utils.html#foo" class="tsd-kind-icon">Foo</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#nyi" class="tsd-kind-icon">NYI</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#throw" class="tsd-kind-icon">Throw</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#callsite" class="tsd-kind-icon">call<wbr>Site</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#curry1" class="tsd-kind-icon">curry1</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#curry2" class="tsd-kind-icon">curry2</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#curry3" class="tsd-kind-icon">curry3</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#curry4" class="tsd-kind-icon">curry4</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#definetag" class="tsd-kind-icon">define<wbr>Tag</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#idgen-1" class="tsd-kind-icon">id<wbr>Gen</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#isfunction" class="tsd-kind-icon">is<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#isgenerator" class="tsd-kind-icon">is<wbr>Generator</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#isiterable" class="tsd-kind-icon">is<wbr>Iterable</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#isiterator" class="tsd-kind-icon">is<wbr>Iterator</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../modules/utils.html#itevery" class="tsd-kind-icon">it<wbr>Every</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../modules/utils.html#itreduce" class="tsd-kind-icon">it<wbr>Reduce</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../modules/utils.html#itsome" class="tsd-kind-icon">it<wbr>Some</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#not" class="tsd-kind-icon">not</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#range" class="tsd-kind-icon">range</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/utils.html#range2" class="tsd-kind-icon">range2</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#romberg" class="tsd-kind-icon">romberg</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/utils.html#tex" class="tsd-kind-icon">tex</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#togenerator" class="tsd-kind-icon">to<wbr>Generator</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#toiterable" class="tsd-kind-icon">to<wbr>Iterable</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/utils.html#toiterator" class="tsd-kind-icon">to<wbr>Iterator</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script
+src="https://unpkg.com/mermaid/dist/mermaid.min.js"
+></script>
+<script>
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    </script>
+</body>
+</html>
