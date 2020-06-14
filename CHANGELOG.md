@@ -1,5 +1,12 @@
 # ChangeLog
 
+## Version 0.1.32
+_date: 2020-06-14_
+
+* Further extend MappableGenerators with the most useful methods from Array:
+map, filter, reduce, concat, flat, flatMap, join
+* Don't add a suffix to supplied function names.
+
 ## Version 0.1.31
 _date: 2020-06-12_
 
