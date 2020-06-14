@@ -24,6 +24,7 @@
       <w>fempto</w>
       <w>functionals</w>
       <w>gadd</w>
+      <w>genable</w>
       <w>gmul</w>
       <w>gsub</w>
       <w>heta</w>
@@ -64,6 +65,7 @@
       <w>textcolor</w>
       <w>timestep</w>
       <w>tsbuild</w>
+      <w>tsc</w>
       <w>typedoc</w>
       <w>unprefixed</w>
       <w>vectorish</w>
