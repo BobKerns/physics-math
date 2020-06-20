@@ -79,6 +79,9 @@ export abstract class MemoizerBase<T extends number> implements Memoizer<T> {
     }
 }
 
+/**
+ * @internal
+ */
 export class RangeMemoizer<T extends number = number> extends MemoizerBase<T> {
     constructor(f: (n: number) => T, stepsize = MemoizerBase.stepsize, bufsize = MemoizerBase.bufsize) {
         super(f, stepsize, bufsize);
@@ -158,6 +161,7 @@ export class RangeMemoizer<T extends number = number> extends MemoizerBase<T> {
 
 /**
  * Cache values in an internal array, marking absent values with a NaN.
+ * @internal
  */
 export class NumericMemoizer<T extends number> extends MemoizerBase<T> {
     constructor(f: (n: number) => T, stepsize = MemoizerBase.stepsize, bufsize = MemoizerBase.bufsize) {
