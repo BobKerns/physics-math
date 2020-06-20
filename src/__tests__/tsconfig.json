@@ -9,6 +9,13 @@
     "test-pfunction.ts",
     "test-units.ts",
     "test-numerics.ts",
+    "test-algebra.ts",
+    "test-generators.ts",
+    "test-graph.ts",
+    "test-integration.ts",
+    "test-latex.ts",
+    "test-piecewise.ts",
+    "test-utils",
     "../modules.d.ts"
   ],
   "include": ["*.ts"],

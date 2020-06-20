@@ -21,11 +21,8 @@ export {
     IndefiniteIntegral
 } from './base';
 export {
-    range,
-    isGenerator, MappableGenerator, toGenerator,
-    isIterable, toIterable,
-    isIterator, toIterator,
     isFunction,
+    Throw, idGen, callSite, ViewOf, NYI, not
 } from './utils';
 export {add, sub, mul, equal, near} from './arith';
 export * from './curry';
@@ -46,3 +43,10 @@ export {SI} from "./primitive-units";
 export {InertialFrame, Frame, World} from "./frame";
 export {Styler, StyleKey, colorStyler, RGB6Color, setStyle, INITIAL_STYLE, NumberFormat} from './latex'
 export {Piecewise} from './piecewise';
+export {graph, GraphFormat, AxisRange, DEFAULT_FORMAT, Box, MouseMoveData} from './graph';
+export {gcd, xgcd, isPrime, isComposite, factor, sieve} from './algebra';
+export {range,
+    isIterable, isIterator, toIterable, toIterator, toIterableIterator,
+    toGenerator, isGenerator, isGenable, isIterableIterator,
+    Genable, GenUnion, FlatGen, GenType, Reducer,
+    EnhancedGenerator} from './generators'

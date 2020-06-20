@@ -9,8 +9,8 @@
  * Test numerics functions
  */
 
-import {range} from "../utils";
 import {Memoizer, NumericMemoizer, RangeMemoizer, romberg} from "../numerics";
+import {range} from "../generators";
 type MemoFun = (t: number) => number;
 interface MemoizerConstructor<T extends Memoizer<any>> {
     new(f: MemoFun, a: number, b: number): Memoizer<any>;
