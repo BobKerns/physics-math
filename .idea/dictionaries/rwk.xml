@@ -25,6 +25,7 @@
       <w>functionals</w>
       <w>gadd</w>
       <w>genable</w>
+      <w>genables</w>
       <w>gmul</w>
       <w>gsub</w>
       <w>heta</w>
@@ -36,6 +37,7 @@
       <w>mathrm</w>
       <w>memoizer</w>
       <w>moduledefinition</w>
+      <w>moduledocumentation</w>
       <w>mult</w>
       <w>multf</w>
       <w>nargs</w>
@@ -67,7 +69,9 @@
       <w>tsbuild</w>
       <w>tsc</w>
       <w>typedoc</w>
+      <w>unpkg</w>
       <w>unprefixed</w>
+      <w>varadic</w>
       <w>vectorish</w>
       <w>versor</w>
       <w>viewof</w>
