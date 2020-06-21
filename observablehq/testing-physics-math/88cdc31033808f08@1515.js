@@ -1,13 +1,19 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@1365
+// https://observablehq.com/@bobkerns/testing-physics-math@1515
 import define1 from "./e93997d5089d7165@2264.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
-import define3 from "./4e8bebdde0debc65@139.js";
+import define3 from "./c6c7a741ac87d656@52.js";
+import define4 from "./4e8bebdde0debc65@139.js";
 
 export default function define(runtime, observer) {
   const main = runtime.module();
+  main.variable(observer()).define(["md"], function(md){return(
+md`# Testing Physics-Math`
+)});
+  main.variable(observer()).define(["toc"], function(toc){return(
+toc()
+)});
   main.variable(observer()).define(["md","TAG","isVersion"], function(md,TAG,isVersion){return(
-md`# Testing Physics-Math
-
+md`
 This page is a testing page for the Physics Math package I am developing. (Part of a bigger project,
 Newton's Spherical Cow).
 
@@ -49,7 +55,7 @@ button({ value: "Check for new releases" })
 )});
   main.variable(observer("check_release")).define("check_release", ["Generators", "viewof check_release"], (G, _) => G.input(_));
   main.variable(observer("viewof reload")).define("viewof reload", ["VERSION","button","md","VERSION_NAME"], function(VERSION,button,md,VERSION_NAME){return(
-VERSION === 'localhost'
+VERSION === 'local'
   ? button({ value: "Reload from Localhost" })
   : ((v = md``) => ((v.value = VERSION_NAME), v))()
 )});
@@ -84,23 +90,6 @@ in the top level of the project directory.`
         )
 }`
 )});
-  main.variable(observer("viewof TIME")).define("viewof TIME", ["slider","constant","Units"], function(slider,constant,Units){return(
-slider({
-  min: 0,
-  max: 10,
-  step: 0.001,
-  format: v => constant(v, Units.time).html,
-  description: "Time"
-})
-)});
-  main.variable(observer("TIME")).define("TIME", ["Generators", "viewof TIME"], (G, _) => G.input(_));
-  main.variable(observer("viewof numberFormat")).define("viewof numberFormat", ["select","STYLES"], function(select,STYLES){return(
-select({
-  options: [...Object.keys(STYLES).filter(k => k.length > 1)],
-  description: `Number format`
-})
-)});
-  main.variable(observer("numberFormat")).define("numberFormat", ["Generators", "viewof numberFormat"], (G, _) => G.input(_));
   main.variable(observer()).define(["md"], function(md){return(
 md`### The full module can be inspected here.`
 )});
@@ -136,6 +125,23 @@ ${
 `;
 }
 );
+  main.variable(observer("viewof numberFormat")).define("viewof numberFormat", ["select","STYLES"], function(select,STYLES){return(
+select({
+  options: [...Object.keys(STYLES).filter(k => k.length > 1)],
+  description: `Number format`
+})
+)});
+  main.variable(observer("numberFormat")).define("numberFormat", ["Generators", "viewof numberFormat"], (G, _) => G.input(_));
+  main.variable(observer("viewof TIME")).define("viewof TIME", ["slider","constant","Units"], function(slider,constant,Units){return(
+slider({
+  min: 0,
+  max: 10,
+  step: 0.001,
+  format: v => constant(v, Units.time).html,
+  description: "Time"
+})
+)});
+  main.variable(observer("TIME")).define("TIME", ["Generators", "viewof TIME"], (G, _) => G.input(_));
   main.variable(observer()).define(["constant","getUnit","sel_unit"], function(constant,getUnit,sel_unit){return(
 constant(...getUnit(sel_unit).toSI(1)).html
 )});
@@ -154,9 +160,6 @@ constant(...getUnit('kilometer').fromSI(...getUnit('mile').toSI(1))).html
   main.variable(observer()).define(["constant","getUnit"], function(constant,getUnit){return(
 constant(...getUnit('mile').fromSI(1, getUnit('cm'))).html
 )});
-  main.variable(observer()).define(["constant"], function(constant){return(
-constant.toString()
-)});
   main.variable(observer()).define(["md"], function(md){return(
 md`### The defined unit symbols and names (preferring symbols to names).`
 )});
@@ -168,7 +171,18 @@ Object.keys(
   }, {})
 )
   .filter(k => !!k)
-  .sort()
+  .sort((a, b) =>
+    // Sort the symbols to the end since they're confusing, especially " as arc-seconds.
+    a.length < 3 && b.length >= 3
+      ? 1
+      : a.length >= 3 && b.length < 3
+      ? -1
+      : a.toLowerCase() < b.toLowerCase()
+      ? -1
+      : a.toLowerCase() > b.toLowerCase()
+      ? 1
+      : 0
+  )
 )});
   main.variable(observer()).define(["md"], function(md){return(
 md`### We will need a World, and at least one InertialFrame within that world.
@@ -308,6 +322,15 @@ new Piecewise(Units.length, TYPE.SCALAR)
   main.variable(observer()).define(["PX"], function(PX){return(
 PX.functions
 )});
+  main.variable(observer()).define(["EnhancedGenerator"], function(EnhancedGenerator){return(
+EnhancedGenerator.enhance([3, 5, 6]).asArray()
+)});
+  main.variable(observer()).define(["EnhancedGenerator","range"], function(EnhancedGenerator,range){return(
+EnhancedGenerator.concat(range(0, 10), range(20, 30)).asArray()
+)});
+  main.variable(observer()).define(["graph","width","constant","getUnit"], function(graph,width,constant,getUnit){return(
+graph(width)()([constant(2, getUnit('meter'))])
+)});
   main.variable(observer()).define(["md"], function(md){return(
 md`## Appendix
 
@@ -368,7 +391,7 @@ LIBRARY_URL, new Date()
 )});
   main.variable(observer("PM")).define("PM", ["glMatrix","reload","require","LIBRARY_URL","tex","VERSION"], async function(glMatrix,reload,require,LIBRARY_URL,tex,VERSION)
 {
-  glMatrix; // Import it first.
+  glMatrix; // Import it first (in versions where it's needed).
   reload;
   try {
     const PM = await require(LIBRARY_URL);
@@ -493,11 +516,45 @@ PM.isPCompiled
   main.variable(observer("romberg")).define("romberg", ["PM"], function(PM){return(
 PM.romberg
 )});
+  main.variable(observer("EnhancedGenerator")).define("EnhancedGenerator", ["isVersion","PM"], function(isVersion,PM){return(
+isVersion(">0.1.33")
+  ? PM.EnhancedGenerator
+  : ((PM.MappableGenerator.enhance = PM.MappableGenerator.extend),
+    PM.MappableGenerator)
+)});
+  main.variable(observer("isGenerator")).define("isGenerator", ["PM"], function(PM){return(
+PM.isGenerator
+)});
+  main.variable(observer("isIterator")).define("isIterator", ["PM"], function(PM){return(
+PM.isIterator
+)});
+  main.variable(observer("isIterable")).define("isIterable", ["PM"], function(PM){return(
+PM.isIterable
+)});
+  main.variable(observer("toGenerator")).define("toGenerator", ["PM"], function(PM){return(
+PM.toGenerator
+)});
+  main.variable(observer("toIterator")).define("toIterator", ["PM"], function(PM){return(
+PM.toIterator
+)});
+  main.variable(observer("toIterable")).define("toIterable", ["PM"], function(PM){return(
+PM.toIterable
+)});
+  main.variable(observer("range")).define("range", ["PM"], function(PM){return(
+PM.range
+)});
+  main.variable(observer("graph")).define("graph", ["isVersion","PM","md","VERSION"], function(isVersion,PM,md,VERSION){return(
+isVersion('>0.1.32')
+  ? PM.graph
+  : () => () => () => md`Graphing not available in ${VERSION}`
+)});
   main.variable(observer()).define(["md"], function(md){return(
 md`### Library imports.`
 )});
-  main.variable(observer("glMatrix")).define("glMatrix", async function(){return(
-await import('https://unpkg.com/gl-matrix@3.3.0/esm/index.js?module')
+  main.variable(observer("glMatrix")).define("glMatrix", ["isVersion"], async function(isVersion){return(
+isVersion('<0.1.33')
+  ? await import('https://unpkg.com/gl-matrix@3.3.0/esm/index.js?module')
+  : null
 )});
   const child1 = runtime.module(define1);
   main.import("slider", child1);
@@ -508,6 +565,8 @@ await import('https://unpkg.com/gl-matrix@3.3.0/esm/index.js?module')
   main.variable(observer("semver")).define("semver", ["require"], function(require){return(
 require('https://bundle.run/semver@7.3.2')
 )});
+  const child3 = runtime.module(define3);
+  main.import("toc", child3);
   main.variable(observer()).define(["md","VERSION","isVersion"], function(md,VERSION,isVersion){return(
 md`### Predicate to conditionalize on the VERSION.
 ~~~javascript
@@ -515,8 +574,15 @@ VERSION = "${VERSION}"
 
 isVersion(">=0.1.26"); // => ${isVersion(">=0.1.26")}
 isVersion(">=0.1.16"); // => ${isVersion(">=0.1.16")}
-isVersion(">=0.2.26"); // => ${isVersion(">=0.2.26")}
-isVersion("local"); // ${isVersion("local")}
+isVersion(">=0.1.26"); // => ${isVersion(">=0.1.26")}${
+  isVersion('local')
+    ? ''
+    : `
+isVersion(">=${VERSION}"); // => ${isVersion(VERSION)}
+`
+}isVersion(">=0.2.26"); // => ${isVersion(">=0.2.26")}
+isVersion(">=1.0.0");  // => ${isVersion(">=1.0.0")}
+isVersion("local");    // => ${isVersion("local")}
 ~~~`
 )});
   main.variable(observer("isVersion")).define("isVersion", ["VERSION","semver"], function(VERSION,semver){return(
@@ -560,9 +626,10 @@ INITIAL_STYLE.context.number(3783.99)
   main.variable(observer()).define(["INITIAL_STYLE"], function(INITIAL_STYLE){return(
 INITIAL_STYLE.context.exponentStyle.number(3783.99)
 )});
-  main.variable(observer()).define(["md"], async function(md){return(
+  main.variable(observer()).define(["md","check_release"], async function(md,check_release){return(
 md`### Release Documentation Links
-${(await (await fetch(
+${(check_release,
+(await (await fetch(
   'https://api.github.com/repos/BobKerns/physics-math/releases'
 )).json())
   .filter(e => e.published_at >= '2020-05-29T18:25:38Z')
@@ -572,10 +639,10 @@ ${(await (await fetch(
         r.tag_name
       }/index.html) ${r.prerelease ? ' (prerelease)' : ''}`
   )
-  .join('\n')}`
+  .join('\n'))}`
 )});
-  const child3 = runtime.module(define3);
-  main.import("applyHljsStyle", child3);
+  const child4 = runtime.module(define4);
+  main.import("applyHljsStyle", child4);
   main.variable(observer()).define(["applyHljsStyle"], function(applyHljsStyle){return(
 applyHljsStyle('vs')
 )});
