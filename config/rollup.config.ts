@@ -66,6 +66,9 @@ export const outputs = (p: Package) => flatMap((e: OutputOptions) => (e.file ? [
             name: 'PM',
             sourcemap: true,
             globals: {
+                katex: "katex",
+                d3: "d3",
+                "@observablehq/stdlib": "observablehq"
                 // "ramda": "ramda",
                 // "gl-matrix": "glMatrix"
             }
@@ -109,7 +112,7 @@ const dbg: any = {name: 'dbg'};
  * @param resolved
  */
 const checkExternal = (id: string, from?: string, resolved?: boolean): boolean =>
-    (resolved
+    !/gl-matrix|glMatrix/i.test(id) && (resolved
         ? /node_modules/.test(id)
         : !/^\./.test(id));
 
@@ -135,7 +138,7 @@ const options: RollupOptions = {
             extensions: [".js", ".ts"]
         }),
         externalGlobals({
-            'gl-matrix': "glMatrix",
+            // 'gl-matrix': "glMatrix",
             //'katex': 'katex',
             'ramda': 'ramda'
         }),
