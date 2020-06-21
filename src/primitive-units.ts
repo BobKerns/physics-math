@@ -137,9 +137,10 @@ export interface IUnitBase<T extends PUnitTerms = PUnitTerms> {
  */
 export const makeLookupKey = (key: PUnitTerms) => {
     const units = Object.keys(Primitive) as Primitive[];
+    const invalid = (k: Primitive) => Throw(`Invalid primitive type name "${k} in type key.`);
     return units
         .sort(orderUnits)
-        .map(k => `${PRIMITIVE_MAP[k]?.symbol || Throw(`Invalid primitive type name "${k} in type key.`)}^${key[k] || 0}`)
+        .map(k => `${PRIMITIVE_MAP[k]?.symbol || invalid(k)}^${key[k] || 0}`)
         .join(' ');
 }
 
