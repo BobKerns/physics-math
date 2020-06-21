@@ -1,6 +1,6 @@
 {
   "name": "@rwk/physics-math",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "description": "Math for physics homework problems",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -52,7 +52,7 @@
   },
   "homepage": "https://github.com/BobKerns/physics-math#readme",
   "dependencies": {
-    "@observablehq/runtime": "^4.7.0",
+    "@observablehq/runtime": "^4.7.1",
     "@observablehq/stdlib": "^3.3.2",
     "@types/d3": "^5.7.2",
     "d3": "^5.16.0",

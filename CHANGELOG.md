@@ -1,5 +1,14 @@
 # ChangeLog
 
+## Version 0.1.33
+_date: 2020-06-20_
+
+* Rename MappableGenerators to EnhancedGenerators
+* Much enhanced generators
+* Update dependencies
+* Add serve.json so serve will load our docs correctly.
+* Directly include gl-matrix in the bundle to simplify usage.
+
 ## Version 0.1.32
 _date: 2020-06-14_
 
