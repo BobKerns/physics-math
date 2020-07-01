@@ -16,7 +16,7 @@
  */
 
 import {isFunction} from "../utils";
-import {isGenable, isGenerator, EnhancedGenerator, range, isIterator, isIterable} from "../generators";
+import {isGenable, isGenerator, EnhancedGenerator, range, isIterator, isIterable, Sync, Async} from "../generators";
 
 type TestGen<T> =  EnhancedGenerator<T> & {
     did_return?: boolean;
@@ -42,7 +42,7 @@ function gen(max: number): TestGen<number> {
         }
     }
     result = gen(max) as TestGen<number>;
-    return EnhancedGenerator.enhance(result);
+    return Sync.enhance(result);
 }
 
 const testThrow = (f: (g: TestGen<number>) => Generator<number>) => {
@@ -74,7 +74,6 @@ describe('TestGen', () => {
         testReturn(g => g);
     });
 });
-
 
 describe('range', () => {
     test('simple',() => expect([...range(0, 5)])
@@ -183,21 +182,45 @@ describe('Predicates', () => {
 });
 
 describe('EnhancedGenerator', () => {
+    describe('of', () => {
+        describe('Sync', () => {
+            test('of', () =>
+                expect([...Sync.of(3, 7, 'foo')]).toEqual([3, 7, 'foo']));
+
+            test('of union', () => {
+                // Verifies that differing types work and infer a suitable union.
+                const v: EnhancedGenerator<number|string> = Sync.of(3, 7, 'foo');
+                const a: Array<number|string> = v.asArray();
+                expect(a).toEqual([3, 7, 'foo']);
+            });
+        });
+    });
+    describe('Async', () => {
+        describe('of', () => {
+            test('of not iterable', () =>
+                // @ts-expect-error
+                expect(() => [...Async.of(3, 7, 'foo')]).toThrowError());
+            test('of Promise', () =>
+                expect(Async.of(3, 7, 'foo').asArray()).toBeInstanceOf(Promise));
+            test('of', async () =>
+                expect(await Async.of(3, 7, 'foo').asArray()).toEqual([3, 7, 'foo']));
+        });
+    });
     describe('slice', () => {
         test('defaultArgs', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).slice().asArray())
+            expect(Sync.enhance([1, 2, 3, 4]).slice().asArray())
                 .toEqual([1, 2, 3, 4]));
         test('skip 2', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).slice(2).asArray())
+            expect(Sync.enhance([1, 2, 3, 4]).slice(2).asArray())
                 .toEqual([3, 4]));
         test('limit 2', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).slice(0, 2).asArray())
+            expect(Sync.enhance([1, 2, 3, 4]).slice(0, 2).asArray())
                 .toEqual([1, 2]));
         test('middle 2', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).slice(1, 3).asArray())
+            expect(Sync.enhance([1, 2, 3, 4]).slice(1, 3).asArray())
                 .toEqual([2, 3]));
         test('out-of-range', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).slice(4).asArray())
+            expect(Sync.enhance([1, 2, 3, 4]).slice(4).asArray())
                 .toEqual([]));
 
         test('throw', () =>
@@ -209,32 +232,32 @@ describe('EnhancedGenerator', () => {
 
     describe('concat', () => {
         test('trivial', () =>
-            expect(EnhancedGenerator.enhance([1, 8, 'fred']).concat().asArray())
+            expect(Sync.enhance([1, 8, 'fred']).concat().asArray())
                 .toEqual([1, 8, 'fred']));
 
         test('multiple', () =>
-            expect(EnhancedGenerator.enhance([1, 8, 'fred']).concat(['ginger'], [], [7]).asArray())
+            expect(Sync.enhance([1, 8, 'fred']).concat(['ginger'], [], [7]).asArray())
                 .toEqual([1, 8, 'fred', 'ginger', 7]));
 
         test('static', () =>
-            expect(EnhancedGenerator.concat([1, 8, 'fred'], ['ginger'], [], [7]).asArray())
+            expect(Sync.concat([1, 8, 'fred'], ['ginger'], [], [7]).asArray())
                 .toEqual([1, 8, 'fred', 'ginger', 7]));
 
-        test('throw', () => testThrow(g => EnhancedGenerator.enhance<number>([]).concat(g)))
-        test('return', () => testReturn(g => EnhancedGenerator.enhance<number>([]).concat(g)))
+        test('throw', () => testThrow(g => Sync.enhance<number>([]).concat(g)))
+        test('return', () => testReturn(g => Sync.enhance<number>([]).concat(g)))
     });
 
     describe('reduce', () => {
         test('w/ init', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).reduce((acc, v) => acc + v, 5))
+            expect(Sync.enhance([1, 2, 3, 4]).reduce((acc, v) => acc + v, 5))
                 .toBe(15));
 
         test('w/o init', () =>
-            expect(EnhancedGenerator.enhance([1, 2, 3, 4]).reduce((acc: number, v) => acc + v))
+            expect(Sync.enhance([1, 2, 3, 4]).reduce((acc: number, v) => acc + v))
                 .toBe(10));
 
         test('empty', () =>
-            expect((_: any) => EnhancedGenerator.enhance([]).reduce((acc: number, v) => acc + v))
+            expect((_: any) => Sync.enhance([]).reduce((acc: number, v) => acc + v))
                 .toThrow(TypeError));
 
     });
@@ -245,23 +268,23 @@ describe('EnhancedGenerator', () => {
                 .toEqual([]));
 
         test('simple', () =>
-            expect(EnhancedGenerator.flat([3, 7]).asArray())
+            expect(Sync.flat([3, 7]).asArray())
                 .toEqual([3, 7]));
 
         test('nested', () =>
-            expect(EnhancedGenerator.flat([3, [8, 9], 7]).asArray())
+            expect(Sync.flat([3, [8, 9], 7]).asArray())
                 .toEqual([3, 8, 9, 7]));
 
         test('nested Gen', () =>
-            expect(EnhancedGenerator.flat([3, range(4, 7), 7]).asArray())
+            expect(Sync.flat([3, range(4, 7), 7]).asArray())
                 .toEqual([3, 4, 5, 6, 7]));
 
         test('depth 1', () =>
-            expect(EnhancedGenerator.flat([3, [2, [1, [0]]], 7]).asArray())
+            expect(Sync.flat([3, [2, [1, [0]]], 7]).asArray())
                 .toEqual([3, 2, [1, [0]], 7]));
 
         test('depth 2', () =>
-            expect(EnhancedGenerator.flat([3, [2, [1, [0]]], 7], 2).asArray())
+            expect(Sync.flat([3, [2, [1, [0]]], 7], 2).asArray())
                 .toEqual([3, 2, 1, [0], 7]));
 
     });
@@ -273,23 +296,23 @@ describe('EnhancedGenerator', () => {
                 .toEqual([]));
 
         test('simple', () =>
-            expect(EnhancedGenerator.flatMap((n: number) => n + 1)([3, 7]).asArray())
+            expect(Sync.flatMap((n: number) => n + 1)([3, 7]).asArray())
                 .toEqual([4, 8]));
 
         test('nested', () =>
-            expect(EnhancedGenerator.flatMap((n: number) => (n & 1) ?  n : [n, n + 1])([3, 8, 7]).asArray())
+            expect(Sync.flatMap((n: number) => (n & 1) ?  n : [n, n + 1])([3, 8, 7]).asArray())
                 .toEqual([3, 8, 9, 7]));
 
         test('nested Gen', () =>
-            expect(EnhancedGenerator.flatMap((n: any) => typeof n === 'number' ? n * 2 : n)([3, range(4, 7), 7], 2).asArray())
+            expect(Sync.flatMap((n: any) => typeof n === 'number' ? n * 2 : n)([3, range(4, 7), 7], 2).asArray())
                 .toEqual([6, 8, 10, 12, 14]));
 
         test('depth 1', () =>
-            expect(EnhancedGenerator.flatMap((n: any) => typeof n === 'number' ? n * 2 : n)([3, [2, [1, [0]]], 7]).asArray())
+            expect(Sync.flatMap((n: any) => typeof n === 'number' ? n * 2 : n)([3, [2, [1, [0]]], 7]).asArray())
                 .toEqual([6, 2, [1, [0]], 14]));
 
         test('depth 2', () =>
-            expect(EnhancedGenerator.flatMap((n: any) => typeof n === 'number' ? n * 2 : n, 2)([3, [2, [1, [0]]], 7]).asArray())
+            expect(Sync.flatMap((n: any) => typeof n === 'number' ? n * 2 : n, 2)([3, [2, [1, [0]]], 7]).asArray())
                 .toEqual([6, 4, 1, [0], 14]));
 
     });
@@ -304,16 +327,16 @@ describe('EnhancedGenerator', () => {
             expect(range(0, 3).join(', '))
                 .toEqual('0, 1, 2'));
         test('static', () =>
-            expect(EnhancedGenerator.join(['a', 'b']))
+            expect(Sync.join(['a', 'b']))
                 .toEqual('a,b'));
         test('static sep', () =>
-            expect(EnhancedGenerator.join(['a', 'b'], ', '))
+            expect(Sync.join(['a', 'b'], ', '))
                 .toEqual('a, b'));
         test('static nullsep', () =>
-            expect(EnhancedGenerator.join(['a', 'b'], ''))
+            expect(Sync.join(['a', 'b'], ''))
                 .toEqual('ab'));
         test('static sep functional', () =>
-            expect(EnhancedGenerator.join(', ')(['a', 'b']))
+            expect(Sync.join(', ')(['a', 'b']))
                 .toEqual('a, b'));
 
     });
@@ -321,11 +344,11 @@ describe('EnhancedGenerator', () => {
 
 describe('repeat', () => {
     test('standalone empty', () =>
-        expect([...EnhancedGenerator.repeat(55, 0)])
+        expect([...Sync.repeat(55, 0)])
             .toEqual([]));
 
     test('standalone', () =>
-        expect([...EnhancedGenerator.repeat(9, 5)])
+        expect([...Sync.repeat(9, 5)])
             .toEqual([9, 9, 9, 9, 9]));
 
     test('extend empty', () =>
@@ -355,19 +378,19 @@ describe('repeatLast', () => {
 
 describe('zip', () => {
     test('empty', () =>
-        expect(EnhancedGenerator.zip().asArray())
+        expect(Sync.zip().asArray())
             .toEqual([]));
     test('all empty', () =>
-        expect(EnhancedGenerator.zip(range(0, 0), range(0, 0)).asArray())
+        expect(Sync.zip(range(0, 0), range(0, 0)).asArray())
             .toEqual([]));
     test('single', () =>
-        expect(EnhancedGenerator.zip(range(0, 5)).asArray())
+        expect(Sync.zip(range(0, 5)).asArray())
             .toEqual([[0], [1], [2], [3], [4]]));
     test('simple', () =>
-        expect(EnhancedGenerator.zip(range(0, 5), range(0, 10, 2)).asArray())
+        expect(Sync.zip(range(0, 5), range(0, 10, 2)).asArray())
             .toEqual([[0, 0], [1, 2], [2, 4], [3, 6], [4, 8]]));
     test('uneven', () =>
-        expect(EnhancedGenerator.zip(range(0, 10), range(0, 10, 2)).asArray())
+        expect(Sync.zip(range(0, 10), range(0, 10, 2)).asArray())
             .toEqual([[0, 0], [1, 2], [2, 4], [3, 6], [4, 8]]));
 
 
