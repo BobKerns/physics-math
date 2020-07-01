@@ -48,5 +48,9 @@ export {gcd, xgcd, isPrime, isComposite, factor, sieve} from './algebra';
 export {range,
     isIterable, isIterator, toIterable, toIterator, toIterableIterator,
     toGenerator, isGenerator, isGenable, isIterableIterator,
+    isAsyncIterable, isAsyncIterator, toAsyncIterable, toAsyncIterator, toAsyncIterableIterator,
+    toAsyncGenerator, isAsyncGenerator, isAsyncGenable, isAsyncIterableIterator,
+    Sync, Async,
     Genable, GenUnion, FlatGen, GenType, Reducer,
-    EnhancedGenerator} from './generators'
+    EnhancedGenerator, EnhancedAsyncGenerator, Enhanced
+} from './generators'

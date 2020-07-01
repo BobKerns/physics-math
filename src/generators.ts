@@ -646,7 +646,7 @@ export interface GeneratorOps<S extends SyncType> {
  * @typeParam T The value type yielded by the `Generator`.
  * @typeParam S Selects for Sync or Async operation.
  */
-type Enhanced<T, S extends SyncType, TReturn = any, TNext = unknown> = {
+export type Enhanced<T, S extends SyncType, TReturn = any, TNext = unknown> = {
     sync: EnhancedGenerator<T, TReturn, TNext>;
     async: EnhancedAsyncGenerator<T, TReturn, TNext>;
 }[S];
@@ -2655,7 +2655,7 @@ abstract class Enhancements<T = unknown, TReturn = any, TNext = unknown, S exten
     }
 }
 
-abstract class EnhancedAsyncGenerator<T = unknown, TReturn = any, TNext = unknown>
+export abstract class EnhancedAsyncGenerator<T = unknown, TReturn = any, TNext = unknown>
     extends Enhancements<T, TReturn, TNext, Async>
     implements AsyncGenerator<T, TReturn, TNext>, AsyncIterable<T>, AsyncIterator<T> {
 
@@ -2879,7 +2879,7 @@ export function toAsyncIterable<T>(i: Genable<T, Async>): AsyncIterable<T> {
  * Similar to [[toGenerator]], but does not require the presence of `Generator.return` or `Generator.throw` methods.
  * @param i
  */
-export function toIterableIterator<T>(i: Genable<T>): IterableIterator<T> {
+export function toIterableIterator<T>(i: Genable<T, Sync>): IterableIterator<T> {
     if (isIterable(i) && isIterator(i)) return i;
     if (isIterable(i)) {
         // Invoke [Symbol.iterator]() just once, on first use.
@@ -2896,6 +2896,38 @@ export function toIterableIterator<T>(i: Genable<T>): IterableIterator<T> {
     if (isIterator(i)) {
         const iit: IterableIterator<T> = {
             [Symbol.iterator]: () => iit,
+            next: (val: any) => i.next(val),
+            return: i.return && ((val) => i.return!(val)),
+            throw: i.throw && ((val) => i.throw!(val))
+        }
+        return iit;
+    }
+    throw new Error(`Not iterator nor iterable: ${i}`);
+}
+
+
+/**
+ * Similar to [[toAsyncGenerator]], but does not require the presence of `AsyncGenerator.return` or
+ * `AsyncGenerator.throw` methods.
+ * @param i
+ */
+export function toAsyncIterableIterator<T>(i: Genable<T, Async>): AsyncIterableIterator<T> {
+    if (isAsyncIterable(i) && isAsyncIterator(i)) return i;
+    if (isAsyncIterable(i)) {
+        // Invoke [Symbol.iterator]() just once, on first use.
+        let _it: AsyncIterator<T>|undefined = undefined;
+        const it = () => _it ?? (_it = i[Symbol.asyncIterator]());
+        const iit: AsyncIterableIterator<T> = {
+            [Symbol.asyncIterator]: () => iit,
+            next: () => it().next(),
+            return: it().return && ((val) => it().return!(val)),
+            throw: it().throw && ((val) => it().throw!(val))
+        };
+        return iit;
+    }
+    if (isAsyncIterator(i)) {
+        const iit: AsyncIterableIterator<T> = {
+            [Symbol.asyncIterator]: () => iit,
             next: (val: any) => i.next(val),
             return: i.return && ((val) => i.return!(val)),
             throw: i.throw && ((val) => i.throw!(val))
@@ -2946,8 +2978,16 @@ export const isAsyncIterable = <K>(i: AsyncIterable<K> | any): i is AsyncIterabl
  * method) and the `Iterator` protocol (a next() method).
  * @param i
  */
-export const isIterableIterator = <K>(i: Iterable<K>|Iterator<K>|any): i is IterableIterator<K> => isIterator(i) && isIterable(i);
+export const isIterableIterator = <K>(i: Iterable<K>|Iterator<K>|any): i is IterableIterator<K> =>
+    isIterator(i) && isIterable(i);
 
+/**
+ * Predicate/type guard, returns `true` if the argument satisfies the `AsyncIterable` protocol (has a `[Symbol.asyncIterator]`
+ * method) and the `AsyncIterator` protocol (a next() method).
+ * @param i
+ */
+export const isAsyncIterableIterator = <K>(i: Iterable<K>|Iterator<K>|any): i is IterableIterator<K> =>
+    isAsyncIterator(i) && isAsyncIterable(i);
 
 /**
  *
