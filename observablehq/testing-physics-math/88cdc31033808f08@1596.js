@@ -1,4 +1,4 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@1515
+// https://observablehq.com/@bobkerns/testing-physics-math@1596
 import define1 from "./e93997d5089d7165@2264.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
 import define3 from "./c6c7a741ac87d656@52.js";
@@ -322,11 +322,20 @@ new Piecewise(Units.length, TYPE.SCALAR)
   main.variable(observer()).define(["PX"], function(PX){return(
 PX.functions
 )});
-  main.variable(observer()).define(["EnhancedGenerator"], function(EnhancedGenerator){return(
-EnhancedGenerator.enhance([3, 5, 6]).asArray()
+  main.variable(observer()).define(["tex"], function(tex){return(
+tex`\int_0^3{x dt}`
 )});
-  main.variable(observer()).define(["EnhancedGenerator","range"], function(EnhancedGenerator,range){return(
-EnhancedGenerator.concat(range(0, 10), range(20, 30)).asArray()
+  main.variable(observer()).define(["Sync"], function(Sync){return(
+Sync.enhance([3, 5, 6]).asArray()
+)});
+  main.variable(observer()).define(["Sync","range"], function(Sync,range){return(
+Sync.concat(range(0, 10), range(20, 30)).asArray()
+)});
+  main.variable(observer()).define(["Async"], function(Async){return(
+Async.of(3, 5, 7, 9).asArray()
+)});
+  main.variable(observer()).define(["Async","Sync"], function(Async,Sync){return(
+Async.zip(Async.of(3, 5, 7, 9), Sync.of(2, 4, 6).repeatLast()).asArray()
 )});
   main.variable(observer()).define(["graph","width","constant","getUnit"], function(graph,width,constant,getUnit){return(
 graph(width)()([constant(2, getUnit('meter'))])
@@ -516,11 +525,31 @@ PM.isPCompiled
   main.variable(observer("romberg")).define("romberg", ["PM"], function(PM){return(
 PM.romberg
 )});
+  main.variable(observer("graph")).define("graph", ["isVersion","PM","md","VERSION"], function(isVersion,PM,md,VERSION){return(
+isVersion('>0.1.32')
+  ? PM.graph
+  : () => () => () => md`Graphing not available in ${VERSION}`
+)});
+  main.variable(observer()).define(["md"], function(md){return(
+md`#### Include our library of iterator/generator utilities.`
+)});
   main.variable(observer("EnhancedGenerator")).define("EnhancedGenerator", ["isVersion","PM"], function(isVersion,PM){return(
 isVersion(">0.1.33")
   ? PM.EnhancedGenerator
   : ((PM.MappableGenerator.enhance = PM.MappableGenerator.extend),
     PM.MappableGenerator)
+)});
+  main.variable(observer("EnhancedAsyncGenerator")).define("EnhancedAsyncGenerator", ["PM"], function(PM){return(
+PM.EnhancedAsyncGenerator
+)});
+  main.variable(observer()).define(["md"], function(md){return(
+md`Of particular utility are Sync.enhance(gen) or Async.enhance(gen), which take a generator, iterator, or iterable and extend them with additional functionality.`
+)});
+  main.variable(observer("Sync")).define("Sync", ["PM"], function(PM){return(
+PM.Sync
+)});
+  main.variable(observer("Async")).define("Async", ["PM"], function(PM){return(
+PM.Async
 )});
   main.variable(observer("isGenerator")).define("isGenerator", ["PM"], function(PM){return(
 PM.isGenerator
@@ -531,6 +560,9 @@ PM.isIterator
   main.variable(observer("isIterable")).define("isIterable", ["PM"], function(PM){return(
 PM.isIterable
 )});
+  main.variable(observer("isIterableIterator")).define("isIterableIterator", ["PM"], function(PM){return(
+PM.isIterableIterator
+)});
   main.variable(observer("toGenerator")).define("toGenerator", ["PM"], function(PM){return(
 PM.toGenerator
 )});
@@ -540,13 +572,35 @@ PM.toIterator
   main.variable(observer("toIterable")).define("toIterable", ["PM"], function(PM){return(
 PM.toIterable
 )});
+  main.variable(observer("toIterableIterator")).define("toIterableIterator", ["PM"], function(PM){return(
+PM.toIterableIterator
+)});
+  main.variable(observer("isAsyncGenerator")).define("isAsyncGenerator", ["PM"], function(PM){return(
+PM.isAsyncGenerator
+)});
+  main.variable(observer("isAsyncIterator")).define("isAsyncIterator", ["PM"], function(PM){return(
+PM.isAsyncIterator
+)});
+  main.variable(observer("isAsyncIterable")).define("isAsyncIterable", ["PM"], function(PM){return(
+PM.isAsyncIterable
+)});
+  main.variable(observer("isAsyncIterableIterator")).define("isAsyncIterableIterator", ["PM"], function(PM){return(
+PM.isAsyncIterableIterator
+)});
+  main.variable(observer("toAsyncGenerator")).define("toAsyncGenerator", ["PM"], function(PM){return(
+PM.toAsyncGenerator
+)});
+  main.variable(observer("toAsyncIterator")).define("toAsyncIterator", ["PM"], function(PM){return(
+PM.toAsyncIterator
+)});
+  main.variable(observer("toAsyncIterable")).define("toAsyncIterable", ["PM"], function(PM){return(
+PM.toAsyncIterable
+)});
+  main.variable(observer("toAsyncIterableIterator")).define("toAsyncIterableIterator", ["PM"], function(PM){return(
+PM.toAsyncIterableIterator
+)});
   main.variable(observer("range")).define("range", ["PM"], function(PM){return(
 PM.range
-)});
-  main.variable(observer("graph")).define("graph", ["isVersion","PM","md","VERSION"], function(isVersion,PM,md,VERSION){return(
-isVersion('>0.1.32')
-  ? PM.graph
-  : () => () => () => md`Graphing not available in ${VERSION}`
 )});
   main.variable(observer()).define(["md"], function(md){return(
 md`### Library imports.`
