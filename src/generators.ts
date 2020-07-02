@@ -1509,6 +1509,7 @@ class Sync_ implements GeneratorOps<Sync> {
                                 // Ignore
                             }
                         }
+                        throw e;
                     }
                 }
             } finally {
@@ -2398,6 +2399,7 @@ class Async_ implements GeneratorOps<Async> {
                                 // Ignore
                             }
                         }
+                        throw e;
                     }
                 }
             } finally {
