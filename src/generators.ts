@@ -1866,7 +1866,7 @@ class Async_ implements GeneratorOps<Async> {
                                 try {
                                     if (depth > 0 && isAsyncIterator(v)) {
                                         yield* flat(v, depth - 1);
-                                    } else if (depth > 0 && isAsyncIterable(v)) {
+                                    } else if (depth > 0 && (isAsyncIterable(v) || isIterable(v))) {
                                         yield* flat(toAsyncIterator(v), depth - 1)
                                     } else {
                                         nr = yield r.value as FlatGen<T, D>;
@@ -1979,7 +1979,7 @@ class Async_ implements GeneratorOps<Async> {
                                         } else {
                                             yield v;
                                         }
-                                    } else if (isAsyncIterable(v)) {
+                                    } else if (isAsyncIterable(v) || isIterable(v)) {
                                         if (depth > 1) {
                                             yield* flatMap(toAsyncIterator(v), depth - 1);
                                         } else if (depth === 1) {
