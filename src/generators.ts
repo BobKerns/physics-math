@@ -2869,9 +2869,22 @@ export function toIterable<T>(i: Genable<T>): Iterable<T> {
  */
 export function toAsyncIterable<T>(i: Genable<T, Async>): AsyncIterable<T> {
     if (isAsyncIterable(i)) return i;
+    if (isIterable(i)) {
+        return toAsyncIterable_adaptor(i);
+    }
     return {
         [Symbol.asyncIterator]: () => i as AsyncIterator<T>
     };
+}
+
+async function* toAsyncIterable_adaptor<T>(iterable: Iterable<T>): AsyncGenerator<T> {
+    const it = iterable[Symbol.iterator]();
+    let nr: any = undefined;
+    while (true) {
+        const r = await it.next(nr);
+        if (r.done) return r.value;
+        nr = yield r.value;
+    }
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -2924,6 +2937,9 @@ export function toAsyncIterableIterator<T>(i: Genable<T, Async>): AsyncIterableI
             throw: it().throw && ((val) => it().throw!(val))
         };
         return iit;
+    }
+    if (isIterable(i)) {
+        return toAsyncIterable_adaptor(i);
     }
     if (isAsyncIterator(i)) {
         const iit: AsyncIterableIterator<T> = {
