@@ -53,7 +53,10 @@ export interface ViewOf<T = any> {
  * A functional version of the throw statement.
  * @param msg
  */
-export const Throw = (msg: string = 'Error'): never => {
+export const Throw = (msg: string | Error = 'Error'): never => {
+    if (msg instanceof Error) {
+        throw msg;
+    }
     throw new Error(msg);
 }
 
