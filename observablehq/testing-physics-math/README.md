@@ -1,6 +1,6 @@
 # Testing Physics-Math
 
-https://observablehq.com/@bobkerns/testing-physics-math@1596
+https://observablehq.com/@bobkerns/testing-physics-math@1618
 
 View this notebook in your browser by running a web server in this folder. For
 example:

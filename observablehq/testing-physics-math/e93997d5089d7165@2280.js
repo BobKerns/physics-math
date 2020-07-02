@@ -1,4 +1,4 @@
-// https://observablehq.com/@jashkenas/inputs@2264
+// https://observablehq.com/@jashkenas/inputs@2280
 export default function define(runtime, observer) {
   const main = runtime.module();
   const fileAttachments = new Map([["capstan.gif",new URL("./files/c051fbc024553912e31968b35e537d4ad3592201b5f8e7bd13fd9d02e38599c5d541a704d0858c676328babb3e5c9c35dd7c6d67240090d094882a1cad8eece4",import.meta.url)]]);
@@ -248,7 +248,7 @@ dd2
       { label: "😂", value: "tears-of-joy" },
       { label: "😍", value: "loving-it" },
       { label: "🤔", value: "hmmm" },
-      { label: "😱", value: "yikes" },
+      { label: "😱", value: "yikes", disabled: true },
       { label: "😈", value: "mischievous" },
       { label: "💩", value: "poo" }
     ],
@@ -295,12 +295,13 @@ function select(config = {}) {
         <select name="input" ${
           multiple ? `multiple size="${size || options.length}"` : ""
         }>
-          ${options.map(({ value, label }) =>
+          ${options.map(({ value, label,disabled }) =>
             Object.assign(html`<option>`, {
               value,
               selected: Array.isArray(formValue)
                 ? formValue.includes(value)
                 : formValue === value,
+              disabled : disabled ? disabled : false,
               textContent: label
             })
           )}

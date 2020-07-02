@@ -1,6 +1,6 @@
 // https://observablehq.com/@anwarhahjjeffersongeorge/code-block-style-picker@139
 import define1 from "./37f2e57e1832e1d6@243.js";
-import define2 from "./e93997d5089d7165@2264.js";
+import define2 from "./e93997d5089d7165@2280.js";
 
 export default function define(runtime, observer) {
   const main = runtime.module();

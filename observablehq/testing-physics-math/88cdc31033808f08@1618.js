@@ -1,5 +1,5 @@
-// https://observablehq.com/@bobkerns/testing-physics-math@1596
-import define1 from "./e93997d5089d7165@2264.js";
+// https://observablehq.com/@bobkerns/testing-physics-math@1618
+import define1 from "./e93997d5089d7165@2280.js";
 import define2 from "./10ca265cf0ddc43e@1074.js";
 import define3 from "./c6c7a741ac87d656@52.js";
 import define4 from "./4e8bebdde0debc65@139.js";
@@ -159,6 +159,14 @@ constant(...getUnit('kilometer').fromSI(...getUnit('mile').toSI(1))).html
 )});
   main.variable(observer()).define(["constant","getUnit"], function(constant,getUnit){return(
 constant(...getUnit('mile').fromSI(1, getUnit('cm'))).html
+)});
+  main.variable(observer()).define(["md"], function(md){return(
+md`xkcd:![xkcd Oily House Index](https://imgs.xkcd.com/comics/oily_house_index.png)`
+)});
+  main.variable(observer()).define(["isVersion","Units","VERSION"], function(isVersion,Units,VERSION){return(
+isVersion('>0.1.33')
+  ? Units.money.divide(Units.area).divide(Units.money.divide(Units.volume)).html
+  : `No money units in ${VERSION}`
 )});
   main.variable(observer()).define(["md"], function(md){return(
 md`### The defined unit symbols and names (preferring symbols to names).`
@@ -534,7 +542,7 @@ isVersion('>0.1.32')
 md`#### Include our library of iterator/generator utilities.`
 )});
   main.variable(observer("EnhancedGenerator")).define("EnhancedGenerator", ["isVersion","PM"], function(isVersion,PM){return(
-isVersion(">0.1.33")
+isVersion(">=0.1.33")
   ? PM.EnhancedGenerator
   : ((PM.MappableGenerator.enhance = PM.MappableGenerator.extend),
     PM.MappableGenerator)
