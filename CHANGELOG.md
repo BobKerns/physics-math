@@ -1,4 +1,11 @@
 # ChangeLog
+## Version 0.1.34
+_date: 2020-07-10_
+
+* Extend the EnhancedGenerators functionality to EnhancedAsyncGenerators
+* Update dependencies
+* Update ObservableHQ test page
+* Add missing exports
 
 ## Version 0.1.33
 _date: 2020-06-20_
