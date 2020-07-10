@@ -160,7 +160,8 @@ const nullTerms: CompleteTerms<{}> = {
     current: 0,
     temperature: 0,
     amount: 0,
-    candela: 0
+    candela: 0,
+    money: 0
 };
 /**
  * @param key

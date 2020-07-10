@@ -26,7 +26,7 @@ import RE_symbol = TEST.RE_symbol_;
 
 describe("Primitive", () => {
     // If this test fails, the tests need to be revisited for the change in primitives.
-    test('# of primitives', () => expect(Object.keys(PRIMITIVE_MAP).length).toBe(10));
+    test('# of primitives', () => expect(Object.keys(PRIMITIVE_MAP).length).toBe(11));
     (Object.keys(PRIMITIVE_MAP) as (keyof typeof Primitive)[]).forEach(k => {
         const prim = PRIMITIVE_MAP[k];
         test(`name ${k}`, () => expect(NAMED_UNITS[prim.name].name).toBe(prim.name));
@@ -41,7 +41,8 @@ describe("Primitive", () => {
         temperature: ['kelvin', 'K', 'T'],
         candela: ['candela', 'cd', 'c'],
         angle: ['radian', 'rad', '𝜃'],
-        solidAngle: ['steridian', 'sr']
+        solidAngle: ['steridian', 'sr'],
+        money: ['money', '$', '$']
     };
     const keys = Object.keys(expectations) as Primitive[];
     keys.forEach(k => {

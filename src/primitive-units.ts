@@ -33,7 +33,8 @@ export enum Primitive {
     current = 'current', // Dunno why this is the SI base
     temperature = 'temperature',
     amount = 'amount', // Amount
-    candela = 'candela' // An SI base unit for some reason
+    candela = 'candela', // An SI base unit for some reason
+    money = 'money'
 }
 
 export const primitiveKeys: Primitive[] = Object.keys(Primitive) as Primitive[];
@@ -52,7 +53,8 @@ const ORDER: { [K in Primitive]: number } = (i => {
         current: i++,
         temperature: i++,
         time: i++,
-        candela: i++
+        candela: i++,
+        money: i++
     };
 })(0);
 /**
@@ -277,7 +279,8 @@ export const PRIMITIVE_MAP: Readonly<PrimitiveMap> = (() => {
     defPrimitive(Primitive.current, 'ampere', 'A', 'A', {si_base: true});
     defPrimitive(Primitive.temperature, 'kelvin', 'K', 'T',
         {absolute: true, si_base: true});
-    defPrimitive(Primitive.candela, 'candela', 'cd', 'c', {si_base: true})
+    defPrimitive(Primitive.candela, 'candela', 'cd', 'c', {si_base: true});
+    defPrimitive(Primitive.money,'money', '$', '$', {});
     return val as PrimitiveMap;
 })();
 /**
@@ -311,6 +314,7 @@ export namespace P {
     export type temperature = typeof temperature;
     export const candela: IUnitBase<{ candela: 1 }> = PRIMITIVE_MAP.candela;
     export type candela = typeof candela;
+    export const money: IUnitBase<{money: 1}> = PRIMITIVE_MAP.money;
 }
 
 defineTag(PrimitiveUnit, 'PrimitiveUnit');
