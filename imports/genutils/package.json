@@ -1,7 +1,7 @@
 {
-  "name": "npm-typescript-rollup-template",
-  "version": "0.1.0",
-  "description": "Template project for typescript and rollup",
+  "name": "genutils",
+  "version": "0.1.35",
+  "description": "Generator utilities that bring array-like operations to sync and async generators.",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "browser": "lib/umd/index.js",
@@ -32,20 +32,20 @@
   "bin": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BobKerns/npm-typescript-rollup-template.git"
+    "url": "git+https://github.com/BobKerns/genutils"
   },
   "keywords": [
-    "template",
     "node",
     "typescript",
-    "rollup"
+    "javascript",
+    "generators"
   ],
   "author": "Bob Kerns",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/BobKerns/npm-typescript-rollup-template/issues"
+    "url": "https://github.com/BobKerns/genutils/issues"
   },
-  "homepage": "https://github.com/BobKerns/npm-typescript-rollup-template#readme",
+  "homepage": "https://github.com/BobKerns/genutils#readme",
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",

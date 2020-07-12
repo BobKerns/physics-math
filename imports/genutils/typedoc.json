@@ -1,7 +1,7 @@
 {
   "mode": "modules",
   "exclude": "**/__tests__/**",
-  "name": "NPM Template Project (rename me!)",
+  "name": "Genutils",
   "readme": "src/README.md",
   "includes": "./"
 }
