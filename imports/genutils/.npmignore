@@ -1,0 +1,24 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+assets/
+build/
+config/
+devtools/
+docs/
+src/
+.editorconfig
+.travis.yml
+jest.config.js
+rollup.config.js
+tsconfig.json
+typedoc.json
+.circleci/
+.github/
+bin/
+observablehq/*.tgz
+_config.yml
+.idea/
+CHANGELOG.md
+README.md
+docdest/
+imports/
