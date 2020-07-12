@@ -15,8 +15,18 @@
  * Test functions from the utils pkg
  */
 
-import {isFunction, Throw} from "../utils";
-import {isGenable, isGenerator, EnhancedGenerator, range, isIterator, isIterable, Sync, Async, SyncType, Enhanced} from "../generators";
+import {isGenable, isGenerator, EnhancedGenerator, range, isFunction, isIterator, isIterable, Sync, Async, SyncType, Enhanced} from "../generators";
+
+/**
+ * A functional version of the throw statement.
+ * @param msg
+ */
+export const Throw = (msg: string | Error = 'Error'): never => {
+    if (msg instanceof Error) {
+        throw msg;
+    }
+    throw new Error(msg);
+}
 
 type TestGen<T, S extends SyncType> =  Enhanced<T, S> & {
     did_return?: boolean;

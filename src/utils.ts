@@ -13,7 +13,7 @@
  * @preferred
  */
 
-import {range} from "./generators";
+import {range} from "genutils/src/generators";
 
 interface idGen extends Function {
     seqs: {[k: string]: Iterator<number>}

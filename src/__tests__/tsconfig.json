@@ -10,7 +10,6 @@
     "test-units.ts",
     "test-numerics.ts",
     "test-algebra.ts",
-    "test-generators.ts",
     "test-graph.ts",
     "test-integration.ts",
     "test-latex.ts",

@@ -10,7 +10,7 @@
  */
 
 import {Memoizer, NumericMemoizer, RangeMemoizer, romberg} from "../numerics";
-import {range} from "../generators";
+import {range} from "genutils/src/generators";
 type MemoFun = (t: number) => number;
 interface MemoizerConstructor<T extends Memoizer<any>> {
     new(f: MemoFun, a: number, b: number): Memoizer<any>;

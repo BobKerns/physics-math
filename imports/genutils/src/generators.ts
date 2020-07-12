@@ -24,8 +24,6 @@ export type FlatGen<Arr, Depth extends number> = {
 }[Depth extends -1 ? "done" : "recur"];
 */
 
-import {isFunction} from "./utils";
-
 /**
  * Sync/Async type selector
  */
@@ -2693,6 +2691,13 @@ export abstract class EnhancedGenerator<T = unknown, TReturn = any, TNext = unkn
     [Symbol.toStringTag]: 'EnhancedGenerator';
 }
 
+/**
+ * Predicate/Type Guard for any function.
+ * @param f
+ */
+export const isFunction = <A extends Function>(f: (A | any)): f is A => {
+    return typeof f === 'function';
+}
 
 /**
  * Predicate/type guard to determine if an object is [[Genable]]. An object is [[Genable]] if it
