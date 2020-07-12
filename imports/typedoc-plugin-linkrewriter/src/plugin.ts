@@ -105,7 +105,7 @@ export class LinkRewriterPlugin extends ContextAwareRendererComponent {
 
     private loadLinks(links: string) {
         try {
-            return require(path.resolve(links));
+            return links && require(path.resolve(links));
         }
         catch (e) {
             this.application.logger.error("Could not load links '%s'.", links);
