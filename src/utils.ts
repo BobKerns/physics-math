@@ -13,7 +13,7 @@
  * @preferred
  */
 
-import {range} from "genutils/src/generators";
+import {range} from "genutils/lib/cjs/range";
 
 interface idGen extends Function {
     seqs: {[k: string]: Iterator<number>}

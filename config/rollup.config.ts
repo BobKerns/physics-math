@@ -112,7 +112,7 @@ const dbg: any = {name: 'dbg'};
  * @param resolved
  */
 const checkExternal = (id: string, from?: string, resolved?: boolean): boolean =>
-    !/gl-matrix|glMatrix/i.test(id) && (resolved
+    !/gl-matrix|glMatrix|genutils/i.test(id) && (resolved
         ? /node_modules/.test(id)
         : !/^\./.test(id));
 

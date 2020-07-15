@@ -11,7 +11,7 @@
 
 import {factor, gcd, isComposite, isPrime, xgcd} from "../algebra";
 import {not} from "../utils";
-import {range} from "genutils/src/generators";
+import {range} from "genutils";
 const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199];
 const COMPOSITES = range(0, 200).filter(n => n > 1 && 0 > PRIMES.findIndex((a) => a === n));
 describe('primality', () => {

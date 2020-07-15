@@ -45,12 +45,3 @@ export {Styler, StyleKey, colorStyler, RGB6Color, setStyle, INITIAL_STYLE, Numbe
 export {Piecewise} from './piecewise';
 export {graph, GraphFormat, AxisRange, DEFAULT_FORMAT, Box, MouseMoveData} from './graph';
 export {gcd, xgcd, isPrime, isComposite, factor, sieve} from './algebra';
-export {range,
-    isIterable, isIterator, toIterable, toIterator, toIterableIterator,
-    toGenerator, isGenerator, isGenable, isIterableIterator,
-    isAsyncIterable, isAsyncIterator, toAsyncIterable, toAsyncIterator, toAsyncIterableIterator,
-    toAsyncGenerator, isAsyncGenerator, isAsyncGenable, isAsyncIterableIterator,
-    Sync, Async,
-    Genable, GenUnion, FlatGen, GenType, Reducer,
-    EnhancedGenerator, EnhancedAsyncGenerator, Enhanced
-} from 'genutils/src/generators'
