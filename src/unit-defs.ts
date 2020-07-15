@@ -242,4 +242,56 @@ export namespace Units {
     // noinspection JSUnusedGlobalSymbols
     export const gram = defineAlias('gram', 'g', {},
         Units.mass, 0.001);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const barrel = defineAlias('barrel', 'bbl', {},
+        Units.volume, 158.98729492);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const gallon = defineAlias('gallon', 'gal', {},
+        Units.volume, 3.785411784);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const quart = defineAlias('quart', 'qt', {},
+        Units.volume, 3.785411784 / 4);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const pint = defineAlias('pint', 'pt', {},
+        Units.volume, 3.785411784 / 8);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const cup = defineAlias('cup', 'cp', {},
+        Units.volume, 3.785411784 / 16);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const tablespoon = defineAlias('tablespoon', 'Tbl', {},
+        Units.volume, 0.0147868);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const teaspoon = defineAlias('teaspoon', 'tsp', {},
+        Units.volume, 0.0147868/3);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const btu = defineAlias('british thermal unit', 'but', {},
+        Units.energy, 1055.06);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const ounce = defineAlias('ounce', 'oz', {},
+        Units.force, 0.278);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const pound = defineAlias('pound', 'lb', {},
+        Units.force, 0.278 * 16);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const stone = defineAlias('stone', 'stone', {},
+        Units.force, 201.168);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const furlong = defineAlias('furlong', 'furlong', {},
+        Units.length, 201.168);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const fortnight = defineAlias('fortnight', 'fortnight', {},
+        Units.time, 14*24*60*60);
 }
