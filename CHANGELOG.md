@@ -1,4 +1,9 @@
 # ChangeLog
+## Version 0.1.35
+_date: 2020-06-15_
+
+* Move generator utils to new NPM genutils module.
+
 ## Version 0.1.34
 _date: 2020-07-10_
 
