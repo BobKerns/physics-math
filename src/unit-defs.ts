@@ -294,4 +294,8 @@ export namespace Units {
     // noinspection JSUnusedGlobalSymbols
     export const fortnight = defineAlias('fortnight', 'fortnight', {},
         Units.time, 14*24*60*60);
+
+    // noinspection JSUnusedGlobalSymbols
+    export const smoot = defineAlias('smoot', 'smoot', {},
+        Units.length, 1.7018);
 }
