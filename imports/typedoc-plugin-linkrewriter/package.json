@@ -28,17 +28,17 @@
     "typedoc": ">=0.17.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.42",
-    "jest": "^26.0.1",
-    "ts-jest": "^26.1.0",
-    "typedoc": "^0.17.7",
-    "typescript": "^3.9.3"
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.16",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "typedoc": "^0.20.4",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@types/marked": "^0.7.4",
-    "marked": "^1.1.0",
+    "@types/marked": "^1.2.1",
+    "marked": "^1.2.7",
     "source-map-support": "^0.5.19",
-    "tslib": "^1.13.0"
+    "tslib": "^2.0.3"
   }
 }
