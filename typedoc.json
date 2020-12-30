@@ -1,7 +1,6 @@
 {
-  "mode": "modules",
-  "exclude": ["**/__tests__/**"],
   "name": "Physics Math",
+  "exclude": "**/__tests__/**",
   "readme": "src/README.md",
   "includes": "./",
   "plugin": [
