@@ -153,12 +153,12 @@ export const graph = (defaultWidth: number) =>
                             .attr('stroke', 'blue')
                             .attr('x', margin.left)
                             .attr('y', margin.right)
-                            .on('mousemove', _ => {
+                            .on('mousemove', event => {
                         const mouse = {
-                            x: scaleX.invert(d3.event.offsetX),
-                            y: scaleY.invert(d3.event.offsetY),
-                            offsetX: d3.event.offsetX - margin.left,
-                            offsetY: d3.event.offsetY - margin.top
+                            x: scaleX.invert(event.offsetX),
+                            y: scaleY.invert(event.offsetY),
+                            offsetX: event.offsetX - margin.left,
+                            offsetY: event.offsetY - margin.top
                         };
                         g.call(g => update(g, mouse));
                     })
