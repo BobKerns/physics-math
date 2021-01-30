@@ -29,7 +29,7 @@ export type Styler<I = string|number, R extends any[] = any[]> = (continuation: 
 type StylerFn<I = string|number, R extends any[] = any[]> = (ctx: StyleContext, arg: I, ...rest: R) => string;
 
 
-type StyleKeyStyler =  'applyUnit' | 'applyUnitFunction' | 'function' | 'variable' | 'unit' | 'unitSymbol' | 'unitFraction' | 'number' |
+type StyleKeyStyler =  'applyUnit' | 'applyUnitFunction' | 'function' | 'variable' | 'unit' | 'unitSymbol' | 'unitFraction' | 'unitProduct' | 'number' |
     'call';
 type StyleKeyData = 'exponentStyle' | 'numberSpecials' | 'numberPrecision' | 'numberFormat' | 'numberTrimTrailingZero';
 
@@ -50,7 +50,8 @@ export enum NumberFormat {
 export type StyleMap = {
     unit: Styler<IUnitBase>;
     unitSymbol: Styler<IUnitBase>;
-    unitFraction: Styler<string, [string]>
+    unitFraction: Styler<string, [string]>;
+    unitProduct: Styler<string[]>;
     applyUnit: Styler<string|number, [IUnitBase]>;
     applyUnitFunction: Styler<string|number, [IUnitBase]>;
     number: Styler<number>;
@@ -128,6 +129,10 @@ export class StyleContext implements StyleContextHolder<StyleContext> {
         return this.style.unitFraction(this, numer, denom);
     }
 
+    unitProduct(terms: string[]){
+        return this.style.unitProduct(this, terms);
+    }
+
     get numberSpecials() { return this.style.numberSpecials; }
     get numberPrecision() { return this.style.numberPrecision; }
     get numberFormat() { return this.style.numberFormat; }
@@ -168,6 +173,7 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder<Style> {
     readonly unit: StylerFn<IUnitBase>;
     readonly unitSymbol: StylerFn<IUnitBase>;
     readonly unitFraction: StylerFn<string, [string]>;
+    readonly unitProduct: StylerFn<string[]>;
     readonly applyUnit: StylerFn<string|number,[IUnitBase]>;
     readonly applyUnitFunction: StylerFn<string|number,[IUnitBase]>;
     readonly numberFormat: NumberFormat;
@@ -186,6 +192,7 @@ export class Style implements Readonly<StyleFnMap>, StyleContextHolder<Style> {
         this.unit = init.unit(DEFAULT_STYLE_FNS.unit, this);
         this.unitSymbol = init.unitSymbol(DEFAULT_STYLE_FNS.unitSymbol, this);
         this.unitFraction = init.unitFraction(DEFAULT_STYLE_FNS.unitFraction, this);
+        this.unitProduct= init.unitProduct(DEFAULT_STYLE_FNS.unitProduct, this);
         this.applyUnit = init.applyUnit(DEFAULT_STYLE_FNS.applyUnit, this);
         this.applyUnitFunction = init.applyUnitFunction(DEFAULT_STYLE_FNS.applyUnitFunction, this);
         this.numberFormat = init.numberFormat;
@@ -367,6 +374,7 @@ export const colorStyler = (color: RGB6Color): Styler<any> =>
 const DEFAULT_STYLE_FNS: StyleFnMap = {
     unit: (_ctx, u): string => u.toTex(_ctx),
     unitFraction: (_ctx, numer, denom) => tex`\Large{\frac{${numer}}{${denom}}}`,
+    unitProduct: (_ctx, terms: string[]) => terms.join(tex`\centerdot `),
     unitSymbol: (_ctx, unit) => tex`\text{${unit.symbol}}`,
     function: (_ctx, op) => tex`\operatorname{${op.name || op}}`,
     call: (ctx, s, vars: Variable[]) => `${ctx.function(s)}(${vars.map(v => ctx.variable(v)).join(',')})`,
@@ -385,6 +393,7 @@ const exponentError = () => () => Throw(`Units should not appear in the exponent
 const exponentStyle: Style = Object.freeze(new Style({
     unit: exponentError,
     unitFraction: exponentError,
+    unitProduct: exponentError,
     unitSymbol: exponentError,
     function: () => DEFAULT_STYLE_FNS.function,
     call: () => DEFAULT_STYLE_FNS.call,
@@ -406,6 +415,7 @@ const exponentStyle: Style = Object.freeze(new Style({
 export const DEFAULTS: StyleMap = Object.freeze({
     unit: colorStyler('ff0000'),
     unitFraction: () => DEFAULT_STYLE_FNS.unitFraction,
+    unitProduct: () => DEFAULT_STYLE_FNS.unitProduct,
     unitSymbol: () => DEFAULT_STYLE_FNS.unitSymbol,
     function: () => DEFAULT_STYLE_FNS.function,
     call: () => DEFAULT_STYLE_FNS.call,

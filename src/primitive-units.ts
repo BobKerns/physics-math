@@ -181,15 +181,17 @@ export abstract class UnitBase<T extends PUnitTerms> implements IUnitBase<T> {
             const numUnits = units
                 .filter(k => (key[k] || 0) > 0)
                 .sort(orderUnits);
-            const num = numUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].toTex(ctx)}${(key[k] || 0) > 1 ? TeX`^{${key[k]}}` : TeX``}`)
-                .join(TeX`\centerdot`);
+            const num = ctx.unitProduct(
+                numUnits
+                    .map(k => TeX`${PRIMITIVE_MAP[k].toTex(ctx)}${(key[k] || 0) > 1 ? TeX`^{${key[k]}}` : TeX``}`)
+            )
             const denomUnits = units
                 .filter(k => (key[k] || 0) < 0)
                 .sort(orderUnits);
-            const denom = denomUnits
-                .map(k => TeX`${PRIMITIVE_MAP[k].toTex(ctx)}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
-                .join(TeX`\centerdot`);
+            const denom = ctx.unitProduct(
+                denomUnits
+                    .map(k => TeX`${PRIMITIVE_MAP[k].toTex(ctx)}${(key[k] || 0) < -1 ? TeX`^{${-(key[k] || 0)}}` : TeX``}`)
+            );
             return denomUnits.length === 0
                 ? num
                 : ctx.unitFraction(num, denom);

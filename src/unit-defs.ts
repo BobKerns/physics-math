@@ -272,7 +272,7 @@ export namespace Units {
         Units.volume, 0.0147868/3);
 
     // noinspection JSUnusedGlobalSymbols
-    export const btu = defineAlias('british thermal unit', 'but', {},
+    export const btu = defineAlias('british thermal unit', 'btu', {},
         Units.energy, 1055.06);
 
     // noinspection JSUnusedGlobalSymbols
