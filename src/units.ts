@@ -251,7 +251,7 @@ const SYMBOL_UNITS: {[key: string]: Unit } = { };
  */
 // noinspection JSUnusedLocalSymbols
 class DerivedUnit<T extends UnitTerms> extends UnitBase<T> implements Unit<T>, SI {
-    readonly symbol?: string;
+    declare symbol?: string;
     readonly varName?: string;
     constructor(key: T, attributes: UnitAttributes = {}) {
         super(key, attributes);

@@ -223,10 +223,10 @@ const checkUnits = (a: Value, b: Value): true | never =>
 abstract class Vectorish<C extends Unit, W extends 0 | 1 = 0 | 1>
     extends ArrayBase<C>
     implements DataType<TYPE.VECTOR|TYPE.POINT> {
-    0: number;
-    1: number;
-    2: number;
-    3: W;
+    declare 0: number;
+    declare 1: number;
+    declare 2: number;
+    declare 3: W;
     protected constructor(unit: C, x = 0, y = 0, z = 0, w: W) {
         super(unit);
         this[0] = x;
